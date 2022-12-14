@@ -11,12 +11,26 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 
 
-class Partners(ListView):
+class Partners(DataMixin, ListView):
     model = Partner
     template_name = 'Jaimain/partners.html'
     context_object_name = 'partners'
-    menu = [{'title': "Партнеры", 'url_name': 'partners'},
-            ]
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Партнеры')
+        return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
         return Partner.objects.all()
+
+class AddPartner(DataMixin, CreateView):
+    form_class = AddPartnerForm
+    template_name = 'Jaimain/addpartner.html'
+    success_url = reverse_lazy('partners')
+    raise_exception = True
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Добавление партнера')
+        return dict(list(context.items()) + list(c_def.items()))
