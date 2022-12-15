@@ -1,19 +1,26 @@
+{% extends 'Jaimain/base.html' %}
 {% block content %}
+<form action="{% url 'search' %}" method="GET">
+    <input type="text" name="q" placeholder="Search">
+    <input type="submit" value="Search">
+</form>
+
 <ul class="list-articles">
 	{% for p in partners %}
 			<li><div class="article-panel">
-	<p class="first">Партнер: {{p.name}}</p>
-	<p class="last">Дата начала работы: {{p.time_start_working|date:"d-m-Y"}}</p>
-	<p class="last">Дата окончания работы: {{p.time_expires|date:"d-m-Y"}}</p>
+	<p class="first">{{p.name}}</p>
+	<div style="text-align: right">
+  <button><a href="{{p.pk}}">Просмотр</a></button>
+</div>
 </div>
 
 {% if p.logo %}
 	<p><img class="img-article-left thumb" src="{{p.logo.url}}"></p>
 {% endif %}
 
-				<h2>{{p.name}}</h2>
 	{% autoescape on %}
-	{{p.description|linebreaks|truncatewords:50}}
+	{{p.description|linebreaks|truncatewords:20}}
+	<p class="last">Дата начала работы: {{p.time_start_working|date:"d-m-Y"}} | Дата окончания работы: {{p.time_expires|date:"d-m-Y"}}</p>
 	{% endautoescape %}
 			<div class="clear"></div>
 

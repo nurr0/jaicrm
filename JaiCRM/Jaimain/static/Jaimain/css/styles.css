@@ -428,3 +428,15 @@ ul.lang-list li a:hover {color: #fdc073;}
 .list-pages .page-num-selected:hover {
 	box-shadow: none; 
 }
+
+.header_ilya{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.btn_ilya{
+    display: flex;
+    margin-left: auto;
+    margin-right: 0;
+    align-items: center;
+}
