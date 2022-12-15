@@ -1,5 +1,10 @@
 {% extends 'Jaimain/base.html' %}
 {% block content %}
+<form action="{% url 'search' %}" method="GET">
+    <input type="text" name="q" placeholder="Search">
+    <input type="submit" value="Search">
+</form>
+
 <ul class="list-articles">
 	{% for p in partners %}
 			<li><div class="article-panel">

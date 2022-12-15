@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView, UpdateView
 from .forms import *
 from .models import *
+from django.http import HttpResponse
+from django.template import loader
 from .utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -59,3 +61,20 @@ class EditPartner(DataMixin, UpdateView):
         c_def = self.get_user_context(title='Изменение партнера')
         return dict(list(context.items()) + list(c_def.items()))
 
+
+def search(request):
+    query = request.GET.get('q')
+    results = []  # здесь будут храниться результаты поиска
+
+    # выполняем поиск и заполняем список результатов
+    if query:
+        results = Partner.objects.filter(name__contains=query)
+
+    # загружаем шаблон и передаем в него результаты поиска
+    template = loader.get_template('Jaimain/search_results.html')
+    context = {
+        'results': results,
+    }
+    user_menu = menu.copy()
+    context['menu'] = user_menu
+    return HttpResponse(template.render(context, request))

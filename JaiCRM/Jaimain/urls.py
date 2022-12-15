@@ -8,4 +8,5 @@ urlpatterns = [
     path('addpartner/', AddPartner.as_view(), name='addpartner'),
     path('partners/<int:partner_pk>/', ShowPartner.as_view(), name='partner'),
     path('partners/<int:pk>/edit/', EditPartner.as_view(), name='editpartner'),
+    path('partners/search/', search, name='search'),
 ]
