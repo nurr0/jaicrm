@@ -1,16 +1,23 @@
 {% extends 'Jaimain/base.html' %}
 {% block content %}
-<form class="search" action="{% url 'search' %}" method="GET">
-    <input type="text" name="q" placeholder="Введите товар">
-    <input class="search__btn" type="submit" value="Искать">
+<form class="search form-text" action="{% url 'search' %}" method="GET">
+    <!-- <input class="search__area" type="text" name="q" placeholder="Введите текст"> -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<form class="form-text" action="">
+  		<input class="input-text" name="q" type="search">
+  		<i class="fa fa-search"></i>
+		  <input class="input-search" type="submit" value="Искать">
+	</form>
+    
 </form>
 
 <ul class="list-articles">
 	{% for p in partners %}
-			<li><div class="article-panel">
+			<li class="partners__info"><div class="article-panel">
 	<p class="first">{{p.name}}</p>
-	<div style="text-align: right">
-  <button class="btn"><a href="{{p.pk}}">Просмотр</a></button>
+	<div class="partners__info-header" style="text-align: right">
+  <button class="btn"><a class="btn__text" href="{{p.pk}}">Просмотр</a></button>
+  
 </div>
 </div>
 
@@ -27,4 +34,5 @@
 			</li>
 	{% endfor %}
 </ul>
+
 {% endblock %}
