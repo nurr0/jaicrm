@@ -1,8 +1,8 @@
 {% extends 'Jaimain/base.html' %}
 {% block content %}
-<form action="{% url 'search' %}" method="GET">
-    <input type="text" name="q" placeholder="Search">
-    <input type="submit" value="Search">
+<form class="search" action="{% url 'search' %}" method="GET">
+    <input type="text" name="q" placeholder="Введите товар">
+    <input class="search__btn" type="submit" value="Искать">
 </form>
 
 <ul class="list-articles">
@@ -10,7 +10,7 @@
 			<li><div class="article-panel">
 	<p class="first">{{p.name}}</p>
 	<div style="text-align: right">
-  <button><a href="{{p.pk}}">Просмотр</a></button>
+  <button class="btn"><a href="{{p.pk}}">Просмотр</a></button>
 </div>
 </div>
 
