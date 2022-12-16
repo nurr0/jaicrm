@@ -4,6 +4,7 @@
 <head>
 	<title>{{title}}</title>
 	<link type="text/css" href="{% static 'Jaimain/css/styles.css' %}" rel="stylesheet" />
+	<link rel="stylesheet" href="./../../static/Jaimain/script.js">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="shortcut icon" href="{% static 'Jaimain/images/main.ico' %}" type="image/x-icon"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,15 +22,21 @@
 			<li>Подключиться</li>
 {% endblock %}
 <!-- Sidebar слева -->
-
-	<td valign="top" class="left-chapters">
-	<ul id="leftchapters">
-
+	<aside class="sidebar" >
+		<td valign="top" class="left-chapters " >
+			<ul id="leftchapters">
 {% for m in menu %}
-		<li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+				<li>
+					<div class="slider__right" >
+						<img class="img-slide" src="./../../static/Jaimain/images/settings.svg" alt="">
+						<a href="{% url m.url_name %}">{{m.title}}</a>
+					</div>
+				</li>
 {% endfor %}
-	</ul>
-</td>
+			</ul>
+
+		</td>
+	</aside>
 
 <!-- Конец Sidebar'а -->
 <td valign="top" class="content">
@@ -81,4 +88,5 @@
 <!-- Конец footer'а и страницы -->
 </body>
 <script src="./../../static/Jaimain/main.js"></script>
+<script src="./../../static/Jaimain/script.js"></script>
 </html>

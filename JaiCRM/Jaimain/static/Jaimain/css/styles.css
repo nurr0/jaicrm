@@ -163,6 +163,7 @@ div.button {
 .left-chapters {
 	margin: 0;
 	background: #eee;
+	background: white;
 	border-right: 1px solid #ccc;
 	min-height: 100%;
 }
@@ -558,4 +559,36 @@ ul.lang-list li a:hover {color: #fdc073;}
 .form-text:hover .fa{
     background: #07051a;
     color: white;
+}
+
+.img-slide{
+	width: 25px;
+	height: 25px;
+}
+
+.slider__right{
+	display: flex;
+	align-items: center;
+	font-family: 'Poppins', sans-serif;
+}
+
+.img-slide{
+	margin-right: 5px;
+}
+
+.active__slider{
+	background-color: black;
+}
+
+.nonActive{
+	display: flex;
+	width: 25px;
+}
+
+.slider__right-nonActive{
+	display: none;
+}
+
+.leftchapters-nonActive{
+	display: none;
 }
