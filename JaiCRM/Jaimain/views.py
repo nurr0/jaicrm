@@ -1,5 +1,6 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -11,6 +12,7 @@ from django.template import loader
 from .utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 
 class Partners(DataMixin, ListView):
@@ -37,11 +39,16 @@ class ShowPartner(DataMixin, DetailView):
         c_def = self.get_user_context(title='Партнеры')
         return dict(list(context.items()) + list(c_def.items()))
 
-class AddPartner(DataMixin, FormView):
+class AddPartner(DataMixin, CreateView):
     form_class = AddPartnerForm
     template_name = 'Jaimain/addpartner.html'
     success_url = reverse_lazy('partners')
     raise_exception = True
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

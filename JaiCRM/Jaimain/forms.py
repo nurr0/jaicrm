@@ -13,10 +13,12 @@ class AddPartnerForm(forms.ModelForm):
 
     class Meta:
         model = Partner
-        fields = ['name', 'logo', 'description', 'partner_tel', 'partner_email', 'partner_person', 'time_start_working',  'time_expires', 'is_working']
+        fields = ['name', 'logo', 'description', 'partner_person', 'partner_tel', 'partner_email', 'time_start_working',  'time_expires', 'is_working']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-input'}),
             'description': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
+            'time_start_working': forms.SelectDateWidget(years=list(range(1980, 2030))),
+            'time_expires': forms.SelectDateWidget(years=list(range(1980, 2030))),
 
         }
 
