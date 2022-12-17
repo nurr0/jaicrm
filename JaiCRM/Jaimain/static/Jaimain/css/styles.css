@@ -2,9 +2,10 @@ html, body {
 	font-family: 'Arial';
 	margin: 0;
 	padding: 0;
-	height: 100%;
+	height: 100vh;
 	width: 100%;
 	color: #444;
+	
 }
 
 a {
@@ -162,13 +163,13 @@ div.button {
 
 .left-chapters {
 	margin: 0;
-	background: #eee;
+	background: white;
 	border-right: 1px solid #ccc;
-	min-height: 100%;
+	/* min-height: 100%; */
 }
 .left-chapters ul {
 	width: 230px;
-	min-height: 100%;
+	max-height: 100%;
 	margin: 0;
 	padding: 20px 10px 10px 20px;
 	list-style: none;
@@ -365,10 +366,12 @@ ul.lang-list li a:hover {color: #fdc073;}
 	font-family: Verdana, Geneva, Arial, Helvetica;
 	text-align: left;
 	overflow: hidden;
+	z-index: 2;
 }
 #footer a {
 	text-decoration: underline;
 	color: #aaa;
+	z-index: 3;
 }
 
 .form-input {
@@ -558,4 +561,73 @@ ul.lang-list li a:hover {color: #fdc073;}
 .form-text:hover .fa{
     background: #07051a;
     color: white;
+}
+
+.img-slide{
+	width: 25px;
+	height: 25px;
+}
+
+.slider__right{
+	display: flex;
+	align-items: center;
+	font-family: 'Poppins', sans-serif;
+}
+
+.img-slide{
+	margin-right: 5px;
+}
+
+.active__slider{
+	background-color: black;
+}
+
+.nonActive{
+	display: flex;
+	background-color: #999;
+	content: '';
+    position: absolute;
+	animation: animateMotion 1s infinite linear;
+	animation-iteration-count: 1;
+	
+}
+
+
+.leftchapters-nonActive{
+	display: none;
+	z-index: 1;
+	border: none;
+}
+
+@keyframes animateMotion {
+	0%{
+        left: 200;
+    }
+    /* конечное значение */
+    100%{
+        left: 0px
+    }
+}
+
+.back{
+	background: #3F4137;
+}
+
+.sidebar__arrow{
+	display: flex;
+	justify-content: end;
+	z-index: 1;
+	position: relative ;
+}
+.sidebar__arrow-img{
+	position: relative;
+	z-index: 1;
+}
+
+.footet-bot{
+	padding: 0;
+}
+
+.footer-fot{
+	margin-top: 10px;
 }
