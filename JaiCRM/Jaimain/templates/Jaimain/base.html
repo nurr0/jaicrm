@@ -24,6 +24,9 @@
 <!-- Sidebar слева -->
 	<aside class="sidebar" >
 		<td valign="top" class="left-chapters " >
+			<div class="sidebar__arrow">
+				<img class="sidebar__arrow-img" src="./../../static/Jaimain/images/Caret.svg" alt="">
+			</div>
 			<ul id="leftchapters">
 {% for m in menu %}
 				<li>
@@ -39,7 +42,7 @@
 	</aside>
 
 <!-- Конец Sidebar'а -->
-<td valign="top" class="content">
+<td valign="top" class="content footet-bot">
 	<!-- Хлебные крошки -->
 	{% block breadcrumbs %}
 	{% endblock %}
@@ -81,7 +84,7 @@
 </td></tr>
 <!-- Footer -->
 <tr><td valign=top>
-	<div id="footer">
+	<div class="footer-fot" id="footer">
 		<p>&copy; NuRRo.</p>
 	</div>
 </td></tr></table>
