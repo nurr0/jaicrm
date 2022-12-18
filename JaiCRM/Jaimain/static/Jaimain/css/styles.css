@@ -2,7 +2,8 @@ html, body {
 	font-family: 'Arial';
 	margin: 0;
 	padding: 0;
-	height: 100vh;
+	/* height: 100vh; */
+	height: 100%;
 	width: 100%;
 	color: #444;
 	
@@ -165,7 +166,7 @@ div.button {
 	margin: 0;
 	background: white;
 	border-right: 1px solid #ccc;
-	/* min-height: 100%; */
+	min-height: 100%;
 }
 .left-chapters ul {
 	width: 230px;
@@ -358,9 +359,8 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 #footer {
 	box-sizing: border-box;
-
 	background: #3F4137;
-	padding: 5px;
+	padding: 10px;
 	color: #aaa;
 	font-size: 14px;
 	font-family: Verdana, Geneva, Arial, Helvetica;
@@ -578,56 +578,108 @@ ul.lang-list li a:hover {color: #fdc073;}
 	margin-right: 5px;
 }
 
-.active__slider{
-	background-color: black;
-}
 
 .nonActive{
 	display: flex;
-	background-color: #999;
-	content: '';
-    position: absolute;
-	animation: animateMotion 1s infinite linear;
-	animation-iteration-count: 1;
+	position: relative;
+	animation: animateMotion 1s  linear;
+	animation-iteration-count: 0.4;
+	animation-fill-mode:forwards;
 	
 }
 
+.nonActiveTwo{
+	display: flex;
+	animation: animateMotionTwo 1s  linear;
+	animation-iteration-count: 0.4;
+	animation-fill-mode:forwards;
+}
 
-.leftchapters-nonActive{
+.nonActive-time{
 	display: none;
-	z-index: 1;
-	border: none;
+	
+}
+
+.background-tr{
+	background-color: #F6FAFF;
 }
 
 @keyframes animateMotion {
 	0%{
-        left: 200;
+        left: 0;
     }
     /* конечное значение */
     100%{
-        left: 0px
+        left: -700px;
+		
     }
 }
 
-.back{
-	background: #3F4137;
+@keyframes animateMotionTwo {
+	0%{
+        left: -70px;
+    }
+    /* конечное значение */
+    100%{
+        left: 100px;
+		
+    }
 }
 
 .sidebar__arrow{
 	display: flex;
 	justify-content: end;
-	z-index: 1;
-	position: relative ;
-}
-.sidebar__arrow-img{
-	position: relative;
-	z-index: 1;
+	position: absolute;
+	left: 218px;
+	cursor: pointer;
 }
 
-.footet-bot{
-	padding: 0;
+.sidebar__arrow:hover{
+	scale: 1.1;
 }
 
-.footer-fot{
-	margin-top: 10px;
+.sidebar__arrow-non{
+	position: absolute;
+	left: 100px;
+	top:100px
+}
+
+
+
+.top2{
+	position: absolute;
+}
+
+.top2-active{
+	margin-top: 60px;
+	position: absolute;
+	width: 30px;
+	/* min-height: fit-content;
+	/* background-color: #2F76E6; */ 
+}
+
+.nonActiveList{
+	opacity: 0.5;
+	
+}
+.nonActiveList:hover{
+	scale: 1.1;
+	
+}
+
+.partners, .AddPartners{
+	margin: 13px;
+	cursor: pointer;
+}
+
+.partners:hover{
+	scale: 1.1;
+}
+
+.AddPartners:hover{
+	scale: 1.1;
+}
+
+.hoverblock{
+	scale: 1.1;
 }

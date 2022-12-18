@@ -13,7 +13,7 @@
 <table class="table-page" border=0 cellpadding="0" cellspacing="0">
 <tr><td valign=top>
 <table class="table-content" border=0 cellpadding="0" cellspacing="0">
-<tr>
+<tr class="background-tr">
 {% block mainmenu %}
 		<div class="header">
 			<ul id="mainmenu" class="mainmenu">
@@ -22,8 +22,17 @@
 			<li>Подключиться</li>
 {% endblock %}
 <!-- Sidebar слева -->
-	<aside class="sidebar" >
+
+	<div class="top2">
+		<div class="sidebar__arrow-img2">
+			<img class="sidebar__arrow-img0" src="./../../static/Jaimain/images/picture.svg" alt="">
+			<img class="partners" src="./../../static/Jaimain/images/settings.svg" alt="">
+			<img class="AddPartners" src="./../../static/Jaimain/images/settings.svg" alt="">
+		</div>
+	</div>
+
 		<td valign="top" class="left-chapters " >
+
 			<div class="sidebar__arrow">
 				<img class="sidebar__arrow-img" src="./../../static/Jaimain/images/Caret.svg" alt="">
 			</div>
@@ -32,16 +41,17 @@
 				<li>
 					<div class="slider__right" >
 						<img class="img-slide" src="./../../static/Jaimain/images/settings.svg" alt="">
-						<a href="{% url m.url_name %}">{{m.title}}</a>
+						<a  href="{% url m.url_name %}">{{m.title}}</a>
 					</div>
 				</li>
 {% endfor %}
 			</ul>
 
 		</td>
-	</aside>
+
 
 <!-- Конец Sidebar'а -->
+
 <td valign="top" class="content footet-bot">
 	<!-- Хлебные крошки -->
 	{% block breadcrumbs %}
@@ -83,13 +93,12 @@
 </td></tr></table>
 </td></tr>
 <!-- Footer -->
-<tr><td valign=top>
+<!-- <tr><td valign=top>
 	<div class="footer-fot" id="footer">
 		<p>&copy; NuRRo.</p>
 	</div>
-</td></tr></table>
+</td></tr></table> -->
 <!-- Конец footer'а и страницы -->
 </body>
 <script src="./../../static/Jaimain/main.js"></script>
-<script src="./../../static/Jaimain/script.js"></script>
 </html>
