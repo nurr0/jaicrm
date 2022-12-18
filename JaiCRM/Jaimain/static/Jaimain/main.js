@@ -4,6 +4,7 @@ const sidebar = document.querySelector('.left-chapters')
 const sliderRight = document.querySelector('.slider__right')
 const left = document.querySelector('#leftchapters')
 const arrow = document.querySelector('.sidebar__arrow')
+const arrowZero = document.querySelector('.sidebar__arrow-img')
 const top2 = document.querySelector('.top2')
 const top2Active = document.querySelector('.top2-active')
 const arrow2 = document.querySelector('.sidebar__arrow-img2')
@@ -13,10 +14,11 @@ const arrow2 = document.querySelector('.sidebar__arrow-img2')
 
 
 
+
 arrow.addEventListener('click',nonActive)
 
 function nonActive(){
-
+    arrowZero.classList.toggle('nonActive-time');
     //Открыть плашку мини
     arrow.classList.toggle('sidebar__arrow-non');
     sidebar.classList.toggle('nonActive');
@@ -27,17 +29,17 @@ function nonActive(){
         top2.classList.toggle('top2-active');
         top2.classList.toggle('top2');
         top2Active.addEventListener('click', nonActive2)
-    },300)
+    },200)
 }
 
 arrow2.addEventListener('click', nonActive2)
 
 function nonActive2(){
-
+    arrowZero.classList.toggle('nonActive-time');
     arrow.classList.toggle('sidebar__arrow-non');
-    sidebar.classList.toggle('nonActive');
+    // sidebar.classList.toggle('nonActive');
     sidebar.classList.toggle('nonActiveTwo');
-    left.classList.toggle('leftchapters-nonActive');
+    // left.classList.toggle('leftchapters-nonActive');
     sidebar.classList.toggle('nonActive-time');
     top2.classList.toggle('top2-active');
     top2.classList.toggle('top2');

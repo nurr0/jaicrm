@@ -590,7 +590,8 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 .nonActiveTwo{
 	display: flex;
-	animation: animateMotionTwo 1s  linear;
+	position: relative;
+	animation: animateMotionTwo 0.5s  linear;
 	animation-iteration-count: 0.4;
 	animation-fill-mode:forwards;
 }
@@ -617,11 +618,11 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 @keyframes animateMotionTwo {
 	0%{
-        left: -70px;
+        left: -700px;
     }
     /* конечное значение */
     100%{
-        left: 100px;
+        left: 1000px;
 		
     }
 }
@@ -634,7 +635,19 @@ ul.lang-list li a:hover {color: #fdc073;}
 	cursor: pointer;
 }
 
+.sidebar__arrow{
+	cursor: pointer;
+}
+
 .sidebar__arrow:hover{
+	scale: 1.1;
+}
+
+.sidebar__arrow-img0{
+	cursor: pointer;
+}
+
+.sidebar__arrow-img0:hover{
 	scale: 1.1;
 }
 
