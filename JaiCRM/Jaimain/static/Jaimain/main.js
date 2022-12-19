@@ -8,6 +8,8 @@ const arrowZero = document.querySelector('.sidebar__arrow-img')
 const top2 = document.querySelector('.top2')
 const top2Active = document.querySelector('.top2-active')
 const arrow2 = document.querySelector('.sidebar__arrow-img2')
+const showPartners = document.querySelector('.partners')
+const showAddPartners = document.querySelector('.AddPartners')
 
 
 
@@ -18,6 +20,8 @@ const arrow2 = document.querySelector('.sidebar__arrow-img2')
 arrow.addEventListener('click',nonActive)
 
 function nonActive(){
+    showAddPartners.classList.toggle('zero')
+    showPartners.classList.toggle('zero')
     arrowZero.classList.toggle('nonActive-time');
     //Открыть плашку мини
     arrow.classList.toggle('sidebar__arrow-non');
@@ -35,6 +39,8 @@ function nonActive(){
 arrow2.addEventListener('click', nonActive2)
 
 function nonActive2(){
+    showAddPartners.classList.toggle('zero')
+    showPartners.classList.toggle('zero')
     arrowZero.classList.toggle('nonActive-time');
     arrow.classList.toggle('sidebar__arrow-non');
     // sidebar.classList.toggle('nonActive');
@@ -47,17 +53,22 @@ function nonActive2(){
 }
 
 
-const partners = document.querySelectorAll('[href="/partners/"]')[1];
+const partners = document.querySelectorAll('[href="/partners/"]')[0];
+partners.classList.add('partners-block')
+
 const addPartners = document.querySelector('[href="/addpartner/"]');
+addPartners.classList.add('addPartners-block')
+
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
-    addPartners.classList.add('nonActiveList')
+    partners.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/addpartner/'){
-    partners.classList.add('nonActiveList')
+    addPartners.classList.add('ActiveList')
 }
 
-const partners_link = document.querySelector('.partners');
-partners_link.addEventListener('click',()=> location.href = 'http://127.0.0.1:8000/partners/')
+
+showPartners.addEventListener('click',()=> location.href = 'http://127.0.0.1:8000/partners/')
+showAddPartners.addEventListener('click',()=> location.href = 'http://127.0.0.1:8000/addpartner/')
 
 
 //Поиск (нет на всех страницах)
