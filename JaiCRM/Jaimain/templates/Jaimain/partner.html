@@ -3,7 +3,11 @@
 {% block content %}
 <div class="header_ilya">
     <h1>{{partner.name}}</h1>
-    <div style="text-align: right" class="btn_ilya"><button><a href='{% url 'editpartner' partner.pk %}'>Редактировать</a></button></div>
+    <div style="text-align: right" class="btn_ilya">
+        <button class="btn">
+            <a class="white" href='{% url 'editpartner' partner.pk %}'>Редактировать</a>
+        </button>
+    </div>
 </div>
 
 

@@ -10,23 +10,18 @@ const top2Active = document.querySelector('.top2-active')
 const arrow2 = document.querySelector('.sidebar__arrow-img2')
 const showPartners = document.querySelector('.partners')
 const showAddPartners = document.querySelector('.AddPartners')
+const fileUpload = document.getElementById('id_logo')
 
 
 
-
-
-
-
-arrow.addEventListener('click',nonActive)
+arrow.addEventListener('click', nonActive)
 
 function nonActive(){
     showAddPartners.classList.toggle('zero')
     showPartners.classList.toggle('zero')
     arrowZero.classList.toggle('nonActive-time');
-    //Открыть плашку мини
     arrow.classList.toggle('sidebar__arrow-non');
     sidebar.classList.toggle('nonActive');
-    // sliderRight.classList.toggle('slider__right-nonActive');
     left.classList.toggle('leftchapters-nonActive');
     const tim = setTimeout(function(){
         sidebar.classList.toggle('nonActive-time');
@@ -43,13 +38,10 @@ function nonActive2(){
     showPartners.classList.toggle('zero')
     arrowZero.classList.toggle('nonActive-time');
     arrow.classList.toggle('sidebar__arrow-non');
-    // sidebar.classList.toggle('nonActive');
     sidebar.classList.toggle('nonActiveTwo');
-    // left.classList.toggle('leftchapters-nonActive');
     sidebar.classList.toggle('nonActive-time');
     top2.classList.toggle('top2-active');
     top2.classList.toggle('top2');
-    
 }
 
 
@@ -64,11 +56,19 @@ if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/addpartner/'){
     addPartners.classList.add('ActiveList')
-}
+}else if (url === 'http://127.0.0.1:8000/partners/1/edit//'){
+    alert('mde')};
 
 
-showPartners.addEventListener('click',()=> location.href = 'http://127.0.0.1:8000/partners/')
-showAddPartners.addEventListener('click',()=> location.href = 'http://127.0.0.1:8000/addpartner/')
+showPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/partners/')
+showAddPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/addpartner/')
+
+
+fileUpload.classList.add('btn-zero')
+
+
+
+
 
 
 //Поиск (нет на всех страницах)
