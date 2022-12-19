@@ -13,7 +13,7 @@ class AddPartnerForm(forms.ModelForm):
 
     class Meta:
         model = Partner
-        fields = ['name', 'logo', 'description', 'partner_person', 'partner_tel', 'partner_email', 'time_start_working',  'time_expires', 'is_working']
+        fields = ['name', 'logo', 'description', 'iin', 'partner_person', 'partner_tel', 'partner_email', 'time_start_working',  'time_expires', 'is_working']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-input'}),
             'description': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
@@ -28,3 +28,6 @@ class AddPartnerForm(forms.ModelForm):
             raise ValidationError('Длина превышает 200 символов')
 
         return title
+
+
+

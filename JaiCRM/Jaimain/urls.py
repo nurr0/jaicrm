@@ -8,5 +8,9 @@ urlpatterns = [
     path('addpartner/', AddPartner.as_view(), name='addpartner'),
     path('partners/<int:partner_pk>/', ShowPartner.as_view(), name='partner'),
     path('partners/<int:pk>/edit/', EditPartner.as_view(), name='editpartner'),
-    path('partners/search/', search, name='search'),
+    path('partners/search/', search_partners, name='search'),
+    path('users/', UsersList.as_view(), name='users'),
+    path('users/<int:jaiuser_pk>', ShowUser.as_view(), name='showuser'),
+    path('users/<int:pk>/edit/', EditUser.as_view(), name='edituser'),
+    # path('adduser/', AddUser.as_view(), name='adduser'),
 ]

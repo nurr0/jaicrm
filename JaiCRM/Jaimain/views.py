@@ -34,6 +34,8 @@ class ShowPartner(DataMixin, DetailView):
     pk_url_kwarg = 'partner_pk'
     context_object_name = 'partner'
 
+
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Партнеры')
@@ -69,7 +71,7 @@ class EditPartner(DataMixin, UpdateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-def search(request):
+def search_partners(request):
     query = request.GET.get('q')
     results = []  # здесь будут храниться результаты поиска
 
@@ -85,3 +87,43 @@ def search(request):
     user_menu = menu.copy()
     context['menu'] = user_menu
     return HttpResponse(template.render(context, request))
+
+
+class UsersList(DataMixin, ListView):
+    model = JaiUser
+    template_name = 'Jaimain/users.html'
+    context_object_name = 'users'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Пользователи')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        return JaiUser.objects.all()
+
+
+class ShowUser(DataMixin, DetailView):
+    model = JaiUser
+    template_name = 'Jaimain/show_user.html'
+    pk_url_kwarg = 'jaiuser_pk'
+    context_object_name = 'user'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Партнеры')
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class EditUser(DataMixin, UpdateView):
+    model = JaiUser
+    fields = ['last_name', 'first_name', 'email']
+    template_name = 'Jaimain/edituser.html'
+    success_url = '/users/'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение пользователя')
+        return dict(list(context.items()) + list(c_def.items()))
+
+
