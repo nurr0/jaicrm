@@ -66,9 +66,11 @@ showAddPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1
 
 fileUpload.classList.add('btn-zero')
 
-
-
-
+const VFail = document.querySelector('.btn-addPart');
+fileUpload.addEventListener('click',failEdit)
+function failEdit(){
+    VFail.innerText = 'Файл выбран';
+}
 
 
 //Поиск (нет на всех страницах)
