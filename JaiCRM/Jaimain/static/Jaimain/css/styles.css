@@ -793,6 +793,10 @@ ul.lang-list li a:hover {color: #fdc073;}
 	margin-right: 5px;
 }
 
+.h1-header{
+	border-bottom: rgb(128, 128, 128) dotted 1px;
+}
+
 
 
 /* Страница Поиска Начало */
