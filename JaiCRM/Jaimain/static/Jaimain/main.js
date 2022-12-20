@@ -56,8 +56,9 @@ if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/addpartner/'){
     addPartners.classList.add('ActiveList')
-}else if (url === 'http://127.0.0.1:8000/partners/1/edit//'){
-    alert('mde')};
+}else if (url === 'http://127.0.0.1:8000/partners/1/'){
+    partners.classList.add('ActiveList')
+};
 
 
 showPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/partners/')
@@ -66,8 +67,60 @@ showAddPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1
 
 fileUpload.classList.add('btn-zero')
 
+const VFail = document.querySelector('.btn-addPart');
+fileUpload.addEventListener('click',failEdit)
+
+function failEdit(){
+    setTimeout(function(){
+        VFail.innerText = 'Файл выбран';
+    },1000)
+
+}
+
+const NamePartners = document.querySelector('.form-label')
+const InputNamePartners = document.querySelector('.form-input')
+const logoPartners = document.querySelectorAll('.form-label')[1]
+const descriptionPartners = document.querySelectorAll('.form-label')[2]
+const AreadescriptionPartners = document.querySelector('#id_description')
+const TextdescriptionPartners = document.querySelectorAll('#id_description')[0]
+const contactPartners = document.querySelectorAll('.form-label')[3]
+const contactPhonePartners = document.querySelectorAll('.form-label')[4]
+const contactEmailPartners = document.querySelectorAll('.form-label')[5]
+const contactDataStartPartners = document.querySelectorAll('.form-label')[6]
+const contactDataEndPartners = document.querySelectorAll('.form-label')[7]
+const ActivityPart = document.querySelectorAll('.form-label')[8]
+const dataDayPart = document.querySelectorAll('#id_time_start_working_day')[0]
+const dataMonthPart = document.querySelectorAll('#id_time_start_working_month')[0]
+const dataDayPartTwo = document.querySelector('#id_time_expires_day')
+const dataMonthPartTwo = document.querySelector('#id_time_expires_month')
+
+const TextContactLico = document.querySelector('#id_partner_person')
+const TextContactPhone = document.querySelector('#id_partner_tel')
+const TextContactEmail = document.querySelector('#id_partner_email')
 
 
+NamePartners.classList.add('p__addPart-width')
+logoPartners.classList.add('p__addPart-width')
+contactPartners.classList.add('p__addPart-width')
+contactPhonePartners.classList.add('p__addPart-width')
+contactEmailPartners.classList.add('p__addPart-width')
+contactDataStartPartners.classList.add('p__addPart-width')
+contactDataEndPartners.classList.add('p__addPart-width')
+ActivityPart.classList.add('p__addPart-width')
+
+descriptionPartners.classList.add('p__addPart-desc')
+AreadescriptionPartners.classList.add('p__addPart-width')
+
+dataDayPart.classList.add('p__addPart-dataDay')
+dataMonthPart.classList.add('p__addPart-dataDay')
+dataDayPartTwo.classList.add('p__addPart-dataDay')
+dataMonthPartTwo.classList.add('p__addPart-dataDay')
+
+InputNamePartners.classList.add('p__addPart-widthRight')
+TextdescriptionPartners.classList.add('p__addPart-widthRight')
+TextContactLico.classList.add('p__addPart-widthRight')
+TextContactPhone.classList.add('p__addPart-widthRight')
+TextContactEmail.classList.add('p__addPart-widthRight')
 
 
 

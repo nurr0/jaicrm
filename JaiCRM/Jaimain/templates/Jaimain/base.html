@@ -4,12 +4,18 @@
 <head>
 	<title>{{title}}</title>
 	<link type="text/css" href="{% static 'Jaimain/css/styles.css' %}" rel="stylesheet" />
-	<link rel="stylesheet" href="./../../static/Jaimain/script.js">
+
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="shortcut icon" href="{% static 'Jaimain/images/main.ico' %}" type="image/x-icon"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<div class="preloader">
+	<div class="preloader__row">
+		<div class="preloader__item"></div>
+		<div class="preloader__item"></div>
+	</div>
+</div>
 <table class="table-page" border=0 cellpadding="0" cellspacing="0">
 <tr><td valign=top>
 <table class="table-content" border=0 cellpadding="0" cellspacing="0">
@@ -21,14 +27,11 @@
 				<!-- <a href="{% url 'partners' %}" > -->
 				<div class="logo"></div></a>
 			</li>
-			{% if request.user.is_authenticated %}
+{% if request.user.is_authenticated %}
 			<li class="last">{{user.username}} | <a href="{% url 'logout' %}">Выйти</a> </li>
 			{% else %}
 			<li class="last"><a href="{% url 'login' %}">Войти</a></li>
 			{% endif %}
-			</ul>
-			<div class="clear"></div>
-		</div>
 {% endblock %}
 <!-- Sidebar слева -->
 
@@ -109,4 +112,15 @@
 <!-- Конец footer'а и страницы -->
 </body>
 <script src="./../../static/Jaimain/main.js"></script>
+<!-- preloader -->
+<script>
+	window.onload = function () {
+	  document.body.classList.add('loaded_hiding');
+	  window.setTimeout(function () {
+		document.body.classList.add('loaded');
+		document.body.classList.remove('loaded_hiding');
+	  }, 500);
+	}
+  </script>
+  <!-- preloader end-->
 </html>

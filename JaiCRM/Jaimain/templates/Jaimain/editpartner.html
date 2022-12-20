@@ -9,7 +9,10 @@
     <div class="form-error">{{ form.non_field_errors }}</div>
 
 {% for f in form %}
-<p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+<p>
+    <label class="form-label" for="{{ f.id_for_label }}">
+        {{f.label}}: </label>{{ f }}
+</p>
 <div class="form-error">{{ f.errors }}</div>
 {% endfor %}
 
@@ -17,5 +20,7 @@
     <button class="btn" type="submit">Сохранить</button>
     <button class="btn" onclick="history.go(-1)">Отменить</button>
 </form>
+<script src="/JaiCRM/Jaimain/static/Jaimain/main.js"></script>
+
 
 {% endblock %}
