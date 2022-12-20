@@ -137,7 +137,7 @@ class ShowUser(DataMixin, DetailView):
 
 class EditUser(DataMixin, UpdateView):
     model = JaiUser
-    fields = ['last_name', 'first_name', 'email']
+    fields = ['last_name', 'first_name', 'email', 'is_active']
     template_name = 'Jaimain/edituser.html'
     success_url = '/users/'
 
@@ -192,3 +192,24 @@ def HomePage(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+def search_users(request):
+    query = request.GET.get('q')
+    results = []  # здесь будут храниться результаты поиска
+
+    # выполняем поиск и заполняем список результатов
+    if query:
+        results = JaiUser.objects.filter(username__contains=query)
+
+    # загружаем шаблон и передаем в него результаты поиска
+    template = loader.get_template('Jaimain/user_search_results.html')
+    context = {
+        'results': results,
+    }
+    user_menu = menu.copy()
+    context['menu'] = user_menu
+    return HttpResponse(template.render(context, request))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
