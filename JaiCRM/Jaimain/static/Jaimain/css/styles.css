@@ -1,6 +1,4 @@
-* {
-	box-sizing: border-box;
-  }
+
 
 html, body {
 	font-family: 'Arial';
@@ -82,12 +80,16 @@ ul.list-articles li {
 .clear {clear: both;}
 
 .header {
-	/* background: white; */
-	height: 50px;
+	height: 30px;
 	width: 100%;
-	background: white;
-	position: relative;
-
+	/* background: white; */
+	/* position: fixed; */
+    top: 0;
+	background-color: #333;
+    
+    padding: 0;
+    overflow: hidden;
+    z-index: 90;
 	
 }
 
@@ -169,6 +171,7 @@ div.button {
 	width: 100%;
 	min-height: 100%;
 	height: 100%;
+	margin-top: 8px;
 }
 
 .left-chapters {
@@ -688,6 +691,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 	/* min-height: fit-content; */
 	/* background-color: #2F76E6;   */
 	z-index: 1000;
+	top:-20px;
 	
 }
 
