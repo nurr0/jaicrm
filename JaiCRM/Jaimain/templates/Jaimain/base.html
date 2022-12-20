@@ -21,8 +21,14 @@
 				<!-- <a href="{% url 'partners' %}" > -->
 				<div class="logo"></div></a>
 			</li>
-			<!-- <li>Войти</li>
-			<li>Подключиться</li> -->
+			{% if request.user.is_authenticated %}
+			<li class="last">{{user.username}} | <a href="{% url 'logout' %}">Выйти</a> </li>
+			{% else %}
+			<li class="last"><a href="{% url 'login' %}">Войти</a></li>
+			{% endif %}
+			</ul>
+			<div class="clear"></div>
+		</div>
 {% endblock %}
 <!-- Sidebar слева -->
 
