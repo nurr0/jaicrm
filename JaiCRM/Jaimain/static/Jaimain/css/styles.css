@@ -765,11 +765,35 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 .btn-addPart{
 	position: absolute;
-	top:160px;
-	left:210px;
+	top:220px;
+	left:360px;
 	z-index: 0;
-	width: 200px;
+	width: 300px;
 }
+
+.p__addPart{
+	border-bottom: rgb(128, 128, 128) dotted 1px;
+	padding: 20px 0;
+}
+
+.p__addPart-width{
+	width: 300px;
+}
+
+.p__addPart-widthRight{
+	width: 60%;
+}
+
+.p__addPart-desc{
+	height: 40px;
+	width: 300px;
+}
+
+.p__addPart-dataDay{
+	margin-right: 5px;
+}
+
+
 
 /* Страница Поиска Начало */
 .article-panel-search{
