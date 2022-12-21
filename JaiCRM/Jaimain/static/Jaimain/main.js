@@ -54,10 +54,14 @@ users.classList.add('addPartners-block')
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
-
+}else if (url === 'http://127.0.0.1:8000/partners/1/'){
+    partners.classList.add('ActiveList')    
 }else if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/registeruser/' ){
     users.classList.add('ActiveList')
+}else if (url === 'http://127.0.0.1:8000/login/'){
+    sidebar.classList.add('nonActive-time')
 }
+
 
 
 showPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/partners/')

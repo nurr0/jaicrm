@@ -824,6 +824,12 @@ ul.lang-list li a:hover {color: #fdc073;}
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+
+	
+}
+
+.header__user-exit:hover{
+	scale: 1.1;
 	
 }
 
@@ -835,6 +841,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 .header__exit{
 	color:black !important;
 	width: 100px;
+	text-decoration: none !important;
 }
 
 
