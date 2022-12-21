@@ -13,7 +13,11 @@
 	</form>
 
 </form>
-  <button class="btn"><a class="btn__text" href="{% url 'registeruser' %}">Добавить пользователя</a></button>
+<div class="btn__addUsers">
+	<button class="btn ">
+		<a class="btn__text" href="{% url 'registeruser' %}">Добавить пользователя</a>
+	</button>
+</div>
 <ul class="list-articles">
 	{% for u in users %}
 			<li class="partners__info"><div class="article-panel">

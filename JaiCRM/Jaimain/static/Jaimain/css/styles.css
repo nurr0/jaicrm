@@ -15,7 +15,7 @@ a {
 }
 a:hover {
 	color: #CC0000;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 img {max-width: 600px; height: auto;}
@@ -480,6 +480,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 	box-shadow: 0 7px 10px #d6d9e4;
 	cursor: pointer;
 	transition: all 0.1s ease-in-out;
+	text-decoration: none !important;
 }
 
 .input-search{
@@ -488,6 +489,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 .btn:hover, .search__btn:hover{
 	background-color: rgb(255, 97, 24);
+	text-decoration: none !important;
 
 }
 
@@ -842,6 +844,11 @@ ul.lang-list li a:hover {color: #fdc073;}
 	color:black !important;
 	width: 100px;
 	text-decoration: none !important;
+}
+
+.btn__addUsers{
+	display: flex;
+	justify-content: end;
 }
 
 

@@ -56,6 +56,10 @@ if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/partners/1/'){
     partners.classList.add('ActiveList')    
+}else if (url === 'http://127.0.0.1:8000/addpartner/'){
+    partners.classList.add('ActiveList')  
+}else if (url === 'http://127.0.0.1:8000/partners/1/edit/'){
+    partners.classList.add('ActiveList') 
 }else if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/registeruser/' ){
     users.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/login/'){
