@@ -71,11 +71,13 @@ if (url === 'http://127.0.0.1:8000/partners/'){
 showPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/partners/')
 showAddPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/addpartner/')
 
+if (url === 'http://127.0.0.1:8000/addpartner/'){
+    fileUpload.classList.add('btn-zero')
+    const VFail = document.querySelector('.btn-addPart');
+    fileUpload.addEventListener('click',failEdit)
+}
 
-fileUpload.classList.add('btn-zero')
 
-const VFail = document.querySelector('.btn-addPart');
-fileUpload.addEventListener('click',failEdit)
 
 function failEdit(){
     setTimeout(function(){
@@ -105,7 +107,7 @@ const TextContactLico = document.querySelector('#id_partner_person')
 const TextContactPhone = document.querySelector('#id_partner_tel')
 const TextContactEmail = document.querySelector('#id_partner_email')
 
-
+if (url === 'http://127.0.0.1:8000/addpartner/'){
 NamePartners.classList.add('p__addPart-width')
 logoPartners.classList.add('p__addPart-width')
 contactPartners.classList.add('p__addPart-width')
@@ -128,14 +130,40 @@ TextdescriptionPartners.classList.add('p__addPart-widthRight')
 TextContactLico.classList.add('p__addPart-widthRight')
 TextContactPhone.classList.add('p__addPart-widthRight')
 TextContactEmail.classList.add('p__addPart-widthRight')
+}
 
 
 
 //Поиск (нет на всех страницах)
-searchBtn.addEventListener('click', SearchEmpty)
-function SearchEmpty(e){
-    if (inputText.value === ''){
-        e.preventDefault();
-        alert('Введите текст в поиск!')
-    }
-}
+// searchBtn.addEventListener('click', SearchEmpty)
+// function SearchEmpty(e){
+//     if (inputText.value === ''){
+//         e.preventDefault();
+//         alert('Введите текст в поиск!')
+//     }
+// }
+
+
+//Поиск у пользователей
+let filter = function () {
+    let input = document.querySelector('.filter-input');
+
+    input.addEventListener('keyup', FilterUser)
+
+    function FilterUser(){
+        //Ловеркейс для поиска
+        let filter = input.value.toLowerCase(),
+        //Ищем все li у ul
+        filterElements = document.querySelectorAll('#filter-list li');
+
+        filterElements.forEach((item) => {
+            if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        })}
+    
+};
+
+filter();

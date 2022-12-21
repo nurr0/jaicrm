@@ -1,5 +1,6 @@
 html, body {
-	font-family: 'Arial';
+	/* font-family: 'Arial'; */
+	font-family: Sans-serif, Arial, Tahoma;
 	margin: 0;
 	padding: 0;
 	/* height: 100vh; */
@@ -849,6 +850,15 @@ ul.lang-list li a:hover {color: #fdc073;}
 .btn__addUsers{
 	display: flex;
 	justify-content: end;
+	padding-bottom: 30px;
+	height: 62px;
+}
+
+.header__users-top{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
 }
 
 
@@ -944,3 +954,45 @@ ul.lang-list li a:hover {color: #fdc073;}
 	display: none;
   }
   /* Преоладер */
+
+ /* Поиск у пользователей */
+.d7{
+	display: flex;
+	justify-content: left;
+}
+.d7:after {content:""; clear:both; display:table}
+.d7 form {
+  width: auto;
+  float: right;
+  margin-right: 30px;
+}
+.d7 input {
+  width: 250px;
+  height: 42px;
+  padding-left: 15px;
+  border-radius: 42px;
+  border: 2px solid #324b4e;
+  background: white;
+  outline: none;
+  position: relative;
+  transition: .3s linear;
+}
+.d7 input:focus {
+  width: 300px;
+}
+.d7 button {
+  width: 42px;
+  height: 42px;
+  background: none;
+  border: none;
+  position: absolute;
+  top: -2px;
+  right: 0;
+}
+.d7 button:before{
+  content: "\f002";
+  font-family: FontAwesome;
+  color: #324b4e;
+}
+
+/* Поиск у пользоватей End*/
