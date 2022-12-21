@@ -1,0 +1,18 @@
+{% extends 'Jaimain/base.html' %}
+
+{% block content %}
+<div class="header_ilya">
+    <h1>Пользователь - {{user.username}}</h1>
+    <div style="text-align: right" class="btn_ilya">
+        <button class="btn">
+            <a class="white" href='{% url 'edituser' user.pk %}'>Редактировать</a>
+        </button>
+    </div>
+</div>
+
+
+
+<h4>Имя пользователя: {{user.last_name}} {{user.first_name}}</h4>
+<h4>email: {{user.email}}</h4>
+<h4>Партнер: {{user.partner}}</h4>
+{% endblock %}
