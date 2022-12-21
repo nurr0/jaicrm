@@ -48,17 +48,16 @@ function nonActive2(){
 const partners = document.querySelectorAll('[href="/partners/"]')[0];
 partners.classList.add('partners-block')
 
-const addPartners = document.querySelector('[href="/addpartner/"]');
-addPartners.classList.add('addPartners-block')
+const users = document.querySelector('[href="/users/"]');
+users.classList.add('addPartners-block')
 
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
-}else if (url === 'http://127.0.0.1:8000/addpartner/'){
-    addPartners.classList.add('ActiveList')
-}else if (url === 'http://127.0.0.1:8000/partners/1/'){
-    partners.classList.add('ActiveList')
-};
+
+}else if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/registeruser/' ){
+    users.classList.add('ActiveList')
+}
 
 
 showPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/partners/')

@@ -23,14 +23,27 @@
 {% block mainmenu %}
 		<div class="header">
 			<ul id="mainmenu" class="mainmenu">
-			<li class="logo">
+			<div class="logo">
 				<!-- <a href="{% url 'partners' %}" > -->
 				<div class="logo"></div></a>
-			</li>
+				</div>
 {% if request.user.is_authenticated %}
-			<li class="last">{{user.username}} | <a href="{% url 'logout' %}">Выйти</a> </li>
+				<div class="header__user">
+					<div class="last">
+						<img src="./../../static/Jaimain/images/user.svg" alt="">
+						<p>{{user.username}}</p>
+					</div>
+					<div class="header__user-exit">
+						<img class="header__user-exitImg" src="./../../static/Jaimain/images/exit.svg" alt="">
+						<a class="header__exit" href="{% url 'logout' %}">Выйти</a>
+					</div>
+				</div>
+			
+			
 			{% else %}
-			<li class="last"><a href="{% url 'login' %}">Войти</a></li>
+			
+			<div class="last"><a href="{% url 'login' %}">Войти</a>
+			</div>
 			{% endif %}
 {% endblock %}
 <!-- Sidebar слева -->
