@@ -21,8 +21,11 @@ class Partners(DataMixin,  ListView):
     template_name = 'Jaimain/partners.html'
     context_object_name = 'partners'
 
+
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -31,7 +34,9 @@ class Partners(DataMixin,  ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return Partner.objects.all()
+        user = self.request.user
+        queryset = Partner.objects.all() if user.is_superuser else Partner.objects.filter(pk=user.partner.pk)
+        return queryset
 
 
 class ShowPartner(DataMixin, DetailView):
@@ -47,6 +52,8 @@ class ShowPartner(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 class AddPartner(DataMixin, CreateView):
@@ -80,9 +87,14 @@ class EditPartner(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
+@login_required
 def search_partners(request):
+    if request.user.is_costumer:
+        raise PermissionDenied
     query = request.GET.get('q')
     results = []  # здесь будут храниться результаты поиска
 
@@ -99,9 +111,6 @@ def search_partners(request):
     context['menu'] = user_menu
     return HttpResponse(template.render(context, request))
 
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
 class UsersList(DataMixin, ListView):
     model = JaiUser
@@ -116,8 +125,15 @@ class UsersList(DataMixin, ListView):
     def get_queryset(self):
         return JaiUser.objects.all()
 
+    def get_queryset(self):
+        user = self.request.user
+        queryset = JaiUser.objects.all() if user.is_superuser else JaiUser.objects.filter(partner=user.partner)
+        return queryset
+
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 class ShowUser(DataMixin, DetailView):
@@ -133,6 +149,8 @@ class ShowUser(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 class EditUser(DataMixin, UpdateView):
@@ -148,6 +166,8 @@ class EditUser(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 class RegisterUser(DataMixin, CreateView):
@@ -193,7 +213,10 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
+@login_required()
 def search_users(request):
+    if request.user.is_costumer:
+        raise PermissionDenied
     query = request.GET.get('q')
     results = []  # здесь будут храниться результаты поиска
 
@@ -210,6 +233,3 @@ def search_users(request):
     context['menu'] = user_menu
     return HttpResponse(template.render(context, request))
 
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)

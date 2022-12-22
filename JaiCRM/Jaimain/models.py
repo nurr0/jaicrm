@@ -26,4 +26,5 @@ class Partner(models.Model):
 
 class JaiUser(AbstractUser):
     partner = models.ForeignKey('Partner', on_delete=models.PROTECT, verbose_name="Партнер", default=1)
-
+    tel_number = models.CharField(max_length=255, verbose_name='Контактный телефон')
+    is_costumer = models.BooleanField(default=False, verbose_name='Является покупателем')
