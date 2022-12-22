@@ -38,6 +38,8 @@ class RegisterUserForm(UserCreationForm):
     last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={'class': 'form-input'}))
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))
     partner = forms.ModelChoiceField(label='Партнер', queryset=Partner.objects.all())
+    tel_number = forms.CharField(label='Номер телефона', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    is_costumer = forms.BooleanField(label='Является покупателем', widget=forms.CheckboxInput)
 
     class Meta:
         model = JaiUser
