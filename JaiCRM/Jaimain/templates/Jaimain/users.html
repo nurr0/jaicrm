@@ -3,33 +3,55 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 {% extends 'Jaimain/base.html' %}
 {% block content %}
-<form class="search form-text" action="{% url 'search' %}" method="GET">
-    <!-- <input class="search__area" type="text" name="q" placeholder="Введите текст"> -->
+<!-- <form class="search form-text" action="{% url 'search' %}" method="GET">
+    
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<form class="form-text" action="">
   		<input class="input-text" name="q" type="search">
   		<i class="fa fa-search"></i>
 		  <input class="input-search" type="submit" value="Искать">
-	</form>
+</form> -->
 
-</form>
-  <button class="btn"><a class="btn__text" href="{% url 'registeruser' %}">Добавить пользователя</a></button>
-<ul class="list-articles">
+<!-- </form> -->
+<div class="header__users-top">
+	<div class="d7">
+		<form>
+		<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
+		
+		</form>
+	</div>
+
+	<div class="btn__addUsers">
+		<button class="btn ">
+			<a class="btn__text" href="{% url 'registeruser' %}">Добавить пользователя</a>
+		</button>
+	</div>
+
+	<!-- <input type="text" class="filter-input"> -->
+
+	
+</div>
+
+<ul id="filter-list" class="list-articles">
 	{% for u in users %}
-			<li class="partners__info"><div class="article-panel">
-	<p class="first">{{u.username}}</p>
-	<div class="partners__info-header" style="text-align: right">
-  <button class="btn"><a class="btn__text" href="{{u.pk}}">Просмотр</a></button>
-
-</div>
-</div>
-
+	<li class="partners__info">
+		<div class="article-panel">
+			<p class="first">{{u.username}}</p>
+			<div class="partners__info-header" style="text-align: right">
+			<button class="btn">
+				<a class="btn__text" href="{{u.pk}}">Просмотр</a>
+			</button>
+		</div>
+		</div>
 	{% autoescape on %}
-	<p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p>
+		<p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p>
 	{% endautoescape %}
-			<div class="clear"></div>
+		<div class="clear"></div>
+	</li>
 
-			</li>
+	
+
+
 	{% endfor %}
 </ul>
 

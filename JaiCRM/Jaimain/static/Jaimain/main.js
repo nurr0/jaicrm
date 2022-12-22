@@ -48,27 +48,36 @@ function nonActive2(){
 const partners = document.querySelectorAll('[href="/partners/"]')[0];
 partners.classList.add('partners-block')
 
-const addPartners = document.querySelector('[href="/addpartner/"]');
-addPartners.classList.add('addPartners-block')
+const users = document.querySelector('[href="/users/"]');
+users.classList.add('addPartners-block')
 
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
-}else if (url === 'http://127.0.0.1:8000/addpartner/'){
-    addPartners.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/partners/1/'){
-    partners.classList.add('ActiveList')
-};
+    partners.classList.add('ActiveList')    
+}else if (url === 'http://127.0.0.1:8000/addpartner/'){
+    partners.classList.add('ActiveList')  
+}else if (url === 'http://127.0.0.1:8000/partners/1/edit/'){
+    partners.classList.add('ActiveList') 
+}else if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/registeruser/' ){
+    users.classList.add('ActiveList')
+}else if (url === 'http://127.0.0.1:8000/login/'){
+    sidebar.classList.add('nonActive-time')
+}
+
 
 
 showPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/partners/')
 showAddPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/addpartner/')
 
+if (url === 'http://127.0.0.1:8000/addpartner/'){
+    fileUpload.classList.add('btn-zero')
+    const VFail = document.querySelector('.btn-addPart');
+    fileUpload.addEventListener('click',failEdit)
+}
 
-fileUpload.classList.add('btn-zero')
 
-const VFail = document.querySelector('.btn-addPart');
-fileUpload.addEventListener('click',failEdit)
 
 function failEdit(){
     setTimeout(function(){
@@ -98,7 +107,7 @@ const TextContactLico = document.querySelector('#id_partner_person')
 const TextContactPhone = document.querySelector('#id_partner_tel')
 const TextContactEmail = document.querySelector('#id_partner_email')
 
-
+if (url === 'http://127.0.0.1:8000/addpartner/'){
 NamePartners.classList.add('p__addPart-width')
 logoPartners.classList.add('p__addPart-width')
 contactPartners.classList.add('p__addPart-width')
@@ -121,14 +130,40 @@ TextdescriptionPartners.classList.add('p__addPart-widthRight')
 TextContactLico.classList.add('p__addPart-widthRight')
 TextContactPhone.classList.add('p__addPart-widthRight')
 TextContactEmail.classList.add('p__addPart-widthRight')
+}
 
 
 
 //Поиск (нет на всех страницах)
-searchBtn.addEventListener('click', SearchEmpty)
-function SearchEmpty(e){
-    if (inputText.value === ''){
-        e.preventDefault();
-        alert('Введите текст в поиск!')
-    }
-}
+// searchBtn.addEventListener('click', SearchEmpty)
+// function SearchEmpty(e){
+//     if (inputText.value === ''){
+//         e.preventDefault();
+//         alert('Введите текст в поиск!')
+//     }
+// }
+
+
+//Поиск у пользователей
+let filter = function () {
+    let input = document.querySelector('.filter-input');
+
+    input.addEventListener('keyup', FilterUser)
+
+    function FilterUser(){
+        //Ловеркейс для поиска
+        let filter = input.value.toLowerCase(),
+        //Ищем все li у ul
+        filterElements = document.querySelectorAll('#filter-list li');
+
+        filterElements.forEach((item) => {
+            if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        })}
+    
+};
+
+filter();
