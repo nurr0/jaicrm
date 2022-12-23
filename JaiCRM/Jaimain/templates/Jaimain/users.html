@@ -35,17 +35,20 @@
 
 <ul id="filter-list" class="list-articles">
 	{% for u in users %}
-	<li class="partners__info">
+	<li class="partners__infoUsers">
 		<div class="article-panel">
-			<p class="first">{{u.username}}</p>
+			<p class="first fistUsers">{{u.username}}</p>
+			<p class="last lastUsers">{{u.first_name}} {{u.last_name}}</p>
+			<p class="last lastUsers "> Партнер: {{u.partner}}</p>
 			<div class="partners__info-header" style="text-align: right">
 			<button class="btn">
 				<a class="btn__text" href="{{u.pk}}">Просмотр</a>
 			</button>
+			
 		</div>
 		</div>
 	{% autoescape on %}
-		<p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p>
+			<!-- <p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p> -->
 	{% endautoescape %}
 		<div class="clear"></div>
 	</li>
