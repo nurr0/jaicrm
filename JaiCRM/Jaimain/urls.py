@@ -16,4 +16,8 @@ urlpatterns = [
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', logout_user, name='logout'),
     path('users/search/', search_users, name='search_users'),
+    path('shops/', ShowShops.as_view(), name='shops'),
+    path('addshop/', add_shop, name='addshop'),
+    path('shops/<int:shop_pk>', ShowShop.as_view(), name='showshop'),
+    path('shops/<int:pk>/edit/', EditShop.as_view(), name='editshop'),
 ]
