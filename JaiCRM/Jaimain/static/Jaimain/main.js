@@ -69,7 +69,7 @@ if (url === 'http://127.0.0.1:8000/partners/'){
 
 
 showPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/partners/')
-showAddPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/addpartner/')
+showAddPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/users/')
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
     fileUpload.classList.add('btn-zero')

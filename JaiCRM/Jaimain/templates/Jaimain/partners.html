@@ -12,17 +12,41 @@
 		  <input class="input-search" type="submit" value="Искать">
 </form> -->
     
-</form>
-<button class="btn"><a class="btn__text" href="{% url 'addpartner' %}">Добавить партнера</a></button>
-<ul class="list-articles">
+<!-- </form> -->
+<!-- <button class="btn"><a class="btn__text" href="{% url 'addpartner' %}">Добавить партнера</a></button> -->
+
+<div class="header__users-top">
+	<div class="d7">
+		<form>
+		<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
+		
+		</form>
+	</div>
+
+	<div class="btn__addUsers">
+		<button class="btn ">
+			<a class="btn__text" href="{% url 'addpartner' %}">Добавить партнера</a>
+		</button>
+	</div>
+
+	<!-- <input type="text" class="filter-input"> -->
+
+	
+</div>
+
+<ul id="filter-list" class="list-articles">
+<!-- <ul class="list-articles"> -->
 	{% for p in partners %}
-			<li class="partners__info"><div class="article-panel">
-	<p class="first">{{p.name}}</p>
-	<div class="partners__info-header" style="text-align: right">
-  <button class="btn"><a class="btn__text" href="{{p.pk}}">Просмотр</a></button>
-  
-</div>
-</div>
+
+	<li class="partners__info">
+		<div class="article-panel">
+			<p class="first">{{p.name}}</p></div>
+		<div class="partners__info-header" style="text-align: right">
+			<button class="btn">
+				<a class="btn__text" href="{{p.pk}}">Просмотр</a>
+			</button>
+  		</div>
+
 
 {% if p.logo %}
 	<p><img class="img-article-left thumb" src="{{p.logo.url}}"></p>
