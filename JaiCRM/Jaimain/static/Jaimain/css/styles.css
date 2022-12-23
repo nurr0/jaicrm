@@ -303,6 +303,8 @@ ul.content-table li a:hover {color: #F0711C;}
 	padding: 100px;
 	filter: drop-shadow(0px 2px 12px rgba(0, 0, 0, 0.25));
 	border-radius: 40px;
+	width: 30%;
+	margin-top: 10px;
 	
 
 }
@@ -912,7 +914,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 .input__login{
 	height: 33px;
-	width: 900px;
+	/* width: 900px; */
 }
 
 .partners__info-header{
