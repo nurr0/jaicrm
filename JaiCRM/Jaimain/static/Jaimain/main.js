@@ -69,7 +69,7 @@ if (url === 'http://127.0.0.1:8000/partners/'){
 
 
 showPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/partners/')
-showAddPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/addpartner/')
+showAddPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/users/')
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
     fileUpload.classList.add('btn-zero')
@@ -106,6 +106,26 @@ const dataMonthPartTwo = document.querySelector('#id_time_expires_month')
 const TextContactLico = document.querySelector('#id_partner_person')
 const TextContactPhone = document.querySelector('#id_partner_tel')
 const TextContactEmail = document.querySelector('#id_partner_email')
+
+if (url === 'http://127.0.0.1:8000/login/'){
+    const LoginPage = document.querySelector('.content-text')
+    LoginPage.classList.add('content-textLogin')
+
+    const LoginPageLogin = document.querySelectorAll('.form-label')[0];
+    LoginPageLogin.classList.add('nonActive-time')
+    const LoginPageInput = document.querySelectorAll('.form-input')[0];
+    LoginPageInput.setAttribute('placeholder','Введите логин')
+    LoginPageInput.classList.add('input__login')
+
+    const LoginPagePass = document.querySelectorAll('.form-label')[1];
+    LoginPagePass.classList.add('nonActive-time')
+    const LoginPageInputPass = document.querySelectorAll('.form-input')[1];
+    LoginPageInputPass.setAttribute('placeholder','Введите пароль')
+    LoginPageInputPass.classList.add('input__login')
+
+}
+
+
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
 NamePartners.classList.add('p__addPart-width')

@@ -1,18 +1,24 @@
 {% extends 'Jaimain/base.html' %}
 
 {% block content %}
-<h1>{{ title }}</h1>
+<div class="content__loginpage wave">
+<h1 class="login__header">{{ title }}</h1>
 
 <form method="post">
   {% csrf_token %}
 <div class="form-error">{{ form.non_field_errors }}</div>
 
 {% for f in form %}
-<p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+<p>
+  <label class="form-label" for="{{ f.id_for_label }}">
+    {{f.label}}: 
+  </label>{{ f }}
+</p>
 <div class="form-error">{{ f.errors }}</div>
 {% endfor %}
 
-  <button type="submit">Войти</button>
+  <button class="btn btn-login" type="submit">Войти</button>
 </form>
+</div>
 
 {% endblock %}
