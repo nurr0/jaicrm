@@ -1,6 +1,9 @@
+
+
 html, body {
 	/* font-family: 'Arial'; */
-	font-family: Sans-serif, Arial, Tahoma;
+	/* font-family: Sans-serif, Arial, Tahoma; */
+	font-family: 'Inter', sans-serif !important;
 	margin: 0;
 	padding: 0;
 	/* height: 100vh; */
@@ -540,6 +543,8 @@ ul.lang-list li a:hover {color: #fdc073;}
 	filter: drop-shadow(0px 2px 12px rgba(0, 0, 0, 0.25));
 	max-width: 200px;
 	min-height: 470px !important;
+	/* font-family: 'Inter', sans-serif; */
+
 }
 
 .partners-desc{
