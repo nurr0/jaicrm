@@ -23,4 +23,10 @@
 <p>Время начала работы: {{partner.time_start_working}}</p>
 <p>Доступ до: {{partner.time_expires}}</p>
 <p>Активность: {{partner.is_working}}</p>
+<p>Торговые точки: </p>
+{% for shop in shops_info %}
+{% if shop.partner.pk == partner.pk %}
+<li>{{shop.name}}
+{% endif %}
+{% endfor %}
 {% endblock %}
