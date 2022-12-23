@@ -34,29 +34,34 @@
 	
 </div>
 
-<ul id="filter-list" class="list-articles">
+<ul id="filter-list" class="list-articles partners__cards">
 <!-- <ul class="list-articles"> -->
 	{% for p in partners %}
 
 	<li class="partners__info">
+		<p><img class="img-article-left thumb" src="{{p.logo.url}}"></p>
 		<div class="article-panel">
 			<p class="first">{{p.name}}</p></div>
-		<div class="partners__info-header" style="text-align: right">
-			<button class="btn">
-				<a class="btn__text" href="{{p.pk}}">Просмотр</a>
-			</button>
-  		</div>
+		
 
 
 {% if p.logo %}
-	<p><img class="img-article-left thumb" src="{{p.logo.url}}"></p>
+	
 {% endif %}
 
 	{% autoescape on %}
-	{{p.description|linebreaks|truncatewords:20}}
-	<p class="last">Дата начала работы: {{p.time_start_working|date:"d-m-Y"}} | Дата окончания работы: {{p.time_expires|date:"d-m-Y"}}</p>
+	<div class="partners-desc" >
+		{{p.description|linebreaks|truncatewords:10}}
+	</div>
+	<p class="last dataPartners">Дата начала работы:<br> {{p.time_start_working|date:"d-m-Y"}} <br> Дата окончания работы: {{p.time_expires|date:"d-m-Y"}}</p>
 	{% endautoescape %}
-			<div class="clear"></div>
+	<!-- <div class="clear"></div> -->
+
+	<div class="partners__info-header" style="text-align: right">
+		<button class="btn btn__partners">
+			<a class="btn__text" href="{{p.pk}}">Просмотр</a>
+		</button>
+		</div>
 
 			</li>
 	{% endfor %}
