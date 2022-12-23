@@ -570,6 +570,20 @@ ul.lang-list li a:hover {color: #fdc073;}
 	justify-content: start !important;
 }
 
+.header_users-list{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.header_users-list-name,
+.header_users-list-Person,
+.header_users-list-Part,
+.header_users-list-last{
+	width: 100px;
+}
+
 .partners-desc{
 	font-size: 13px;
 	height: 62px;
