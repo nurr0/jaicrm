@@ -575,13 +575,20 @@ ul.lang-list li a:hover {color: #fdc073;}
 	flex-wrap: wrap;
 	justify-content: space-between;
 	width: 100%;
+	background-color: #000;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	height: 58px;
+	align-items: center;
 }
 
 .header_users-list-name,
 .header_users-list-Person,
 .header_users-list-Part,
 .header_users-list-last{
-	width: 100px;
+	width: 120px;
+	color:white;
+	padding-left: 5px;
 }
 
 .partners-desc{
