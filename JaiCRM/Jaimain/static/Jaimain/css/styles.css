@@ -1009,6 +1009,23 @@ ul.lang-list li a:hover {color: #fdc073;}
 	color: #707f8d;
 }
 
+.Portfolio__users{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.PortfolioUsersHeaders{
+	width: 50%;
+	font-size: 30px;
+	align-items: flex-start;
+	display: flex;
+}
+
+.PortfolioUsers{
+	width: 50%;
+	margin-bottom: 40px;
+}
+
 
 
 /* Страница Поиска Начало */
