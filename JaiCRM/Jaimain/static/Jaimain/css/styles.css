@@ -976,11 +976,38 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .btn__partners{
-	
 	width: 100%;
 	margin-left: 0;
-
 }
+
+.PortfolioTop{
+	width: 50%;
+	font-size: 40px;
+}
+
+.PortfolioBtn{
+	width: 50%;
+	font-size: 30px;
+	margin-bottom: 40px;
+	
+}
+
+.PortfolioPerson,.PortfolioName{
+	width: 50%;
+	font-size: 30px;
+	margin-bottom: 40px;
+	
+}
+
+.PortfolioMail,.PortfolioPartner{
+	width: 50%;
+	font-size: 30px;
+}
+
+.PortfolioPerson-top,.PortfolioName-top,.PortfolioMail-top,.PortfolioPartner-top{
+	color: #707f8d;
+}
+
 
 
 /* Страница Поиска Начало */
