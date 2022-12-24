@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="header_ilya">
-    <h1>Пользователь - {{user.username}}</h1>
+    <h1>Пользователь : <br> {{user.username}}</h1>
     <div style="text-align: right" class="btn_ilya">
         <button class="btn">
             <a class="white" href='{% url 'edituser' user.pk %}'>Редактировать</a>
@@ -12,7 +12,7 @@
 
 
 
-<h4>Имя пользователя: {{user.last_name}} {{user.first_name}}</h4>
-<h4>email: {{user.email}}</h4>
-<h4>Партнер: {{user.partner}}</h4>
+<h4>Имя пользователя:<br> {{user.last_name}} {{user.first_name}}</h4>
+<h4>email: <br> {{user.email}}</h4>
+<h4>Партнер: <br> {{user.partner}}</h4>
 {% endblock %}
