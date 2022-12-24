@@ -28,3 +28,17 @@ class JaiUser(AbstractUser):
     partner = models.ForeignKey('Partner', on_delete=models.PROTECT, verbose_name="Партнер", default=None, null=True)
     tel_number = models.CharField(max_length=255, verbose_name='Контактный телефон')
     is_costumer = models.BooleanField(default=False, verbose_name='Является покупателем')
+
+
+class Shop(models.Model):
+    partner = models.ForeignKey('Partner', on_delete=models.PROTECT, verbose_name="Партнер", default=None, null=False)
+    name = models.CharField(max_length=255, unique=True, verbose_name='Наименование торговой точки')
+    location = models.CharField(max_length=255, unique=True, verbose_name='Адрес')
+    description = models.TextField(blank=True, verbose_name='Описание')
+    is_working = models.BooleanField(default=True, verbose_name='Активность')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+
+    class Meta:
+        verbose_name = 'Торговая точка'
+        verbose_name_plural = 'Торговые точки'
+        ordering = ['id']

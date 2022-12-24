@@ -16,11 +16,10 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
 
-class Partners(DataMixin,  ListView):
+class Partners(DataMixin, ListView):
     model = Partner
     template_name = 'Jaimain/partners.html'
     context_object_name = 'partners'
-
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -48,6 +47,7 @@ class ShowPartner(DataMixin, DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Партнеры')
+        c_def['shops_info'] = Shop.objects.all()
         return dict(list(context.items()) + list(c_def.items()))
 
     @method_decorator(login_required)
@@ -55,6 +55,11 @@ class ShowPartner(DataMixin, DetailView):
         if request.user.is_costumer:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
+
+    # def get(self, request):
+    #     partner_data = Partner.objects.all()
+    #     shops_data = Shop.objects.all()
+    #     return render(request, 'Jaimain/partner.html', {'partner_data': partner_data, 'shops_data': shops_data})
 
 class AddPartner(DataMixin, CreateView):
     form_class = AddPartnerForm
@@ -90,6 +95,7 @@ class EditPartner(DataMixin, UpdateView):
         if request.user.is_costumer:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
+
 
 @login_required
 def search_partners(request):
@@ -136,6 +142,7 @@ class UsersList(DataMixin, ListView):
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
+
 class ShowUser(DataMixin, DetailView):
     model = JaiUser
     template_name = 'Jaimain/show_user.html'
@@ -153,6 +160,7 @@ class ShowUser(DataMixin, DetailView):
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
+
 class EditUser(DataMixin, UpdateView):
     model = JaiUser
     fields = ['last_name', 'first_name', 'email', 'is_active']
@@ -169,6 +177,7 @@ class EditUser(DataMixin, UpdateView):
         if request.user.is_costumer:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
+
 
 class RegisterUser(DataMixin, CreateView):
     form_class = RegisterUserForm
@@ -202,6 +211,7 @@ class LoginUser(DataMixin, LoginView):
     def get_success_url(self):
         return reverse_lazy('partners')
 
+
 def HomePage(request):
     return redirect('partners')
 
@@ -209,9 +219,11 @@ def HomePage(request):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+
 def logout_user(request):
     logout(request)
     return redirect('login')
+
 
 @login_required()
 def search_users(request):
@@ -233,3 +245,83 @@ def search_users(request):
     context['menu'] = user_menu
     return HttpResponse(template.render(context, request))
 
+
+class ShowShops(DataMixin, ListView):
+    model = Shop
+    template_name = 'Jaimain/shops.html'
+    context_object_name = 'shops'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Торговые точки')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Shop.objects.all() if user.is_superuser else Shop.objects.filter(partner=user.partner)
+        return queryset
+
+
+def add_shop(request):
+    template = 'Jaimain/addshop.html'
+    user_menu = menu.copy()
+    form = AddShopForm()
+    context = {'menu': user_menu, 'form': form}
+
+    if request.method == 'POST':
+        form = AddShopForm(request.POST)
+        if form.is_valid():
+            partner = request.user.partner
+            name = form.cleaned_data['name']
+            location = form.cleaned_data['location']
+            description = form.cleaned_data['description']
+            is_working = form.cleaned_data['is_working']
+            queryset = Shop.objects.create(partner=partner, name=name, location=location,
+                                description=description, is_working=is_working)
+
+        else:
+            form = AddShopForm()
+
+    return render(request, template, context=context)
+
+
+class ShowShop(DataMixin, DetailView):
+    model = Shop
+    template_name = 'Jaimain/show_shop.html'
+    pk_url_kwarg = 'shop_pk'
+    context_object_name = 'shop'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Торговая точка')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+
+class EditShop(DataMixin, UpdateView):
+    model = Shop
+    fields = ['name', 'description', 'location']
+    template_name = 'Jaimain/editshop.html'
+    success_url = '/shops/'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение торговой точки')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)

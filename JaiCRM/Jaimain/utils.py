@@ -8,6 +8,7 @@ menu = [
         # {'title': "Dashboard", 'url_name': 'dashboard'},
         {'title': "Партнеры", 'url_name': 'partners'},
         {'title': "Пользователи", 'url_name': 'users'},
+        {'title': "Торговые точки", 'url_name': 'shops'},
         # {'title': "Склад", 'url_name': 'warehouse'},
         # {'title': "CRM", 'url_name': 'crm'},
         ]
