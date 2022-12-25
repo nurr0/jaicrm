@@ -426,8 +426,18 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 .form-input {
     /* width: 300px; */
-	width: 100%;
+	width: 50%;
     font-size: 16px;
+}
+
+.form-inputRegisterP{
+	border-bottom: rgb(128, 128, 128) dotted 1px;
+	padding: 20px 0;
+}
+
+.form-inputRegister{
+	width: 30%;
+
 }
 
 .form-label {
@@ -896,7 +906,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .p__addPart-widthRight{
-	width: 60%;
+	width: 50%;
 }
 
 .p__addPart-desc{

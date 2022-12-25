@@ -106,6 +106,7 @@ const dataMonthPartTwo = document.querySelector('#id_time_expires_month')
 const TextContactLico = document.querySelector('#id_partner_person')
 const TextContactPhone = document.querySelector('#id_partner_tel')
 const TextContactEmail = document.querySelector('#id_partner_email')
+const TextContactInn = document.querySelector('#id_iin')
 
 if (url === 'http://127.0.0.1:8000/login/'){
     const LoginPage = document.querySelector('.content-text')
@@ -128,14 +129,14 @@ if (url === 'http://127.0.0.1:8000/login/'){
 
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
-NamePartners.classList.add('p__addPart-width')
-logoPartners.classList.add('p__addPart-width')
-contactPartners.classList.add('p__addPart-width')
-contactPhonePartners.classList.add('p__addPart-width')
-contactEmailPartners.classList.add('p__addPart-width')
-contactDataStartPartners.classList.add('p__addPart-width')
-contactDataEndPartners.classList.add('p__addPart-width')
-ActivityPart.classList.add('p__addPart-width')
+// NamePartners.classList.add('p__addPart-width')
+// logoPartners.classList.add('p__addPart-width')
+// contactPartners.classList.add('p__addPart-width')
+// contactPhonePartners.classList.add('p__addPart-width')
+// contactEmailPartners.classList.add('p__addPart-width')
+// contactDataStartPartners.classList.add('p__addPart-width')
+// contactDataEndPartners.classList.add('p__addPart-width')
+// ActivityPart.classList.add('p__addPart-width')
 
 descriptionPartners.classList.add('p__addPart-desc')
 AreadescriptionPartners.classList.add('p__addPart-width')
@@ -150,6 +151,7 @@ TextdescriptionPartners.classList.add('p__addPart-widthRight')
 TextContactLico.classList.add('p__addPart-widthRight')
 TextContactPhone.classList.add('p__addPart-widthRight')
 TextContactEmail.classList.add('p__addPart-widthRight')
+TextContactInn.classList.add('p__addPart-widthRight')
 }
 
 
