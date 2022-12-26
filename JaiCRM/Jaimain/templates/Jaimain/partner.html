@@ -58,4 +58,13 @@
     <img class="img-article-left" src="{{partner.logo.url}}">
 </div>
 {% endif %}
+
+<h4>{{partner.description|linebreaks}}</h4>
+<p>Контактное лицо партнера: {{partner.partner_person}}</p>
+<p>Контактный номер телефона: {{partner.partner_tel}}</p>
+<p>Контактный e-mail: {{partner.partner_email}}</p>
+<p>Время создания партнера: {{partner.time_create}}</p>
+<p>Время начала работы: {{partner.time_start_working}}</p>
+<p>Доступ до: {{partner.time_expires}}</p>
+<p>Активность: {{partner.is_working}}</p>
 {% endblock %}

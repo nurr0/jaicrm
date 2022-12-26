@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+from . import views
 from .models import *
 
 
@@ -43,9 +44,18 @@ class RegisterUserForm(UserCreationForm):
 
     class Meta:
         model = JaiUser
-        fields = ('first_name', 'last_name', 'username', 'password1', 'password2', 'email', 'partner')
+        fields = ('first_name', 'last_name', 'username', 'password1', 'password2', 'email', 'partner', 'tel_number',
+                  'is_costumer')
 
 
 class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+
+
+class AddShopForm(forms.ModelForm):
+
+    class Meta:
+        model = Shop
+        exclude = ('partner',)
+
