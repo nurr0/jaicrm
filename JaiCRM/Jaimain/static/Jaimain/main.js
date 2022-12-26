@@ -82,11 +82,19 @@ users.addEventListener('click',()=>
     localStorage.setItem('tasks', JSON.stringify(0))
 )
 
+const shop = document.querySelector('[href="/shops/"]');
+shop.classList.add('shop')
+shop.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
+}else if (url === 'http://127.0.0.1:8000/shops/'){
+    shop.classList.add('ActiveList')    
 }else if (url === 'http://127.0.0.1:8000/partners/1/'){
-    partners.classList.add('ActiveList')    
+    partners.classList.add('ActiveList')  
 }else if (url === 'http://127.0.0.1:8000/addpartner/'){
     partners.classList.add('ActiveList')  
 }else if (url === 'http://127.0.0.1:8000/partners/1/edit/'){
@@ -162,10 +170,26 @@ if (url === 'http://127.0.0.1:8000/login/'){
     const LoginPageInputPass = document.querySelectorAll('.form-input')[1];
     LoginPageInputPass.setAttribute('placeholder','Введите пароль')
     LoginPageInputPass.classList.add('input__login')
-
 }
 
-
+if (url === 'http://127.0.0.1:8000/registeruser/'){
+    const RegistName = document.querySelectorAll('.form-input')[0];
+    RegistName.classList.add('form-inputRegister');
+    const RegistFamily = document.querySelectorAll('.form-input')[1];
+    RegistFamily.classList.add('form-inputRegister');
+    const RegistLogin = document.querySelectorAll('.form-input')[2];
+    RegistLogin.classList.add('form-inputRegister');
+    const RegistPass = document.querySelectorAll('.form-input')[3];
+    RegistPass.classList.add('form-inputRegister');
+    const RegistPass2 = document.querySelectorAll('.form-input')[4];
+    RegistPass2.classList.add('form-inputRegister');
+    const RegistMail = document.querySelectorAll('.form-input')[5];
+    RegistMail.classList.add('form-inputRegister');
+    const RegistPart = document.querySelectorAll('.form-input')[6];
+    RegistPart.classList.add('form-inputRegister');
+    const RegistPhone = document.querySelectorAll('.form-input')[7];
+    RegistPhone.classList.add('form-inputRegister');
+}
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
 

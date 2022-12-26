@@ -13,26 +13,47 @@
 </form> -->
 
 </form>
-<button class="btn"><a class="btn__text" href="{% url 'addshop' %}">Добавить торговую точку</a></button>
-<ul class="list-articles">
+
+<div class="header__users-top">
+	<div class="d7">
+		<form>
+		<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
+		
+		</form>
+	</div>
+
+	<div class="btn__addUsers">
+		<button class="btn">
+			<a class="btn__text" href="{% url 'addshop' %}">Добавить торговую точку</a>
+		</button>
+	</div>
+</div>
+
+<!-- <button class="btn">
+	<a class="btn__text" href="{% url 'addshop' %}">Добавить торговую точку</a>
+</button> -->
+<ul id="filter-list" class="list-articles">
 	{% for shop in shops %}
-			<li class="partners__info"><div class="article-panel">
-	<p class="first">{{shop.name}}</p>
-	<div class="partners__info-header" style="text-align: right">
-  <button class="btn"><a class="btn__text" href="{{shop.pk}}">Просмотр</a></button>
-
-</div>
-</div>
-
-
-	{% autoescape on %}
-	{{shop.description|linebreaks|truncatewords:20}}
-	<p>Местоположение: {{ shop.location }}</p>
-	<p>Партнер: {{ shop.partner }}</p>
-	{% endautoescape %}
-			<div class="clear"></div>
-
-			</li>
+	<li class="partners__info shop__info">
+		<div class="article-panel shop__info-art">
+		<div class="img">
+			<img class="img__shop" src="./../../static/Jaimain/images/store.png" alt="">
+		</div>
+		<div class="first name__shop">{{shop.name}}</div>
+		<div class="partners-desc desc__shop">
+		{% autoescape on %}
+			{{shop.description|linebreaks|truncatewords:10}}
+		</div>
+		<div class="mesto__shop">Местоположение: {{ shop.location }}</div>
+		<div class="part__shop">Партнер: {{ shop.partner }}</div>
+		{% endautoescape %}
+		<div class="clear"></div>
+		<!-- <div class="partners__info-header" style="text-align: right"> -->
+			<button class="btn btn__partners">
+				<a class="btn__text" href="{{shop.pk}}">Просмотр</a>
+			</button>
+		<!-- </div> -->
+	</li>
 	{% endfor %}
 </ul>
 

@@ -863,6 +863,54 @@ ul.lang-list li a:hover {color: #fdc073;}
 	align-items: center;
 }
 
+.shop{
+	background-image: url(./../images/home.svg);
+	background-repeat: no-repeat;
+	font-size: 18px;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.shop__info{
+	max-height: 470px;
+}
+
+.shop__info-art{
+	max-height: 470px;
+	overflow: auto !important;
+	overflow-x:hidden !important;
+}
+
+.desc__shop{
+	width: 100%;
+}
+
+.name__shop{
+	width: 100%;
+}
+
+.mesto__shop{
+	margin-top: 40px;
+	font-size: 13px;
+	margin-bottom: 30px;
+}
+
+.part__shop{
+	font-size: 13px;
+	margin-bottom: 30px;
+}
+
+.img__shop{
+	background-size: contain;
+	width: 180px;
+	height: 160px;
+	margin-bottom: 20px;
+}
+
 .partners:hover{
 	scale: 1.1;
 }
