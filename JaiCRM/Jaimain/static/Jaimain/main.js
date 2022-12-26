@@ -12,11 +12,35 @@ const showPartners = document.querySelector('.partners')
 const showAddPartners = document.querySelector('.AddPartners')
 const fileUpload = document.getElementById('id_logo')
 
+if (JSON.parse(localStorage.getItem('tasks')) == 1){
+    console.log('privet')
+    nonActive()
+} else if (JSON.parse(localStorage.getItem('tasks')) == 0){
+    console.log('privet2')
+    
+    
+}
+
+function proverka(){
+    if (JSON.parse(localStorage.getItem('tasks')) == 1){
+        console.log('privet')
+        nonActive()
+    } else if (JSON.parse(localStorage.getItem('tasks')) == 0){
+        console.log('privet2')
+        nonActive2()
+    }
+}
+
+// if (JSON.parse(localStorage.getItem('tasks')) == 1){
+//     console.log('privet')
+//     nonActive()
+// }
 
 
 arrow.addEventListener('click', nonActive)
 
 function nonActive(){
+    localStorage.setItem('tasks', JSON.stringify(1))
     showAddPartners.classList.toggle('zero')
     showPartners.classList.toggle('zero')
     arrowZero.classList.toggle('nonActive-time');
@@ -34,6 +58,7 @@ function nonActive(){
 arrow2.addEventListener('click', nonActive2)
 
 function nonActive2(){
+    localStorage.setItem('tasks', JSON.stringify(0))
     showAddPartners.classList.toggle('zero')
     showPartners.classList.toggle('zero')
     arrowZero.classList.toggle('nonActive-time');
@@ -47,9 +72,15 @@ function nonActive2(){
 
 const partners = document.querySelectorAll('[href="/partners/"]')[0];
 partners.classList.add('partners-block')
+partners.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
 
 const users = document.querySelector('[href="/users/"]');
 users.classList.add('addPartners-block')
+users.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
 
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
@@ -68,8 +99,16 @@ if (url === 'http://127.0.0.1:8000/partners/'){
 
 
 
-showPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/partners/')
-showAddPartners.addEventListener('click', ()=> location.href = 'http://127.0.0.1:8000/users/')
+showPartners.addEventListener('click', ()=> 
+    location.href = 'http://127.0.0.1:8000/partners/',
+    // localStorage.setItem('tasks', JSON.stringify(1)),
+    proverka()
+    )
+showAddPartners.addEventListener('click', ()=> 
+    location.href = 'http://127.0.0.1:8000/users/',
+    // localStorage.setItem('tasks', JSON.stringify(1)),
+        proverka()
+)
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
     fileUpload.classList.add('btn-zero')
@@ -129,14 +168,7 @@ if (url === 'http://127.0.0.1:8000/login/'){
 
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
-// NamePartners.classList.add('p__addPart-width')
-// logoPartners.classList.add('p__addPart-width')
-// contactPartners.classList.add('p__addPart-width')
-// contactPhonePartners.classList.add('p__addPart-width')
-// contactEmailPartners.classList.add('p__addPart-width')
-// contactDataStartPartners.classList.add('p__addPart-width')
-// contactDataEndPartners.classList.add('p__addPart-width')
-// ActivityPart.classList.add('p__addPart-width')
+
 
 descriptionPartners.classList.add('p__addPart-desc')
 AreadescriptionPartners.classList.add('p__addPart-width')
@@ -189,3 +221,36 @@ let filter = function () {
 };
 
 filter();
+
+// const imgSort = document.querySelector('.header_users-list-last')
+// imgSort.addEventListener('click', sortTable);
+
+// function sortTable(){
+//     let list, i, switching, b, shouldSwitch;
+
+//     list = document.querySelector('.list-articles');
+//     switching = true;
+
+//     while (switching) {
+
+//         switching = false;
+//         b = list.querySelectorAll('.fistUsers');
+
+//         for (i = 0; i < (b.length - 1); i++) {
+
+//             shouldSwitch = false;
+
+//             if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+
+//                 shouldSwitch = true;
+//                 break;
+//         }
+//     }
+//     if (shouldSwitch) {
+
+//       b[i].parentNode.insertBefore(b[i + 1], b[i]);
+//       switching = true;
+//     }
+//   }
+// }
+
