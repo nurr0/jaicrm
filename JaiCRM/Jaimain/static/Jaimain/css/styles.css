@@ -1090,6 +1090,14 @@ ul.lang-list li a:hover {color: #fdc073;}
 	margin-bottom: 40px;
 }
 
+.trStyle{
+	border-collapse: collapse;
+	border: 4px double black; 
+}
+
+.tdStyle{
+	border: 1px solid black; 
+}
 
 
 /* Страница Поиска Начало */

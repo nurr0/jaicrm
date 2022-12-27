@@ -246,33 +246,42 @@ let filter = function () {
 
 filter();
 
-// const imgSort = document.querySelector('.header_users-list-last')
-// imgSort.addEventListener('click', sortTable);
 
-// function sortTable(){
-//     let list, i, switching, b, shouldSwitch;
 
-//     list = document.querySelector('.list-articles');
-//     switching = true;
+if (url === 'http://127.0.0.1:8000/users/'){
+    const fuck = document.querySelector('.btn-fuck') 
+    
+    fuck.addEventListener('click',sortTable)  
 
-//     while (switching) {
-//         switching = false;
-//         b = list.querySelectorAll('.fistUsers');
-//         //Проходим циклои по всеми элементам обхекта
-//         for (i = 0; i < (b.length - 1 ); i++) {
-//             shouldSwitch = false;
+    function sortTable() {
+        console.log('fuck') 
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("myTable");
+        switching = true;
 
-//             if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+        while (switching) {
 
-//                 shouldSwitch = true;
-//                 break;
-//         }
-//     }
-//     if (shouldSwitch) {
+          switching = false;
+          rows = table.getElementsByTagName("TR");
 
-//       b[i].parentNode.insertBefore(b[i + 1], b[i]);
-//       switching = true;
-//     }
-//   }
-// }
+          for (i = 1; i < (rows.length - 1); i++) {
 
+            shouldSwitch = false;
+
+            x = rows[i].getElementsByTagName("TD")[0];
+            y = rows[i + 1].getElementsByTagName("TD")[0];
+            //check if the two rows should switch place:
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+
+              shouldSwitch = true;
+              break;
+            }
+          }
+          if (shouldSwitch) {
+
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+          }
+        }
+      }
+}
