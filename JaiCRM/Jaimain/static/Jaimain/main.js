@@ -256,12 +256,10 @@ filter();
 //     switching = true;
 
 //     while (switching) {
-
 //         switching = false;
 //         b = list.querySelectorAll('.fistUsers');
-
-//         for (i = 0; i < (b.length - 1); i++) {
-
+//         //Проходим циклои по всеми элементам обхекта
+//         for (i = 0; i < (b.length - 1 ); i++) {
 //             shouldSwitch = false;
 
 //             if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
