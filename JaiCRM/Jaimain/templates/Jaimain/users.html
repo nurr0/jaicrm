@@ -35,17 +35,20 @@
 
 <ul id="filter-list" class="list-articles">
 	<div class="header_users-list">
-		<div class="header_users-list-name">Имя</div>
-		<div class="header_users-list-Person">Чел</div>
+		<div class="header_users-list-name">Пользователь</div>
+		<div class="header_users-list-Person">Имя пользователя</div>
 		<div class="header_users-list-Part">Партнер</div>
-		<div class="header_users-list-last"></div>
+		<div class="header_users-list-Part"></div>
+		<!-- <div class="header_users-list-last"> <img class="imgSort" src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt=""> </div> -->
+		
 	</div>
 	{% for u in users %}
 	<li class="partners__infoUsers">
+		<div class="" style="display: none;">{{u.username}}</div>
 		<div class="article-panel">
 			<p class="first fistUsers">{{u.username}}</p>
-			<p class="last lastUsers">{{u.first_name}} {{u.last_name}}</p>
-			<p class="last lastUsers "> Партнер: {{u.partner}}</p>
+			<p class="last lastUsers"> {{u.last_name}}  {{u.first_name}}</p>
+			<p class="last lastUsers ">{{u.partner}}</p>
 			<div class="partners__info-header" style="text-align: right">
 			<button class="btn">
 				<a class="btn__text" href="{{u.pk}}">Просмотр</a>
@@ -58,8 +61,6 @@
 	{% endautoescape %}
 		<div class="clear"></div>
 	</li>
-
-	
 
 
 	{% endfor %}

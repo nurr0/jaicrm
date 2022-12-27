@@ -29,6 +29,7 @@ img.img-article-left {
 	height: auto;
 	float: left;
 	padding: 0 10px 10px 0;
+	width: 100%;
 	
 }
 
@@ -429,6 +430,16 @@ ul.lang-list li a:hover {color: #fdc073;}
     font-size: 16px;
 }
 
+.form-inputRegisterP{
+	border-bottom: rgb(128, 128, 128) dotted 1px;
+	padding: 20px 0;
+}
+
+.form-inputRegister{
+	width: 30%;
+
+}
+
 .form-label {
     display: inline-block;
     min-width: 150px;
@@ -549,6 +560,18 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 }
 
+.info__user{
+	margin-right: 20px;
+	margin-bottom: 20px;
+	margin-top: 50px;
+	background-color: white;
+	border-radius: 20px;
+	padding: 10px;
+	filter: drop-shadow(0px 2px 12px rgba(0, 0, 0, 0.25));
+	max-width: 200px;
+	min-height: 470px !important;
+}
+
 .partners__infoUsers{
 	/* margin-right: 20px;
 	margin-bottom: 20px;
@@ -575,13 +598,26 @@ ul.lang-list li a:hover {color: #fdc073;}
 	flex-wrap: wrap;
 	justify-content: space-between;
 	width: 100%;
+	background-color: #000;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	height: 58px;
+	align-items: center;
 }
 
 .header_users-list-name,
 .header_users-list-Person,
 .header_users-list-Part,
 .header_users-list-last{
-	width: 100px;
+	width: 120px;
+	color:white;
+	padding-left: 5px;
+}
+
+.header_users-list-last{
+	display: flex;
+	justify-content: center;
+	cursor: pointer;
 }
 
 .partners-desc{
@@ -827,6 +863,54 @@ ul.lang-list li a:hover {color: #fdc073;}
 	align-items: center;
 }
 
+.shop{
+	background-image: url(./../images/home.svg);
+	background-repeat: no-repeat;
+	font-size: 18px;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.shop__info{
+	max-height: 470px;
+}
+
+.shop__info-art{
+	max-height: 470px;
+	overflow: auto !important;
+	overflow-x:hidden !important;
+}
+
+.desc__shop{
+	width: 100%;
+}
+
+.name__shop{
+	width: 100%;
+}
+
+.mesto__shop{
+	margin-top: 40px;
+	font-size: 13px;
+	margin-bottom: 30px;
+}
+
+.part__shop{
+	font-size: 13px;
+	margin-bottom: 30px;
+}
+
+.img__shop{
+	background-size: contain;
+	width: 180px;
+	height: 160px;
+	margin-bottom: 20px;
+}
+
 .partners:hover{
 	scale: 1.1;
 }
@@ -876,7 +960,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .p__addPart-widthRight{
-	width: 60%;
+	width: 50%;
 }
 
 .p__addPart-desc{
@@ -957,11 +1041,55 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .btn__partners{
-	
 	width: 100%;
 	margin-left: 0;
-
 }
+
+.PortfolioTop{
+	width: 50%;
+	font-size: 40px;
+}
+
+.PortfolioBtn{
+	width: 50%;
+	font-size: 30px;
+	margin-bottom: 40px;
+	
+}
+
+.PortfolioPerson,.PortfolioName{
+	width: 50%;
+	font-size: 30px;
+	margin-bottom: 40px;
+	
+}
+
+.PortfolioMail,.PortfolioPartner{
+	width: 50%;
+	font-size: 30px;
+}
+
+.PortfolioPerson-top,.PortfolioName-top,.PortfolioMail-top,.PortfolioPartner-top{
+	color: #707f8d;
+}
+
+.Portfolio__users{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.PortfolioUsersHeaders{
+	width: 50%;
+	font-size: 30px;
+	align-items: flex-start;
+	display: flex;
+}
+
+.PortfolioUsers{
+	width: 50%;
+	margin-bottom: 40px;
+}
+
 
 
 /* Страница Поиска Начало */

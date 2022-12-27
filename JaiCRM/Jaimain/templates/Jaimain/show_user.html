@@ -2,17 +2,34 @@
 
 {% block content %}
 <div class="header_ilya">
-    <h1>Пользователь - {{user.username}}</h1>
-    <div style="text-align: right" class="btn_ilya">
+    <div class="PortfolioTop">Учетные данные:</div>
+    <div class="PortfolioBtn" style="text-align: right" class="btn_ilya">
         <button class="btn">
             <a class="white" href='{% url 'edituser' user.pk %}'>Редактировать</a>
         </button>
     </div>
+    <div class="PortfolioPerson">
+        <div class="PortfolioPerson-top">Пользователь:</div>
+        <div> {{user.username}}</div>
+    </div>
+    
+    <div class="PortfolioName">
+        <div class="PortfolioName-top">Имя пользователя:</div>
+        <div>{{user.last_name}} {{user.first_name}}</div>   
+    </div>
+
+    <div class="PortfolioMail">
+        <div class="PortfolioMail-top">E-mail:</div>
+        <div>{{user.email}}</div>
+    </div>
+
+    <div class="PortfolioPartner">
+        <div class="PortfolioPartner-top">Партнер:</div>
+        <div>{{user.partner}}</div>
+    </div>
+    {% endblock %}
 </div>
 
 
 
-<h4>Имя пользователя: {{user.last_name}} {{user.first_name}}</h4>
-<h4>email: {{user.email}}</h4>
-<h4>Партнер: {{user.partner}}</h4>
-{% endblock %}
+
