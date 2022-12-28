@@ -19,16 +19,17 @@ if (JSON.parse(localStorage.getItem('tasks')) == 1){
 } else if (JSON.parse(localStorage.getItem('tasks')) == 0){
     console.log('privet2')
     
+
     
 }
 
 function proverka(){
     if (JSON.parse(localStorage.getItem('tasks')) == 1){
         console.log('privet')
-        nonActive()
+        
     } else if (JSON.parse(localStorage.getItem('tasks')) == 0){
         console.log('privet2')
-        nonActive2()
+        
     }
 }
 
