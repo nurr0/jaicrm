@@ -1044,6 +1044,11 @@ ul.lang-list li a:hover {color: #fdc073;}
 	margin-bottom: 30px;
 }
 
+.headers__users{
+	display: flex;
+	flex-wrap: wrap;
+}
+
 .input__login{
 	height: 33px;
 	/* width: 900px; */

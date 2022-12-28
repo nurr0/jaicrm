@@ -15,16 +15,17 @@
 
 <!-- </form> -->
 <div class="header__users-top">
+
+	<div class="d7">
+		<form>
+		<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
+		</form>
+	</div>
+
 	<button class="btn btn__addUsers1 btn-fuck zero1">
 		<!-- <a class="btn__text">Сортировать от A - Я </a> -->
 		<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
 	</button>
-	<div class="d7">
-		<form>
-		<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
-		
-		</form>
-	</div>
 
 	<button class="btnOn01">
 		<!-- <a class="btn__text">Переключить</a> -->
@@ -77,10 +78,12 @@
 </ul>
 
 
-
-	
-		
-	
+	<div class="headers__users zero1">
+		<div>Пользователь</div>
+		<div>Имя пользователя</div>
+		<div>Партнер</div>
+		<div>Данные</div>
+	</div>
 	<table  class="trStyle zero1" id="myTable">
 		<tr>
 		  <th>Пользователь</th>
@@ -88,6 +91,7 @@
 		  <th>Партнер</th>
 		  <th>Данные</th>
 		</tr>
+		
 		<tr >
 			{% for u in users %}
 			<td class="tdStyle">{% autoescape on %}{{u.username}}</td>
