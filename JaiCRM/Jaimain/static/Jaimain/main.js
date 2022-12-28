@@ -10,6 +10,7 @@ const top2Active = document.querySelector('.top2-active')
 const arrow2 = document.querySelector('.sidebar__arrow-img2')
 const showPartners = document.querySelector('.partners')
 const showAddPartners = document.querySelector('.AddPartners')
+const showShop = document.querySelector('.shops')
 const fileUpload = document.getElementById('id_logo')
 
 if (JSON.parse(localStorage.getItem('tasks')) == 1){
@@ -42,6 +43,7 @@ arrow.addEventListener('click', nonActive)
 function nonActive(){
     localStorage.setItem('tasks', JSON.stringify(1))
     showAddPartners.classList.toggle('zero')
+    showShop.classList.toggle('zero')
     showPartners.classList.toggle('zero')
     arrowZero.classList.toggle('nonActive-time');
     arrow.classList.toggle('sidebar__arrow-non');
@@ -60,6 +62,7 @@ arrow2.addEventListener('click', nonActive2)
 function nonActive2(){
     localStorage.setItem('tasks', JSON.stringify(0))
     showAddPartners.classList.toggle('zero')
+    showShop.classList.toggle('zero')
     showPartners.classList.toggle('zero')
     arrowZero.classList.toggle('nonActive-time');
     arrow.classList.toggle('sidebar__arrow-non');
@@ -116,6 +119,12 @@ showAddPartners.addEventListener('click', ()=>
     location.href = 'http://127.0.0.1:8000/users/',
     // localStorage.setItem('tasks', JSON.stringify(1)),
         proverka()
+)
+
+showShop.addEventListener('click', ()=> 
+location.href = 'http://127.0.0.1:8000/shops/',
+// localStorage.setItem('tasks', JSON.stringify(1)),
+    proverka()
 )
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
@@ -283,5 +292,17 @@ if (url === 'http://127.0.0.1:8000/users/'){
             switching = true;
           }
         }
+      }
+
+      const btnON = document.querySelector('.btnOn01')
+      const trTable = document.querySelector('.trStyle')
+      const stroka = document.querySelector('.list-articles')
+      const searchUser = document.querySelector('.d7')
+      btnON.addEventListener('click', smenaVida);
+      function smenaVida(){
+        trTable.classList.toggle('zero1')
+        stroka.classList.toggle('zero1')
+        fuck.classList.toggle('zero1')
+        searchUser.classList.toggle('zero1')
       }
 }

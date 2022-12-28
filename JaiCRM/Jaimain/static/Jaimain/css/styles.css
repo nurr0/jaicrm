@@ -824,7 +824,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 
-.partners, .AddPartners{
+.partners, .AddPartners,.shops{
 	margin: 13px;
 	cursor: pointer;
 	font-family: 'Poppins', sans-serif;
@@ -927,6 +927,10 @@ ul.lang-list li a:hover {color: #fdc073;}
 	opacity: 0;
 }
 
+.zero1{
+	display: none !important;
+}
+
 .btn-zero{
 	cursor: pointer;
 
@@ -1024,11 +1028,20 @@ ul.lang-list li a:hover {color: #fdc073;}
 	height: 62px;
 }
 
+.btn__addUsers1{
+	display: flex;
+	justify-content: end;
+	padding-bottom: 8px;
+	height: 62px;
+	margin-bottom: 12px;
+}
+
 .header__users-top{
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 30px;
 }
 
 .input__login{
@@ -1098,6 +1111,8 @@ ul.lang-list li a:hover {color: #fdc073;}
 .tdStyle{
 	border: 1px solid black; 
 }
+
+
 
 
 /* Страница Поиска Начало */

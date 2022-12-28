@@ -15,6 +15,10 @@
 
 <!-- </form> -->
 <div class="header__users-top">
+	<button class="btn btn__addUsers1 btn-fuck zero1">
+		<!-- <a class="btn__text">Сортировать от A - Я </a> -->
+		<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+	</button>
 	<div class="d7">
 		<form>
 		<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
@@ -22,13 +26,16 @@
 		</form>
 	</div>
 
+	<button class="btnOn01">
+		<!-- <a class="btn__text">Переключить</a> -->
+		<img src="./../../static/Jaimain/images/kind01.svg" alt="">
+	</button>
+
 	<div class="btn__addUsers">
 		<button class="btn ">
 			<a class="btn__text" href="{% url 'registeruser' %}">Добавить пользователя</a>
 		</button>
-		<button class="btn btn-fuck  ">
-			<a class="btn__text">Сортироваать</a>
-		</button>
+		
 	</div>
 
 	<!-- <input type="text" class="filter-input"> -->
@@ -36,7 +43,7 @@
 	
 </div>
 
-<!-- <ul id="filter-list" class="list-articles">
+<ul id="filter-list" class="list-articles">
 	<div class="header_users-list">
 		<div class="header_users-list-name">Пользователь</div>
 		<div class="header_users-list-Person">Имя пользователя</div>
@@ -44,7 +51,7 @@
 		<div class="header_users-list-Part"></div>
 		<!-- <div class="header_users-list-last"> <img class="imgSort" src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt=""> </div> -->
 		
-	<!-- </div>
+	</div>
 	{% for u in users %}
 	<li class="partners__infoUsers">
 		<div class="" style="display: none;">{{u.username}}</div>
@@ -61,29 +68,31 @@
 		</div>
 	{% autoescape on %}
 			<!-- <p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p> -->
-	<!-- {% endautoescape %} -->
-		<!-- <div class="clear"></div>
+	{% endautoescape %}
+		<div class="clear"></div>
 	</li>
 
 
 	{% endfor %}
-</ul> --> --> -->
+</ul>
 
 
 
 	
 		
 	
-	<table class="trStyle" id="myTable">
+	<table  class="trStyle zero1" id="myTable">
 		<tr>
-		  <th></th>
-		  <th></th>
-		  <th></th>
+		  <th>Пользователь</th>
+		  <th>Имя пользователя</th>
+		  <th>Партнер</th>
+		  <th>Данные</th>
 		</tr>
 		<tr >
 			{% for u in users %}
 			<td class="tdStyle">{% autoescape on %}{{u.username}}</td>
 			<td class="tdStyle">{{u.last_name}}  {{u.first_name}}</td>
+			<td class="tdStyle">{{u.partner}}</td>
 			<td class="tdStyle"> <button class="btn">
 				  <a class="btn__text" href="{{u.pk}}">Просмотр</a>
 				  </button>
