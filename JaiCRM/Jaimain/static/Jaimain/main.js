@@ -295,19 +295,19 @@ if (url === 'http://127.0.0.1:8000/users/'){
         }
       }
 
-      const btnON = document.querySelector('.btnOn01')
-      const trTable = document.querySelector('.trStyle')
-      const stroka = document.querySelector('.list-articles')
-      const searchUser = document.querySelector('.d7')
-      const headerUsers = document.querySelector('.headers__users')
-      btnON.addEventListener('click', smenaVida);
-      function smenaVida(){
-        trTable.classList.toggle('zero1')
-        stroka.classList.toggle('zero1')
-        fuck.classList.toggle('zero1')
-        headerUsers.classList.toggle('zero1')
-        // searchUser.classList.toggle('zero1')
-      }
+    //   const btnON = document.querySelector('.btnOn01')
+    //   const trTable = document.querySelector('.trStyle')
+    //   const stroka = document.querySelector('.list-articles')
+    //   const searchUser = document.querySelector('.d7')
+    //   const headerUsers = document.querySelector('.headers__users')
+    //   btnON.addEventListener('click', smenaVida);
+    //   function smenaVida(){
+    //     trTable.classList.toggle('zero1')
+    //     stroka.classList.toggle('zero1')
+    //     fuck.classList.toggle('zero1')
+    //     headerUsers.classList.toggle('zero1')
+    //     // searchUser.classList.toggle('zero1')
+    //   }
 }
 
 

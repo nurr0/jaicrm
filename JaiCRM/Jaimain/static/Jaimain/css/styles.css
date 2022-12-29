@@ -532,6 +532,42 @@ ul.lang-list li a:hover {color: #fdc073;}
 	text-decoration: none !important;
 }
 
+.btn1{
+	margin-left: 10px;
+	margin-top: 10px;
+	/* background-color: rgb(251, 80, 0); */
+	background-color: #2F76E6;
+	padding: 10px 15px;
+	border-radius: 15px;
+	font-size: 16px;
+	color: #fff;
+	border: 0;
+	outline: none;
+	cursor: pointer;
+	transition: all 0.1s ease-in-out;
+	text-decoration: none !important;
+}
+
+.btn1:hover{
+	background-color: rgb(255, 97, 24);
+	text-decoration: none !important;
+
+}
+
+
+.butPods:hover::after { 
+    content: attr(data-title); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    left: 70%; top: 20%; /* Положение подсказки */
+    z-index: 1; /* Отображаем подсказку поверх других элементов */
+    background: rgba(255,255,230,0.9); /* Полупрозрачный цвет фона */
+    font-family: Arial, sans-serif; /* Гарнитура шрифта */
+    font-size: 11px; /* Размер текста подсказки */
+    padding: 5px 10px; /* Поля */
+    border: 1px solid #333; /* Параметры рамки */
+	color: black;
+}
+
 .input-search{
 	margin-bottom: 50px;
 }
@@ -603,6 +639,13 @@ ul.lang-list li a:hover {color: #fdc073;}
 	border-top-right-radius: 10px;
 	height: 58px;
 	align-items: center;
+	color: white;
+	
+}
+
+.header_users-list1{
+	justify-content: space-around !important;
+	height: 79px;
 }
 
 .header_users-list-name,
@@ -1111,12 +1154,23 @@ ul.lang-list li a:hover {color: #fdc073;}
 .trStyle{
 	border-collapse: collapse;
 	border: 4px double black; 
+	width: 100%;
+	/* text-align: center; */
+	background-color: white;
 }
 
 .tdStyle{
 	border: 1px solid black; 
+	width: 100px !important;
 }
 
+.trClass{
+	
+}
+
+.headerTable{
+	width: 100px !important;
+}
 
 
 

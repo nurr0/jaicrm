@@ -22,15 +22,12 @@
 		</form>
 	</div>
 
-	<button class="btn btn__addUsers1 btn-fuck zero1">
-		<!-- <a class="btn__text">Сортировать от A - Я </a> -->
+	<!-- <button class="btn btn__addUsers1 btn-fuck zero1">
+		
 		<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
-	</button>
+	</button> -->
 
-	<button class="btnOn01">
-		<!-- <a class="btn__text">Переключить</a> -->
-		<img src="./../../static/Jaimain/images/kind01.svg" alt="">
-	</button>
+	
 
 	<div class="btn__addUsers">
 		<button class="btn ">
@@ -44,55 +41,29 @@
 	
 </div>
 
-<ul id="filter-list" class="list-articles">
-	<div class="header_users-list">
-		<div class="header_users-list-name">Пользователь</div>
-		<div class="header_users-list-Person">Имя пользователя</div>
-		<div class="header_users-list-Part">Партнер</div>
-		<div class="header_users-list-Part"></div>
-		<!-- <div class="header_users-list-last"> <img class="imgSort" src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt=""> </div> -->
-		
-	</div>
-	{% for u in users %}
-	<li class="partners__infoUsers">
-		<div class="" style="display: none;">{{u.username}}</div>
-		<div class="article-panel">
-			<p class="first fistUsers">{{u.username}}</p>
-			<p class="last lastUsers"> {{u.last_name}}  {{u.first_name}}</p>
-			<p class="last lastUsers ">{{u.partner}}</p>
-			<div class="partners__info-header" style="text-align: right">
-			<button class="btn">
-				<a class="btn__text" href="{{u.pk}}">Просмотр</a>
-			</button>
-			
+
+
+
+	<div class="headers__users  header_users-list header_users-list1">
+		<div class="headerTable">Пользователь</div>
+		<div class="headerTable">Аккаунт</div>
+		<div class="headerTable">Партнер</div>
+		<div class="headerTable butPods" data-title="Сортировать Пользователя от А - Я">
+			<button class="btn1 btn__addUsers1 btn-fuck ">
+			<!-- <a class="btn__text">Сортировать от A - Я </a> -->
+			<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+		</button>
 		</div>
-		</div>
-	{% autoescape on %}
-			<!-- <p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p> -->
-	{% endautoescape %}
-		<div class="clear"></div>
-	</li>
-
-
-	{% endfor %}
-</ul>
-
-
-	<div class="headers__users zero1">
-		<div>Пользователь</div>
-		<div>Имя пользователя</div>
-		<div>Партнер</div>
-		<div>Данные</div>
 	</div>
-	<table  class="trStyle zero1" id="myTable">
+	<table  class="trStyle " id="myTable">
 		<tr>
-		  <th>Пользователь</th>
+		  <!-- <th>Пользователь</th>
 		  <th>Имя пользователя</th>
 		  <th>Партнер</th>
-		  <th>Данные</th>
+		  <th>Данные</th> -->
 		</tr>
 		
-		<tr >
+		<tr class="trClass">
 			{% for u in users %}
 			<td class="tdStyle">{% autoescape on %}{{u.username}}</td>
 			<td class="tdStyle">{{u.last_name}}  {{u.first_name}}</td>
