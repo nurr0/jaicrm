@@ -10,6 +10,7 @@ const top2Active = document.querySelector('.top2-active')
 const arrow2 = document.querySelector('.sidebar__arrow-img2')
 const showPartners = document.querySelector('.partners')
 const showAddPartners = document.querySelector('.AddPartners')
+const showShop = document.querySelector('.shops')
 const fileUpload = document.getElementById('id_logo')
 
 if (JSON.parse(localStorage.getItem('tasks')) == 1){
@@ -18,16 +19,17 @@ if (JSON.parse(localStorage.getItem('tasks')) == 1){
 } else if (JSON.parse(localStorage.getItem('tasks')) == 0){
     console.log('privet2')
     
+
     
 }
 
 function proverka(){
     if (JSON.parse(localStorage.getItem('tasks')) == 1){
         console.log('privet')
-        nonActive()
+        
     } else if (JSON.parse(localStorage.getItem('tasks')) == 0){
         console.log('privet2')
-        nonActive2()
+        
     }
 }
 
@@ -42,6 +44,7 @@ arrow.addEventListener('click', nonActive)
 function nonActive(){
     localStorage.setItem('tasks', JSON.stringify(1))
     showAddPartners.classList.toggle('zero')
+    showShop.classList.toggle('zero')
     showPartners.classList.toggle('zero')
     arrowZero.classList.toggle('nonActive-time');
     arrow.classList.toggle('sidebar__arrow-non');
@@ -60,6 +63,7 @@ arrow2.addEventListener('click', nonActive2)
 function nonActive2(){
     localStorage.setItem('tasks', JSON.stringify(0))
     showAddPartners.classList.toggle('zero')
+    showShop.classList.toggle('zero')
     showPartners.classList.toggle('zero')
     arrowZero.classList.toggle('nonActive-time');
     arrow.classList.toggle('sidebar__arrow-non');
@@ -116,6 +120,12 @@ showAddPartners.addEventListener('click', ()=>
     location.href = 'http://127.0.0.1:8000/users/',
     // localStorage.setItem('tasks', JSON.stringify(1)),
         proverka()
+)
+
+showShop.addEventListener('click', ()=> 
+location.href = 'http://127.0.0.1:8000/shops/',
+// localStorage.setItem('tasks', JSON.stringify(1)),
+    proverka()
 )
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
@@ -246,33 +256,80 @@ let filter = function () {
 
 filter();
 
-// const imgSort = document.querySelector('.header_users-list-last')
-// imgSort.addEventListener('click', sortTable);
 
-// function sortTable(){
-//     let list, i, switching, b, shouldSwitch;
 
-//     list = document.querySelector('.list-articles');
-//     switching = true;
+if (url === 'http://127.0.0.1:8000/users/'){
+    const fuck = document.querySelector('.btn-fuck') 
+    
+    fuck.addEventListener('click',sortTable)  
 
-//     while (switching) {
-//         switching = false;
-//         b = list.querySelectorAll('.fistUsers');
-//         //Проходим циклои по всеми элементам обхекта
-//         for (i = 0; i < (b.length - 1 ); i++) {
-//             shouldSwitch = false;
+    function sortTable() {
+        console.log('fuck') 
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("myTable");
+        switching = true;
 
-//             if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+        while (switching) {
 
-//                 shouldSwitch = true;
-//                 break;
-//         }
-//     }
-//     if (shouldSwitch) {
+          switching = false;
+          rows = table.getElementsByTagName("TR");
 
-//       b[i].parentNode.insertBefore(b[i + 1], b[i]);
-//       switching = true;
-//     }
-//   }
-// }
+          for (i = 1; i < (rows.length - 1); i++) {
 
+            shouldSwitch = false;
+
+            x = rows[i].getElementsByTagName("TD")[0];
+            y = rows[i + 1].getElementsByTagName("TD")[0];
+            //check if the two rows should switch place:
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+
+              shouldSwitch = true;
+              break;
+            }
+          }
+          if (shouldSwitch) {
+
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+          }
+        }
+      }
+
+    //   const btnON = document.querySelector('.btnOn01')
+    //   const trTable = document.querySelector('.trStyle')
+    //   const stroka = document.querySelector('.list-articles')
+    //   const searchUser = document.querySelector('.d7')
+    //   const headerUsers = document.querySelector('.headers__users')
+    //   btnON.addEventListener('click', smenaVida);
+    //   function smenaVida(){
+    //     trTable.classList.toggle('zero1')
+    //     stroka.classList.toggle('zero1')
+    //     fuck.classList.toggle('zero1')
+    //     headerUsers.classList.toggle('zero1')
+    //     // searchUser.classList.toggle('zero1')
+    //   }
+}
+
+
+let filter02 = function () {
+    let input = document.querySelector('.filter-input');
+
+    input.addEventListener('keyup', FilterUser)
+
+    function FilterUser(){
+        //Ловеркейс для поиска
+        let filter = input.value.toLowerCase(),
+        //Ищем все li у ul
+        filterElements = document.querySelectorAll("TR");
+
+        filterElements.forEach((item) => {
+            if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        })}
+    
+};
+
+filter02();
