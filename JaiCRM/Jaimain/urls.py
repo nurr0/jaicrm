@@ -20,4 +20,7 @@ urlpatterns = [
     path('addshop/', add_shop, name='addshop'),
     path('shops/<int:shop_pk>', ShowShop.as_view(), name='showshop'),
     path('shops/<int:pk>/edit/', EditShop.as_view(), name='editshop'),
+    path('add_prod_cat', add_product_category, name='addproductcategory'),
+    path('product_categories/', ProductCategoriesList.as_view(), name='product_categories'),
+    path('product_categories/<int:pk>/', edit_product_category, name='editproductcategory')
 ]
