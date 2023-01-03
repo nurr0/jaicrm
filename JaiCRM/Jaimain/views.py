@@ -1,7 +1,7 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponse, HttpResponseNotFound, Http404, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -48,6 +48,7 @@ class ShowPartner(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Партнеры')
         c_def['shops_info'] = Shop.objects.all()
+        c_def['product_cats_info'] = ProductCategory.objects.all()
         return dict(list(context.items()) + list(c_def.items()))
 
     @method_decorator(login_required)
@@ -60,6 +61,7 @@ class ShowPartner(DataMixin, DetailView):
     #     partner_data = Partner.objects.all()
     #     shops_data = Shop.objects.all()
     #     return render(request, 'Jaimain/partner.html', {'partner_data': partner_data, 'shops_data': shops_data})
+
 
 class AddPartner(DataMixin, CreateView):
     form_class = AddPartnerForm
@@ -190,8 +192,7 @@ class RegisterUser(DataMixin, CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
-        return redirect('partners')  # не забыть исправить после реализации главной страницы
+        return redirect('')  # не забыть исправить после реализации главной страницы
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_superuser:
@@ -230,13 +231,11 @@ def search_users(request):
     if request.user.is_costumer:
         raise PermissionDenied
     query = request.GET.get('q')
-    results = []  # здесь будут храниться результаты поиска
+    results = []
 
-    # выполняем поиск и заполняем список результатов
     if query:
         results = JaiUser.objects.filter(username__contains=query)
 
-    # загружаем шаблон и передаем в него результаты поиска
     template = loader.get_template('Jaimain/user_search_results.html')
     context = {
         'results': results,
@@ -283,8 +282,8 @@ def add_shop(request):
             description = form.cleaned_data['description']
             is_working = form.cleaned_data['is_working']
             queryset = Shop.objects.create(partner=partner, name=name, location=location,
-                                description=description, is_working=is_working)
-
+                                           description=description, is_working=is_working)
+            return redirect('shops')
         else:
             form = AddShopForm()
 
@@ -325,3 +324,91 @@ class EditShop(DataMixin, UpdateView):
         if request.user.is_costumer:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
+
+
+def add_product_category(request):
+    template = 'Jaimain/addrootproductcategory.html'
+    form = AddProductCategoryForm()
+    partner = request.user.partner
+    user_menu = menu.copy()
+    context = {'partner': partner, 'form': form, 'menu': user_menu}
+
+    if request.method == 'POST':
+        form = AddProductCategoryForm(request.POST)
+        if form.is_valid():
+            partner = request.user.partner
+            parent = form.cleaned_data['parent']
+            name = form.cleaned_data['name']
+            try:
+                queryset = ProductCategory.objects.create(partner=partner, name=name, parent=parent)
+            except:
+                form = AddProductCategoryForm()
+            return redirect('product_categories/')
+        else:
+            form = AddProductCategoryForm()
+    categories = ProductCategory.objects.filter(partner=request.user.partner)
+    form.fields['parent'].queryset = categories
+
+    return render(request, template, context=context)
+
+
+class ProductCategoriesList(DataMixin, ListView):
+    model = Shop
+    template_name = 'Jaimain/product_categories.html'
+    context_object_name = 'product_cats'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Торговые точки')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = ProductCategory.objects.all() if user.is_superuser else ProductCategory.objects.filter(
+            partner=user.partner)
+        return queryset
+
+
+class EditProductCategory(DataMixin, UpdateView):
+    model = ProductCategory
+    fields = ['name', 'parent']
+    template_name = 'Jaimain/editproductcategory.html'
+    success_url = '/product_categories/'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение товарной категории')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+
+def edit_product_category(request, pk):
+    product_category = get_object_or_404(ProductCategory, pk=pk)
+    user_menu = menu.copy()
+    partner = request.user.partner
+    context = {'partner': partner, 'menu': user_menu, }
+
+    if request.method == 'POST':
+        form = AddProductCategoryForm(request.POST, instance=product_category)
+        form.fields['parent'].queryset = ProductCategory.objects.filter(partner=request.user.partner)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('product_categories'))
+    else:
+        form = AddProductCategoryForm(instance=product_category)
+
+    categories = ProductCategory.objects.filter(partner=request.user.partner)
+    form.fields['parent'].queryset = categories
+    context['form'] = form
+    return render(request, 'Jaimain/editproductcategory.html', context=context)

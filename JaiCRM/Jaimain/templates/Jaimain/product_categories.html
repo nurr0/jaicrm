@@ -1,0 +1,38 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+{% extends 'Jaimain/base.html' %}
+{% block content %}
+
+
+	<div class="btn__addUsers">
+		<button class="btn">
+			<a class="btn__text" href="{% url 'addproductcategory' %}">Добавить товарную категорию</a>
+		</button>
+	</div>
+</div>
+
+{% load mptt_tags %}
+
+{% block title %}Список категорий{% endblock %}
+
+
+
+<div>
+    <div>
+	<ul>
+	{% recursetree object_list %}
+	    <li>
+		<a href={{ node.pk }}>{{node.name}}</a>
+		{% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+		{% endif %}
+	    </li>
+	{% endrecursetree %}
+	</ul>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,6 +1,12 @@
 {% extends 'Jaimain/base.html' %}
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% block content %}
+{% if partner.logo %}
+<div>
+    <img class="img-article-left" src="{{partner.logo.url}}">
+</div>
+<div style="clear: both;"></div>
+{% endif %}
 <div class="header_ilya">
     <h1>{{partner.name}}</h1>
     <div style="text-align: right" class="btn_ilya">
@@ -53,18 +59,13 @@
         </div>
     
 </div>
-{% if partner.logo %}
-<div>
-    <img class="img-article-left" src="{{partner.logo.url}}">
-</div>
-{% endif %}
 
-<!-- <h4>{{partner.description|linebreaks}}</h4>
-<p>Контактное лицо партнера: {{partner.partner_person}}</p>
-<p>Контактный номер телефона: {{partner.partner_tel}}</p>
-<p>Контактный e-mail: {{partner.partner_email}}</p>
-<p>Время создания партнера: {{partner.time_create}}</p>
-<p>Время начала работы: {{partner.time_start_working}}</p>
-<p>Доступ до: {{partner.time_expires}}</p>
-<p>Активность: {{partner.is_working}}</p> -->
+
+
+<h4>Торговые точки партнера:</h4>
+{% for shop in shops_info %}
+{% if shop.partner == partner %}
+<li>{{ shop }}</li>
+{% endif %}
+{% endfor %}
 {% endblock %}

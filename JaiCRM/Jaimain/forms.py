@@ -1,8 +1,9 @@
+import mptt.forms
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
+from mptt.forms import *
 from . import views
 from .models import *
 
@@ -32,6 +33,10 @@ class AddPartnerForm(forms.ModelForm):
 
 
 class RegisterUserForm(UserCreationForm):
+    CHOICES = (
+        (True, 'Да'),
+        (False, 'Нет'),
+    )
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
@@ -40,7 +45,7 @@ class RegisterUserForm(UserCreationForm):
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))
     partner = forms.ModelChoiceField(label='Партнер', queryset=Partner.objects.all())
     tel_number = forms.CharField(label='Номер телефона', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    is_costumer = forms.BooleanField(label='Является покупателем', widget=forms.CheckboxInput)
+    is_costumer = forms.ChoiceField(label='Является покупателем', choices=CHOICES)
 
     class Meta:
         model = JaiUser
@@ -54,8 +59,20 @@ class LoginUserForm(AuthenticationForm):
 
 
 class AddShopForm(forms.ModelForm):
-
     class Meta:
         model = Shop
+        exclude = ('partner',)
+
+
+class AddProductCategoryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user is not None:
+            self.fields['parent'].queryset = ProductCategory.objects.filter(partner=user.partner)
+
+
+    class Meta:
+        model = ProductCategory
         exclude = ('partner',)
 
