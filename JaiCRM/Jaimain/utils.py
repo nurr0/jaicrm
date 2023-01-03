@@ -9,7 +9,7 @@ menu = [
         {'title': "Партнеры", 'url_name': 'partners'},
         {'title': "Пользователи", 'url_name': 'users'},
         {'title': "Торговые точки", 'url_name': 'shops'},
-        # {'title': "Склад", 'url_name': 'warehouse'},
+        {'title': "Товарные категории", 'url_name': 'product_categories'},
         # {'title': "CRM", 'url_name': 'crm'},
         ]
 
