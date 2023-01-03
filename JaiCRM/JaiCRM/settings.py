@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "Jaimain"
+    "Jaimain",
+    "mptt",
+    "django_mptt_admin",
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'Jaimain.JaiUser'
 
 LOGIN_URL = '/login/'
+
+LOGIN_ON_REGISTRATION = False

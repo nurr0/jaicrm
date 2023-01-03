@@ -1,7 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import F
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 from rest_framework.validators import UniqueTogetherValidator, UniqueValidator
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Partner(models.Model):
@@ -29,7 +32,7 @@ class Partner(models.Model):
 class JaiUser(AbstractUser):
     partner = models.ForeignKey('Partner', on_delete=models.PROTECT, verbose_name="Партнер", default=None, null=True)
     tel_number = models.CharField(max_length=255, verbose_name='Контактный телефон')
-    is_costumer = models.BooleanField(default=False, verbose_name='Является покупателем')
+    is_costumer = models.BooleanField(default=False, verbose_name='Является покупателем', null=False, blank=False)
 
     def __str__(self):
         return self.username
@@ -52,16 +55,27 @@ class Shop(models.Model):
         return self.name
 
 
-class ProductCategory(models.Model):
+class ProductCategory(MPTTModel):
     partner = models.ForeignKey('Partner', on_delete=models.PROTECT, verbose_name='Партнер', null=False)
     name = models.CharField(max_length=255, verbose_name='Наименование категории',
                             error_messages={
-                                'unique_together': 'Категория с таким названием и родительской категорией уже существует'})
-    parent_category = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=False,
-                                        verbose_name='Родительская категория')
+                                'unique_together': 'Категория с таким же названием и родительской категорией уже существует'})
+    parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
+                            db_index=True, verbose_name='Родительская категория')
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
 
     class Meta:
-        unique_together = (('partner', 'name', 'parent_category'),)
+        unique_together = (('partner', 'name', 'parent'),)
+        verbose_name = 'Товарная категория'
+        verbose_name_plural = 'Товарные категории'
+
+    def get_absolute_url(self):
+        return reverse(f'category/{self.pk}')
 
     def __str__(self):
         return self.name
+
+
+
