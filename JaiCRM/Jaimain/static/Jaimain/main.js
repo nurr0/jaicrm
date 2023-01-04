@@ -250,28 +250,31 @@ TextContactInn.classList.add('p__addPart-widthRight')
 
 
 //Поиск у пользователей
-let filter = function () {
-    let input = document.querySelector('.filter-input');
+if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/partners/' || url === 'http://127.0.0.1:8000/users/'){
+    let filter = function () {
+        let input = document.querySelector('.filter-input');
 
-    input.addEventListener('keyup', FilterUser)
+        input.addEventListener('keyup', FilterUser)
 
-    function FilterUser(){
-        //Ловеркейс для поиска
-        let filter = input.value.toLowerCase(),
-        //Ищем все li у ul
-        filterElements = document.querySelectorAll('#filter-list li');
+        function FilterUser(){
+            //Ловеркейс для поиска
+            let filter = input.value.toLowerCase(),
+            //Ищем все li у ul
+            filterElements = document.querySelectorAll('#filter-list li');
 
-        filterElements.forEach((item) => {
-            if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
-                item.style.display = '';
-            } else {
-                item.style.display = 'none';
-            }
-        })}
-    
-};
+            filterElements.forEach((item) => {
+                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            })}
+        
+    };
+    filter();
+}
 
-filter();
+
 
 
 
@@ -327,26 +330,34 @@ if (url === 'http://127.0.0.1:8000/users/'){
     //   }
 }
 
+if (url === 'http://127.0.0.1:8000/users/'){
+    let filter02 = function () {
+        let input = document.querySelector('.filter-input');
 
-let filter02 = function () {
-    let input = document.querySelector('.filter-input');
+        input.addEventListener('keyup', FilterUser)
 
-    input.addEventListener('keyup', FilterUser)
+        function FilterUser(){
+            //Ловеркейс для поиска
+            let filter = input.value.toLowerCase(),
+            //Ищем все li у ul
+            filterElements = document.querySelectorAll("TR");
 
-    function FilterUser(){
-        //Ловеркейс для поиска
-        let filter = input.value.toLowerCase(),
-        //Ищем все li у ul
-        filterElements = document.querySelectorAll("TR");
+            filterElements.forEach((item) => {
+                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            })}
+        
+    };
 
-        filterElements.forEach((item) => {
-            if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
-                item.style.display = '';
-            } else {
-                item.style.display = 'none';
-            }
-        })}
-    
+    filter02();
+}
+
+let menuElem = document.getElementById('sweeties');
+    let titleElem = menuElem.querySelector('.title');
+
+    titleElem.onclick = function() {
+      menuElem.classList.toggle('open');
 };
-
-filter02();

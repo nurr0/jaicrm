@@ -1238,6 +1238,32 @@ ul.lang-list li a:hover {color: #fdc073;}
 	margin-top: 10px;
 }
 
+.menu ul {
+	margin: 0;
+	list-style: none;
+	padding-left: 20px;
+	display: none;
+  }
+
+  .menu .title {
+	font-size: 18px;
+	cursor: pointer;
+  }
+
+  .menu .title::before {
+	content: '▶ ';
+	font-size: 80%;
+	color: green;
+  }
+
+  .menu.open .title::before {
+	content: '▼ ';
+  }
+
+  .menu.open ul {
+	display: block;
+  }
+
 /* Страница Поиска Конец */
 
 /* Преоладер */

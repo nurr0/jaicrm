@@ -19,19 +19,20 @@
 
 
 <div>
-    <div>
-	<ul>
+    <!-- <div id="sweeties" class="menu"> -->
+		<!-- <span class="title">Сладости (нажми меня)!</span> -->
+		<ul>
+			
 	{% recursetree object_list %}
-	    <li>
-		<a href={{ node.pk }}>{{node.name}}</a>
+	    	<li id="sweeties" class="menu">
+				<a  href={{ node.pk }}>{{node.name}} </a>
+				<img class="title" src="./../../static/Jaimain/images/ar.svg" alt="">
 		{% if not node.is_leaf_node %}
-                <ul class="children">
-                    {{ children }}
-                </ul>
+                <ul class="children ">{{ children }}</ul>
 		{% endif %}
-	    </li>
+	   		 </li>
 	{% endrecursetree %}
-	</ul>
+		</ul>
     </div>
 </div>
 
