@@ -250,7 +250,7 @@ TextContactInn.classList.add('p__addPart-widthRight')
 
 
 //Поиск у пользователей
-if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/partners/' || url === 'http://127.0.0.1:8000/users/'){
+if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/partners/' || url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_categories/'){
     let filter = function () {
         let input = document.querySelector('.filter-input');
 
@@ -355,9 +355,34 @@ if (url === 'http://127.0.0.1:8000/users/'){
     filter02();
 }
 
-let menuElem = document.getElementById('sweeties');
-    let titleElem = menuElem.querySelector('.title');
+if (url === 'http://127.0.0.1:8000/product_categories/'){
+    let menuElem = document.getElementById('sweeties');
+        let titleElem = menuElem.querySelector('.title');
 
-    titleElem.onclick = function() {
-      menuElem.classList.toggle('open');
-};
+        titleElem.onclick = function() {
+        menuElem.classList.toggle('open');
+    };
+
+    let filter03 = function () {
+        let input = document.querySelector('.filter-input');
+
+        input.addEventListener('keyup', FilterUser)
+
+        function FilterUser(){
+            //Ловеркейс для поиска
+            let filter = input.value.toLowerCase(),
+            //Ищем все li у ul
+            filterElements = document.querySelectorAll(".menu");
+
+            filterElements.forEach((item) => {
+                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            })}
+        
+    };
+
+    filter03();
+}
