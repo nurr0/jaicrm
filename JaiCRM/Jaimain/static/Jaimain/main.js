@@ -357,23 +357,65 @@ if (url === 'http://127.0.0.1:8000/users/'){
 
 
 if (url === 'http://127.0.0.1:8000/product_categories/'){
-        let menuElem = document.getElementById('sweeties');
-        let titleElem = menuElem.querySelector('.title');
-        let deti1 = document.querySelectorAll('.children')[1];
+        // let menuElem = document.getElementById('sweeties');
+        // // let titleElem = menuElem.querySelector('.title');
+        // let titleElem = menuElem.querySelectorAll('.title')[0];
+        // let deti1 = document.querySelectorAll('.children')[1];
+
+        // titleElem.onclick = function() {
+        //     menuElem.classList.toggle('open');
+        
+
+        //     deti1.classList.toggle('zero1');
+        
+
+
+        // };
+        // title2 = document.querySelectorAll('.title')[1]
+        // title2.onclick = function() {
+        //     deti1.classList.toggle('zero1');
+        // }
+
+        // let titleElem2 = menuElem.querySelectorAll('.title')[1];
+        // let deti2 = document.querySelectorAll('.children')[2];
+
+        // titleElem2.onclick = function() {
+        //     menuElem.classList.toggle('open');
+        
+
+        //     deti2.classList.toggle('zero1');
+        
+
+
+        // };
+
+        // let menuElem = document.getElementById('sweeties');
+        let menuElem = document.querySelectorAll('.menu')[0];
+        let titleElem = menuElem.querySelectorAll('.title')[0];
+        
 
         titleElem.onclick = function() {
             menuElem.classList.toggle('open');
-        
-
-            deti1.classList.toggle('zero1');
-        
-
-
         };
-        title2 = document.querySelectorAll('.title')[1]
-        title2.onclick = function() {
-            deti1.classList.toggle('zero1');
-        }
+
+
+
+        
+        let menuElem1 = document.querySelectorAll('.menu')[4];
+        // let menuElem1 = document.querySelectorAll('.menu');
+        let titleElem1 = menuElem1.querySelectorAll('.title')[0];
+        
+
+        titleElem1.onclick = function() {
+            menuElem1.classList.toggle('open');
+        };
+       
+       
+         
+        
+
+
+        
 
 
 

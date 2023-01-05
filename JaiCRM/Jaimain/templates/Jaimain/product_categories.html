@@ -32,7 +32,7 @@
 		<ul>
 			
 	{% recursetree object_list %}
-	    	<li id="sweeties" class="menu">
+	    	<li id="sweeties" class="menu open">
 				<a class="categoryStyle"  id='filter-list' href={{ node.pk }}>{{node.name}} </a>
 				<img class="title" src="./../../static/Jaimain/images/ar.svg" alt="">
 		{% if not node.is_leaf_node %}
