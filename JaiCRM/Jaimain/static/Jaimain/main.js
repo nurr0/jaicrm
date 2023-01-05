@@ -399,8 +399,21 @@ if (url === 'http://127.0.0.1:8000/product_categories/'){
         };
 
 
-
         
+
+        let menuElem0 = document.querySelectorAll('.menu')[1];
+        // let menuElem1 = document.querySelectorAll('.menu');
+        let titleElem0 = menuElem0.querySelectorAll('.title')[0];
+        
+
+        titleElem0.onclick = function() {
+            menuElem0.classList.toggle('open');
+            console.log('sdsd')
+        };
+
+
+
+
         let menuElem1 = document.querySelectorAll('.menu')[4];
         // let menuElem1 = document.querySelectorAll('.menu');
         let titleElem1 = menuElem1.querySelectorAll('.title')[0];
