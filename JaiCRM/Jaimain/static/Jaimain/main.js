@@ -355,13 +355,28 @@ if (url === 'http://127.0.0.1:8000/users/'){
     filter02();
 }
 
+
 if (url === 'http://127.0.0.1:8000/product_categories/'){
-    let menuElem = document.getElementById('sweeties');
+        let menuElem = document.getElementById('sweeties');
         let titleElem = menuElem.querySelector('.title');
+        let deti1 = document.querySelectorAll('.children')[1];
 
         titleElem.onclick = function() {
-        menuElem.classList.toggle('open');
-    };
+            menuElem.classList.toggle('open');
+        
+
+            deti1.classList.toggle('zero1');
+        
+
+
+        };
+        title2 = document.querySelectorAll('.title')[1]
+        title2.onclick = function() {
+            deti1.classList.toggle('zero1');
+        }
+
+
+
 
     let filter03 = function () {
         let input = document.querySelector('.filter-input');

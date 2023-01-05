@@ -1260,9 +1260,15 @@ ul.lang-list li a:hover {color: #fdc073;}
 	content: '▼ ';
   }
 
-  .menu.open ul {
+  .menu.open ul{
 	display: block;
   }
+
+
+
+/* .children:first-child  {
+	display: block;
+} */
 
 .menu{
 	margin: 10px;
