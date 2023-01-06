@@ -1164,9 +1164,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 	width: 100px !important;
 }
 
-.trClass{
-	
-}
+
 
 .headerTable{
 	width: 100px !important;
@@ -1238,7 +1236,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 	margin-top: 10px;
 }
 
-.menu ul {
+/* .menu ul {
 	margin: 0;
 	list-style: none;
 	padding-left: 20px;
@@ -1262,6 +1260,21 @@ ul.lang-list li a:hover {color: #fdc073;}
 
   .menu.open ul{
 	display: block;
+  } */
+
+  .children{
+	padding: 5px;
+	opacity: 0;
+	/* min-height: 3px; */
+	height: 10px;
+  }
+
+  .opa{
+	height: auto;
+	opacity: 1;
+	margin-bottom: 20px;
+	padding: 30px;
+	transition: 0.3s ease-in-out;
   }
 
 

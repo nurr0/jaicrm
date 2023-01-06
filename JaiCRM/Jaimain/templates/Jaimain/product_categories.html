@@ -32,10 +32,14 @@
 		<ul>
 			
 	{% recursetree object_list %}
+			<!-- <img class="title" src="./../../static/Jaimain/images/ar.svg" alt=""> -->
+			
 	    	<li id="sweeties" class="menu open">
 				<a class="categoryStyle"  id='filter-list' href={{ node.pk }}>{{node.name}} </a>
-				<img class="title" src="./../../static/Jaimain/images/ar.svg" alt="">
+				<!-- <img class="title" src="./../../static/Jaimain/images/ar.svg" alt=""> -->
 		{% if not node.is_leaf_node %}
+				<img class="title" src="./../../static/Jaimain/images/ar.svg" alt="">
+				<!-- <div class="title">Нажать</div> -->
                 <ul class="children ">{{ children }}</ul>
 		{% endif %}
 	   		 </li>
