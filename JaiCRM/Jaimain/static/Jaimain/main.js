@@ -340,7 +340,7 @@ if (url === 'http://127.0.0.1:8000/users/'){
             //Ловеркейс для поиска
             let filter = input.value.toLowerCase(),
             //Ищем все li у ul
-            filterElements = document.querySelectorAll("TR");
+            filterElements = document.querySelectorAll("tr:not(:first-child)");
 
             filterElements.forEach((item) => {
                 if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
