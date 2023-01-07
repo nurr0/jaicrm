@@ -12,14 +12,13 @@ const showPartners = document.querySelector('.partners')
 const showAddPartners = document.querySelector('.AddPartners')
 const showShop = document.querySelector('.shops')
 const fileUpload = document.getElementById('id_logo')
+const category1 = document.querySelector('.category ')
 
 if (JSON.parse(localStorage.getItem('tasks')) == 1){
     console.log('privet')
     nonActive()
 } else if (JSON.parse(localStorage.getItem('tasks')) == 0){
     console.log('privet2')
-    
-
     
 }
 
@@ -38,11 +37,13 @@ function proverka(){
 //     nonActive()
 // }
 
+category1.classList.add('category10')
 
 arrow.addEventListener('click', nonActive)
 
 function nonActive(){
     localStorage.setItem('tasks', JSON.stringify(1))
+    category1.classList.toggle('zero')
     showAddPartners.classList.toggle('zero')
     showShop.classList.toggle('zero')
     showPartners.classList.toggle('zero')
@@ -62,6 +63,7 @@ arrow2.addEventListener('click', nonActive2)
 
 function nonActive2(){
     localStorage.setItem('tasks', JSON.stringify(0))
+    category1.classList.toggle('zero')
     showAddPartners.classList.toggle('zero')
     showShop.classList.toggle('zero')
     showPartners.classList.toggle('zero')
@@ -92,11 +94,19 @@ shop.addEventListener('click',()=>
     localStorage.setItem('tasks', JSON.stringify(0))
 )
 
+const category = document.querySelector('[href="/product_categories/"]');
+category.classList.add('category')
+category.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/shops/'){
     shop.classList.add('ActiveList')    
+}else if (url === 'http://127.0.0.1:8000/product_categories/'){
+    category.classList.add('ActiveList')    
 }else if (url === 'http://127.0.0.1:8000/partners/1/'){
     partners.classList.add('ActiveList')  
 }else if (url === 'http://127.0.0.1:8000/addpartner/'){
@@ -116,6 +126,7 @@ showPartners.addEventListener('click', ()=>
     // localStorage.setItem('tasks', JSON.stringify(1)),
     proverka()
     )
+
 showAddPartners.addEventListener('click', ()=> 
     location.href = 'http://127.0.0.1:8000/users/',
     // localStorage.setItem('tasks', JSON.stringify(1)),
@@ -124,6 +135,12 @@ showAddPartners.addEventListener('click', ()=>
 
 showShop.addEventListener('click', ()=> 
 location.href = 'http://127.0.0.1:8000/shops/',
+// localStorage.setItem('tasks', JSON.stringify(1)),
+    proverka()
+)
+
+category1.addEventListener('click', ()=> 
+location.href = 'http://127.0.0.1:8000/product_categories/',
 // localStorage.setItem('tasks', JSON.stringify(1)),
     proverka()
 )
@@ -233,28 +250,31 @@ TextContactInn.classList.add('p__addPart-widthRight')
 
 
 //Поиск у пользователей
-let filter = function () {
-    let input = document.querySelector('.filter-input');
+if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/partners/' || url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_categories/'){
+    let filter = function () {
+        let input = document.querySelector('.filter-input');
 
-    input.addEventListener('keyup', FilterUser)
+        input.addEventListener('keyup', FilterUser)
 
-    function FilterUser(){
-        //Ловеркейс для поиска
-        let filter = input.value.toLowerCase(),
-        //Ищем все li у ul
-        filterElements = document.querySelectorAll('#filter-list li');
+        function FilterUser(){
+            //Ловеркейс для поиска
+            let filter = input.value.toLowerCase(),
+            //Ищем все li у ul
+            filterElements = document.querySelectorAll('#filter-list li');
 
-        filterElements.forEach((item) => {
-            if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
-                item.style.display = '';
-            } else {
-                item.style.display = 'none';
-            }
-        })}
-    
-};
+            filterElements.forEach((item) => {
+                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            })}
+        
+    };
+    filter();
+}
 
-filter();
+
 
 
 
@@ -310,26 +330,78 @@ if (url === 'http://127.0.0.1:8000/users/'){
     //   }
 }
 
+if (url === 'http://127.0.0.1:8000/users/'){
+    let filter02 = function () {
+        let input = document.querySelector('.filter-input');
 
-let filter02 = function () {
-    let input = document.querySelector('.filter-input');
+        input.addEventListener('keyup', FilterUser)
 
-    input.addEventListener('keyup', FilterUser)
+        function FilterUser(){
+            //Ловеркейс для поиска
+            let filter = input.value.toLowerCase(),
+            //Ищем все li у ul
+            filterElements = document.querySelectorAll("tr:not(:first-child)");
 
-    function FilterUser(){
-        //Ловеркейс для поиска
-        let filter = input.value.toLowerCase(),
-        //Ищем все li у ul
-        filterElements = document.querySelectorAll("TR");
+            filterElements.forEach((item) => {
+                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            })}
+        
+    };
 
-        filterElements.forEach((item) => {
-            if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
-                item.style.display = '';
-            } else {
-                item.style.display = 'none';
-            }
-        })}
-    
-};
+    filter02();
+}
 
-filter02();
+
+if (url === 'http://127.0.0.1:8000/product_categories/') {
+        document.querySelectorAll('.title').forEach((el) => {
+            el.addEventListener('click',()=>{
+                let content = el.nextElementSibling ;
+                console.log(content)
+
+                if(content.style.maxHeight){
+                    document.querySelectorAll('.children').forEach((el)=>el.style.maxHeight = null)
+                } else{
+                    document.querySelectorAll('.children').forEach((el)=>el.style.maxHeight = null)
+                    // content.style.maxHeight = content.scrollHeight +'px';
+                    // content.style.opacity="1";
+                    content.classList.toggle('opa')
+                }
+                
+            })
+        })
+         
+        
+
+
+        
+
+
+
+
+    let filter03 = function () {
+        let input = document.querySelector('.filter-input');
+
+        input.addEventListener('keyup', FilterUser)
+
+        function FilterUser(){
+            //Ловеркейс для поиска
+            let filter = input.value.toLowerCase(),
+            //Ищем все li у ul
+            filterElements = document.querySelectorAll(".menu");
+
+            filterElements.forEach((item) => {
+                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            })}
+        
+    };
+
+    filter03();
+}

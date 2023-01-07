@@ -3,37 +3,48 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 {% extends 'Jaimain/base.html' %}
 {% block content %}
+<div class="header__users-top">
+		<div class="d7">
+			<form>
+			<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
+
+			</form>
+		</div>
 
 
-	<div class="btn__addUsers">
-		<button class="btn">
-			<a class="btn__text" href="{% url 'addproductcategory' %}">Добавить товарную категорию</a>
-		</button>
-	</div>
+		<div class="btn__addUsers">
+			<button class="btn">
+				<a class="btn__text" href="{% url 'addproductcategory' %}">Добавить товарную категорию</a>
+			</button>
+		</div>
+
 </div>
 
 {% load mptt_tags %}
 
-{% block title %}
-<h2>Список категорий</h2>
-	{% endblock %}
+{% block title %}Список категорий{% endblock %}
 
 
 
 <div>
-    <div>
-	<ul>
+    <!-- <div id="sweeties" class="menu"> -->
+		<!-- <span class="title">Сладости (нажми меня)!</span> -->
+		<ul>
+
 	{% recursetree object_list %}
-	    <li>
-		<a href={{ node.pk }}><h3>{{node.name}}</h3></a>
+			<!-- <img class="title" src="./../../static/Jaimain/images/ar.svg" alt=""> -->
+
+	    	<li id="sweeties" class="menu open">
+				<a class="categoryStyle"  id='filter-list' href={{ node.pk }}>{{node.name}} </a>
+				<!-- <img class="title" src="./../../static/Jaimain/images/ar.svg" alt=""> -->
 		{% if not node.is_leaf_node %}
-                <ul class="children">
-                    <h4>{{ children }}</h4>
-                </ul>
+				<img class="title" src="./../../static/Jaimain/images/ar.svg" alt="">
+				<!-- <div class="title">Нажать</div> -->
+                <ul class="children ">{{ children }}</ul>
 		{% endif %}
-	    </li>
+	   		 </li>
 	{% endrecursetree %}
-	</ul>
+		</ul>
     </div>
 </div>
 

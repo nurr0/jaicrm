@@ -56,14 +56,9 @@
 		</div>
 	</div>
 	<table  class="trStyle " id="myTable">
-		<tr>
-		  <!-- <th>Пользователь</th>
-		  <th>Имя пользователя</th>
-		  <th>Партнер</th>
-		  <th>Данные</th> -->
-		</tr>
 		
-		<tr class="trClass">
+		
+		<tr class="zero1"">
 			{% for u in users %}
 			<td class="tdStyle">{% autoescape on %}{{u.username}}</td>
 			<td class="tdStyle">{{u.last_name}}  {{u.first_name}}</td>
@@ -73,6 +68,7 @@
 				  </button>
 			</td>
 		</tr>
+		
 		{% endautoescape %}
 		{% endfor %}
 	</table>
