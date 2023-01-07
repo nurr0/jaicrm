@@ -14,7 +14,9 @@
 
 {% load mptt_tags %}
 
-{% block title %}Список категорий{% endblock %}
+{% block title %}
+<h2>Список категорий</h2>
+	{% endblock %}
 
 
 
@@ -23,10 +25,10 @@
 	<ul>
 	{% recursetree object_list %}
 	    <li>
-		<a href={{ node.pk }}>{{node.name}}</a>
+		<a href={{ node.pk }}><h3>{{node.name}}</h3></a>
 		{% if not node.is_leaf_node %}
                 <ul class="children">
-                    {{ children }}
+                    <h4>{{ children }}</h4>
                 </ul>
 		{% endif %}
 	    </li>

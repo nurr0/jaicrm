@@ -22,5 +22,12 @@ urlpatterns = [
     path('shops/<int:pk>/edit/', EditShop.as_view(), name='editshop'),
     path('add_prod_cat', add_product_category, name='addproductcategory'),
     path('product_categories/', ProductCategoriesList.as_view(), name='product_categories'),
-    path('product_categories/<int:pk>/', edit_product_category, name='editproductcategory')
+    path('product_categories/<int:pk>/', edit_product_category, name='editproductcategory'),
+    path('addproductproperty/', add_product_property, name='addproductproperty'),
+    path('product_properties/', ProductPropertiesList.as_view(), name='product_properties'),
+    path('product_properties/<int:pk>/', EditProductProperty.as_view(), name='editproductproperty'),
+    path('add_sku/', add_sku, name='add_sku'),
+    path('sku/', SKUList.as_view(), name='sku'),
+    path('sku/<int:sku_pk>/', ShowSKU.as_view(), name='show_sku'),
+    path('sku/<int:sku_pk>/edit/', edit_sku, name='edit_sku')
 ]

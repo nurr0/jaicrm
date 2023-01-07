@@ -1329,4 +1329,11 @@ ul.lang-list li a:hover {color: #fdc073;}
   color: #324b4e;
 }
 
+
 /* Поиск у пользоватей End*/
+
+.form-group {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
