@@ -5,16 +5,26 @@
 
 <form method="post" action="{% url 'add_sku' %}" enctype="multipart/form-data">
     {% csrf_token %}
-    <div><h2>Описание Товара</div>
-    {{ sku_form.as_p }}
-    {{ productpropertyrelation_formset.management_form }}
-    <div><h2>Свойства Товара</div>
+    <div>
+        <h2>Описание Товара</h2>
+    </div>
+
+    <div class="p__addPart">
+        {{ sku_form.as_p }}
+    
+        {{ productpropertyrelation_formset.management_form }}
+    </div>
+    
+
+    <div>
+        <h2>Свойства Товара</h2>
+    </div>
     {% for form in productpropertyrelation_formset %}
     <div class="form-group">
         {{ form.as_p }}
     </div>
     {% endfor %}
-    <input type="submit" value="Сохранить">
+    <input class="btn" type="submit" value="Сохранить">
 </form>
 
 

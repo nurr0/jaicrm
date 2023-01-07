@@ -1003,7 +1003,8 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .p__addPart-width{
-	width: 300px;
+	width: 300px !important;
+	display: inline-block;
 }
 
 .p__addPart-widthRight{

@@ -413,3 +413,24 @@ if (url === 'http://127.0.0.1:8000/product_categories/') {
 
     filter03();
 }
+
+if (url === 'http://127.0.0.1:8000/add_sku/'){
+    const nameSku = document.querySelector('label[for="id_name"]')
+    const AreaNameSku = document.querySelector('#id_name')
+    nameSku.classList.add('p__addPart-width')
+    
+    const imgSku = document.querySelector('label[for="id_image"]')
+    imgSku.classList.add('p__addPart-width')
+
+    const descSku = document.querySelector('label[for="id_description"]')
+    descSku.classList.add('p__addPart-width')
+
+    const articulSku = document.querySelector('label[for="id_identifier"]')
+    articulSku.classList.add('p__addPart-width')
+
+    const proizvoditelSku = document.querySelector('label[for="id_producer"]')
+    proizvoditelSku.classList.add('p__addPart-width')
+
+    const categoryySku = document.querySelector('label[for="id_category"]')
+    categoryySku.classList.add('p__addPart-width')
+}
