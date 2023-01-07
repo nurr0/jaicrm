@@ -1279,7 +1279,17 @@ ul.lang-list li a:hover {color: #fdc073;}
 	margin-bottom: 20px;
 	/* padding: 30px; */
 	list-style-type: none;
-	
+	animation: opacity 0.9s;
+  }
+
+  @keyframes opacity{
+	from{
+		opacity: 0;
+	}
+
+	to{
+		opacity: 1;
+	}
   }
 
   .title:hover{
