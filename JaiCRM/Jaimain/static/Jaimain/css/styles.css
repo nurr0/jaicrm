@@ -1307,6 +1307,30 @@ ul.lang-list li a:hover {color: #fdc073;}
 	
 }
 
+.property-block{
+	background-image: url(./../images/property.svg);
+	background-repeat: no-repeat;
+	font-size: 18px;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.settings-block{
+	background-image: url(./../images/sett.svg);
+	background-repeat: no-repeat;
+	font-size: 18px;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
 /* Страница Поиска Конец */
 
 /* Преоладер */

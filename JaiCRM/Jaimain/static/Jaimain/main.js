@@ -32,10 +32,6 @@ function proverka(){
     }
 }
 
-// if (JSON.parse(localStorage.getItem('tasks')) == 1){
-//     console.log('privet')
-//     nonActive()
-// }
 
 category1.classList.add('category10')
 
@@ -97,6 +93,18 @@ shop.addEventListener('click',()=>
 const category = document.querySelector('[href="/product_categories/"]');
 category.classList.add('category')
 category.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
+const propertyBlock = document.querySelector('[href="/product_properties/"]');
+propertyBlock.classList.add('property-block')
+propertyBlock.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
+const settingsBlock = document.querySelector('[href="/sku/"]');
+settingsBlock.classList.add('settings-block')
+settingsBlock.addEventListener('click',()=>
     localStorage.setItem('tasks', JSON.stringify(0))
 )
 
@@ -330,7 +338,7 @@ if (url === 'http://127.0.0.1:8000/users/'){
     //   }
 }
 
-if (url === 'http://127.0.0.1:8000/users/'){
+if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_properties/' || url === 'http://127.0.0.1:8000/sku/'){
     let filter02 = function () {
         let input = document.querySelector('.filter-input');
 
