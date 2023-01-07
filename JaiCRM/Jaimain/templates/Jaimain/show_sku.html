@@ -1,0 +1,57 @@
+{% extends 'Jaimain/base.html' %}
+
+{% block content %}
+{% if sku.image %}
+<div>
+    <img class="img-article-left" src="{{sku.image.url}}">
+</div>
+<div style="clear: both;"></div>
+{% endif %}
+<div class="header_ilya">
+    <h1>SKU - {{sku.name}}</h1>
+    <div style="text-align: right" class="btn_ilya">
+        <button class="btn">
+            <a class="white" href='{% url 'edit_sku' sku.pk %}'>Редактировать</a>
+        </button>
+    </div>
+
+
+</div>
+<h4>Наименование: {{sku.name}}</h4>
+<h4>Описание: {{sku.description}}</h4>
+<h4>Идетнификатор(артикул): {{sku.identifier}}</h4>
+<h4>Производитель: {{sku.producer}}</h4>
+<h4>Категория: {{sku.category.get_full_path}}</h4>
+
+<!--{% for item in properties_list %}-->
+<!--<div>{{ item.property }} - {{ item.value }}</div>-->
+<!--{% endfor %}-->
+
+
+	<div class="headers__users  header_users-list header_users-list1">
+		<div class="headerTable">Характеристика</div>
+		<div class="headerTable">Значение</div>
+	</div>
+	<table  class="trStyle " id="myTable">
+		<tr>
+		  <!-- <th>Пользователь</th>
+		  <th>Имя пользователя</th>
+		  <th>Партнер</th>
+		  <th>Данные</th> -->
+		</tr>
+
+		<tr class="trClass">
+			{% for item in properties_list %}
+			<td class="tdStyle">{{ item.property }}</td>
+			<td class="tdStyle">{{ item.value }}</td>
+
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+			<!-- <p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p> -->
+
+		<div class="clear"></div>
+
+{% endblock %}
+

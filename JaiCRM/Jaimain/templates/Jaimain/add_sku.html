@@ -1,0 +1,21 @@
+{% extends 'Jaimain/base.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+
+<form method="post" action="{% url 'add_sku' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div><h2>Описание Товара</div>
+    {{ sku_form.as_p }}
+    {{ productpropertyrelation_formset.management_form }}
+    <div><h2>Свойства Товара</div>
+    {% for form in productpropertyrelation_formset %}
+    <div class="form-group">
+        {{ form.as_p }}
+    </div>
+    {% endfor %}
+    <input type="submit" value="Сохранить">
+</form>
+
+
+{% endblock %}

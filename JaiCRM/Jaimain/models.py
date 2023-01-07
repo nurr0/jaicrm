@@ -62,6 +62,7 @@ class ProductCategory(MPTTModel):
                                 'unique_together': 'Категория с таким же названием и родительской категорией уже существует'})
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name='Родительская категория')
+    description = models.TextField(blank=True, verbose_name='Описание', default=None, null=True)
 
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -77,5 +78,53 @@ class ProductCategory(MPTTModel):
     def __str__(self):
         return self.name
 
+    def get_full_path(self):
+        path = list(self.get_ancestors())
+        path_str = '/'.join([node.name for node in path])
+        path_str += f'/{self.name}'
+        return path_str
 
 
+class ProductProperty(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Наименование свойства')
+    partner = models.ForeignKey(Partner, on_delete=models.CASCADE, verbose_name='Партнер')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        unique_together = (('partner', 'name'),)
+        verbose_name = 'Свойство товара'
+        verbose_name_plural = 'Свойства товаров'
+
+
+class SKU(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Наименование', blank=False, null=False)
+    image = models.ImageField(upload_to=f'product_images/', verbose_name='Изображение', blank=True, default=None, null=True)
+    description = models.TextField(blank=True, verbose_name='Описание', default=None, null=True)
+    identifier = models.CharField(blank=False, max_length=255, null=False, verbose_name='Артикул', unique=True)
+    producer = models.CharField(blank=False, max_length=255, null=False, verbose_name='Производитель')
+    partner = models.ForeignKey(Partner, on_delete=models.CASCADE, verbose_name='Партнер')
+    category = TreeForeignKey(ProductCategory, on_delete=models.PROTECT, verbose_name='Категория')
+
+    def __str__(self):
+        return f'{self.identifier}/{self.name}'
+
+    class Meta:
+        unique_together = (('partner', 'identifier', 'name'),)
+        verbose_name = 'SKU'
+        verbose_name_plural = 'SKU'
+
+
+class ProductPropertyRelation(models.Model):
+    product = models.ForeignKey(SKU, on_delete=models.CASCADE, verbose_name='SKU')
+    property = models.ForeignKey(ProductProperty, on_delete=models.CASCADE, verbose_name='Свойство')
+    value = models.CharField(max_length=255, verbose_name='Значение')
+
+    def __str__(self):
+        return f'{self.product} - {self.property} - {self.value}'
+
+    class Meta:
+        unique_together = (('product', 'property'),)
+        verbose_name = 'Связь свойства и товара'
+        verbose_name_plural = 'Связи свойств и товаров'
