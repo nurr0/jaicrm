@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.forms import inlineformset_factory
 from mptt.forms import *
 from . import views
 from .models import *
@@ -71,8 +72,48 @@ class AddProductCategoryForm(forms.ModelForm):
         if user is not None:
             self.fields['parent'].queryset = ProductCategory.objects.filter(partner=user.partner)
 
-
     class Meta:
         model = ProductCategory
         exclude = ('partner',)
+
+
+class AddProductPropertyForm(forms.ModelForm):
+    name = forms.CharField(label='Наименование свойства')
+
+    class Meta:
+        model = ProductProperty
+        exclude = ('partner',)
+
+
+class AddSKUForm(forms.ModelForm):
+    class Meta:
+        model = SKU
+        exclude = ('partner',)
+
+
+class ProductPropertyRelationForm(forms.ModelForm):
+    class Meta:
+        model = ProductPropertyRelation
+        fields = ['property', 'value']
+
+
+ProductPropertyRelationFormSet = inlineformset_factory(SKU, ProductPropertyRelation,
+                                                       fields=['property', 'value'],
+                                                       extra=5,
+                                                       can_delete=True,
+                                                       can_delete_extra=True)
+
+
+class EditSKUForm(forms.ModelForm):
+    class Meta:
+        model = SKU
+        fields = ['name', 'description', 'identifier', 'producer', 'partner', 'category']
+
+
+class EditProductPropertyRelationForm(forms.ModelForm):
+    class Meta:
+        model = ProductPropertyRelation
+        fields = ['property', 'value']
+
+
 

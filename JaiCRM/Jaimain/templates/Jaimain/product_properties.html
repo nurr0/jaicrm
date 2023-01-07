@@ -1,0 +1,82 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+{% extends 'Jaimain/base.html' %}
+{% block content %}
+<!-- <form class="search form-text" action="{% url 'search' %}" method="GET">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<form class="form-text" action="">
+  		<input class="input-text" name="q" type="search">
+  		<i class="fa fa-search"></i>
+		  <input class="input-search" type="submit" value="Искать">
+</form> -->
+
+<!-- </form> -->
+<div class="header__users-top">
+
+	<div class="d7">
+		<form>
+		<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
+		</form>
+	</div>
+
+	<!-- <button class="btn btn__addUsers1 btn-fuck zero1">
+
+		<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+	</button> -->
+
+
+
+	<div class="btn__addUsers">
+		<button class="btn ">
+			<a class="btn__text" href="{% url 'addproductproperty' %}">Добавить свойство</a>
+		</button>
+
+	</div>
+
+	<!-- <input type="text" class="filter-input"> -->
+
+
+</div>
+
+
+
+
+	<div class="headers__users  header_users-list header_users-list1">
+		<div class="headerTable">Название свойства</div>
+		<div class="headerTable">Партнер</div>
+		<div class="headerTable butPods" data-title="Сортировать Свойства от А - Я">
+			<button class="btn1 btn__addUsers1 btn-fuck ">
+			<!-- <a class="btn__text">Сортировать от A - Я </a> -->
+			<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+		</button>
+		</div>
+	</div>
+	<table  class="trStyle " id="myTable">
+		<tr>
+		  <!-- <th>Пользователь</th>
+		  <th>Имя пользователя</th>
+		  <th>Партнер</th>
+		  <th>Данные</th> -->
+		</tr>
+
+		<tr class="trClass">
+			{% for prop in product_props %}
+			<td class="tdStyle">{{prop.name}}</td>
+			<td class="tdStyle">{{prop.partner}}</td>
+			<td class="tdStyle"> <button class="btn">
+				  <a class="btn__text" href="{{prop.pk}}">Просмотр</a>
+				  </button>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+			<!-- <p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p> -->
+
+		<div class="clear"></div>
+
+
+{% endblock %}
+

@@ -10,7 +10,8 @@ menu = [
         {'title': "Пользователи", 'url_name': 'users'},
         {'title': "Торговые точки", 'url_name': 'shops'},
         {'title': "Товарные категории", 'url_name': 'product_categories'},
-        # {'title': "CRM", 'url_name': 'crm'},
+        {'title': "Свойства товаров", 'url_name': 'product_properties'},
+        {'title': "Управление SKU", 'url_name': 'sku'}
         ]
 
 class DataMixin:

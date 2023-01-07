@@ -192,7 +192,7 @@ class RegisterUser(DataMixin, CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        return redirect('')  # не забыть исправить после реализации главной страницы
+        return redirect('home')
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_superuser:
@@ -375,22 +375,22 @@ class ProductCategoriesList(DataMixin, ListView):
         return queryset
 
 
-class EditProductCategory(DataMixin, UpdateView):
-    model = ProductCategory
-    fields = ['name', 'parent']
-    template_name = 'Jaimain/editproductcategory.html'
-    success_url = '/product_categories/'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Изменение товарной категории')
-        return dict(list(context.items()) + list(c_def.items()))
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
+# class EditProductCategory(DataMixin, UpdateView):
+#     model = ProductCategory
+#     fields = ['name', 'parent']
+#     template_name = 'Jaimain/editproductcategory.html'
+#     success_url = '/product_categories/'
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         c_def = self.get_user_context(title='Изменение товарной категории')
+#         return dict(list(context.items()) + list(c_def.items()))
+#
+#     @method_decorator(login_required)
+#     def dispatch(self, request, *args, **kwargs):
+#         if request.user.is_costumer:
+#             raise PermissionDenied
+#         return super().dispatch(request, *args, **kwargs)
 
 
 def edit_product_category(request, pk):
@@ -412,3 +412,170 @@ def edit_product_category(request, pk):
     form.fields['parent'].queryset = categories
     context['form'] = form
     return render(request, 'Jaimain/editproductcategory.html', context=context)
+
+
+def add_product_property(request):
+    template = 'Jaimain/addproductproperty.html'
+    form = AddProductPropertyForm()
+    partner = request.user.partner
+    user_menu = menu.copy()
+    context = {'partner': partner, 'form': form, 'menu': user_menu}
+
+    if request.method == 'POST':
+        form = AddProductPropertyForm(request.POST)
+        if form.is_valid():
+            partner = request.user.partner
+            name = form.cleaned_data['name']
+            try:
+                queryset = ProductProperty.objects.create(partner=partner, name=name)
+            except:
+                form = AddProductPropertyForm()
+            return redirect('product_properties')
+        else:
+            form = AddProductPropertyForm()
+
+    return render(request, template, context=context)
+
+
+class ProductPropertiesList(DataMixin, ListView):
+    model = ProductProperty
+    template_name = 'Jaimain/product_properties.html'
+    context_object_name = 'product_props'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Торговые точки')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = ProductProperty.objects.all() if user.is_superuser else ProductProperty.objects.filter(
+            partner=user.partner)
+        return queryset
+
+
+class EditProductProperty(DataMixin, UpdateView):
+    model = ProductProperty
+    fields = ['name']
+    template_name = 'Jaimain/editproductproperty.html'
+    success_url = '/product_properties/'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение свойства товара')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+
+def add_sku(request):
+    user_menu = menu.copy()
+    # context = {'partner': partner, 'form': form, 'menu': user_menu}
+    if request.method == 'POST':
+        sku_form = AddSKUForm(request.POST, request.FILES)
+        productpropertyrelation_formset = ProductPropertyRelationFormSet(request.POST)
+        if sku_form.is_valid() and productpropertyrelation_formset.is_valid():
+            sku = sku_form.save(commit=False)
+            sku.partner = request.user.partner
+            sku.image = sku_form.cleaned_data['image']
+            sku.save()
+            try:
+                for form in productpropertyrelation_formset:
+                    if form.cleaned_data.get('DELETE'):
+                        continue
+                    property_relation = form.save(commit=False)
+                    property_relation.product = sku
+                    property_relation.save()
+            except:
+                sku.delete()
+            return redirect('sku')
+        if not sku_form.is_valid():
+            print(sku_form.errors)
+    else:
+        sku_form = AddSKUForm()
+        productpropertyrelation_formset = ProductPropertyRelationFormSet()
+
+    return render(request, 'Jaimain/add_sku.html', {
+        'sku_form': sku_form,
+        'productpropertyrelation_formset': productpropertyrelation_formset, 'menu': user_menu
+    })
+
+
+def edit_sku(request, sku_pk):
+    user_menu = menu.copy()
+    sku = get_object_or_404(SKU, pk=sku_pk)
+
+    if request.method == 'POST':
+        sku_form = AddSKUForm(request.POST, request.FILES, instance=sku)
+        productpropertyrelation_formset = ProductPropertyRelationFormSet(request.POST, instance=sku)
+        if sku_form.is_valid() and productpropertyrelation_formset.is_valid():
+            sku = sku_form.save()
+            for form in productpropertyrelation_formset:
+                if form.cleaned_data.get('DELETE'):
+                    if form.instance.pk:
+                        form.instance.delete()
+                else:
+                    property_relation = form.save(commit=False)
+                    property_relation.product = sku
+                    property_relation.save()
+            return redirect('sku')
+    else:
+        sku_form = AddSKUForm(instance=sku)
+        productpropertyrelation_formset = ProductPropertyRelationFormSet(instance=sku)
+
+    return render(request, 'Jaimain/edit_sku.html', {
+        'sku_form': sku_form,
+        'productpropertyrelation_formset': productpropertyrelation_formset, 'menu': user_menu
+    })
+
+
+class SKUList(DataMixin, ListView):
+    model = SKU
+    template_name = 'Jaimain/sku.html'
+    context_object_name = 'sku_list'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Список SKU Партнера')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = SKU.objects.all() if user.is_superuser else SKU.objects.filter(
+            partner=user.partner)
+        return queryset
+
+
+class ShowSKU(DataMixin, DetailView):
+    model = SKU
+    template_name = 'Jaimain/show_sku.html'
+    pk_url_kwarg = 'sku_pk'
+    context_object_name = 'sku'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Просмотр SKU')
+        c_def['properties_list'] = ProductPropertyRelation.objects.filter(product_id=self.object.pk)
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)

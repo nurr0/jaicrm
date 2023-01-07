@@ -7,7 +7,7 @@
 		<div class="d7">
 			<form>
 			<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
-			
+
 			</form>
 		</div>
 
@@ -17,7 +17,7 @@
 				<a class="btn__text" href="{% url 'addproductcategory' %}">Добавить товарную категорию</a>
 			</button>
 		</div>
-	
+
 </div>
 
 {% load mptt_tags %}
@@ -30,10 +30,10 @@
     <!-- <div id="sweeties" class="menu"> -->
 		<!-- <span class="title">Сладости (нажми меня)!</span> -->
 		<ul>
-			
+
 	{% recursetree object_list %}
 			<!-- <img class="title" src="./../../static/Jaimain/images/ar.svg" alt=""> -->
-			
+
 	    	<li id="sweeties" class="menu open">
 				<a class="categoryStyle"  id='filter-list' href={{ node.pk }}>{{node.name}} </a>
 				<!-- <img class="title" src="./../../static/Jaimain/images/ar.svg" alt=""> -->
