@@ -291,7 +291,7 @@ if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/par
 
 
 
-if (url === 'http://127.0.0.1:8000/users/'){
+if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/'){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -419,7 +419,7 @@ if (url === 'http://127.0.0.1:8000/product_categories/') {
     filter03();
 }
 
-if (url === 'http://127.0.0.1:8000/add_sku/'){
+if (url === 'http://127.0.0.1:8000/add_sku/' ){
     const nameSku = document.querySelector('label[for="id_name"]')
     const AreaNameSku = document.querySelector('#id_name')
     nameSku.classList.add('p__addPart-width')
@@ -486,3 +486,28 @@ if (url === 'http://127.0.0.1:8000/add_sku/'){
     })
 }
 
+if (/edit/.test(location.href )  && /sku/.test(location.href )){
+    settingsBlock.classList.add('ActiveList') 
+
+    const nameSku = document.querySelector('label[for="id_name"]')
+    const AreaNameSku = document.querySelector('#id_name')
+    nameSku.classList.add('p__addPart-width')
+    
+    const imgSku = document.querySelector('label[for="id_image"]')
+    imgSku.classList.add('p__addPart-width')
+
+    const imgSkuEdit = document.querySelector('#id_image')
+    imgSkuEdit.classList.add('imgSkuEdit')
+
+    const descSku = document.querySelector('label[for="id_description"]')
+    descSku.classList.add('p__addPart-width')
+
+    const articulSku = document.querySelector('label[for="id_identifier"]')
+    articulSku.classList.add('p__addPart-width')
+
+    const proizvoditelSku = document.querySelector('label[for="id_producer"]')
+    proizvoditelSku.classList.add('p__addPart-width')
+
+    const categoryySku = document.querySelector('label[for="id_category"]')
+    categoryySku.classList.add('p__addPart-width')
+}

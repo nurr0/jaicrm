@@ -32,11 +32,12 @@
 {% if request.user.is_authenticated %}
 				<div class="header__user">
 					<div class="last">
-						<img src="./../../static/Jaimain/images/user.svg" alt="">
+						<!-- <img src="./../../static/Jaimain/images/user.svg" alt=""> -->
+						<img src="/static/Jaimain/images/user.svg" alt="">
 						<p>{{user.username}}</p>
 					</div>
 					<div class="header__user-exit">
-						<img class="header__user-exitImg" src="./../../static/Jaimain/images/exit.svg" alt="">
+						<img class="header__user-exitImg" src="/static/Jaimain/images/exit.svg" alt="">
 						<a class="header__exit" href="{% url 'logout' %}">Выйти</a>
 					</div>
 				</div>
@@ -52,18 +53,19 @@
 
 	<div class="top2 ">
 		<div class="sidebar__arrow-img2">
-			<img class="sidebar__arrow-img0" src="./../../static/Jaimain/images/picture.svg" alt="">
-			<img class="partners zero"  src="./../../static/Jaimain/images/part-icon.svg" alt="">
-			<img class="AddPartners zero" src="./../../static/Jaimain/images/add-part-icon.svg" alt="">
-			<img class="shops zero" src="./../../static/Jaimain/images/home.svg" alt="">
-			<img class="category zero" src="./../../static/Jaimain/images/category.svg" alt="">
+			<!-- <img class="sidebar__arrow-img0" src="./../../static/Jaimain/images/picture.svg" alt=""> -->
+			<img class="sidebar__arrow-img0" src="/static/Jaimain/images/picture.svg" alt="">
+			<img class="partners zero"  src="/static/Jaimain/images/part-icon.svg" alt="">
+			<img class="AddPartners zero" src="/static/Jaimain/images/add-part-icon.svg" alt="">
+			<img class="shops zero" src="/static/Jaimain/images/home.svg" alt="">
+			<img class="category zero" src="/static/Jaimain/images/category.svg" alt="">
 		</div>
 	</div>
 
 		<td valign="top" class="left-chapters " >
 
 			<div class="sidebar__arrow">
-				<img class="sidebar__arrow-img" src="./../../static/Jaimain/images/Caret.svg" alt="">
+				<img class="sidebar__arrow-img" src="/static/Jaimain/images/Caret.svg" alt="">
 			</div>
 			<ul id="leftchapters">
 {% for m in menu %}
@@ -128,7 +130,8 @@
 </td></tr></table> -->
 <!-- Конец footer'а и страницы -->
 </body>
-<script src="./../../static/Jaimain/main.js"></script>
+<!-- <script src="./../../static/Jaimain/main.js"></script> -->
+<script src="/static/Jaimain/main.js"></script>
 <!-- preloader -->
 <script>
 	window.onload = function () {
