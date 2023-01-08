@@ -1330,6 +1330,10 @@ ul.lang-list li a:hover {color: #fdc073;}
 	align-items: center;
 }
 
+.property-block:hover{
+	scale: 1.1;
+}
+
 .settings-block{
 	background-image: url(./../images/sett.svg);
 	background-repeat: no-repeat;
@@ -1340,6 +1344,36 @@ ul.lang-list li a:hover {color: #fdc073;}
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
+}
+
+.settings-block:hover{
+	scale: 1.1;
+}
+
+.properyAll{
+	display: none;
+	/* opacity: 0; */
+}
+
+.opa1{
+	display: block;
+	/* opacity: 1; */
+	animation: opacity2 0.9s;
+}
+
+@keyframes opacity2{
+	from{
+		opacity: 0;
+	}
+
+	to{
+		opacity: 1;
+	}
+  }
+
+.plus{
+	width: 25px;
+	height: 25px;
 }
 
 /* Страница Поиска Конец */

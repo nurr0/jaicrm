@@ -21,7 +21,10 @@
     </div>
     {% for form in productpropertyrelation_formset %}
     <div class="form-group">
-        {{ form.as_p }}
+        <!-- <div class="title">Добавить</div> -->
+        <img class="title plus" src="./../../static/Jaimain/images/plus.png" alt="">
+        <div>{{ form.as_p }}</div>
+        
     </div>
     {% endfor %}
     <input class="btn" type="submit" value="Сохранить">

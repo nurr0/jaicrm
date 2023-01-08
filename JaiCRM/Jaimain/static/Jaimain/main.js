@@ -121,6 +121,10 @@ if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')  
 }else if (url === 'http://127.0.0.1:8000/partners/1/edit/'){
     partners.classList.add('ActiveList') 
+}else if (url === 'http://127.0.0.1:8000/product_properties/'){
+    propertyBlock.classList.add('ActiveList') 
+}else if (url === 'http://127.0.0.1:8000/sku/'){
+    settingsBlock.classList.add('ActiveList') 
 }else if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/registeruser/' ){
     users.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/login/'){
@@ -157,16 +161,17 @@ if (url === 'http://127.0.0.1:8000/addpartner/'){
     fileUpload.classList.add('btn-zero')
     const VFail = document.querySelector('.btn-addPart');
     fileUpload.addEventListener('click',failEdit)
+    function failEdit(){
+        setTimeout(function(){
+            VFail.innerText = 'Файл выбран';
+        },1000)
+    
+    }
 }
 
 
 
-function failEdit(){
-    setTimeout(function(){
-        VFail.innerText = 'Файл выбран';
-    },1000)
 
-}
 
 const NamePartners = document.querySelector('.form-label')
 const InputNamePartners = document.querySelector('.form-input')
@@ -433,4 +438,51 @@ if (url === 'http://127.0.0.1:8000/add_sku/'){
 
     const categoryySku = document.querySelector('label[for="id_category"]')
     categoryySku.classList.add('p__addPart-width')
+
+    const provertyAll = document.querySelectorAll('.form-group')
+    const provertyAll01 = document.querySelectorAll('.form-group > div')[0]
+    provertyAll01.classList.toggle('properyAll')
+    const provertyAll02 = document.querySelectorAll('.form-group > div')[1]
+    provertyAll02.classList.toggle('properyAll')
+    const provertyAll03 = document.querySelectorAll('.form-group > div')[2]
+    provertyAll03.classList.toggle('properyAll')
+    const provertyAll04 = document.querySelectorAll('.form-group > div')[3]
+    provertyAll04.classList.toggle('properyAll')
+    const provertyAll05 = document.querySelectorAll('.form-group > div')[4]
+    provertyAll05.classList.toggle('properyAll')
+
+    const proverty01 = document.querySelector('#id_productpropertyrelation_set-0-DELETE')
+    proverty01.setAttribute('checked','checked')
+    const proverty02 = document.querySelector('#id_productpropertyrelation_set-1-DELETE')
+    proverty02.setAttribute('checked','checked')
+    const proverty03 = document.querySelector('#id_productpropertyrelation_set-2-DELETE')
+    proverty03.setAttribute('checked','checked')
+    const proverty04 = document.querySelector('#id_productpropertyrelation_set-3-DELETE')
+    proverty04.setAttribute('checked','checked')
+    const proverty05 = document.querySelector('#id_productpropertyrelation_set-4-DELETE')
+    proverty05.setAttribute('checked','checked')
+
+    document.querySelectorAll('.title').forEach((el) => {
+        el.addEventListener('click',()=>{
+            let content = el.nextElementSibling ;
+            console.log(content)
+            let contentPAll = content.querySelectorAll('p')[2]
+            let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
+            contentP.removeAttribute('checked')
+            console.log(contentP)
+
+            document.querySelector('.plus').remove()
+
+            if(content.style.maxHeight){
+                provertyAll.forEach((el)=>el.style.maxHeight = null)
+            } else{
+                provertyAll.forEach((el)=>el.style.maxHeight = null)
+                content.classList.toggle('opa1')
+                contentPAll.classList.toggle('zero1')
+                // contentP.removeAttribute('checked')
+            }
+            
+        })
+    })
 }
+
