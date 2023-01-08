@@ -34,6 +34,7 @@ function proverka(){
 
 
 category1.classList.add('category10')
+category1.classList.add('zero1')
 
 arrow.addEventListener('click', nonActive)
 
