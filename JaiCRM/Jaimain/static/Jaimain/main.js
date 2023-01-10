@@ -511,4 +511,356 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
 
     const categoryySku = document.querySelector('label[for="id_category"]')
     categoryySku.classList.add('p__addPart-width')
+
+    //Убираем пустые блоки
+    const xz0 = document.querySelector('#id_productpropertyrelation_set-0-value')
+    if (xz0 != null){
+        const zxc0 = xz0.value;
+        parentxz0 = xz0.closest("p");
+        glavParentxz0 = parentxz0.closest("div");
+        console.log(zxc0)
+
+        if (zxc0 == ''){
+            glavParentxz0.classList.toggle('zero1')
+            glavParentxz0.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+                    // let contentPAll = content.querySelectorAll('p')[2]
+                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
+                    // contentP.removeAttribute('checked')
+                    // console.log(contentP)
+        
+                    
+                    // const provertyAll = document.querySelectorAll('.form-group')
+                    content1.classList.toggle('zero1')
+                    el.remove()
+                    // if(content.style.maxHeight){
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    // } else{
+                    
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    //     content.classList.toggle('opa1')
+                    //     contentPAll.classList.toggle('zero1')
+                    //     // contentP.removeAttribute('checked')
+                    // }
+                    
+                })
+            })
+    
+        }
+
+    }
+
+    const xz1 = document.querySelector('#id_productpropertyrelation_set-1-value')
+    if (xz1 != null){
+        const zxc1 = xz1.value; //значение
+        parentxz1 = xz1.closest("p"); // тег p
+        glavParentxz1 = parentxz1.closest("div"); //высший тег div
+        console.log(zxc1)
+        if (zxc1 == ''){
+            glavParentxz1.classList.toggle('zero1')
+            glavParentxz1.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+                    // let contentPAll = content.querySelectorAll('p')[2]
+                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
+                    // contentP.removeAttribute('checked')
+                    // console.log(contentP)
+        
+                    
+                    // const provertyAll = document.querySelectorAll('.form-group')
+                    content1.classList.toggle('zero1')
+                    el.remove()
+                    // if(content.style.maxHeight){
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    // } else{
+                    
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    //     content.classList.toggle('opa1')
+                    //     contentPAll.classList.toggle('zero1')
+                    //     // contentP.removeAttribute('checked')
+                    // }
+                    
+                })
+            })
+    
+        }
+    }
+
+
+    const xz2 = document.querySelector('#id_productpropertyrelation_set-2-value')
+    if (xz2 != null){
+        const zxc2 = xz2.value;
+        parentxz2 = xz2.closest("p");
+        glavParentxz2 = parentxz2.closest("div");
+        console.log(zxc2)
+
+        if (zxc2 == ''){
+            glavParentxz2.classList.toggle('zero1')
+            glavParentxz2.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+                    // let contentPAll = content.querySelectorAll('p')[2]
+                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
+                    // contentP.removeAttribute('checked')
+                    // console.log(contentP)
+        
+                    
+                    // const provertyAll = document.querySelectorAll('.form-group')
+                    content1.classList.toggle('zero1')
+                    el.remove()
+                    // if(content.style.maxHeight){
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    // } else{
+                    
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    //     content.classList.toggle('opa1')
+                    //     contentPAll.classList.toggle('zero1')
+                    //     // contentP.removeAttribute('checked')
+                    // }
+                    
+                })
+            })
+    
+        }
+    }
+
+    const xz3 = document.querySelector('#id_productpropertyrelation_set-3-value')
+    if (xz3 != null){
+        const zxc3 = xz3.value; //значение
+        parentxz3 = xz3.closest("p"); // тег p
+        glavParentxz3 = parentxz3.closest("div"); //высший тег div
+        papaGlavParentxz3 = glavParentxz3.closest(".form-group")
+        console.log(zxc3)
+
+        if (zxc3 == ''){
+            glavParentxz3.classList.toggle('zero1')
+            glavParentxz3.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+            // papaGlavParentxz3.innerHTML = `<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>`
+            
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+                    // let contentPAll = content.querySelectorAll('p')[2]
+                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
+                    // contentP.removeAttribute('checked')
+                    // console.log(contentP)
+        
+                    
+                    // const provertyAll = document.querySelectorAll('.form-group')
+                    content1.classList.toggle('zero1')
+                    el.remove()
+                    // if(content.style.maxHeight){
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    // } else{
+                    
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    //     content.classList.toggle('opa1')
+                    //     contentPAll.classList.toggle('zero1')
+                    //     // contentP.removeAttribute('checked')
+                    // }
+                    
+                })
+            })
+            
+            // plusEdit = document.querySelector('.title')
+            // plusEdit.addEventListener('click',()=>{
+            //     glavParentxz3.classList.toggle('zero1')
+            // })
+        }
+    }
+
+    const xz4 = document.querySelector('#id_productpropertyrelation_set-4-value')
+    if (xz4 !== null){
+        const zxc4 = xz4.value; //значение
+        parentxz4 = xz4.closest("p"); // тег p
+        glavParentxz4 = parentxz4.closest("div"); //высший тег div
+        papaGlavParentxz4 = glavParentxz4.closest(".form-group")
+        console.log(zxc4)
+
+        if (zxc4 == ''){
+            glavParentxz4.classList.toggle('zero1')
+            glavParentxz4.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+            // papaGlavParentxz3.innerHTML = `<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>`
+            
+            // plusEdit = document.querySelector('.title')
+            // plusEdit.addEventListener('click',()=>{
+            //     glavParentxz4.classList.toggle('zero1')
+            // })
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+                    // let contentPAll = content.querySelectorAll('p')[2]
+                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
+                    // contentP.removeAttribute('checked')
+                    // console.log(contentP)
+        
+                    
+                    // const provertyAll = document.querySelectorAll('.form-group')
+                    content1.classList.toggle('zero1')
+                    el.remove()
+                    // if(content.style.maxHeight){
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    // } else{
+                    
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    //     content.classList.toggle('opa1')
+                    //     contentPAll.classList.toggle('zero1')
+                    //     // contentP.removeAttribute('checked')
+                    // }
+                    
+                })
+            })
+        }
+    
+    }
+
+    const xz5 = document.querySelector('#id_productpropertyrelation_set-5-value')
+    if (xz5 !== null){
+        const zxc5 = xz5.value; //значение
+        parentxz5 = xz5.closest("p"); // тег p
+        glavParentxz5 = parentxz5.closest("div"); //высший тег div
+        console.log(zxc5)
+        if (zxc5 == ''){
+            glavParentxz5.classList.toggle('zero1')
+            glavParentxz5.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+                    // let contentPAll = content.querySelectorAll('p')[2]
+                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
+                    // contentP.removeAttribute('checked')
+                    // console.log(contentP)
+        
+                   
+                    // const provertyAll = document.querySelectorAll('.form-group')
+                    content1.classList.toggle('zero1')
+                    el.remove()
+                    // if(content.style.maxHeight){
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    // } else{
+                    
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    //     content.classList.toggle('opa1')
+                    //     contentPAll.classList.toggle('zero1')
+                    //     // contentP.removeAttribute('checked')
+                    // }
+                    
+                })
+            })
+            
+        }
+    }
+
+    const xz6 = document.querySelector('#id_productpropertyrelation_set-6-value')
+    if (xz6 !== null){
+        const zxc6 = xz6.value; //значение
+        parentxz6 = xz6.closest("p"); // тег p
+        glavParentxz6 = parentxz6.closest("div"); //высший тег div
+        console.log(zxc6)
+        if (zxc6 == ''){
+            glavParentxz6.classList.toggle('zero1')
+            glavParentxz6.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+                    // let contentPAll = content.querySelectorAll('p')[2]
+                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
+                    // contentP.removeAttribute('checked')
+                    // console.log(contentP)
+        
+                    
+                    // const provertyAll = document.querySelectorAll('.form-group')
+                    content1.classList.toggle('zero1')
+                    el.remove()
+                    // if(content.style.maxHeight){
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    // } else{
+                    
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    //     content.classList.toggle('opa1')
+                    //     contentPAll.classList.toggle('zero1')
+                    //     // contentP.removeAttribute('checked')
+                    // }
+                    
+                })
+            })
+    
+        }
+    }
+
+    const xz7 = document.querySelector('#id_productpropertyrelation_set-7-value')
+    if (xz7 !== null){
+        const zxc7 = xz7.value; //значение
+        parentxz7 = xz7.closest("p"); // тег p
+        glavParentxz7 = parentxz7.closest("div"); //высший тег div
+        console.log(zxc7)
+        if (zxc7 == ''){
+            glavParentxz7.classList.toggle('zero1')
+            glavParentxz7.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+                    // let contentPAll = content.querySelectorAll('p')[2]
+                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
+                    // contentP.removeAttribute('checked')
+                    // console.log(contentP)
+        
+                    
+                    // const provertyAll = document.querySelectorAll('.form-group')
+                    content1.classList.toggle('zero1')
+                    el.remove()
+                    // if(content.style.maxHeight){
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    // } else{
+                    
+                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
+                    //     content.classList.toggle('opa1')
+                    //     contentPAll.classList.toggle('zero1')
+                    //     // contentP.removeAttribute('checked')
+                    // }
+                    
+                })
+            })
+    
+        }
+    }
+
+    
+
+
 }
+
+function querySelectorAllShadows(selector, el = document.body) {
+    // recurse on childShadows
+    const childShadows = Array.from(el.querySelectorAll('*')).
+      map(el => el.shadowRoot).filter(Boolean);
+  
+    // console.log('[querySelectorAllShadows]', selector, el, `(${childShadows.length} shadowRoots)`);
+  
+    const childResults = childShadows.map(child => querySelectorAllShadows(selector, child));
+    
+    // fuse all results into singular, flat array
+    const result = Array.from(el.querySelectorAll(selector));
+    return result.concat(childResults).flat();
+  }
+
+//   .label
+

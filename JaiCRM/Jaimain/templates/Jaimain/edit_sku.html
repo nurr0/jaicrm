@@ -12,7 +12,8 @@
     <div><h2>Свойства Товара</div>
     {% for form in productpropertyrelation_formset %}
     <div class="form-group">
-        {{ form.as_p }}
+        
+        <div>{{ form.as_p }}</div>
     </div>
     {% endfor %}
         <input class="btn" type="submit" value="Save">

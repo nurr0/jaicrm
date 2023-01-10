@@ -17,10 +17,9 @@
 
 <div class="header__users-top">
 	<div class="d7">
-		<form>
-		<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
+		<form shadowroot="open">
+		<input  id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
 		
-		</form>
 	</div>
 
 	<div class="btn__addUsers">
@@ -44,7 +43,7 @@
 <ul id="filter-list" class="list-articles partners__cards">
 <!-- <ul class="list-articles"> -->
 	{% for p in partners %}
-
+	
 	<li class="partners__info">
 		<p><img class="img-article-left thumb" src="{{p.logo.url}}"></p>
 		<div class="article-panel">
