@@ -850,3 +850,30 @@ userImg.addEventListener('click',()=>{
             requestAnimationFrame(loop);
 
 })
+
+//Пагинация
+const partnersblock = document.querySelectorAll('.partners__info')
+const arrayPartnersblock = Array.from(partnersblock)
+console.log(arrayPartnersblock)
+
+let liPagination = document.querySelector('#pagination li')
+
+let notesOnPage = 3;
+
+for (let item of liPagination){
+    item.addEventListener('click',function(){
+        //Получаем номер страницы
+        let pageNum = +this.innerHTML;
+        console.log(pageNum)
+        let notes = arrayPartnersblock.slice
+    });
+}
+
+// for (let item of Object.keys(liPagination)){
+//     item.addEventListener('click',function(){
+//         //Получаем номер страницы
+//         let pageNum = liPagination[+this.innerHTML];
+//         console.log(pageNum)
+//         let notes = arrayPartnersblock.slice()
+//     });
+// }

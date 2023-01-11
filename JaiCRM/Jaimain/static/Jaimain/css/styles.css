@@ -1407,6 +1407,7 @@ canvas {
 .stylePagination{
 	display: flex;
 	justify-content: flex-end;
+	list-style-type: none;
 }
 /* .canvasgame{
 	display: block;
