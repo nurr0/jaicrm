@@ -171,9 +171,6 @@ if (url === 'http://127.0.0.1:8000/addpartner/'){
 }
 
 
-
-
-
 const NamePartners = document.querySelector('.form-label')
 const InputNamePartners = document.querySelector('.form-input')
 const logoPartners = document.querySelectorAll('.form-label')[1]
@@ -252,15 +249,6 @@ TextContactInn.classList.add('p__addPart-widthRight')
 }
 
 
-
-//Поиск (нет на всех страницах)
-// searchBtn.addEventListener('click', SearchEmpty)
-// function SearchEmpty(e){
-//     if (inputText.value === ''){
-//         e.preventDefault();
-//         alert('Введите текст в поиск!')
-//     }
-// }
 
 
 //Поиск у пользователей
@@ -528,25 +516,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                 el.addEventListener('click',()=>{
                     let content1 = el.nextElementSibling ;
                     console.log(content1)
-                    // let contentPAll = content.querySelectorAll('p')[2]
-                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
-                    // contentP.removeAttribute('checked')
-                    // console.log(contentP)
-        
-                    
-                    // const provertyAll = document.querySelectorAll('.form-group')
+
                     content1.classList.toggle('zero1')
                     el.remove()
-                    // if(content.style.maxHeight){
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    // } else{
-                    
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    //     content.classList.toggle('opa1')
-                    //     contentPAll.classList.toggle('zero1')
-                    //     // contentP.removeAttribute('checked')
-                    // }
-                    
+ 
                 })
             })
     
@@ -568,25 +541,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                 el.addEventListener('click',()=>{
                     let content1 = el.nextElementSibling ;
                     console.log(content1)
-                    // let contentPAll = content.querySelectorAll('p')[2]
-                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
-                    // contentP.removeAttribute('checked')
-                    // console.log(contentP)
-        
-                    
-                    // const provertyAll = document.querySelectorAll('.form-group')
+
                     content1.classList.toggle('zero1')
                     el.remove()
-                    // if(content.style.maxHeight){
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    // } else{
-                    
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    //     content.classList.toggle('opa1')
-                    //     contentPAll.classList.toggle('zero1')
-                    //     // contentP.removeAttribute('checked')
-                    // }
-                    
+
                 })
             })
     
@@ -609,24 +567,9 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                 el.addEventListener('click',()=>{
                     let content1 = el.nextElementSibling ;
                     console.log(content1)
-                    // let contentPAll = content.querySelectorAll('p')[2]
-                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
-                    // contentP.removeAttribute('checked')
-                    // console.log(contentP)
-        
-                    
-                    // const provertyAll = document.querySelectorAll('.form-group')
                     content1.classList.toggle('zero1')
                     el.remove()
-                    // if(content.style.maxHeight){
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    // } else{
-                    
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    //     content.classList.toggle('opa1')
-                    //     contentPAll.classList.toggle('zero1')
-                    //     // contentP.removeAttribute('checked')
-                    // }
+
                     
                 })
             })
@@ -645,38 +588,21 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
         if (zxc3 == ''){
             glavParentxz3.classList.toggle('zero1')
             glavParentxz3.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
-            // papaGlavParentxz3.innerHTML = `<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>`
+
             
             document.querySelectorAll('.title').forEach((el) => {
                 el.addEventListener('click',()=>{
                     let content1 = el.nextElementSibling ;
                     console.log(content1)
-                    // let contentPAll = content.querySelectorAll('p')[2]
-                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
-                    // contentP.removeAttribute('checked')
-                    // console.log(contentP)
-        
-                    
-                    // const provertyAll = document.querySelectorAll('.form-group')
+
                     content1.classList.toggle('zero1')
                     el.remove()
-                    // if(content.style.maxHeight){
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    // } else{
-                    
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    //     content.classList.toggle('opa1')
-                    //     contentPAll.classList.toggle('zero1')
-                    //     // contentP.removeAttribute('checked')
-                    // }
+
                     
                 })
             })
             
-            // plusEdit = document.querySelector('.title')
-            // plusEdit.addEventListener('click',()=>{
-            //     glavParentxz3.classList.toggle('zero1')
-            // })
+
         }
     }
 
@@ -691,34 +617,15 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
         if (zxc4 == ''){
             glavParentxz4.classList.toggle('zero1')
             glavParentxz4.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
-            // papaGlavParentxz3.innerHTML = `<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>`
-            
-            // plusEdit = document.querySelector('.title')
-            // plusEdit.addEventListener('click',()=>{
-            //     glavParentxz4.classList.toggle('zero1')
-            // })
+
             document.querySelectorAll('.title').forEach((el) => {
                 el.addEventListener('click',()=>{
                     let content1 = el.nextElementSibling ;
                     console.log(content1)
-                    // let contentPAll = content.querySelectorAll('p')[2]
-                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
-                    // contentP.removeAttribute('checked')
-                    // console.log(contentP)
-        
-                    
-                    // const provertyAll = document.querySelectorAll('.form-group')
+
                     content1.classList.toggle('zero1')
                     el.remove()
-                    // if(content.style.maxHeight){
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    // } else{
-                    
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    //     content.classList.toggle('opa1')
-                    //     contentPAll.classList.toggle('zero1')
-                    //     // contentP.removeAttribute('checked')
-                    // }
+
                     
                 })
             })
@@ -740,24 +647,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                 el.addEventListener('click',()=>{
                     let content1 = el.nextElementSibling ;
                     console.log(content1)
-                    // let contentPAll = content.querySelectorAll('p')[2]
-                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
-                    // contentP.removeAttribute('checked')
-                    // console.log(contentP)
-        
-                   
-                    // const provertyAll = document.querySelectorAll('.form-group')
+
                     content1.classList.toggle('zero1')
                     el.remove()
-                    // if(content.style.maxHeight){
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    // } else{
-                    
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    //     content.classList.toggle('opa1')
-                    //     contentPAll.classList.toggle('zero1')
-                    //     // contentP.removeAttribute('checked')
-                    // }
+
                     
                 })
             })
@@ -779,24 +672,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                 el.addEventListener('click',()=>{
                     let content1 = el.nextElementSibling ;
                     console.log(content1)
-                    // let contentPAll = content.querySelectorAll('p')[2]
-                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
-                    // contentP.removeAttribute('checked')
-                    // console.log(contentP)
-        
-                    
-                    // const provertyAll = document.querySelectorAll('.form-group')
+
                     content1.classList.toggle('zero1')
                     el.remove()
-                    // if(content.style.maxHeight){
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    // } else{
-                    
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    //     content.classList.toggle('opa1')
-                    //     contentPAll.classList.toggle('zero1')
-                    //     // contentP.removeAttribute('checked')
-                    // }
+
                     
                 })
             })
@@ -818,49 +697,14 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                 el.addEventListener('click',()=>{
                     let content1 = el.nextElementSibling ;
                     console.log(content1)
-                    // let contentPAll = content.querySelectorAll('p')[2]
-                    // let contentP = content.querySelectorAll('p')[2].querySelector('input[type=checkbox]')
-                    // contentP.removeAttribute('checked')
-                    // console.log(contentP)
-        
-                    
-                    // const provertyAll = document.querySelectorAll('.form-group')
+
                     content1.classList.toggle('zero1')
                     el.remove()
-                    // if(content.style.maxHeight){
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    // } else{
-                    
-                    //     provertyAll.forEach((el)=>el.style.maxHeight = null)
-                    //     content.classList.toggle('opa1')
-                    //     contentPAll.classList.toggle('zero1')
-                    //     // contentP.removeAttribute('checked')
-                    // }
+
                     
                 })
             })
     
         }
     }
-
-    
-
-
 }
-
-function querySelectorAllShadows(selector, el = document.body) {
-    // recurse on childShadows
-    const childShadows = Array.from(el.querySelectorAll('*')).
-      map(el => el.shadowRoot).filter(Boolean);
-  
-    // console.log('[querySelectorAllShadows]', selector, el, `(${childShadows.length} shadowRoots)`);
-  
-    const childResults = childShadows.map(child => querySelectorAllShadows(selector, child));
-    
-    // fuse all results into singular, flat array
-    const result = Array.from(el.querySelectorAll(selector));
-    return result.concat(childResults).flat();
-  }
-
-//   .label
-
