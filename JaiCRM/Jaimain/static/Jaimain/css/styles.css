@@ -1200,12 +1200,12 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 .partners__cards{
 	display: flex;
-	flex-direction: column;
+	/* flex-direction: column; */
 	justify-content: space-between;
 	align-items: flex-start;
 	padding: 0px;
 
-	width: 345.33px;
+	/* width: 345.33px; */
 	height: 584px;
 }
 
@@ -1384,6 +1384,30 @@ ul.lang-list li a:hover {color: #fdc073;}
 canvas {
 	border: 0px solid black;
   }
+
+.btnA{
+	text-align: center;
+	align-items: center;
+	margin-top: 20px;
+	margin-left: 10px;
+
+	/* background-color: rgb(251, 80, 0); */
+	background-color: #2F76E6;
+	padding: 10px 15px;
+	border-radius: 15px;
+	font-size: 16px;
+	color: #fff;
+	border: 0;
+	outline: none;
+	box-shadow: 0 7px 10px #d6d9e4;
+	cursor: pointer;
+	transition: all 0.1s ease-in-out;
+	text-decoration: none !important;
+}
+.stylePagination{
+	display: flex;
+	justify-content: flex-end;
+}
 /* .canvasgame{
 	display: block;
 	width: 400px;

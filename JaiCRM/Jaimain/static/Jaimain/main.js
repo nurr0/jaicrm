@@ -159,7 +159,7 @@ location.href = 'http://127.0.0.1:8000/product_categories/',
 )
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
-    fileUpload.classList.add('btn-zero')
+    // fileUpload.classList.add('btn-zero')
     const VFail = document.querySelector('.btn-addPart');
     fileUpload.addEventListener('click',failEdit)
     function failEdit(){
