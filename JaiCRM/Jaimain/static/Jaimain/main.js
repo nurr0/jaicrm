@@ -880,7 +880,7 @@ userImg.addEventListener('click',()=>{
 //         let notes = arrayPartnersblock.slice
 //     });
 // }
-
+if (url === 'http://127.0.0.1:8000/partners/'){
     // let count = 8; //всего записей
     let count = document.querySelectorAll(".num").length;
     let cnt = 4; //сколько отображаем сначала
@@ -935,3 +935,9 @@ userImg.addEventListener('click',()=>{
         j++;
     }
     }
+
+    const spanNumber = document.querySelectorAll('span')
+    for (let item of spanNumber){
+        item.classList.add('spanNumber')
+    }
+}

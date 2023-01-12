@@ -1420,6 +1420,8 @@ canvas {
   }
   .paginator {
 	line-height: 150%;
+	display: flex;
+	justify-content: flex-end;
   }
   .paginator > span {
 	display: inline-block;
@@ -1429,6 +1431,10 @@ canvas {
   .paginator_active {
 	color: red;
   }
+
+.spanNumber{
+	margin: 20px;
+}
 /* Страница Поиска Конец */
 
 /* Преоладер */
