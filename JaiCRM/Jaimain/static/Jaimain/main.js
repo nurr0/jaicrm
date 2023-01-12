@@ -869,8 +869,9 @@ userImg.addEventListener('click',()=>{
 //     });
 // }
 
-var count = 8; //всего записей
-var cnt = 4; //сколько отображаем сначала
+// let count = 8; //всего записей
+let count = document.querySelectorAll(".num").length;
+let cnt = 4; //сколько отображаем сначала
 var cnt_page = Math.ceil(count / cnt); //кол-во страниц
 
 //выводим список страниц
