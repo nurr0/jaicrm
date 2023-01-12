@@ -251,26 +251,38 @@ TextContactInn.classList.add('p__addPart-widthRight')
 
 
 
-//Поиск у пользователей
+//Поиск у пользователей и партнеров
 if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/partners/' || url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_categories/'){
     let filter = function () {
         let input = document.querySelector('.filter-input');
 
+        
+
         input.addEventListener('keyup', FilterUser)
+        
 
         function FilterUser(){
             //Ловеркейс для поиска
             let filter = input.value.toLowerCase(),
             //Ищем все li у ul
             filterElements = document.querySelectorAll('#filter-list li');
+            //Странное решение
+            if (input.value == ''){
+                location.reload()}
 
             filterElements.forEach((item) => {
                 if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
-                    item.style.display = '';
+                    // item.style.display = '';
+                    item.classList.remove('zero1')
+                    item.classList.remove('num')
+                
                 } else {
-                    item.style.display = 'none';
+                    // item.style.display = 'none';
+                    item.classList.add('zero1')
+                    item.classList.add('num')
                 }
             })}
+            
         
     };
     filter();
@@ -869,57 +881,57 @@ userImg.addEventListener('click',()=>{
 //     });
 // }
 
-// let count = 8; //всего записей
-let count = document.querySelectorAll(".num").length;
-let cnt = 4; //сколько отображаем сначала
-var cnt_page = Math.ceil(count / cnt); //кол-во страниц
+    // let count = 8; //всего записей
+    let count = document.querySelectorAll(".num").length;
+    let cnt = 4; //сколько отображаем сначала
+    var cnt_page = Math.ceil(count / cnt); //кол-во страниц
 
-//выводим список страниц
-var paginator = document.querySelector(".paginator");
-var page = "";
-for (var i = 0; i < cnt_page; i++) {
-  page += "<span data-page=" + i * cnt + "  id=\"page" + (i + 1) + "\">" + (i + 1) + "</span>";
-}
-paginator.innerHTML = page;
+    //выводим список страниц
+    var paginator = document.querySelector(".paginator");
+    var page = "";
+    for (var i = 0; i < cnt_page; i++) {
+    page += "<span data-page=" + i * cnt + "  id=\"page" + (i + 1) + "\">" + (i + 1) + "</span>";
+    }
+    paginator.innerHTML = page;
 
-//выводим первые записи {cnt}
-var div_num = document.querySelectorAll(".num");
-for (var i = 0; i < div_num.length; i++) {
-  if (i < cnt) {
-    div_num[i].style.display = "block";
-  }
-}
+    //выводим первые записи {cnt}
+    var div_num = document.querySelectorAll(".num");
+    for (var i = 0; i < div_num.length; i++) {
+    if (i < cnt) {
+        div_num[i].style.display = "block";
+    }
+    }
 
-var main_page = document.getElementById("page1");
-main_page.classList.add("paginator_active");
+    var main_page = document.getElementById("page1");
+    main_page.classList.add("paginator_active");
 
-//листаем
-function pagination(event) {
-  var e = event || window.event;
-  var target = e.target;
-  var id = target.id;
-  
-  if (target.tagName.toLowerCase() != "span") return;
-  
-  var num_ = id.substr(4);
-  var data_page = +target.dataset.page;
-  main_page.classList.remove("paginator_active");
-  main_page = document.getElementById(id);
-  main_page.classList.add("paginator_active");
+    //листаем
+    function pagination(event) {
+    var e = event || window.event;
+    var target = e.target;
+    var id = target.id;
+    
+    if (target.tagName.toLowerCase() != "span") return;
+    
+    var num_ = id.substr(4);
+    var data_page = +target.dataset.page;
+    main_page.classList.remove("paginator_active");
+    main_page = document.getElementById(id);
+    main_page.classList.add("paginator_active");
 
-  var j = 0;
-  for (var i = 0; i < div_num.length; i++) {
-    // var data_num = div_num[i].dataset.num;
-    var data_num = div_num[i].querySelector('.btn__text').href[31]
+    var j = 0;
+    for (var i = 0; i < div_num.length; i++) {
+        // var data_num = div_num[i].dataset.num;
+        var data_num = div_num[i].querySelector('.btn__text').href[31]
 
-        // document.querySelectorAll(".num")[0].querySelector('.btn__text').href[31]
-    if (data_num <= data_page || data_num >= data_page)
-      div_num[i].style.display = "none";
+            // document.querySelectorAll(".num")[0].querySelector('.btn__text').href[31]
+        if (data_num <= data_page || data_num >= data_page)
+        div_num[i].style.display = "none";
 
-  }
-  for (var i = data_page; i < div_num.length; i++) {
-    if (j >= cnt) break;
-    div_num[i].style.display = "block";
-    j++;
-  }
-}
+    }
+    for (var i = data_page; i < div_num.length; i++) {
+        if (j >= cnt) break;
+        div_num[i].style.display = "block";
+        j++;
+    }
+    }
