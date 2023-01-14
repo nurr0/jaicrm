@@ -973,3 +973,39 @@ if (url === 'http://127.0.0.1:8000/partners/'){
             item.classList.add('spanNumber')
         }
 }
+
+if (url === 'http://127.0.0.1:8000/add_supply/' ){
+    const tovarz = document.querySelectorAll('.form-group')
+    const plus1 = document.querySelector('.plus1')
+    for (let item of tovarz){
+        item.classList.toggle('zero1')
+    }
+
+    plus1.addEventListener('click', plus1Action)
+    function plus1Action(){
+        for (let item of tovarz){
+            if (item.classList.contains('zero1')){
+                item.classList.toggle('zero1')
+                const checkbox = item.querySelector('input[type=checkbox]')
+                checkbox.removeAttribute('checked')
+                return
+            }
+
+        }
+    }
+    const checkDelete = document.querySelectorAll('input[type=checkbox]')
+
+    const proverty01 = document.querySelector('#id_productsinsupply_set-0-DELETE')
+    proverty01.setAttribute('checked','checked')
+    const proverty02 = document.querySelector('#id_productsinsupply_set-1-DELETE')
+    proverty02.setAttribute('checked','checked')
+    const proverty03 = document.querySelector('#id_productsinsupply_set-2-DELETE')
+    proverty03.setAttribute('checked','checked')
+    const proverty04 = document.querySelector('#id_productsinsupply_set-3-DELETE')
+    proverty04.setAttribute('checked','checked')
+    const proverty05 = document.querySelector('#id_productsinsupply_set-4-DELETE')
+    proverty05.setAttribute('checked','checked')
+
+    const udalit1 = document.querySelectorAll('p')[8]
+    udalit1.classList.toggle('zero')
+}

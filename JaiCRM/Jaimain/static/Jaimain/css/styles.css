@@ -1465,6 +1465,11 @@ canvas {
 .spanNumber{
 	margin: 20px;
 }
+
+.plus1{
+	width: 100px;
+	height: 100px;
+}
 /* Страница Поиска Конец */
 
 /* Преоладер */
