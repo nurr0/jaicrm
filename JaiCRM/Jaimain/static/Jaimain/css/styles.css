@@ -896,6 +896,22 @@ ul.lang-list li a:hover {color: #fdc073;}
 	scale: 1.1;
 }
 
+.suppliesBlock{
+	background-image: url(./../images/postTov.svg);
+	background-repeat: no-repeat;
+	text-align: center;
+	width: 100%;
+	font-size: 18px;
+	height: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.suppliesBlock:hover{
+	scale: 1.1;
+}
+
 .addPartners-block:hover{
 	scale: 1.1;
 }

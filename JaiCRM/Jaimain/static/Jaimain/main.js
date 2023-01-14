@@ -109,6 +109,12 @@ settingsBlock.addEventListener('click',()=>
     localStorage.setItem('tasks', JSON.stringify(0))
 )
 
+const suppliesBlock = document.querySelector('[href="/supplies/"]');
+suppliesBlock.classList.add('suppliesBlock')
+suppliesBlock.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
@@ -126,6 +132,8 @@ if (url === 'http://127.0.0.1:8000/partners/'){
     propertyBlock.classList.add('ActiveList') 
 }else if (url === 'http://127.0.0.1:8000/sku/'){
     settingsBlock.classList.add('ActiveList') 
+}else if (url === 'http://127.0.0.1:8000/supplies/'){
+    suppliesBlock.classList.add('ActiveList') 
 }else if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/registeruser/' ){
     users.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/login/'){
@@ -292,7 +300,7 @@ if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/par
 
 
 
-if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/'){
+if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/' ){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -342,6 +350,31 @@ if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/pr
     //     headerUsers.classList.toggle('zero1')
     //     // searchUser.classList.toggle('zero1')
     //   }
+}
+
+if (url === 'http://127.0.0.1:8000/supplies/'){
+    let filter04 = function () {
+        let input = document.querySelector('.filter-input');
+
+        input.addEventListener('keyup', FilterUser)
+
+        function FilterUser(){
+            //Ловеркейс для поиска
+            let filter = input.value.toLowerCase(),
+            //Ищем все li у ul
+            filterElements = document.querySelectorAll("tr:not(:first-child)");
+
+            filterElements.forEach((item) => {
+                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            })}
+        
+    };
+
+    filter04();
 }
 
 if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_properties/' || url === 'http://127.0.0.1:8000/sku/'){
