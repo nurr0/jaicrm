@@ -66,12 +66,6 @@ class AddShopForm(forms.ModelForm):
 
 
 class AddProductCategoryForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        super().__init__(*args, **kwargs)
-        if user is not None:
-            self.fields['parent'].queryset = ProductCategory.objects.filter(partner=user.partner)
-
     class Meta:
         model = ProductCategory
         exclude = ('partner',)
@@ -116,4 +110,51 @@ class EditProductPropertyRelationForm(forms.ModelForm):
         fields = ['property', 'value']
 
 
+class AddSupplyForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user is not None:
+            self.fields['warehouse'].queryset = Shop.objects.filter(partner=user.partner)
 
+    class Meta:
+        model = Supply
+        exclude = ['partner']
+
+        widgets = {
+            'supplier': forms.TextInput(),
+            'document': forms.TextInput(),
+            'date': forms.SelectDateWidget(years=list(range(2020, 2030))),
+        }
+
+
+class ProductsInSupplyForm(forms.ModelForm):
+    class Meta:
+        model = ProductsInSupply
+        fields = '__all__'
+
+    def clean_amount(self):
+        amount = self.cleaned_data['amount']
+        if amount <= 0:
+            raise forms.ValidationError("Количество товара не может быть меньше или равно 0")
+        return amount
+
+
+ProductsInSupplyFormSet = inlineformset_factory(Supply, ProductsInSupply,
+                                                form=ProductsInSupplyForm,
+                                                fields='__all__',
+                                                extra=10,
+                                                can_delete=True,
+                                                can_delete_extra=True)
+
+
+class ProductsRemoveForm(forms.ModelForm):
+    class Meta:
+        model = ProductsRemove
+        exclude = ['shop', 'date_created', 'user_created']
+
+    def clean_decrease_amount(self):
+        decrease_amount = self.cleaned_data['decrease_amount']
+        if decrease_amount <= 0:
+            raise forms.ValidationError("Количество товара не может быть меньше или равно 0")
+        return decrease_amount

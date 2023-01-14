@@ -299,6 +299,7 @@ class ShowShop(DataMixin, DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Торговая точка')
+        c_def['products_in_shop'] = ProductInStock.objects.filter(shop=self.object)
         return dict(list(context.items()) + list(c_def.items()))
 
     @method_decorator(login_required)
@@ -505,6 +506,7 @@ def add_sku(request):
         sku_form = AddSKUForm()
         productpropertyrelation_formset = ProductPropertyRelationFormSet()
 
+    sku_form.fields['category'].queryset = ProductCategory.objects.filter(partner=request.user.partner)
     return render(request, 'Jaimain/add_sku.html', {
         'sku_form': sku_form,
         'productpropertyrelation_formset': productpropertyrelation_formset, 'menu': user_menu
@@ -533,6 +535,7 @@ def edit_sku(request, sku_pk):
         sku_form = AddSKUForm(instance=sku)
         productpropertyrelation_formset = ProductPropertyRelationFormSet(instance=sku)
 
+    sku_form.fields['category'].queryset = ProductCategory.objects.filter(partner=request.user.partner)
     return render(request, 'Jaimain/edit_sku.html', {
         'sku_form': sku_form,
         'productpropertyrelation_formset': productpropertyrelation_formset, 'menu': user_menu
@@ -579,3 +582,149 @@ class ShowSKU(DataMixin, DetailView):
         if request.user.is_costumer:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
+
+
+def add_supply(request):
+    user_menu = menu.copy()
+    if request.method == 'POST':
+        add_supply_form = AddSupplyForm(request.POST)
+        products_in_supply_formset = ProductsInSupplyFormSet(request.POST)
+        if add_supply_form.is_valid() and products_in_supply_formset.is_valid():
+            supply = add_supply_form.save(commit=False)
+            supply.partner = request.user.partner
+            supply.save()
+            shop_supply_to = supply.warehouse
+            try:
+                for form in products_in_supply_formset:
+                    if form.cleaned_data.get('DELETE'):
+                        continue
+                    products_in_supply = form.save(commit=False)
+                    products_in_supply.supply = supply
+                    products_in_supply.save()
+                    amount_added = products_in_supply.amount
+                    product_added = products_in_supply.product
+                    product_in_stock: object = ProductInStock.objects.filter(shop=shop_supply_to, product=product_added)
+                    if len(product_in_stock) == 1:
+                        product_in_stock.update(amount=F('amount') + amount_added)
+                    elif len(product_in_stock) == 0:
+                        save_product_to_warehouse = ProductInStock.objects.create(amount=amount_added,
+                                                                                  product=product_added,
+                                                                                  shop=shop_supply_to)
+                        save_product_to_warehouse.save()
+            except:
+                supply.delete()
+            return redirect('supplies')
+        if not add_supply_form.is_valid():
+            print(add_supply_form.errors)
+    else:
+        add_supply_form = AddSupplyForm()
+        products_in_supply_formset = ProductsInSupplyFormSet()
+
+    add_supply_form.fields['warehouse'].queryset = Shop.objects.filter(partner=request.user.partner)
+    for form in products_in_supply_formset:
+        form.fields['product'].queryset = SKU.objects.filter(partner=request.user.partner)
+
+    return render(request, 'Jaimain/add_supply.html', {
+        'add_supply_form': add_supply_form,
+        'products_in_supply_formset': products_in_supply_formset, 'menu': user_menu
+    })
+
+
+class SupplyList(DataMixin, ListView):
+    model = Supply
+    template_name = 'Jaimain/supplies.html'
+    context_object_name = 'supply_list'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Список поступлений товаров')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Supply.objects.all() if user.is_superuser else Supply.objects.filter(
+            partner=user.partner)
+        return queryset
+
+
+class ShowSupply(DataMixin, DetailView):
+    model = Supply
+    template_name = 'Jaimain/show_supply.html'
+    pk_url_kwarg = 'supply_pk'
+    context_object_name = 'supply'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Просмотр Поступления товаров')
+        c_def['product_in_supply_list'] = ProductsInSupply.objects.filter(supply=self.object)
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+
+class EditSupply(DataMixin, UpdateView):
+    model = Supply
+    fields = ['document', 'supplier', 'date']
+    template_name = 'Jaimain/edit_supply.html'
+    success_url = '/supplies/'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение документа поступления товаров')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+
+def remove_products_from_shop(request, shop_pk):
+    user_menu = menu.copy()
+    template = 'Jaimain/product_remove.html'
+    shop = Shop.objects.get(pk=shop_pk)
+    if request.method == 'POST':
+        form = ProductsRemoveForm(request.POST)
+        if form.is_valid():
+            remove = form.save(commit=False)
+            remove.shop = shop
+            remove.user_created = request.user
+            decrease_amount = form.cleaned_data['decrease_amount']
+            product_in_stock = form.cleaned_data['product']
+            if product_in_stock.amount >= decrease_amount:
+                product_in_stock.amount -= decrease_amount
+                product_in_stock.save()
+                remove.save()
+                return redirect('showshop',shop_pk)
+            else:
+                raise forms.ValidationError('Количество списываемого товара не может быть больше имеющегося')
+    else:
+        form = ProductsRemoveForm()
+    form.fields['product'].queryset = ProductInStock.objects.filter(shop_id=shop_pk)
+    return render(request, template, {'form': form, 'menu':user_menu, 'title':'Списание товаров со склада'})
+
+
+# def decrease_product_amount(request):
+#     if request.method == 'POST':
+#         form = DecreaseAmountForm(request.POST)
+#         if form.is_valid():
+#             product_id = form.cleaned_data['product_id']
+#             decrease_amount = form.cleaned_data['decrease_amount']
+#             product_in_stock = get_object_or_404(ProductInStock, product_id=product_id)
+#             product_in_stock.amount -= decrease_amount
+#             product_in_stock.save()
+#             return render(request, 'decrease_success.html')
+#     else:
+#         form = DecreaseAmountForm()
+#     return render(request, 'decrease_form.html', {'form': form})

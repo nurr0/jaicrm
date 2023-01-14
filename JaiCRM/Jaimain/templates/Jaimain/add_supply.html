@@ -1,0 +1,34 @@
+{% extends 'Jaimain/base.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+
+<form method="post" action="{% url 'add_supply' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <h2>Регистрация поступления товаров</h2>
+    </div>
+
+    <div class="p__addPart">
+        {{ add_supply_form.as_p }}
+
+        {{ products_in_supply_formset.management_form }}
+    </div>
+
+
+    <div>
+        <h2>Свойства Товара</h2>
+    </div>
+    {% for form in products_in_supply_formset %}
+    <div class="form-group">
+        <!-- <div class="title">Добавить</div> -->
+        <img class="title plus" src="/static/Jaimain/images/plus.png" alt="">
+        <div>{{ form.as_p }}</div>
+
+    </div>
+    {% endfor %}
+    <input class="btn" type="submit" value="Сохранить">
+</form>
+
+
+{% endblock %}

@@ -5,7 +5,7 @@
 {% extends 'Jaimain/base.html' %}
 {% block content %}
 <!-- <form class="search form-text" action="{% url 'search' %}" method="GET">
-    
+
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<form class="form-text" action="">
   		<input class="input-text" name="q" type="search">
@@ -23,31 +23,35 @@
 	</div>
 
 	<!-- <button class="btn btn__addUsers1 btn-fuck zero1">
-		
+
 		<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
 	</button> -->
 
-	
+
 
 	<div class="btn__addUsers">
 		<button class="btn ">
-			<a class="btn__text" href="{% url 'registeruser' %}">Добавить пользователя</a>
+			<a class="btn__text" href="{% url 'add_supply' %}">Зарегистрировать поступление товаров</a>
 		</button>
-		
+
 	</div>
 
 	<!-- <input type="text" class="filter-input"> -->
 
-	
+
 </div>
 
 
 
 
 	<div class="headers__users  header_users-list header_users-list1">
-		<div class="headerTable">Пользователь</div>
-		<div class="headerTable">Аккаунт</div>
-		<div class="headerTable">Партнер</div>
+		<div class="headerTable">Документ</div>
+		<div class="headerTable">Поставщик</div>
+		<div class="headerTable">Дата</div>
+        <div class="headerTable">Склад</div>
+        <div class="headerTable">Количество позиций</div>
+        <div class="headerTable">Общее количество товаров</div>
+        <div class="headerTable">Общая стоимость товаров</div>
 		<div class="headerTable butPods" data-title="Сортировать Пользователя от А - Я">
 			<button class="btn1 btn__addUsers1 btn-fuck ">
 			<!-- <a class="btn__text">Сортировать от A - Я </a> -->
@@ -56,26 +60,30 @@
 		</div>
 	</div>
 	<table  class="trStyle " id="myTable">
-		
-		
+
+
 		<tr class="trClass">
-			{% for u in users %}
-			<td class="tdStyle">{% autoescape on %}{{u.username}}</td>
-			<td class="tdStyle">{{u.last_name}}  {{u.first_name}}</td>
-			<td class="tdStyle">{{u.partner}}</td>
+			{% for supply in supply_list %}
+			<td class="tdStyle">{% autoescape on %}{{supply.document}}</td>
+			<td class="tdStyle">{{supply.supplier}}</td>
+			<td class="tdStyle">{{supply.date}}</td>
+			<td class="tdStyle">{{supply.warehouse}}</td>
+			<td class="tdStyle">{{supply.get_total_amount_of_SKU}}</td>
+			<td class="tdStyle">{{supply.get_total_amount_of_products}}</td>
+			<td class="tdStyle">{{supply.get_total_cost_of_supply}}</td>
 			<td class="tdStyle"> <button class="btn">
-				  <a class="btn__text" href="{{u.pk}}">Просмотр</a>
+				  <a class="btn__text" href="{{supply.pk}}">Просмотр</a>
 				  </button>
 			</td>
 		</tr>
-		
+
 		{% endautoescape %}
 		{% endfor %}
 	</table>
 			<!-- <p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p> -->
-			
+
 		<div class="clear"></div>
-	
+
 
 {% endblock %}
 
