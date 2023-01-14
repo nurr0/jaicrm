@@ -1,0 +1,60 @@
+{% extends 'Jaimain/base.html' %}
+
+{% block content %}
+
+<div class="header_ilya">
+    <h1>Документ поступления товаров - {{supply.document}}</h1>
+<div style="text-align: right" class="btn_ilya">
+        <button class="btn">
+            <a class="white" href='{% url 'edit_supply' supply.pk %}'>Редактировать</a>
+        </button>
+    </div>
+
+
+</div>
+<h4>Поставщик: {{supply.supplier}}</h4>
+<h4>Дата поступления: {{supply.date}}</h4>
+<h4>Дата создания записи: {{supply.date_created}}</h4>
+<h4>Принимающий склад: {{supply.warehouse}}</h4>
+
+<!--{% for item in properties_list %}-->
+<!--<div>{{ item.property }} - {{ item.value }}</div>-->
+<!--{% endfor %}-->
+
+
+	<div class="headers__users  header_users-list header_users-list1">
+		<div class="headerTable">Наименование товара</div>
+		<div class="headerTable">Стоимость за 1 ед.</div>
+		<div class="headerTable">Количество</div>
+		<div class="headerTable">Общая стоимость</div>
+	</div>
+	<table  class="trStyle " id="myTable">
+		<tr>
+		  <!-- <th>Пользователь</th>
+		  <th>Имя пользователя</th>
+		  <th>Партнер</th>
+		  <th>Данные</th> -->
+		</tr>
+
+		<tr class="trClass">
+			{% for product in product_in_supply_list %}
+			<td class="tdStyle">{{ product.product }}</td>
+			<td class="tdStyle">{{ product.product_supply_price }}</td>
+			<td class="tdStyle">{{ product.amount }}</td>
+			<td class="tdStyle">{{ product.get_total_cost}}</td>
+			</td>
+		</tr>
+		{% endfor %}
+		<tr class="trClass">
+			<td class="tdStyle">Всего {{ supply.get_total_amount_of_SKU }} наименований</td>
+			<td class="tdStyle"></td>
+			<td class="tdStyle">{{ supply.get_total_amount_of_products }}</td>
+			<td class="tdStyle">{{ supply.get_total_cost_of_supply }}</td>
+			</td>
+	</table>
+			<!-- <p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p> -->
+
+		<div class="clear"></div>
+
+{% endblock %}
+

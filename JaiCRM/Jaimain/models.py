@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from rest_framework.validators import UniqueTogetherValidator, UniqueValidator
 from mptt.models import MPTTModel, TreeForeignKey
+from django.db.models import Sum
 
 
 class Partner(models.Model):
@@ -100,7 +101,8 @@ class ProductProperty(models.Model):
 
 class SKU(models.Model):
     name = models.CharField(max_length=255, verbose_name='Наименование', blank=False, null=False)
-    image = models.ImageField(upload_to=f'product_images/', verbose_name='Изображение', blank=True, default=None, null=True)
+    image = models.ImageField(upload_to=f'product_images/', verbose_name='Изображение', blank=True, default=None,
+                              null=True)
     description = models.TextField(blank=True, verbose_name='Описание', default=None, null=True)
     identifier = models.CharField(blank=False, max_length=255, null=False, verbose_name='Артикул', unique=True)
     producer = models.CharField(blank=False, max_length=255, null=False, verbose_name='Производитель')
@@ -128,3 +130,65 @@ class ProductPropertyRelation(models.Model):
         unique_together = (('product', 'property'),)
         verbose_name = 'Связь свойства и товара'
         verbose_name_plural = 'Связи свойств и товаров'
+
+
+class ProductInStock(models.Model):
+    product = models.ForeignKey(SKU, on_delete=models.PROTECT, verbose_name='Товар')
+    shop = models.ForeignKey(Shop, on_delete=models.PROTECT, verbose_name='Торговая точка')
+    amount = models.IntegerField(verbose_name='Количество')
+
+    def __str__(self):
+        return self.product.__str__()
+
+
+    class Meta:
+        unique_together = (('product', 'shop'),)
+
+
+class Supply(models.Model):
+    supplier = models.CharField(max_length=255, verbose_name='Поставщик')
+    document = models.CharField(max_length=255, verbose_name='Документ')
+    date = models.DateField(verbose_name='Дата')
+    date_created = models.DateField(auto_now_add=True)
+    warehouse = models.ForeignKey(Shop, verbose_name='Склад', on_delete=models.PROTECT)
+    partner = models.ForeignKey(Partner, on_delete=models.PROTECT, verbose_name='Партнер')
+
+    class Meta:
+        unique_together = (('supplier', 'document'),)
+
+    def __str__(self):
+        return self.document
+
+    def get_total_amount_of_SKU(self):
+        return ProductsInSupply.objects.filter(supply=self).values('product').distinct().count()
+
+    def get_total_amount_of_products(self):
+        return ProductsInSupply.objects.filter(supply=self).aggregate(Sum('amount'))['amount__sum']
+
+    def get_total_cost_of_supply(self):
+        total_cost = 0
+        for unit in ProductsInSupply.objects.filter(supply=self):
+            total_cost += unit.get_total_cost()
+        return total_cost
+
+
+class ProductsInSupply(models.Model):
+    supply = models.ForeignKey(Supply, verbose_name='Поставка', on_delete=models.PROTECT)
+    product = models.ForeignKey(SKU, verbose_name='Товар', on_delete=models.PROTECT)
+    amount = models.IntegerField(verbose_name='Количество')
+    product_supply_price = models.DecimalField(verbose_name='Закупочная стоимость', decimal_places=2, max_digits=11)
+
+    def get_total_cost(self):
+        return self.product_supply_price * self.amount
+
+    def __str__(self):
+        return self.product.__str__()
+
+
+class ProductsRemove(models.Model):
+    shop = models.ForeignKey(Shop, verbose_name='Склад', on_delete=models.PROTECT)
+    product = models.ForeignKey(ProductInStock, verbose_name='Товар', on_delete=models.PROTECT)
+    decrease_amount = models.IntegerField(verbose_name='Количество')
+    reason = models.CharField(max_length=255, verbose_name='Основание')
+    date_created = models.DateField(auto_now_add=True)
+    user_created = models.ForeignKey(JaiUser, on_delete=models.PROTECT)

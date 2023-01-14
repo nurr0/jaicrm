@@ -32,11 +32,11 @@
 {% if request.user.is_authenticated %}
 				<div class="header__user">
 					<div class="last">
-						<img src="./../../static/Jaimain/images/user.svg" alt="">
+						<img src="/static/Jaimain/images/user.svg" alt="">
 						<p>{{user.username}}</p>
 					</div>
 					<div class="header__user-exit">
-						<img class="header__user-exitImg" src="./../../static/Jaimain/images/exit.svg" alt="">
+						<img class="header__user-exitImg" src="/static/Jaimain/images/exit.svg" alt="">
 						<a class="header__exit" href="{% url 'logout' %}">Выйти</a>
 					</div>
 				</div>

@@ -29,5 +29,10 @@ urlpatterns = [
     path('add_sku/', add_sku, name='add_sku'),
     path('sku/', SKUList.as_view(), name='sku'),
     path('sku/<int:sku_pk>/', ShowSKU.as_view(), name='show_sku'),
-    path('sku/<int:sku_pk>/edit/', edit_sku, name='edit_sku')
+    path('sku/<int:sku_pk>/edit/', edit_sku, name='edit_sku'),
+    path('add_supply/', add_supply, name='add_supply'),
+    path('supplies/', SupplyList.as_view(), name='supplies'),
+    path('supplies/<int:supply_pk>/', ShowSupply.as_view(), name='show_supply'),
+    path('supplies/<int:pk>/edit/', EditSupply.as_view(), name='edit_supply'),
+    path('shops/<int:shop_pk>/remove_products', remove_products_from_shop, name='remove_products')
 ]

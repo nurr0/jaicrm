@@ -13,6 +13,40 @@
 <h4>Описание: {{shop.description}}</h4>
 <h4>Партнер: {{shop.partner}}</h4>
 
+<div class="header_ilya">
 <h2>Склад</h2>
+<div style="text-align: right" class="btn_ilya">
+        <button class="btn">
+            <a class="white" href='{% url 'remove_products' shop.pk %}'>Списание товаров со склада</a>
+        </button>
+    </div>
+</div>
+	<div class="headers__users  header_users-list header_users-list1">
+		<div class="headerTable">Наименование товара</div>
+		<div class="headerTable">Артикул товара</div>
+		<div class="headerTable">Производитель</div>
+		<div class="headerTable">Категория</div>
+		<div class="headerTable">Количество</div>
+	</div>
+	<table  class="trStyle " id="myTable">
+		<tr class="trClass">
+			{% for product in products_in_shop %}
+			<td class="tdStyle">{{ product.product.name }}</td>
+			<td class="tdStyle">{{ product.product.identifier }}</td>
+			<td class="tdStyle">{{ product.product.producer }}</td>
+			<td class="tdStyle">{{ product.product.category}}</td>
+			<td class="tdStyle">{{ product.amount}}</td>
+			</td>
+		</tr>
+		{% endfor %}
+<!--		<tr class="trClass">-->
+<!--			<td class="tdStyle">Всего {{ supply.get_total_amount_of_SKU }} наименований</td>-->
+<!--			<td class="tdStyle"></td>-->
+<!--			<td class="tdStyle">{{ supply.get_total_amount_of_products }}</td>-->
+<!--			<td class="tdStyle">{{ supply.get_total_cost_of_supply }}</td>-->
+<!--			</td>-->
+	</table>
+
+</div>
 {% endblock %}
 
