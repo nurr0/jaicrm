@@ -27,16 +27,19 @@
 				
 			<div class="logo">
 				<!-- <a href="{% url 'partners' %}" > -->
-				<div class="logo"></div></a>
+				<div class="logos">
+					<img class="logoImg" src="/static/Jaimain/images/z1.png" alt="">
 				</div>
+			</div>
 {% if request.user.is_authenticated %}
 				<div class="header__user">
 					<div class="last">
-						<img src="./../../static/Jaimain/images/user.svg" alt="">
+						<!-- <img src="./../../static/Jaimain/images/user.svg" alt=""> -->
+						<img class="user__img" src="/static/Jaimain/images/user.svg" alt="">
 						<p>{{user.username}}</p>
 					</div>
 					<div class="header__user-exit">
-						<img class="header__user-exitImg" src="./../../static/Jaimain/images/exit.svg" alt="">
+						<img class="header__user-exitImg" src="/static/Jaimain/images/exit.svg" alt="">
 						<a class="header__exit" href="{% url 'logout' %}">Выйти</a>
 					</div>
 				</div>
@@ -52,18 +55,19 @@
 
 	<div class="top2 ">
 		<div class="sidebar__arrow-img2">
-			<img class="sidebar__arrow-img0" src="./../../static/Jaimain/images/picture.svg" alt="">
-			<img class="partners zero"  src="./../../static/Jaimain/images/part-icon.svg" alt="">
-			<img class="AddPartners zero" src="./../../static/Jaimain/images/add-part-icon.svg" alt="">
-			<img class="shops zero" src="./../../static/Jaimain/images/home.svg" alt="">
-			<img class="category zero" src="./../../static/Jaimain/images/category.svg" alt="">
+			<!-- <img class="sidebar__arrow-img0" src="./../../static/Jaimain/images/picture.svg" alt=""> -->
+			<img class="sidebar__arrow-img0" src="/static/Jaimain/images/picture.svg" alt="">
+			<img class="partners zero zero1"  src="/static/Jaimain/images/part-icon.svg" alt="">
+			<img class="AddPartners zero zero1" src="/static/Jaimain/images/add-part-icon.svg" alt="">
+			<img class="shops zero zero1" src="/static/Jaimain/images/home.svg" alt="">
+			<img class="category zero zero1" src="/static/Jaimain/images/category.svg" alt="">
 		</div>
 	</div>
 
 		<td valign="top" class="left-chapters " >
-
+			
 			<div class="sidebar__arrow">
-				<img class="sidebar__arrow-img" src="./../../static/Jaimain/images/Caret.svg" alt="">
+				<img class="sidebar__arrow-img" src="/static/Jaimain/images/Caret.svg" alt="">
 			</div>
 			<ul id="leftchapters">
 {% for m in menu %}
@@ -74,13 +78,14 @@
 				</li>
 {% endfor %}
 			</ul>
-
+			
 		</td>
 
 
 <!-- Конец Sidebar'а -->
 
 <td valign="top" class="content footet-bot">
+	
 	<!-- Хлебные крошки -->
 	{% block breadcrumbs %}
 	{% endblock %}
@@ -116,10 +121,13 @@
 </nav>
 {% endif %}
 	</div>
+	<canvas id="game" width="400" height="400"  ></canvas>
 <!-- Конец блока контента -->
 
 </td></tr></table>
+
 </td></tr>
+
 <!-- Footer -->
 <!-- <tr><td valign=top>
 	<div class="footer-fot" id="footer">
@@ -127,8 +135,10 @@
 	</div>
 </td></tr></table> -->
 <!-- Конец footer'а и страницы -->
+
 </body>
-<script src="./../../static/Jaimain/main.js"></script>
+<!-- <script src="./../../static/Jaimain/main.js"></script> -->
+<script src="/static/Jaimain/main.js"></script>
 <!-- preloader -->
 <script>
 	window.onload = function () {

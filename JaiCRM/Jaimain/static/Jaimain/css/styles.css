@@ -95,10 +95,16 @@ ul.list-articles li {
 }
 
 .logo {
-	background: url('../images/logo.png') no-repeat 10px 5px;
+	/* background: url('../images/logo.png') no-repeat 10px 5px; */
 	width: 70px;
 	height: 60px;
-	display: none;
+	
+	position: absolute;
+}
+
+.logoImg{
+	height: 63px;
+	z-index: 100000;
 }
 
 ul.mainmenu {
@@ -1200,12 +1206,12 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 .partners__cards{
 	display: flex;
-	flex-direction: column;
+	/* flex-direction: column; */
 	justify-content: space-between;
 	align-items: flex-start;
 	padding: 0px;
 
-	width: 345.33px;
+	/* width: 345.33px; */
 	height: 584px;
 }
 
@@ -1376,6 +1382,65 @@ ul.lang-list li a:hover {color: #fdc073;}
 	height: 25px;
 }
 
+.imgSkuEdit{
+	margin-left: 210px;
+	margin-top: 30px;
+}
+
+canvas {
+	border: 0px solid black;
+  }
+
+.btnA{
+	text-align: center;
+	align-items: center;
+	margin-top: 20px;
+	margin-left: 10px;
+
+	/* background-color: rgb(251, 80, 0); */
+	background-color: #2F76E6;
+	padding: 10px 15px;
+	border-radius: 15px;
+	font-size: 16px;
+	color: #fff;
+	border: 0;
+	outline: none;
+	box-shadow: 0 7px 10px #d6d9e4;
+	cursor: pointer;
+	transition: all 0.1s ease-in-out;
+	text-decoration: none !important;
+}
+.stylePagination{
+	display: flex;
+	justify-content: flex-end;
+	list-style-type: none;
+}
+/* .canvasgame{
+	display: block;
+	width: 400px;
+	height: 400px;
+} */
+
+.num {
+	display: none;
+  }
+  .paginator {
+	line-height: 150%;
+	display: flex;
+	justify-content: flex-end;
+  }
+  .paginator > span {
+	display: inline-block;
+	margin-right: 10px;
+	cursor: pointer;
+  }
+  .paginator_active {
+	color: red;
+  }
+
+.spanNumber{
+	margin: 20px;
+}
 /* Страница Поиска Конец */
 
 /* Преоладер */
