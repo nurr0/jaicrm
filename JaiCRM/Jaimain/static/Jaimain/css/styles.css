@@ -1175,11 +1175,15 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .trStyle{
-	border-collapse: collapse;
-	border: 4px double black; 
+	/* border-collapse: collapse; */
+	border-spacing: 0;
+	border-radius: 20px; 
 	width: 100%;
 	/* text-align: center; */
 	background-color: white;
+	/* border-left: 3px solid black;
+	border-right: 3px solid black; */
+	
 }
 
 .tdStyle{
@@ -1193,6 +1197,10 @@ ul.lang-list li a:hover {color: #fdc073;}
 	width: 100px !important;
 }
 
+.headTable{
+	background-color: black;
+	color: white;
+}
 
 
 /* Страница Поиска Начало */
