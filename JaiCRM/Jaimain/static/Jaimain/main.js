@@ -34,6 +34,7 @@ function proverka(){
 
 
 category1.classList.add('category10')
+category1.classList.add('zero1')
 
 arrow.addEventListener('click', nonActive)
 
@@ -158,7 +159,7 @@ location.href = 'http://127.0.0.1:8000/product_categories/',
 )
 
 if (url === 'http://127.0.0.1:8000/addpartner/'){
-    fileUpload.classList.add('btn-zero')
+    // fileUpload.classList.add('btn-zero')
     const VFail = document.querySelector('.btn-addPart');
     fileUpload.addEventListener('click',failEdit)
     function failEdit(){
@@ -168,9 +169,6 @@ if (url === 'http://127.0.0.1:8000/addpartner/'){
     
     }
 }
-
-
-
 
 
 const NamePartners = document.querySelector('.form-label')
@@ -252,36 +250,39 @@ TextContactInn.classList.add('p__addPart-widthRight')
 
 
 
-//Поиск (нет на всех страницах)
-// searchBtn.addEventListener('click', SearchEmpty)
-// function SearchEmpty(e){
-//     if (inputText.value === ''){
-//         e.preventDefault();
-//         alert('Введите текст в поиск!')
-//     }
-// }
 
-
-//Поиск у пользователей
+//Поиск у пользователей и партнеров
 if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/partners/' || url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_categories/'){
     let filter = function () {
         let input = document.querySelector('.filter-input');
 
+        
+
         input.addEventListener('keyup', FilterUser)
+        
 
         function FilterUser(){
             //Ловеркейс для поиска
             let filter = input.value.toLowerCase(),
             //Ищем все li у ul
             filterElements = document.querySelectorAll('#filter-list li');
+            //Странное решение
+            if (input.value == ''){
+                location.reload()}
 
             filterElements.forEach((item) => {
                 if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
-                    item.style.display = '';
+                    // item.style.display = '';
+                    item.classList.remove('zero1')
+                    item.classList.remove('num')
+                
                 } else {
-                    item.style.display = 'none';
+                    // item.style.display = 'none';
+                    item.classList.add('zero1')
+                    item.classList.add('num')
                 }
             })}
+            
         
     };
     filter();
@@ -291,7 +292,7 @@ if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/par
 
 
 
-if (url === 'http://127.0.0.1:8000/users/'){
+if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/'){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -419,7 +420,7 @@ if (url === 'http://127.0.0.1:8000/product_categories/') {
     filter03();
 }
 
-if (url === 'http://127.0.0.1:8000/add_sku/'){
+if (url === 'http://127.0.0.1:8000/add_sku/' ){
     const nameSku = document.querySelector('label[for="id_name"]')
     const AreaNameSku = document.querySelector('#id_name')
     nameSku.classList.add('p__addPart-width')
@@ -486,3 +487,456 @@ if (url === 'http://127.0.0.1:8000/add_sku/'){
     })
 }
 
+if (/edit/.test(location.href )  && /sku/.test(location.href )){
+    settingsBlock.classList.add('ActiveList') 
+
+    const nameSku = document.querySelector('label[for="id_name"]')
+    const AreaNameSku = document.querySelector('#id_name')
+    nameSku.classList.add('p__addPart-width')
+    
+    const imgSku = document.querySelector('label[for="id_image"]')
+    imgSku.classList.add('p__addPart-width')
+
+    const imgSkuEdit = document.querySelector('#id_image')
+    imgSkuEdit.classList.add('imgSkuEdit')
+
+    const descSku = document.querySelector('label[for="id_description"]')
+    descSku.classList.add('p__addPart-width')
+
+    const articulSku = document.querySelector('label[for="id_identifier"]')
+    articulSku.classList.add('p__addPart-width')
+
+    const proizvoditelSku = document.querySelector('label[for="id_producer"]')
+    proizvoditelSku.classList.add('p__addPart-width')
+
+    const categoryySku = document.querySelector('label[for="id_category"]')
+    categoryySku.classList.add('p__addPart-width')
+
+    //Убираем пустые блоки
+    const xz0 = document.querySelector('#id_productpropertyrelation_set-0-value')
+    if (xz0 != null){
+        const zxc0 = xz0.value;
+        parentxz0 = xz0.closest("p");
+        glavParentxz0 = parentxz0.closest("div");
+        console.log(zxc0)
+
+        if (zxc0 == ''){
+            glavParentxz0.classList.toggle('zero1')
+            glavParentxz0.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+
+                    content1.classList.toggle('zero1')
+                    el.remove()
+ 
+                })
+            })
+    
+        }
+
+    }
+
+    const xz1 = document.querySelector('#id_productpropertyrelation_set-1-value')
+    if (xz1 != null){
+        const zxc1 = xz1.value; //значение
+        parentxz1 = xz1.closest("p"); // тег p
+        glavParentxz1 = parentxz1.closest("div"); //высший тег div
+        console.log(zxc1)
+        if (zxc1 == ''){
+            glavParentxz1.classList.toggle('zero1')
+            glavParentxz1.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+
+                    content1.classList.toggle('zero1')
+                    el.remove()
+
+                })
+            })
+    
+        }
+    }
+
+
+    const xz2 = document.querySelector('#id_productpropertyrelation_set-2-value')
+    if (xz2 != null){
+        const zxc2 = xz2.value;
+        parentxz2 = xz2.closest("p");
+        glavParentxz2 = parentxz2.closest("div");
+        console.log(zxc2)
+
+        if (zxc2 == ''){
+            glavParentxz2.classList.toggle('zero1')
+            glavParentxz2.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+                    content1.classList.toggle('zero1')
+                    el.remove()
+
+                    
+                })
+            })
+    
+        }
+    }
+
+    const xz3 = document.querySelector('#id_productpropertyrelation_set-3-value')
+    if (xz3 != null){
+        const zxc3 = xz3.value; //значение
+        parentxz3 = xz3.closest("p"); // тег p
+        glavParentxz3 = parentxz3.closest("div"); //высший тег div
+        papaGlavParentxz3 = glavParentxz3.closest(".form-group")
+        console.log(zxc3)
+
+        if (zxc3 == ''){
+            glavParentxz3.classList.toggle('zero1')
+            glavParentxz3.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+
+                    content1.classList.toggle('zero1')
+                    el.remove()
+
+                    
+                })
+            })
+            
+
+        }
+    }
+
+    const xz4 = document.querySelector('#id_productpropertyrelation_set-4-value')
+    if (xz4 !== null){
+        const zxc4 = xz4.value; //значение
+        parentxz4 = xz4.closest("p"); // тег p
+        glavParentxz4 = parentxz4.closest("div"); //высший тег div
+        papaGlavParentxz4 = glavParentxz4.closest(".form-group")
+        console.log(zxc4)
+
+        if (zxc4 == ''){
+            glavParentxz4.classList.toggle('zero1')
+            glavParentxz4.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+
+                    content1.classList.toggle('zero1')
+                    el.remove()
+
+                    
+                })
+            })
+        }
+    
+    }
+
+    const xz5 = document.querySelector('#id_productpropertyrelation_set-5-value')
+    if (xz5 !== null){
+        const zxc5 = xz5.value; //значение
+        parentxz5 = xz5.closest("p"); // тег p
+        glavParentxz5 = parentxz5.closest("div"); //высший тег div
+        console.log(zxc5)
+        if (zxc5 == ''){
+            glavParentxz5.classList.toggle('zero1')
+            glavParentxz5.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+
+                    content1.classList.toggle('zero1')
+                    el.remove()
+
+                    
+                })
+            })
+            
+        }
+    }
+
+    const xz6 = document.querySelector('#id_productpropertyrelation_set-6-value')
+    if (xz6 !== null){
+        const zxc6 = xz6.value; //значение
+        parentxz6 = xz6.closest("p"); // тег p
+        glavParentxz6 = parentxz6.closest("div"); //высший тег div
+        console.log(zxc6)
+        if (zxc6 == ''){
+            glavParentxz6.classList.toggle('zero1')
+            glavParentxz6.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+
+                    content1.classList.toggle('zero1')
+                    el.remove()
+
+                    
+                })
+            })
+    
+        }
+    }
+
+    const xz7 = document.querySelector('#id_productpropertyrelation_set-7-value')
+    if (xz7 !== null){
+        const zxc7 = xz7.value; //значение
+        parentxz7 = xz7.closest("p"); // тег p
+        glavParentxz7 = parentxz7.closest("div"); //высший тег div
+        console.log(zxc7)
+        if (zxc7 == ''){
+            glavParentxz7.classList.toggle('zero1')
+            glavParentxz7.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
+
+            document.querySelectorAll('.title').forEach((el) => {
+                el.addEventListener('click',()=>{
+                    let content1 = el.nextElementSibling ;
+                    console.log(content1)
+
+                    content1.classList.toggle('zero1')
+                    el.remove()
+
+                    
+                })
+            })
+    
+        }
+    }
+}
+
+const userImg = document.querySelector('.user__img');
+userImg.addEventListener('click',()=>{
+                        // Поле
+            var canvas = document.getElementById('game');
+            // canvas.classList.toggle('canvasgame')
+            // змейка
+            // Описываеем что будет 2х мерная игра
+            var context = canvas.getContext('2d');
+            // Размер одной клеточки на поле — 16 пикселей
+            var grid = 16;
+            // Служебная переменная, которая отвечает за скорость змейки
+            var count = 0;
+            // А вот и сама змейка
+            var snake = {
+            // Начальные координаты
+            x: 160,
+            y: 160,
+            // Скорость змейки — в каждом новом кадре змейка смещается по оси Х или У. На старте будет двигаться горизонтально, поэтому скорость по игреку равна нулю.
+            dx: grid,
+            dy: 0,
+            // Тащим за собой хвост, который пока пустой
+            cells: [],
+            // Стартовая длина змейки — 4 клеточки
+            maxCells: 4
+            };
+            // А это — еда. Представим, что это красные яблоки.
+            var apple = {
+            // Начальные координаты яблока
+            x: 320,
+            y: 320
+            };
+
+            // Делаем генератор случайных чисел в заданном диапазоне
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min)) + min;
+            }
+
+            // Игровой цикл — основной процесс, внутри которого будет всё происходить
+            function loop() {
+                // Дальше будет хитрая функция, которая замедляет скорость игры с 60 кадров в секунду до 15. Для этого она пропускает три кадра из четырёх, то есть срабатывает каждый четвёртый кадр игры. Было 60 кадров в секунду, станет 15.
+                requestAnimationFrame(loop);
+                // Игровой код выполнится только один раз из четырёх, в этом и суть замедления кадров, а пока переменная count меньше четырёх, код выполняться не будет.
+                if (++count < 6) {
+                return;
+                }
+                // Обнуляем переменную скорости
+                count = 0;
+                // Очищаем игровое поле
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                // Двигаем змейку с нужной скоростью
+                snake.x = snake.x + snake.dx ;
+                snake.y += snake.dy;
+                // Если змейка достигла края поля по горизонтали — продолжаем её движение с противоположной стороны
+                if (snake.x < 0) {
+                snake.x = canvas.width - grid;
+                }
+                else if (snake.x >= canvas.width) {
+                snake.x = 0;
+                }
+                // Делаем то же самое для движения по вертикали
+                if (snake.y < 0) {
+                snake.y = canvas.height - grid;
+                }
+                else if (snake.y >= canvas.height) {
+                snake.y = 0;
+                }
+                // Продолжаем двигаться в выбранном направлении. Голова всегда впереди, поэтому добавляем её координаты в начало массива, который отвечает за всю змейку.
+                snake.cells.unshift({ x: snake.x, y: snake.y });
+                // Сразу после этого удаляем последний элемент из массива змейки, потому что она движется и постоянно особождает клетки после себя
+                if (snake.cells.length > snake.maxCells) {
+                snake.cells.pop();
+                }
+                // Рисуем еду — красное яблоко
+                context.fillStyle = 'red';
+                context.fillRect(apple.x, apple.y, grid - 1, grid - 1);
+                // Одно движение змейки — один новый нарисованный квадратик 
+                context.fillStyle = 'green';
+                // Обрабатываем каждый элемент змейки
+                snake.cells.forEach(function (cell, index) {
+                // Чтобы создать эффект клеточек, делаем зелёные квадратики меньше на один пиксель, чтобы вокруг них образовалась чёрная граница
+                context.fillRect(cell.x, cell.y, grid - 1, grid - 1);
+                // Если змейка добралась до яблока...
+                if (cell.x === apple.x && cell.y === apple.y) {
+                    // увеличиваем длину змейки
+                    snake.maxCells++;
+                    // Рисуем новое яблочко
+                    // Помним, что размер холста у нас 400x400, при этом он разбит на ячейки — 25 в каждую сторону
+                    apple.x = getRandomInt(0, 25) * grid;
+                    apple.y = getRandomInt(0, 25) * grid;
+                }
+                // Проверяем, не столкнулась ли змея сама с собой
+                // Для этого перебираем весь массив и смотрим, есть ли у нас в массиве змейки две клетки с одинаковыми координатами 
+                for (var i = index + 1; i < snake.cells.length; i++) {
+                    // Если такие клетки есть — начинаем игру заново
+                    if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+                    // Задаём стартовые параметры основным переменным
+                    snake.x = 160;
+                    snake.y = 160;
+                    snake.cells = [];
+                    snake.maxCells = 4;
+                    snake.dx = grid;
+                    snake.dy = 0;
+                    // Ставим яблочко в случайное место
+                    apple.x = getRandomInt(0, 25) * grid;
+                    apple.y = getRandomInt(0, 25) * grid;
+                    }
+                }
+                });
+            }
+
+            // Смотрим, какие нажимаются клавиши, и реагируем на них нужным образом
+            document.addEventListener('keydown', function (e) {
+                // Дополнительно проверяем такой момент: если змейка движется, например, влево, то ещё одно нажатие влево или вправо ничего не поменяет — змейка продолжит двигаться в ту же сторону, что и раньше. Это сделано для того, чтобы не разворачивать весь массив со змейкой на лету и не усложнять код игры.
+                // Стрелка влево
+                // Если нажата стрелка влево, и при этом змейка никуда не движется по горизонтали…
+                if (e.which === 37 && snake.dx === 0) {
+                // то даём ей движение по горизонтали, влево, а вертикальное — останавливаем
+                // Та же самая логика будет и в остальных кнопках
+                snake.dx = -grid;
+                snake.dy = 0;
+                }
+                // Стрелка вверх
+                else if (e.which === 38 && snake.dy === 0) {
+                snake.dy = -grid;
+                snake.dx = 0;
+                }
+                // Стрелка вправо
+                else if (e.which === 39 && snake.dx === 0) {
+                snake.dx = grid;
+                snake.dy = 0;
+                }
+                // Стрелка вниз
+                else if (e.which === 40 && snake.dy === 0) {
+                snake.dy = grid;
+                snake.dx = 0;
+                }
+            });
+
+            requestAnimationFrame(loop);
+
+})
+
+//Пагинация
+// const partnersblock = document.querySelectorAll('.partners__info')
+// const arrayPartnersblock = Array.from(partnersblock)
+// console.log(arrayPartnersblock)
+
+// let liPagination = document.querySelector('#pagination li')
+
+// let notesOnPage = 3;
+
+// for (let item of liPagination){
+//     item.addEventListener('click',function(){
+//         //Получаем номер страницы
+//         let pageNum = +this.innerHTML;
+//         console.log(pageNum)
+//         let notes = arrayPartnersblock.slice
+//     });
+// }
+if (url === 'http://127.0.0.1:8000/partners/'){
+    // let count = 8; //всего записей
+    let count = document.querySelectorAll(".num").length;
+    let cnt = 4; //сколько отображаем сначала
+    let cnt_page = Math.ceil(count / cnt); //кол-во страниц
+
+    //выводим список страниц
+    let paginator = document.querySelector(".paginator");
+    let page = "";
+    for (var i = 0; i < cnt_page; i++) {
+    page += "<span data-page=" + i * cnt + "  id=\"page" + (i + 1) + "\">" + (i + 1) + "</span>";
+    }
+    paginator.innerHTML = page;
+
+    //выводим первые записи {cnt}
+    let div_num = document.querySelectorAll(".num");
+    for (var i = 0; i < div_num.length; i++) {
+        if (i < cnt) {
+            div_num[i].style.display = "block";
+        }
+    }
+
+    let main_page = document.getElementById("page1");
+    main_page.classList.add("paginator_active");
+
+    //листаем
+    function pagination(event) {
+        let e = event || window.event;
+        let target = e.target;
+        let id = target.id;
+        
+        if (target.tagName.toLowerCase() != "span") return;
+        
+        
+        let data_page = +target.dataset.page;
+        main_page.classList.remove("paginator_active");
+        main_page = document.getElementById(id);
+        main_page.classList.add("paginator_active");
+
+        let j = 0;
+        for (let i = 0; i < div_num.length; i++) {
+            // var data_num = div_num[i].dataset.num;
+            var data_num = div_num[i].querySelector('.btn__text').href[31]
+            // document.querySelectorAll(".num")[0].querySelector('.btn__text').href[31]
+            if (data_num <= data_page || data_num >= data_page)
+            div_num[i].style.display = "none";
+
+        }
+        for (let i = data_page; i < div_num.length; i++) {
+            if (j >= cnt) break;
+            div_num[i].style.display = "block";
+            j++;
+            }
+    }
+
+        const spanNumber = document.querySelectorAll('span')
+        for (let item of spanNumber){
+            item.classList.add('spanNumber')
+        }
+}

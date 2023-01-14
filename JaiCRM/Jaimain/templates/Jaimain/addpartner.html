@@ -2,9 +2,9 @@
 
 {% block content %}
 <h1 class="h1-header">{{title}}</h1>
-<div>
+<!-- <div>
     <button class="btn btn-addPart">Выбрать файл</button>
-</div>
+</div> -->
 
 <form action="{% url 'addpartner' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}

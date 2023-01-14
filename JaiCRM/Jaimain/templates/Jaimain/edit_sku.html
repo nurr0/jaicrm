@@ -12,10 +12,11 @@
     <div><h2>Свойства Товара</div>
     {% for form in productpropertyrelation_formset %}
     <div class="form-group">
-        {{ form.as_p }}
+        
+        <div>{{ form.as_p }}</div>
     </div>
     {% endfor %}
-        <input type="submit" value="Save">
+        <input class="btn" type="submit" value="Save">
     </form>
     <button class="btn" onclick="history.go(-1)">Отменить</button>
 
