@@ -1,6 +1,7 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
+from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseNotFound, Http404, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -14,7 +15,7 @@ from .utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 
 class Partners(DataMixin, ListView):
     model = Partner
@@ -706,13 +707,13 @@ def remove_products_from_shop(request, shop_pk):
                 product_in_stock.amount -= decrease_amount
                 product_in_stock.save()
                 remove.save()
-                return redirect('showshop',shop_pk)
+                return redirect('showshop', shop_pk)
             else:
                 raise forms.ValidationError('Количество списываемого товара не может быть больше имеющегося')
     else:
         form = ProductsRemoveForm()
     form.fields['product'].queryset = ProductInStock.objects.filter(shop_id=shop_pk)
-    return render(request, template, {'form': form, 'menu':user_menu, 'title':'Списание товаров со склада'})
+    return render(request, template, {'form': form, 'menu': user_menu, 'title': 'Списание товаров со склада'})
 
 
 # def decrease_product_amount(request):
@@ -728,3 +729,89 @@ def remove_products_from_shop(request, shop_pk):
 #     else:
 #         form = DecreaseAmountForm()
 #     return render(request, 'decrease_form.html', {'form': form})
+
+class ProductInStockList(DataMixin, ListView):
+    model = ProductInStock
+    template_name = 'Jaimain/products_in_stock.html'
+    context_object_name = 'products_in_stock'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Товары на складах')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        user = self.request.user
+        partners_shops = Shop.objects.filter(partner=user.partner)
+        queryset = ProductInStock.objects.all() if user.is_superuser else ProductInStock.objects.filter(
+            shop__in=partners_shops)
+        return queryset
+
+
+# def add_sell_price(request):
+#     user_menu = menu.copy()
+#     if request.method == 'POST':
+#         form = AddSellPriceForm(request.POST)
+#         if form.is_valid():
+#             form.instance.partner = request.user.partner
+#             try:
+#                 form.save()
+#                 return redirect('success_page')
+#             except IntegrityError:
+#                 messages.error(request, 'Цена для данного товара уже установлена')
+#     else:
+#         form = AddSellPriceForm()
+#     return render(request, 'Jaimain/add_price.html', {'form': form, 'menu': user_menu, 'title': 'Добавление цены'})
+
+
+def add_sell_price(request):
+    user_menu = menu.copy()
+    shops = Shop.objects.filter(partner=request.user.partner)
+    queryset = ProductInStock.objects.filter(sellprice__isnull=True, shop__in=shops)
+    formset_class = formset_factory(AddSellPriceForm, extra=len(queryset), can_delete_extra=True, can_delete=True)
+    if request.method == 'POST':
+        formset = formset_class(request.POST)
+        if formset.is_valid():
+            for i, form in enumerate(formset):
+                form.instance.partner = request.user.partner
+                form.instance.product_in_stock = queryset[i]
+                if form.cleaned_data.get('DELETE'):
+                    continue
+                try:
+                    form.save()
+                except IntegrityError:
+                    messages.error(request, 'Цена для данного товара уже установлена')
+            return redirect('products_in_stock')
+    else:
+        formset = formset_class()
+        for i, form in enumerate(formset):
+            form.fields['product_in_stock'].initial = queryset[i]
+            form.fields['product_in_stock_display'].initial = str(queryset[i])
+            form.fields['product_latest_supply_price'].initial = str(queryset[i].get_latest_supply_price())
+    return render(request, 'Jaimain/add_price.html', {'formset': formset, 'menu': user_menu, 'title': 'Добавление цены'})
+
+
+class EditRetailPrice(DataMixin, UpdateView):
+    model = SellPrice
+    fields = ['price']
+    template_name = 'Jaimain/edit_retail_price.html'
+    success_url = '/product_in_stock/'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение продажной цены',
+                                      product=f'{self.object.product_in_stock}',)
+
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
