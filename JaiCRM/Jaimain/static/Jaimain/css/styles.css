@@ -1200,6 +1200,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 .headTable{
 	background-color: black;
 	color: white;
+	font-size: 16px;
 }
 
 
@@ -1257,6 +1258,22 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .category:hover,.shop:hover{
+	scale: 1.1;
+}
+
+.tovariNaSklade{
+	background-image: url(./../images/tovariNaSklade.svg);
+	background-repeat: no-repeat;
+	font-size: 18px;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.tovariNaSklade:hover{
 	scale: 1.1;
 }
 

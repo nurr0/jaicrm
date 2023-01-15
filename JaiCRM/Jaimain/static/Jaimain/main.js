@@ -115,6 +115,12 @@ suppliesBlock.addEventListener('click',()=>
     localStorage.setItem('tasks', JSON.stringify(0))
 )
 
+const tovariNaSklade = document.querySelector('[href="/products_in_stock/"]');
+tovariNaSklade.classList.add('tovariNaSklade')
+tovariNaSklade.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
@@ -133,7 +139,9 @@ if (url === 'http://127.0.0.1:8000/partners/'){
 }else if (url === 'http://127.0.0.1:8000/sku/'){
     settingsBlock.classList.add('ActiveList') 
 }else if (url === 'http://127.0.0.1:8000/supplies/'){
-    suppliesBlock.classList.add('ActiveList') 
+    suppliesBlock.classList.add('ActiveList')
+}else if (url === 'http://127.0.0.1:8000/products_in_stock/'){
+    tovariNaSklade.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/registeruser/' ){
     users.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/login/'){
@@ -300,7 +308,7 @@ if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/par
 
 
 
-if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/' ){
+if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/' || url === 'http://127.0.0.1:8000/products_in_stock/' ){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -377,7 +385,7 @@ if (url === 'http://127.0.0.1:8000/supplies/'){
     filter04();
 }
 
-if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_properties/' || url === 'http://127.0.0.1:8000/sku/'){
+if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_properties/' || url === 'http://127.0.0.1:8000/sku/' || url === 'http://127.0.0.1:8000/products_in_stock/'){
     let filter02 = function () {
         let input = document.querySelector('.filter-input');
 
