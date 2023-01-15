@@ -34,5 +34,8 @@ urlpatterns = [
     path('supplies/', SupplyList.as_view(), name='supplies'),
     path('supplies/<int:supply_pk>/', ShowSupply.as_view(), name='show_supply'),
     path('supplies/<int:pk>/edit/', EditSupply.as_view(), name='edit_supply'),
-    path('shops/<int:shop_pk>/remove_products', remove_products_from_shop, name='remove_products')
+    path('shops/<int:shop_pk>/remove_products', remove_products_from_shop, name='remove_products'),
+    path('products_in_stock/', ProductInStockList.as_view(), name='products_in_stock'),
+    path('add_price/', add_sell_price, name='add_price'),
+    path('products_in_stock/<int:pk>/', EditRetailPrice.as_view(), name='edit_retail_price'),
 ]

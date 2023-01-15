@@ -112,6 +112,13 @@ class SKU(models.Model):
     def __str__(self):
         return f'{self.identifier}/{self.name}'
 
+    def get_properties(self):
+        properties = ProductPropertyRelation.objects.filter(product=self)
+        properties_list = [f"{p.property.name} - {p.value}" for p in properties]
+        properties_string = '\n'.join(properties_list)
+        return properties_string
+
+
     class Meta:
         unique_together = (('partner', 'identifier', 'name'),)
         verbose_name = 'SKU'
@@ -140,6 +147,21 @@ class ProductInStock(models.Model):
     def __str__(self):
         return self.product.__str__()
 
+    def get_latest_supply_date(self):
+        latest_supply = self.product.productsinsupply_set.filter(supply__warehouse=self.shop).latest('supply__date_created').supply
+        return latest_supply.date_created
+
+    def get_latest_supply_price(self):
+        latest_supply_cost = self.product.productsinsupply_set.filter(supply__warehouse=self.shop).latest('supply__date_created').product_supply_price
+        return latest_supply_cost
+
+    def get_sell_price(self):
+        sell_price = SellPrice.objects.get(product_in_stock=self).price
+        return sell_price
+
+    def get_retail_price_id(self):
+        retail_price_id = SellPrice.objects.get(product_in_stock=self).pk
+        return retail_price_id
 
     class Meta:
         unique_together = (('product', 'shop'),)
@@ -150,7 +172,7 @@ class Supply(models.Model):
     document = models.CharField(max_length=255, verbose_name='Документ')
     date = models.DateField(verbose_name='Дата')
     date_created = models.DateField(auto_now_add=True)
-    warehouse = models.ForeignKey(Shop, verbose_name='Склад', on_delete=models.PROTECT)
+    warehouse = models.ForeignKey(Shop, verbose_name='Торговая точка', on_delete=models.PROTECT)
     partner = models.ForeignKey(Partner, on_delete=models.PROTECT, verbose_name='Партнер')
 
     class Meta:
@@ -192,3 +214,12 @@ class ProductsRemove(models.Model):
     reason = models.CharField(max_length=255, verbose_name='Основание')
     date_created = models.DateField(auto_now_add=True)
     user_created = models.ForeignKey(JaiUser, on_delete=models.PROTECT)
+
+
+class SellPrice(models.Model):
+    product_in_stock = models.ForeignKey(ProductInStock, verbose_name='Товар', on_delete=models.PROTECT)
+    price = models.DecimalField(verbose_name='Цена', decimal_places=2, max_digits=11)
+    partner = models.ForeignKey(Partner, verbose_name='Партнер', on_delete=models.PROTECT)
+
+    class Meta:
+        unique_together = (('product_in_stock', 'partner'),)

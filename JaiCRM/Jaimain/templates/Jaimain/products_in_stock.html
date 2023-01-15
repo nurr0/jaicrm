@@ -1,0 +1,93 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+{% extends 'Jaimain/base.html' %}
+{% block content %}
+<!-- <form class="search form-text" action="{% url 'search' %}" method="GET">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<form class="form-text" action="">
+  		<input class="input-text" name="q" type="search">
+  		<i class="fa fa-search"></i>
+		  <input class="input-search" type="submit" value="Искать">
+</form> -->
+
+<!-- </form> -->
+<div class="header__users-top">
+
+	<div class="d7">
+		<form>
+		<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
+		</form>
+	</div>
+
+			<div class="btn__addUsers">
+		<button class="btn ">
+			<a class="btn__text" href="{% url 'add_price' %}">Установить цены на товары</a>
+		</button>
+
+	</div>
+	<!-- <button class="btn btn__addUsers1 btn-fuck zero1">
+
+		<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+	</button> -->
+
+
+
+<!--	<div class="btn__addUsers">-->
+<!--		<button class="btn ">-->
+<!--			<a class="btn__text" href="{% url 'add_supply' %}">Зарегистрировать поступление товаров</a>-->
+<!--		</button>-->
+
+<!--	</div>-->
+
+	<!-- <input type="text" class="filter-input"> -->
+
+
+</div>
+
+
+
+
+	<div class="headers__users  header_users-list header_users-list1">
+		<div class="headerTable">Торговая точка/склад</div>
+		<div class="headerTable">Наименование</div>
+		<div class="headerTable">Артикул</div>
+		<div class="headerTable">Категория</div>
+		<div class="headerTable">Свойства товара</div>
+        <div class="headerTable">Производитель</div>
+        <div class="headerTable">Количество</div>
+        <div class="headerTable">Продажная цена</div>
+		<div class="headerTable"></div>
+	</div>
+	<table  class="trStyle " id="myTable">
+
+
+		<tr class="trClass">
+			{% for unit in products_in_stock %}
+			<td class="tdStyle">{% autoescape on %}{{unit.shop}}</td>
+			<td class="tdStyle">{{unit.product.name}}</td>
+			<td class="tdStyle">{{unit.product.identifier}}</td>
+			<td class="tdStyle">{{unit.product.category.get_full_path}}</td>
+			<td class="tdStyle">{{unit.product.get_properties}}</td>
+			<td class="tdStyle">{{unit.product.producer}}</td>
+			<td class="tdStyle">{{unit.amount}}</td>
+			<td class="tdStyle">{{unit.get_sell_price}}</td>
+			<td class="tdStyle">{{unit.get_sell_price}}</td>
+			<td class="tdStyle"> <button class="btn">
+				  <a class="btn__text" href="{{unit.get_retail_price_id}}">Просмотр</a>
+				  </button>
+			</td>
+		</tr>
+
+		{% endautoescape %}
+		{% endfor %}
+	</table>
+
+
+		<div class="clear"></div>
+
+
+{% endblock %}
+

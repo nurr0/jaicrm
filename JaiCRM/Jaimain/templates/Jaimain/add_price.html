@@ -1,0 +1,16 @@
+{% extends 'Jaimain/base.html' %}
+
+{% block content %}
+<h1 class="h1-header">{{title}}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% for form in formset %}
+        <div class="form-group">
+        {{ form.as_p }}
+        </div>
+    {% endfor %}
+    <input type="submit" value="Сохранить">
+</form>
+    <button class="btn" onclick="history.go(-1)">Отменить</button>
+{% endblock %}

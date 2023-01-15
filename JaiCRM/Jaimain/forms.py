@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, formset_factory
 from mptt.forms import *
 from . import views
 from .models import *
@@ -158,3 +158,32 @@ class ProductsRemoveForm(forms.ModelForm):
         if decrease_amount <= 0:
             raise forms.ValidationError("Количество товара не может быть меньше или равно 0")
         return decrease_amount
+
+
+class AddSellPriceForm(forms.ModelForm):
+    product_in_stock_display = forms.CharField(label='Товар', widget=forms.TextInput(attrs={'readonly': True}))
+    product_latest_supply_price = forms.CharField(label='Последняя стоимость поставки', widget=forms.TextInput(attrs={'readonly': True}))
+
+    class Meta:
+        model = SellPrice
+        fields = ['product_in_stock_display', 'product_latest_supply_price', 'product_in_stock', 'price', ]
+        widgets = {'product_in_stock': forms.HiddenInput()}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['product_in_stock'].queryset = ProductInStock.objects.filter(sellprice__isnull=True)
+
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        if price <= 0:
+            raise forms.ValidationError("Цена товара не может быть меньше или равна 0")
+        return price
+
+
+    def save(self, commit=True):
+        product_in_stock = self.cleaned_data.pop('product_in_stock')
+        instance = super().save(commit=False)
+        instance.product_in_stock = product_in_stock
+        if commit:
+            instance.save()
+        return instance
