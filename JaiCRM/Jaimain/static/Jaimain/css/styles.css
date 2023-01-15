@@ -1598,3 +1598,32 @@ canvas {
     padding-bottom: 10px;
     margin-bottom: 10px;
 }
+.form-group1 {
+    
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.title1:hover {	
+
+	cursor: pointer;
+}
+
+.title1:active {	
+	scale: 1.1;
+
+}
+
+.title0:hover {	
+
+	cursor: pointer;
+}
+
+.title0:active {	
+	scale: 1.1;
+
+}
+
+
+
+

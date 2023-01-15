@@ -975,7 +975,7 @@ if (url === 'http://127.0.0.1:8000/partners/'){
 }
 
 if (url === 'http://127.0.0.1:8000/add_supply/' ){
-    const tovarz = document.querySelectorAll('.form-group')
+    const tovarz = document.querySelectorAll('.form-group1')
     const plus1 = document.querySelector('.plus1')
     for (let item of tovarz){
         item.classList.toggle('zero1')
@@ -1008,4 +1008,57 @@ if (url === 'http://127.0.0.1:8000/add_supply/' ){
 
     const udalit1 = document.querySelectorAll('p')[8]
     udalit1.classList.toggle('zero')
+
+    const udalit2 = document.querySelectorAll('p')[12]
+    udalit2.classList.toggle('zero')
+
+    const udalit3 = document.querySelectorAll('p')[16]
+    udalit3.classList.toggle('zero')
+
+    const udalit4 = document.querySelectorAll('p')[20]
+    udalit4.classList.toggle('zero')
+
+    const udalit5 = document.querySelectorAll('p')[24]
+    udalit5.classList.toggle('zero')
+
+    const udalit6 = document.querySelectorAll('p')[28]
+    udalit6.classList.toggle('zero')
+
+    const udalit7 = document.querySelectorAll('p')[32]
+    udalit7.classList.toggle('zero')
+
+    const udalit8 = document.querySelectorAll('p')[36]
+    udalit8.classList.toggle('zero')
+
+    const udalit9 = document.querySelectorAll('p')[40]
+    udalit9.classList.toggle('zero')
+
+    const udalit10 = document.querySelectorAll('p')[44]
+    udalit10.classList.toggle('zero')
+
+    document.querySelectorAll('.title0').forEach((el) => {
+        el.addEventListener('click',()=>{
+            let content = el.nextElementSibling ;
+           
+            let contentP = content.querySelector('input[type=checkbox]')
+            contentP.setAttribute('checked','checked')
+            
+            content.classList.toggle('zero1')
+            el.classList.toggle('zero1')
+
+        })
+    })
+    const postav = document.querySelector('label[for="id_supplier"]')
+    postav.classList.add('p__addPart-width')
+
+    const doc = document.querySelector('label[for="id_document"]')
+    doc.classList.add('p__addPart-width')
+
+    const date = document.querySelector('label[for="id_date_day"]')
+    date.classList.add('p__addPart-width')
+
+    const sklad = document.querySelector('label[for="id_warehouse"]')
+    sklad.classList.add('p__addPart-width')
+    
+
 }
