@@ -896,6 +896,22 @@ ul.lang-list li a:hover {color: #fdc073;}
 	scale: 1.1;
 }
 
+.suppliesBlock{
+	background-image: url(./../images/postTov.svg);
+	background-repeat: no-repeat;
+	text-align: center;
+	width: 100%;
+	font-size: 18px;
+	height: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.suppliesBlock:hover{
+	scale: 1.1;
+}
+
 .addPartners-block:hover{
 	scale: 1.1;
 }
@@ -1159,11 +1175,15 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .trStyle{
-	border-collapse: collapse;
-	border: 4px double black; 
+	/* border-collapse: collapse; */
+	border-spacing: 0;
+	border-radius: 20px; 
 	width: 100%;
 	/* text-align: center; */
 	background-color: white;
+	/* border-left: 3px solid black;
+	border-right: 3px solid black; */
+	
 }
 
 .tdStyle{
@@ -1177,6 +1197,11 @@ ul.lang-list li a:hover {color: #fdc073;}
 	width: 100px !important;
 }
 
+.headTable{
+	background-color: black;
+	color: white;
+	font-size: 16px;
+}
 
 
 /* Страница Поиска Начало */
@@ -1233,6 +1258,22 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .category:hover,.shop:hover{
+	scale: 1.1;
+}
+
+.tovariNaSklade{
+	background-image: url(./../images/tovariNaSklade.svg);
+	background-repeat: no-repeat;
+	font-size: 18px;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.tovariNaSklade:hover{
 	scale: 1.1;
 }
 
@@ -1441,6 +1482,17 @@ canvas {
 .spanNumber{
 	margin: 20px;
 }
+
+.plus1{
+	width: 100px;
+	height: 100px;
+}
+
+.plusMinus{
+	width: 50px;
+	height: 50px;
+
+}
 /* Страница Поиска Конец */
 
 /* Преоладер */
@@ -1563,3 +1615,32 @@ canvas {
     padding-bottom: 10px;
     margin-bottom: 10px;
 }
+.form-group1 {
+    
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.title1:hover {	
+
+	cursor: pointer;
+}
+
+.title1:active {	
+	scale: 1.1;
+
+}
+
+.title0:hover {	
+
+	cursor: pointer;
+}
+
+.title0:active {	
+	scale: 1.1;
+
+}
+
+
+
+

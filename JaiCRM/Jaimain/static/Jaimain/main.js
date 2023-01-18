@@ -109,6 +109,18 @@ settingsBlock.addEventListener('click',()=>
     localStorage.setItem('tasks', JSON.stringify(0))
 )
 
+const suppliesBlock = document.querySelector('[href="/supplies/"]');
+suppliesBlock.classList.add('suppliesBlock')
+suppliesBlock.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
+const tovariNaSklade = document.querySelector('[href="/products_in_stock/"]');
+tovariNaSklade.classList.add('tovariNaSklade')
+tovariNaSklade.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
@@ -126,6 +138,10 @@ if (url === 'http://127.0.0.1:8000/partners/'){
     propertyBlock.classList.add('ActiveList') 
 }else if (url === 'http://127.0.0.1:8000/sku/'){
     settingsBlock.classList.add('ActiveList') 
+}else if (url === 'http://127.0.0.1:8000/supplies/'){
+    suppliesBlock.classList.add('ActiveList')
+}else if (url === 'http://127.0.0.1:8000/products_in_stock/'){
+    tovariNaSklade.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/registeruser/' ){
     users.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/login/'){
@@ -292,7 +308,7 @@ if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/par
 
 
 
-if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/'){
+if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/' || url === 'http://127.0.0.1:8000/products_in_stock/' ){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -344,7 +360,32 @@ if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/pr
     //   }
 }
 
-if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_properties/' || url === 'http://127.0.0.1:8000/sku/'){
+if (url === 'http://127.0.0.1:8000/supplies/'){
+    let filter04 = function () {
+        let input = document.querySelector('.filter-input');
+
+        input.addEventListener('keyup', FilterUser)
+
+        function FilterUser(){
+            //Ловеркейс для поиска
+            let filter = input.value.toLowerCase(),
+            //Ищем все li у ul
+            filterElements = document.querySelectorAll("tr:not(:first-child)");
+
+            filterElements.forEach((item) => {
+                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            })}
+        
+    };
+
+    filter04();
+}
+
+if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_properties/' || url === 'http://127.0.0.1:8000/sku/' || url === 'http://127.0.0.1:8000/products_in_stock/'){
     let filter02 = function () {
         let input = document.querySelector('.filter-input');
 
@@ -939,4 +980,93 @@ if (url === 'http://127.0.0.1:8000/partners/'){
         for (let item of spanNumber){
             item.classList.add('spanNumber')
         }
+}
+
+if (url === 'http://127.0.0.1:8000/add_supply/' ){
+    const tovarz = document.querySelectorAll('.form-group1')
+    const plus1 = document.querySelector('.plus1')
+    for (let item of tovarz){
+        item.classList.toggle('zero1')
+    }
+
+    plus1.addEventListener('click', plus1Action)
+    function plus1Action(){
+        for (let item of tovarz){
+            if (item.classList.contains('zero1')){
+                item.classList.toggle('zero1')
+                const checkbox = item.querySelector('input[type=checkbox]')
+                checkbox.removeAttribute('checked')
+                return
+            }
+
+        }
+    }
+    const checkDelete = document.querySelectorAll('input[type=checkbox]')
+
+    const proverty01 = document.querySelector('#id_productsinsupply_set-0-DELETE')
+    proverty01.setAttribute('checked','checked')
+    const proverty02 = document.querySelector('#id_productsinsupply_set-1-DELETE')
+    proverty02.setAttribute('checked','checked')
+    const proverty03 = document.querySelector('#id_productsinsupply_set-2-DELETE')
+    proverty03.setAttribute('checked','checked')
+    const proverty04 = document.querySelector('#id_productsinsupply_set-3-DELETE')
+    proverty04.setAttribute('checked','checked')
+    const proverty05 = document.querySelector('#id_productsinsupply_set-4-DELETE')
+    proverty05.setAttribute('checked','checked')
+
+    const udalit1 = document.querySelectorAll('p')[8]
+    udalit1.classList.toggle('zero')
+
+    const udalit2 = document.querySelectorAll('p')[12]
+    udalit2.classList.toggle('zero')
+
+    const udalit3 = document.querySelectorAll('p')[16]
+    udalit3.classList.toggle('zero')
+
+    const udalit4 = document.querySelectorAll('p')[20]
+    udalit4.classList.toggle('zero')
+
+    const udalit5 = document.querySelectorAll('p')[24]
+    udalit5.classList.toggle('zero')
+
+    const udalit6 = document.querySelectorAll('p')[28]
+    udalit6.classList.toggle('zero')
+
+    const udalit7 = document.querySelectorAll('p')[32]
+    udalit7.classList.toggle('zero')
+
+    const udalit8 = document.querySelectorAll('p')[36]
+    udalit8.classList.toggle('zero')
+
+    const udalit9 = document.querySelectorAll('p')[40]
+    udalit9.classList.toggle('zero')
+
+    const udalit10 = document.querySelectorAll('p')[44]
+    udalit10.classList.toggle('zero')
+
+    document.querySelectorAll('.title0').forEach((el) => {
+        el.addEventListener('click',()=>{
+            let content = el.nextElementSibling ;
+           
+            let contentP = content.querySelector('input[type=checkbox]')
+            contentP.setAttribute('checked','checked')
+            
+            content.classList.toggle('zero1')
+            el.classList.toggle('zero1')
+
+        })
+    })
+    const postav = document.querySelector('label[for="id_supplier"]')
+    postav.classList.add('p__addPart-width')
+
+    const doc = document.querySelector('label[for="id_document"]')
+    doc.classList.add('p__addPart-width')
+
+    const date = document.querySelector('label[for="id_date_day"]')
+    date.classList.add('p__addPart-width')
+
+    const sklad = document.querySelector('label[for="id_warehouse"]')
+    sklad.classList.add('p__addPart-width')
+    
+
 }

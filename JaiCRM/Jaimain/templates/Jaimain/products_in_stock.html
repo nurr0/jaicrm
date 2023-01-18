@@ -50,7 +50,7 @@
 
 
 
-	<div class="headers__users  header_users-list header_users-list1">
+	<!-- <div class="headers__users  header_users-list header_users-list1">
 		<div class="headerTable">Торговая точка/склад</div>
 		<div class="headerTable">Наименование</div>
 		<div class="headerTable">Артикул</div>
@@ -60,8 +60,26 @@
         <div class="headerTable">Количество</div>
         <div class="headerTable">Продажная цена</div>
 		<div class="headerTable"></div>
-	</div>
+	</div> -->
 	<table  class="trStyle " id="myTable">
+		<tr class="headTable">
+			<th>Торговая точка(Склад)</th>
+			<th>Наименование</th>
+			<th>Артикул</th>
+			<th>Категория</th>
+			<th>Свойства</th>
+			<th>Производитель</th>
+			<th>Кол-во</th>
+			<th>Продажная цена</th>
+			<th>
+				<div class="headerTable butPods" data-title="Сортировать Документ от А - Я">
+					<button class="btn1 btn__addUsers1 btn-fuck ">
+					
+					<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+					</button>
+				</div>
+			</th>
+		</tr>
 
 
 		<tr class="trClass">
@@ -73,7 +91,9 @@
 			<td class="tdStyle">{{unit.product.get_properties}}</td>
 			<td class="tdStyle">{{unit.product.producer}}</td>
 			<td class="tdStyle">{{unit.amount}}</td>
-			<td class="tdStyle">{{unit.get_sell_price}}</td>
+
+			<!-- <td class="tdStyle">{{unit.get_sell_price}}</td> -->
+
 			<td class="tdStyle"> <button class="btn">
 				  <a class="btn__text" href="{{unit.get_retail_price_id}}">Изменить цену</a>
 				  </button>
