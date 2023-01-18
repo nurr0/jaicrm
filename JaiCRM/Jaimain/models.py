@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from rest_framework.validators import UniqueTogetherValidator, UniqueValidator
 from mptt.models import MPTTModel, TreeForeignKey
-from django.db.models import Sum
+from django.db.models import Sum, Max
 
 
 class Partner(models.Model):
@@ -20,6 +20,7 @@ class Partner(models.Model):
     time_start_working = models.DateField(verbose_name='Дата начала работы')
     time_expires = models.DateField(verbose_name='Дата окончания работы')
     is_working = models.BooleanField(default=False, verbose_name='Активность')
+    receipt_prefix = models.CharField(default=None, blank=True, null=True, verbose_name='Префикс чека', max_length=100)
 
     class Meta:
         verbose_name = 'Партнер'
@@ -110,14 +111,13 @@ class SKU(models.Model):
     category = TreeForeignKey(ProductCategory, on_delete=models.PROTECT, verbose_name='Категория')
 
     def __str__(self):
-        return f'{self.identifier}/{self.name}'
+        return f'{self.identifier} / {self.name}'
 
     def get_properties(self):
         properties = ProductPropertyRelation.objects.filter(product=self)
         properties_list = [f"{p.property.name} - {p.value}" for p in properties]
         properties_string = '\n'.join(properties_list)
         return properties_string
-
 
     class Meta:
         unique_together = (('partner', 'identifier', 'name'),)
@@ -145,14 +145,16 @@ class ProductInStock(models.Model):
     amount = models.IntegerField(verbose_name='Количество')
 
     def __str__(self):
-        return self.product.__str__()
+        return f'[{self.shop}] {self.product.__str__()}'
 
     def get_latest_supply_date(self):
-        latest_supply = self.product.productsinsupply_set.filter(supply__warehouse=self.shop).latest('supply__date_created').supply
+        latest_supply = self.product.productsinsupply_set.filter(supply__warehouse=self.shop).latest(
+            'supply__date_created').supply
         return latest_supply.date_created
 
     def get_latest_supply_price(self):
-        latest_supply_cost = self.product.productsinsupply_set.filter(supply__warehouse=self.shop).latest('supply__date_created').product_supply_price
+        latest_supply_cost = self.product.productsinsupply_set.filter(supply__warehouse=self.shop).latest(
+            'supply__date_created').product_supply_price
         return latest_supply_cost
 
     def get_sell_price(self):
@@ -223,3 +225,71 @@ class SellPrice(models.Model):
 
     class Meta:
         unique_together = (('product_in_stock', 'partner'),)
+
+
+class SellReceipt(models.Model):
+    partner = models.ForeignKey(Partner, verbose_name='Партнер', on_delete=models.PROTECT)
+    user_created = models.ForeignKey(JaiUser, verbose_name='Пользователь', on_delete=models.PROTECT)
+    time_created = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время регистрации чека')
+    number = models.IntegerField(verbose_name='Номер чека')
+    is_returned = models.BooleanField(verbose_name='Возврат', default=False)
+    shop = models.ForeignKey(Shop, verbose_name='Торговая точка', on_delete=models.PROTECT)
+
+    class Meta:
+        unique_together = (('partner', 'number'),)
+
+    @staticmethod
+    def get_receipt_number_for_partner(partner):
+        last_number = SellReceipt.objects.filter(partner=partner).aggregate(Max('number'))['number__max']
+        if last_number:
+            return last_number + 1
+        else:
+            return 1
+
+    def __str__(self):
+        return f'{self.partner.receipt_prefix} {self.number}'
+
+    def get_total_amount_of_SKU_in_receipt(self):
+        return ProductInReceipt.objects.filter(receipt=self).values('product').distinct().count()
+
+    def get_total_amount_of_products_in_receipt(self):
+        return ProductInReceipt.objects.filter(receipt=self).aggregate(Sum('amount'))['amount__sum']
+
+    def get_total_price(self):
+        total_cost = 0
+        for i in ProductInReceipt.objects.filter(receipt=self):
+            total_cost += i.get_total_cost()
+        return total_cost
+
+    def get_total_discount(self):
+        total_discount = 0
+        for i in ProductInReceipt.objects.filter(receipt=self):
+            total_discount += i.get_total_discount()
+        return total_discount
+
+    def get_total_price_with_discount(self):
+        total_cost_with_discount = 0
+        for i in ProductInReceipt.objects.filter(receipt=self):
+            total_cost_with_discount += i.get_total_cost_with_discount()
+        return total_cost_with_discount
+
+
+class ProductInReceipt(models.Model):
+    product = models.ForeignKey(ProductInStock, verbose_name='Товар', on_delete=models.PROTECT)
+    amount = models.IntegerField(verbose_name='Количество')
+    receipt = models.ForeignKey(SellReceipt, verbose_name='Чек', on_delete=models.PROTECT)
+    price_in_stock = models.DecimalField(verbose_name='Установленная цена', decimal_places=2, max_digits=11)
+    discount = models.IntegerField(verbose_name='Скидка', blank=True, default=0)
+    price_with_discount = models.DecimalField(verbose_name='Цена с учетом скидки', decimal_places=2, max_digits=11)
+
+    class Meta:
+        unique_together = (('receipt', 'product'),)
+
+    def get_total_cost(self):
+        return self.amount * self.price_in_stock
+
+    def get_total_discount(self):
+        return self.amount * self.discount
+
+    def get_total_cost_with_discount(self):
+        return self.amount * self.price_with_discount

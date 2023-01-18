@@ -1,0 +1,38 @@
+{% extends 'Jaimain/base.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+
+<form method="post" action="{% url 'receipt_registration' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+
+
+    <div class="p__addPart">
+        {{ receipt_form.receipt_number_display.label }} {{ receipt_form.receipt_number_display }}
+        {{ receipt_form.shop.label }} {{ receipt_form.shop}}
+    </div>
+
+
+    <div>
+        <h2>Товары</h2>
+    </div>
+    {{ products_in_receipt_formset.management_form }}
+    {% for form in products_in_receipt_formset %}
+    <div class="form-group">
+        <!-- <div class="title">Добавить</div> -->
+        <img class="title plus" src="/static/Jaimain/images/plus.png" alt="">
+<!--        <div>{{ form.as_p }}</div>-->
+            <div>{{ form.product.label }} {{ form.product }}</div>
+            <div>{{ form.amount.label }} {{ form.amount }}</div>
+            <div>{{ form.price_in_stock.label }} {{ form.price_in_stock }}</div>
+            <div>{{ form.discount.label }} {{ form.discount }}</div>
+            <div>{{ form.price_with_discount.label}} {{form.price_with_discount}}</div>
+            <div>{{ form.DELETE.label }} {{ form.DELETE }}</div>
+    </div>
+    {% endfor %}
+            <h3>Всего товаров - , на сумму - </h3>
+    <input class="btn" type="submit" value="Сохранить">
+</form>
+
+
+{% endblock %}

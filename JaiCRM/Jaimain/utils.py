@@ -13,7 +13,9 @@ menu = [
         {'title': "Свойства товаров", 'url_name': 'product_properties'},
         {'title': "Управление SKU", 'url_name': 'sku'},
         {'title': "Поступление товаров", 'url_name': 'supplies'},
-        {'title': "Товары на складах", 'url_name': 'products_in_stock'}
+        {'title': "Товары на складах", 'url_name': 'products_in_stock'},
+        {'title': 'Регистрация продаж', 'url_name': 'receipt_registration'},
+        {'title': 'Продажи', 'url_name': 'sell_receipt_list'}
 
         ]
 
@@ -33,3 +35,4 @@ def superuser_required(view_func):
         else:
             return HttpResponseForbidden()
     return wrapper
+
