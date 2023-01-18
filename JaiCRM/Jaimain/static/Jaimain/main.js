@@ -154,6 +154,10 @@ if (url === 'http://127.0.0.1:8000/partners/'){
     suppliesBlock.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/products_in_stock/'){
     tovariNaSklade.classList.add('ActiveList')
+}else if (url === 'http://127.0.0.1:8000/sell_receipt_list/'){
+    prodazh.classList.add('ActiveList')
+}else if (url === 'http://127.0.0.1:8000/receipt_registration/'){
+    regisProdaz.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/registeruser/' ){
     users.classList.add('ActiveList')
 }else if (url === 'http://127.0.0.1:8000/login/'){
@@ -357,19 +361,7 @@ if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/pr
         }
       }
 
-    //   const btnON = document.querySelector('.btnOn01')
-    //   const trTable = document.querySelector('.trStyle')
-    //   const stroka = document.querySelector('.list-articles')
-    //   const searchUser = document.querySelector('.d7')
-    //   const headerUsers = document.querySelector('.headers__users')
-    //   btnON.addEventListener('click', smenaVida);
-    //   function smenaVida(){
-    //     trTable.classList.toggle('zero1')
-    //     stroka.classList.toggle('zero1')
-    //     fuck.classList.toggle('zero1')
-    //     headerUsers.classList.toggle('zero1')
-    //     // searchUser.classList.toggle('zero1')
-    //   }
+
 }
 
 if (url === 'http://127.0.0.1:8000/supplies/'){
