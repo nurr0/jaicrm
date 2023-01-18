@@ -28,7 +28,9 @@
             <div>{{ form.discount.label }} {{ form.discount }}</div>
             <div>{{ form.price_with_discount.label}} {{form.price_with_discount}}</div>
             <div>{{ form.DELETE.label }} {{ form.DELETE }}</div>
+            {{form.errors}}
     </div>
+
     {% endfor %}
             <h3>Всего товаров - , на сумму - </h3>
     <input class="btn" type="submit" value="Сохранить">

@@ -788,7 +788,7 @@ class EditRetailPrice(DataMixin, UpdateView):
     model = SellPrice
     fields = ['price']
     template_name = 'Jaimain/edit_retail_price.html'
-    success_url = '/product_in_stock/'
+    success_url = '/products_in_stock/'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -827,10 +827,9 @@ def register_a_sale(request):
                     products_in_receipt.receipt = receipt
                     products_in_receipt.save()
                     amount_sold = products_in_receipt.amount
+                    product_sold = products_in_receipt.product
                     # sold_amount = form.cleaned_data['decrease_amount']
                     product_in_stock = form.cleaned_data['product']
-                    discont = form.cleaned_data['discount']
-
                     if product_in_stock.amount >= amount_sold:
                         product_in_stock.amount -= amount_sold
                         product_in_stock.save()
@@ -847,7 +846,6 @@ def register_a_sale(request):
     receipt_form.fields['shop'].queryset = Shop.objects.filter(partner=request.user.partner)
     for form in products_in_receipt_formset:
         form.fields['product'].queryset = ProductInStock.objects.filter(shop__in=shops, amount__gt=0)
-
 
     return render(request, 'Jaimain/receipt_registration.html', {
         'receipt_form': receipt_form,
@@ -896,4 +894,3 @@ class ShowSellReceipt(DataMixin, DetailView):
         if request.user.is_costumer:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
-
