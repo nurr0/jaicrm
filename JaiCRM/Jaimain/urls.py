@@ -38,4 +38,7 @@ urlpatterns = [
     path('products_in_stock/', ProductInStockList.as_view(), name='products_in_stock'),
     path('add_price/', add_sell_price, name='add_price'),
     path('products_in_stock/<int:pk>/', EditRetailPrice.as_view(), name='edit_retail_price'),
+    path('receipt_registration/', register_a_sale, name='receipt_registration'),
+    path('sell_receipt_list/', SellReceiptList.as_view(), name='sell_receipt_list'),
+    path('sell_receipt_list/<int:receipt_pk>/', ShowSellReceipt.as_view(), name='show_receipt')
 ]

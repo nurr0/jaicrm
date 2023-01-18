@@ -17,6 +17,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+
 class Partners(DataMixin, ListView):
     model = Partner
     template_name = 'Jaimain/partners.html'
@@ -84,7 +85,7 @@ class AddPartner(DataMixin, CreateView):
 class EditPartner(DataMixin, UpdateView):
     model = Partner
     fields = ['name', 'description', 'partner_tel', 'partner_email',
-              'partner_person', 'time_start_working', 'time_expires', 'is_working']
+              'partner_person', 'time_start_working', 'time_expires', 'is_working', 'receipt_prefix']
     template_name = 'Jaimain/editpartner.html'
     success_url = '/partners/'
 
@@ -743,7 +744,7 @@ class ProductInStockList(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Товары на складах')
+        c_def = self.get_user_context(title='Товары в продаже')
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
@@ -753,21 +754,6 @@ class ProductInStockList(DataMixin, ListView):
             shop__in=partners_shops)
         return queryset
 
-
-# def add_sell_price(request):
-#     user_menu = menu.copy()
-#     if request.method == 'POST':
-#         form = AddSellPriceForm(request.POST)
-#         if form.is_valid():
-#             form.instance.partner = request.user.partner
-#             try:
-#                 form.save()
-#                 return redirect('success_page')
-#             except IntegrityError:
-#                 messages.error(request, 'Цена для данного товара уже установлена')
-#     else:
-#         form = AddSellPriceForm()
-#     return render(request, 'Jaimain/add_price.html', {'form': form, 'menu': user_menu, 'title': 'Добавление цены'})
 
 
 def add_sell_price(request):
@@ -794,7 +780,8 @@ def add_sell_price(request):
             form.fields['product_in_stock'].initial = queryset[i]
             form.fields['product_in_stock_display'].initial = str(queryset[i])
             form.fields['product_latest_supply_price'].initial = str(queryset[i].get_latest_supply_price())
-    return render(request, 'Jaimain/add_price.html', {'formset': formset, 'menu': user_menu, 'title': 'Добавление цены'})
+    return render(request, 'Jaimain/add_price.html',
+                  {'formset': formset, 'menu': user_menu, 'title': 'Добавление цены'})
 
 
 class EditRetailPrice(DataMixin, UpdateView):
@@ -806,7 +793,7 @@ class EditRetailPrice(DataMixin, UpdateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Изменение продажной цены',
-                                      product=f'{self.object.product_in_stock}',)
+                                      product=f'{self.object.product_in_stock}', )
 
         return dict(list(context.items()) + list(c_def.items()))
 
@@ -815,3 +802,98 @@ class EditRetailPrice(DataMixin, UpdateView):
         if request.user.is_costumer:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
+
+
+def register_a_sale(request):
+    user_menu = menu.copy()
+    partner = request.user.partner
+    receipt_number = SellReceipt.get_receipt_number_for_partner(partner)
+    shops = Shop.objects.filter(partner=request.user.partner)
+    if request.method == 'POST':
+        receipt_form = SaleRegistrationForm(request.POST)
+        products_in_receipt_formset = ProductsInReceiptFormSet(request.POST)
+        if receipt_form.is_valid() and products_in_receipt_formset.is_valid():
+            receipt = receipt_form.save(commit=False)
+            receipt.partner = partner
+            receipt.user_created = request.user
+            receipt.number = receipt_number
+            shop_sold_from = receipt.shop
+            receipt.save()
+            for form in products_in_receipt_formset:
+                if form.is_valid:
+                    if form.cleaned_data.get('DELETE'):
+                        continue
+                    products_in_receipt = form.save(commit=False)
+                    products_in_receipt.receipt = receipt
+                    products_in_receipt.save()
+                    amount_sold = products_in_receipt.amount
+                    # sold_amount = form.cleaned_data['decrease_amount']
+                    product_in_stock = form.cleaned_data['product']
+                    discont = form.cleaned_data['discount']
+
+                    if product_in_stock.amount >= amount_sold:
+                        product_in_stock.amount -= amount_sold
+                        product_in_stock.save()
+                        form.save()
+
+            return redirect('/')
+        if not receipt_form.is_valid():
+            print(receipt_form.errors)
+    else:
+        receipt_form = SaleRegistrationForm()
+        products_in_receipt_formset = ProductsInReceiptFormSet()
+
+    receipt_form.fields['receipt_number_display'].initial = f'{partner.receipt_prefix} {receipt_number}'
+    receipt_form.fields['shop'].queryset = Shop.objects.filter(partner=request.user.partner)
+    for form in products_in_receipt_formset:
+        form.fields['product'].queryset = ProductInStock.objects.filter(shop__in=shops, amount__gt=0)
+
+
+    return render(request, 'Jaimain/receipt_registration.html', {
+        'receipt_form': receipt_form,
+        'products_in_receipt_formset': products_in_receipt_formset, 'menu': user_menu, 'title': 'Регистрация продажи'
+    })
+
+
+class SellReceiptList(DataMixin, ListView):
+    model = SellReceipt
+    template_name = 'Jaimain/sell_receipt_list.html'
+    context_object_name = 'sell_receipt_list'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Продажи')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        user = self.request.user
+        partner = self.request.user.partner
+        queryset = SellReceipt.objects.all() if user.is_superuser else SellReceipt.objects.filter(
+            partner=partner)
+        return queryset
+
+
+class ShowSellReceipt(DataMixin, DetailView):
+    model = SellReceipt
+    template_name = 'Jaimain/show_receipt.html'
+    pk_url_kwarg = 'receipt_pk'
+    context_object_name = 'receipt'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Просмотр документа продажи')
+        c_def['products_in_receipt'] = ProductInReceipt.objects.filter(receipt=self.object)
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
