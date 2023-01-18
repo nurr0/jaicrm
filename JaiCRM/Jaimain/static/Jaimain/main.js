@@ -121,6 +121,18 @@ tovariNaSklade.addEventListener('click',()=>
     localStorage.setItem('tasks', JSON.stringify(0))
 )
 
+const regisProdaz = document.querySelector('[href="/receipt_registration/"]');
+regisProdaz.classList.add('regisProdaz')
+regisProdaz.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
+const prodazh = document.querySelector('[href="/sell_receipt_list/"]');
+prodazh.classList.add('prodazh')
+prodazh.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
 const url = window.location.href;
 if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')
@@ -268,7 +280,7 @@ TextContactInn.classList.add('p__addPart-widthRight')
 
 
 //Поиск у пользователей и партнеров
-if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/partners/' || url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_categories/'){
+if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/partners/' || url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_categories/' ){
     let filter = function () {
         let input = document.querySelector('.filter-input');
 
@@ -308,7 +320,7 @@ if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/par
 
 
 
-if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/' || url === 'http://127.0.0.1:8000/products_in_stock/' ){
+if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/' || url === 'http://127.0.0.1:8000/products_in_stock/' || url === 'http://127.0.0.1:8000/sell_receipt_list/'){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -385,7 +397,7 @@ if (url === 'http://127.0.0.1:8000/supplies/'){
     filter04();
 }
 
-if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_properties/' || url === 'http://127.0.0.1:8000/sku/' || url === 'http://127.0.0.1:8000/products_in_stock/'){
+if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_properties/' || url === 'http://127.0.0.1:8000/sku/' || url === 'http://127.0.0.1:8000/products_in_stock/' ){
     let filter02 = function () {
         let input = document.querySelector('.filter-input');
 
@@ -408,6 +420,31 @@ if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/pro
     };
 
     filter02();
+}
+
+if ( url === 'http://127.0.0.1:8000/sell_receipt_list/'){
+    let filter06 = function () {
+        let input = document.querySelector('.filter-input');
+
+        input.addEventListener('keyup', FilterUser)
+
+        function FilterUser(){
+            //Ловеркейс для поиска
+            let filter = input.value.toLowerCase(),
+            //Ищем все li у ul
+            filterElements = document.querySelector('.trStyle').querySelectorAll("tr:not(:first-child)");
+
+            filterElements.forEach((item) => {
+                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            })}
+        
+    };
+
+    filter06();
 }
 
 
@@ -904,23 +941,7 @@ userImg.addEventListener('click',()=>{
 
 })
 
-//Пагинация
-// const partnersblock = document.querySelectorAll('.partners__info')
-// const arrayPartnersblock = Array.from(partnersblock)
-// console.log(arrayPartnersblock)
 
-// let liPagination = document.querySelector('#pagination li')
-
-// let notesOnPage = 3;
-
-// for (let item of liPagination){
-//     item.addEventListener('click',function(){
-//         //Получаем номер страницы
-//         let pageNum = +this.innerHTML;
-//         console.log(pageNum)
-//         let notes = arrayPartnersblock.slice
-//     });
-// }
 if (url === 'http://127.0.0.1:8000/partners/'){
     // let count = 8; //всего записей
     let count = document.querySelectorAll(".num").length;
@@ -1069,4 +1090,49 @@ if (url === 'http://127.0.0.1:8000/add_supply/' ){
     sklad.classList.add('p__addPart-width')
     
 
+}
+
+if (url === 'http://127.0.0.1:8000/receipt_registration/' ){
+    const tovarz = document.querySelectorAll('.form-group')
+    const plus1 = document.querySelector('.plus')
+    for (let item of tovarz){
+        item.classList.toggle('zero1')
+    }
+
+    plus1.addEventListener('click', plus1Action)
+    function plus1Action(){
+        for (let item of tovarz){
+            if (item.classList.contains('zero1')){
+                item.classList.toggle('zero1')
+                const checkbox = item.querySelector('input[type=checkbox]')
+                checkbox.removeAttribute('checked')
+                return
+            }
+
+        }
+    }
+
+    const proverty01 = document.querySelector('#id_productinreceipt_set-0-DELETE')
+    proverty01.setAttribute('checked','checked')
+    const proverty02 = document.querySelector('#id_productinreceipt_set-1-DELETE')
+    proverty02.setAttribute('checked','checked')
+
+    document.querySelectorAll('.title0').forEach((el) => {
+        el.addEventListener('click',()=>{
+            let content = el.nextElementSibling ;
+           
+            let contentP = content.querySelector('input[type=checkbox]')
+            contentP.setAttribute('checked','checked')
+            
+            content.classList.toggle('zero1')
+            el.classList.toggle('zero1')
+
+        })
+    })
+
+    const udalit1 = document.querySelectorAll('div')[33]
+    udalit1.classList.toggle('zero')
+
+    const udalit2 = document.querySelectorAll('div')[41]
+    udalit2.classList.toggle('zero')
 }

@@ -45,7 +45,7 @@
 
 
 
-	<div class="headers__users  header_users-list header_users-list1">
+	<!-- <div class="headers__users  header_users-list header_users-list1">
 		<div class="headerTable">Торговая точка</div>
 		<div class="headerTable">Дата и время</div>
 		<div class="headerTable">Документ</div>
@@ -56,9 +56,26 @@
         <div class="headerTable">Сумма с учетом скидки</div>
         <div class="headerTable">Возврат</div>
 		<div class="headerTable"></div>
-	</div>
+	</div> -->
 	<table  class="trStyle " id="myTable">
-
+		<tr class="headTable">
+			<th>Торговая точка(Склад)</th>
+			<th>Дата и время</th>
+			<th>Документ</th>
+			<th>Кол-во позиций</th>
+			<th>Кол-во товаров</th>
+			<th>Сумма</th>
+			<th>Скидка</th>
+			<th>Сумма с учетом скидки </th>
+			<th>Возврат </th>
+			<th>
+				<div class="headerTable butPods" data-title="Сортировать Склад от А - Я">
+					<button class="btn1 btn__addUsers1 btn-fuck ">
+					
+					<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+					</button>
+				</div>
+			</th>
 
 		<tr class="trClass">
 			{% for unit in sell_receipt_list %}

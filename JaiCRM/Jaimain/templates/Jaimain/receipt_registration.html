@@ -15,12 +15,16 @@
 
     <div>
         <h2>Товары</h2>
+    <img class="title plus" src="/static/Jaimain/images/plus.png" alt="">
     </div>
     {{ products_in_receipt_formset.management_form }}
     {% for form in products_in_receipt_formset %}
-    <div class="form-group">
+    <div class="form-group border">
+    <img class="title0 plusMinus" src="/static/Jaimain/images/minusss.png" alt="">
+        <div>
+
         <!-- <div class="title">Добавить</div> -->
-        <img class="title plus" src="/static/Jaimain/images/plus.png" alt="">
+        <!-- <img class="title plus" src="/static/Jaimain/images/plus.png" alt=""> -->
 <!--        <div>{{ form.as_p }}</div>-->
             <div>{{ form.product.label }} {{ form.product }}</div>
             <div>{{ form.amount.label }} {{ form.amount }}</div>
@@ -29,6 +33,7 @@
             <div>{{ form.price_with_discount.label}} {{form.price_with_discount}}</div>
             <div>{{ form.DELETE.label }} {{ form.DELETE }}</div>
             {{form.errors}}
+        </div>
     </div>
 
     {% endfor %}
