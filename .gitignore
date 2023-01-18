@@ -1,5 +1,3 @@
-<<<<<<< HEAD
 db.sqlite3
-=======
 /JaiCRM/db.sqlite3
->>>>>>> master
+*.sqlite3

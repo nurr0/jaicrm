@@ -22,12 +22,7 @@
 		</form>
 	</div>
 
-			<div class="btn__addUsers">
-		<button class="btn ">
-			<a class="btn__text" href="{% url 'add_price' %}">Установить цены на товары</a>
-		</button>
 
-	</div>
 	<!-- <button class="btn btn__addUsers1 btn-fuck zero1">
 
 		<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
@@ -50,52 +45,34 @@
 
 
 
-	<!-- <div class="headers__users  header_users-list header_users-list1">
-		<div class="headerTable">Торговая точка/склад</div>
-		<div class="headerTable">Наименование</div>
-		<div class="headerTable">Артикул</div>
-		<div class="headerTable">Категория</div>
-		<div class="headerTable">Свойства товара</div>
-        <div class="headerTable">Производитель</div>
-        <div class="headerTable">Количество</div>
-        <div class="headerTable">Продажная цена</div>
+	<div class="headers__users  header_users-list header_users-list1">
+		<div class="headerTable">Торговая точка</div>
+		<div class="headerTable">Дата и время</div>
+		<div class="headerTable">Документ</div>
+		<div class="headerTable">Количество позиций</div>
+		<div class="headerTable">Количество товаров</div>
+		<div class="headerTable">Сумма</div>
+        <div class="headerTable">Скидка</div>
+        <div class="headerTable">Сумма с учетом скидки</div>
+        <div class="headerTable">Возврат</div>
 		<div class="headerTable"></div>
-	</div> -->
+	</div>
 	<table  class="trStyle " id="myTable">
-		<tr class="headTable">
-			<th>Торговая точка(Склад)</th>
-			<th>Наименование</th>
-			<th>Артикул</th>
-			<th>Категория</th>
-			<th>Свойства</th>
-			<th>Производитель</th>
-			<th>Кол-во</th>
-			<th>Продажная цена</th>
-			<th>
-				<div class="headerTable butPods" data-title="Сортировать Документ от А - Я">
-					<button class="btn1 btn__addUsers1 btn-fuck ">
-					
-					<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
-					</button>
-				</div>
-			</th>
-		</tr>
 
 
 		<tr class="trClass">
-			{% for unit in products_in_stock %}
+			{% for unit in sell_receipt_list %}
 			<td class="tdStyle">{% autoescape on %}{{unit.shop}}</td>
-			<td class="tdStyle">{{unit.product.name}}</td>
-			<td class="tdStyle">{{unit.product.identifier}}</td>
-			<td class="tdStyle">{{unit.product.category.get_full_path}}</td>
-			<td class="tdStyle">{{unit.product.get_properties}}</td>
-			<td class="tdStyle">{{unit.product.producer}}</td>
-			<td class="tdStyle">{{unit.amount}}</td>
-
-			<!-- <td class="tdStyle">{{unit.get_sell_price}}</td> -->
-
+			<td class="tdStyle">{{unit.time_created}}</td>
+			<td class="tdStyle">{{unit.partner.receipt_prefix}} {{unit.number}}</td>
+			<td class="tdStyle">{{unit.get_total_amount_of_SKU_in_receipt}}</td>
+			<td class="tdStyle">{{unit.get_total_amount_of_products_in_receipt}}</td>
+			<td class="tdStyle">{{unit.get_total_price}}</td>
+			<td class="tdStyle">{{unit.get_total_discount}}</td>
+			<td class="tdStyle">{{unit.get_total_price_with_discount}}</td>
+			<td class="tdStyle">{{unit.is_returned}}</td>
 			<td class="tdStyle"> <button class="btn">
-				  <a class="btn__text" href="{{unit.get_retail_price_id}}">Изменить цену</a>
+				  <a class="btn__text" href="{{unit.pk}}">Просмотр</a>
 				  </button>
 			</td>
 		</tr>

@@ -1,0 +1,59 @@
+{% extends 'Jaimain/base.html' %}
+
+{% block content %}
+
+<div class="header_ilya">
+    <h1>Документ: {{receipt.partner.receipt_prefix}} {{receipt.number}}</h1>
+<div style="text-align: right" class="btn_ilya">
+        <button class="btn">
+            <a class="white" href='{% url 'edit_supply' receipt.pk %}'>Оформить возврат</a>
+        </button>
+    </div>
+
+
+</div>
+<h4>Дата и время: {{receipt.time_created}}</h4>
+<h4>Торговая точка: {{receipt.shop}}</h4>
+
+<div class="headers__users  header_users-list header_users-list1">
+	<div class="headerTable">Наименование товара</div>
+	<div class="headerTable">Количество</div>
+	<div class="headerTable">Установленная цена</div>
+	<div class="headerTable">Скидка</div>
+	<div class="headerTable">Цена с учетом скидки</div>
+	<div class="headerTable">Итоговая сумма</div>
+	</div>
+	<table  class="trStyle " id="myTable">
+		<tr>
+		  <!-- <th>Пользователь</th>
+		  <th>Имя пользователя</th>
+		  <th>Партнер</th>
+		  <th>Данные</th> -->
+		</tr>
+
+		<tr class="trClass">
+			{% for product in products_in_receipt %}
+			<td class="tdStyle">{{ product.product.product}}</td>
+			<td class="tdStyle">{{ product.amount }}</td>
+			<td class="tdStyle">{{ product.price_in_stock }}</td>
+			<td class="tdStyle">{{ product.discount }}</td>
+			<td class="tdStyle">{{ product.price_with_discount }}</td>
+			<td class="tdStyle">{{ product.get_total_cost_with_discount }}</td>
+			</td>
+		</tr>
+		{% endfor %}
+		<tr class="trClass">
+			<td class="tdStyle">Всего {{ receipt.get_total_amount_of_SKU_in_receipt }} наименований</td>
+
+			<td class="tdStyle">Едениц товара - {{ receipt.get_total_amount_of_products_in_receipt }}</td>
+			<td class="tdStyle">Сумма без скидки - {{ receipt.get_total_price }}</td>
+			<td class="tdStyle">Сумма скидки - {{ receipt.get_total_discount }}</td>
+			<td class="tdStyle">Сумма со скидкой - {{ receipt.get_total_price_with_discount }}</td>
+			</td>
+	</table>
+			<!-- <p class="last">{{u.first_name}} {{u.last_name}}, Партнер: {{u.partner}}</p> -->
+
+		<div class="clear"></div>
+
+{% endblock %}
+

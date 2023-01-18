@@ -162,7 +162,8 @@ class ProductsRemoveForm(forms.ModelForm):
 
 class AddSellPriceForm(forms.ModelForm):
     product_in_stock_display = forms.CharField(label='Товар', widget=forms.TextInput(attrs={'readonly': True}))
-    product_latest_supply_price = forms.CharField(label='Последняя стоимость поставки', widget=forms.TextInput(attrs={'readonly': True}))
+    product_latest_supply_price = forms.CharField(label='Последняя стоимость поставки',
+                                                  widget=forms.TextInput(attrs={'readonly': True}))
 
     class Meta:
         model = SellPrice
@@ -179,7 +180,6 @@ class AddSellPriceForm(forms.ModelForm):
             raise forms.ValidationError("Цена товара не может быть меньше или равна 0")
         return price
 
-
     def save(self, commit=True):
         product_in_stock = self.cleaned_data.pop('product_in_stock')
         instance = super().save(commit=False)
@@ -187,3 +187,39 @@ class AddSellPriceForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+class SaleRegistrationForm(forms.ModelForm):
+    receipt_number_display = forms.CharField(label='Документ продажи:', widget=forms.TextInput(attrs={'readonly': True}))
+
+    class Meta:
+        model = SellReceipt
+        fields = ['receipt_number_display', 'shop']
+
+
+class ProductsInReceiptForm(forms.ModelForm):
+    class Meta:
+        model = ProductInReceipt
+        fields = '__all__'
+
+    def clean_amount(self):
+        amount = self.cleaned_data['amount']
+        if amount <= 0:
+            raise forms.ValidationError("Количество товара не может быть меньше или равно 0")
+        elif amount > self.cleaned_data['product'].amount:
+            raise forms.ValidationError("Количество товара в чеке не может превышать количество товара на складе")
+        return amount
+
+    def clean_discount(self):
+        discount = self.cleaned_data['discount']
+        if discount and discount >= 100:
+            raise forms.ValidationError("Скидка не может быть больше или равна 100%")
+        return discount
+
+
+ProductsInReceiptFormSet = inlineformset_factory(SellReceipt, ProductInReceipt,
+                                                 form=ProductsInReceiptForm,
+                                                 fields='__all__',
+                                                 extra=2,
+                                                 can_delete=True,
+                                                 can_delete_extra=True)
