@@ -47,6 +47,7 @@ class Shop(models.Model):
     description = models.TextField(blank=True, verbose_name='Описание')
     is_working = models.BooleanField(default=True, verbose_name='Активность')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    user = models.ForeignKey(JaiUser, verbose_name='Пользователь', on_delete=models.PROTECT)
 
     class Meta:
         verbose_name = 'Торговая точка'
@@ -65,6 +66,7 @@ class ProductCategory(MPTTModel):
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name='Родительская категория')
     description = models.TextField(blank=True, verbose_name='Описание', default=None, null=True)
+    user = models.ForeignKey(JaiUser, verbose_name='Пользователь', on_delete=models.PROTECT)
 
     class MPTTMeta:
         order_insertion_by = ['name']

@@ -24,7 +24,9 @@ urlpatterns = [
     path('', include('Jaimain.urls')),
     path('api/v1/propertylist/', PropertyAPIView.as_view()),
     path('api/v1/propertylist/<int:pk>/', PropertyAPIUpdate.as_view()),
-    path('api/v1/partnerlist/', PartnerAPIView.as_view())
+    path('api/v1/partnerlist/', PartnerAPIView.as_view()),
+    path('api/v1/shoplist/', ShopApiView.as_view()),
+    path('api/v1/product_cats/', ProductCategoryAPIView.as_view())
 ]
 
 if settings.DEBUG:
