@@ -1128,3 +1128,26 @@ if (url === 'http://127.0.0.1:8000/receipt_registration/' ){
     const udalit2 = document.querySelectorAll('div')[41]
     udalit2.classList.toggle('zero')
 }
+
+if (url === 'http://127.0.0.1:8000/product_properties/'){
+    const formElemBtn = document.querySelector('.btn__submit-form')
+    formElemBtn.addEventListener('click', postForm)
+    async function postForm(e){
+        e.preventDefault();
+    
+        let response = await fetch('http://127.0.0.1:8000/api/v1/propertylist/', {
+          method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        // headers: { 
+        //     "X-CSRFToken": {% csrf_token %} ,
+        // },
+          body: new FormData(formElem)
+        });
+    
+        let result = await response.json();
+    
+        alert(result.message);
+        }
+}

@@ -3,6 +3,7 @@ from Jaimain.models import *
 
 
 class PropertySerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = ProductProperty
         fields = '__all__'
