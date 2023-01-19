@@ -1,0 +1,11 @@
+{% extends 'Jaimain/base.html' %}
+{% block content %}
+    <h1>Оформить возврат чека</h1>
+    <h3>{{receipt.partner.receipt_prefix}} {{receipt.number}}</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Да">
+    </form>
+{% endblock %}

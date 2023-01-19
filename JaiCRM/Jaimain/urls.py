@@ -41,5 +41,6 @@ urlpatterns = [
     path('receipt_registration/', register_a_sale, name='receipt_registration'),
     path('sell_receipt_list/', SellReceiptList.as_view(), name='sell_receipt_list'),
     path('sell_receipt_list/<int:receipt_pk>/', ShowSellReceipt.as_view(), name='show_receipt'),
+    path('sell_receipt_list/<int:pk>/return/', SellReceiptReturnView.as_view(), name='receipt_return'),
 
 ]
