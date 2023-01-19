@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, FormView, UpdateView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 
 from .forms import *
 from .models import *
@@ -22,6 +23,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from rest_framework import generics
 from Jaimain.serializers import *
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 
 class Partners(DataMixin, ListView):
@@ -940,7 +942,8 @@ class SellReceiptReturnView(DataMixin, UpdateView):
 class PropertyAPIView(generics.ListCreateAPIView):
     queryset = ProductProperty.objects.all()
     serializer_class = PropertySerializer
-
+    permission_classes = (AllowAny,)
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
 
 class PropertyAPIUpdate(generics.UpdateAPIView):
     queryset = ProductProperty.objects.all()
