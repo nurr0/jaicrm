@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "Jaimain",
     "mptt",
     "django_mptt_admin",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [

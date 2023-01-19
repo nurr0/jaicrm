@@ -2,11 +2,15 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
 from django.db import IntegrityError
+from django.forms import model_to_dict
 from django.http import HttpResponse, HttpResponseNotFound, Http404, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, FormView, UpdateView
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .forms import *
 from .models import *
 from django.http import HttpResponse
@@ -16,6 +20,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from rest_framework import generics
+from Jaimain.serializers import *
 
 
 class Partners(DataMixin, ListView):
@@ -755,7 +761,6 @@ class ProductInStockList(DataMixin, ListView):
         return queryset
 
 
-
 def add_sell_price(request):
     user_menu = menu.copy()
     shops = Shop.objects.filter(partner=request.user.partner)
@@ -894,3 +899,17 @@ class ShowSellReceipt(DataMixin, DetailView):
         if request.user.is_costumer:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
+
+
+class PropertyAPIView(generics.ListCreateAPIView):
+    queryset = ProductProperty.objects.all()
+    serializer_class = PropertySerializer
+
+
+class PropertyAPIUpdate(generics.UpdateAPIView):
+    queryset = ProductProperty.objects.all()
+    serializer_class = PropertySerializer
+
+
+class PartnerAPIView(generics.ListAPIView):
+    queryset = Partner.objects.all()
