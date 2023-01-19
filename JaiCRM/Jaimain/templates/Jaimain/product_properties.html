@@ -49,6 +49,7 @@
 
 <div class="modal ">
 	<form id="formElem">
+		{% csrf_token %}
 		<input type="text" name="name" placeholder="Название свойства">
 		<input class="zero1" type="text" name="partner" value="1" placeholder="Партнер">
 		<input class="btn__submit-form" type="submit">

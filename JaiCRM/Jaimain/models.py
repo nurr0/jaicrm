@@ -90,6 +90,7 @@ class ProductCategory(MPTTModel):
 class ProductProperty(models.Model):
     name = models.CharField(max_length=255, verbose_name='Наименование свойства')
     partner = models.ForeignKey(Partner, on_delete=models.CASCADE, verbose_name='Партнер')
+    user = models.ForeignKey(JaiUser, verbose_name='Пользователь', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name

@@ -10,7 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, FormView, UpdateView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
 
 from .forms import *
 from .models import *
@@ -903,13 +903,13 @@ class ShowSellReceipt(DataMixin, DetailView):
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
+
 class SellReceiptReturnView(DataMixin, UpdateView):
     model = SellReceipt
     fields = ('is_returned',)
     # pk_url_kwarg = 'receipt_pk'
     template_name = 'Jaimain/receipt_return.html'
     success_url = reverse_lazy('sell_receipt_list')
-
 
     def form_valid(self, form):
         receipt = form.save(commit=False)
@@ -942,8 +942,9 @@ class SellReceiptReturnView(DataMixin, UpdateView):
 class PropertyAPIView(generics.ListCreateAPIView):
     queryset = ProductProperty.objects.all()
     serializer_class = PropertySerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     authentication_classes = [SessionAuthentication, BasicAuthentication]
+
 
 class PropertyAPIUpdate(generics.UpdateAPIView):
     queryset = ProductProperty.objects.all()
