@@ -5,9 +5,11 @@
 <div class="header_ilya">
     <h1>Документ: {{receipt.partner.receipt_prefix}} {{receipt.number}}</h1>
 <div style="text-align: right" class="btn_ilya">
+	{% if not receipt.is_returned %}
         <button class="btn">
-            <a class="white" href='{% url 'edit_supply' receipt.pk %}'>Оформить возврат</a>
+            <a class="white" href='{% url 'receipt_return' receipt.pk %}'>Оформить возврат</a>
         </button>
+		{% endif %}
     </div>
 
 

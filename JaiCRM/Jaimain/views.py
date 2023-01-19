@@ -460,6 +460,7 @@ class ProductPropertiesList(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Торговые точки')
+        c_def['user_partner'] = self.request.user.partner
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
@@ -840,7 +841,7 @@ def register_a_sale(request):
                         product_in_stock.save()
                         form.save()
 
-            return redirect('/')
+            return redirect('sell_receipt_list')
         if not receipt_form.is_valid():
             print(receipt_form.errors)
     else:
@@ -900,6 +901,41 @@ class ShowSellReceipt(DataMixin, DetailView):
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
+class SellReceiptReturnView(DataMixin, UpdateView):
+    model = SellReceipt
+    fields = ('is_returned',)
+    # pk_url_kwarg = 'receipt_pk'
+    template_name = 'Jaimain/receipt_return.html'
+    success_url = reverse_lazy('sell_receipt_list')
+
+
+    def form_valid(self, form):
+        receipt = form.save(commit=False)
+        receipt.is_returned = True
+        receipt.save()
+
+        products_in_receipt = ProductInReceipt.objects.filter(receipt=receipt)
+        for products_item in products_in_receipt:
+            product_in_stock = ProductInStock.objects.get(pk=products_item.product.pk)
+            product_in_stock.amount += products_item.amount
+            product_in_stock.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение свойства товара')
+        c_def['receipt'] = SellReceipt.objects.get(pk=self.object.pk)
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+
+"""API views \/"""
+
 
 class PropertyAPIView(generics.ListCreateAPIView):
     queryset = ProductProperty.objects.all()
@@ -913,3 +949,4 @@ class PropertyAPIUpdate(generics.UpdateAPIView):
 
 class PartnerAPIView(generics.ListAPIView):
     queryset = Partner.objects.all()
+    serializer_class = PartnerSerializer
