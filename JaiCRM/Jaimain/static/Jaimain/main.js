@@ -1130,10 +1130,23 @@ if (url === 'http://127.0.0.1:8000/receipt_registration/' ){
 }
 
 if (/product_properties/.test(location.href )){
+    const arTd = document.querySelectorAll('.tdStyle')
+    
     const formElemBtn = document.querySelector('.btn__submit-form')
     formElemBtn.addEventListener('click', postForm)
     async function postForm(e){
+        let areaName = document.querySelector('.formElem-name').value
         // e.preventDefault();
+        for (let item of arTd){
+            if (areaName == item.innerHTML){
+                alert('Данное свойство уже имеется! Добавьте другое')
+                e.preventDefault();
+                
+            }else if(areaName !== item.innerHTML){
+                console.log('Все ок!')
+                
+            }   
+        }
     
         let response = await fetch('http://127.0.0.1:8000/api/v1/propertylist/', {
           method: 'POST',
@@ -1144,6 +1157,7 @@ if (/product_properties/.test(location.href )){
         let result = await response.json();
     
         // alert(result.message);
+       
     }
     const btnApi = document.querySelector('.btn__api')
     const modal  = document.querySelector('.modal')
@@ -1158,4 +1172,6 @@ if (/product_properties/.test(location.href )){
     function imgCrossAction(){
         modal.classList.toggle('zero1')
     }
+
+ 
 }
