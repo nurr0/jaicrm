@@ -1,4 +1,10 @@
 asgiref==3.5.2
 Django==4.1.4
+django-js-asset==2.0.0
+django-mptt==0.14.0
+django-mptt-admin==2.3.0
+django-widget-tweaks==1.4.12
+djangorestframework==3.14.0
 Pillow==9.3.0
+pytz==2022.7
 sqlparse==0.4.3
