@@ -146,7 +146,7 @@ if (url === 'http://127.0.0.1:8000/partners/'){
     partners.classList.add('ActiveList')  
 }else if (url === 'http://127.0.0.1:8000/partners/1/edit/'){
     partners.classList.add('ActiveList') 
-}else if (url === 'http://127.0.0.1:8000/product_properties/'){
+}else if (/product_properties/.test(location.href ) ){
     propertyBlock.classList.add('ActiveList') 
 }else if (url === 'http://127.0.0.1:8000/sku/'){
     settingsBlock.classList.add('ActiveList') 
@@ -490,7 +490,7 @@ if (url === 'http://127.0.0.1:8000/product_categories/') {
     filter03();
 }
 
-if (url === 'http://127.0.0.1:8000/add_sku/' ){
+if (/add_sku/.test(location.href )  ){
     const nameSku = document.querySelector('label[for="id_name"]')
     const AreaNameSku = document.querySelector('#id_name')
     nameSku.classList.add('p__addPart-width')
@@ -1129,25 +1129,33 @@ if (url === 'http://127.0.0.1:8000/receipt_registration/' ){
     udalit2.classList.toggle('zero')
 }
 
-if (url === 'http://127.0.0.1:8000/product_properties/'){
+if (/product_properties/.test(location.href )){
     const formElemBtn = document.querySelector('.btn__submit-form')
     formElemBtn.addEventListener('click', postForm)
     async function postForm(e){
-        e.preventDefault();
+        // e.preventDefault();
     
         let response = await fetch('http://127.0.0.1:8000/api/v1/propertylist/', {
           method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        // headers: { 
-        //     "X-CSRFToken": {% csrf_token %} ,
-        // },
+
           body: new FormData(formElem)
         });
     
         let result = await response.json();
     
-        alert(result.message);
-        }
+        // alert(result.message);
+    }
+    const btnApi = document.querySelector('.btn__api')
+    const modal  = document.querySelector('.modal')
+    const imgCross = document.querySelector('.imgCross')
+
+    btnApi.addEventListener('click', btnApiAction)
+    function btnApiAction(){
+        modal.classList.toggle('zero1')
+    }
+
+    imgCross.addEventListener('click', imgCrossAction)
+    function imgCrossAction(){
+        modal.classList.toggle('zero1')
+    }
 }
