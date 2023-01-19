@@ -4,6 +4,7 @@ from Jaimain.models import *
 
 class PropertySerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = ProductProperty
         fields = '__all__'
@@ -13,3 +14,19 @@ class PartnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Partner
         fields = ['id', 'name']
+
+
+class ProductCategorySerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = ProductCategory
+        fields = '__all__'
+
+
+class ShopSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = Shop
+        fields = '__all__'
