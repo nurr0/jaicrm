@@ -27,7 +27,7 @@
 
 		<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
 	</button> -->
-	<div class="btn__addUsers">
+	<div class="btn__addUsers btn__api">
 		<button class="btn ">
 			Добавить свойство API
 		</button>
@@ -47,13 +47,19 @@
 
 </div>
 
-<div class="modal ">
-	<form id="formElem">
-		{% csrf_token %}
-		<input type="text" name="name" placeholder="Название свойства">
-		<input class="zero1" type="text" name="partner" value={{user_partner.pk}} placeholder="Партнер">
-		<input class="btn__submit-form" type="submit">
-	  </form>
+
+<div class="modal zero1 ">
+	<div class="modal-content">
+		<div class="imgCrossParrent"><img class="imgCross" src="/static/Jaimain/images/Cross.svg" alt=""></div>
+		<div class="imgPropertyParrent"><img class="imgProperty" src="/static/Jaimain/images/salyProperty.png" alt=""></div>
+		<form id="formElem">
+			{% csrf_token %}
+			<input class="formElem-name" type="text" name="name" placeholder="Название свойства">
+			<input class="zero1" type="text" name="partner" value="{{user_partner.pk}}" placeholder="Партнер">
+			<input class="btn btn__submit-form formElem-btn" type="submit" value="Добавить">
+		</form>
+	</div>
+
 </div>
 
 
