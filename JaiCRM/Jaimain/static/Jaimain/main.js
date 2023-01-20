@@ -934,7 +934,7 @@ userImg.addEventListener('click',()=>{
 })
 
 
-if (url === 'http://127.0.0.1:8000/partners/'){
+if (/partners/.test(location.href ) ){
     // let count = 8; //всего записей
     let count = document.querySelectorAll(".num").length;
     let cnt = 4; //сколько отображаем сначала
@@ -995,7 +995,7 @@ if (url === 'http://127.0.0.1:8000/partners/'){
         }
 }
 
-if (url === 'http://127.0.0.1:8000/add_supply/' ){
+if (/add_supply/.test(location.href ) ){
     const tovarz = document.querySelectorAll('.form-group1')
     const plus1 = document.querySelector('.plus1')
     for (let item of tovarz){
@@ -1084,7 +1084,7 @@ if (url === 'http://127.0.0.1:8000/add_supply/' ){
 
 }
 
-if (url === 'http://127.0.0.1:8000/receipt_registration/' ){
+if (/receipt_registration/.test(location.href ) ){
     const tovarz = document.querySelectorAll('.form-group')
     const plus1 = document.querySelector('.plus')
     for (let item of tovarz){
