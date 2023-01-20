@@ -11,7 +11,6 @@ from django.views.generic import ListView, DetailView, CreateView, FormView, Upd
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
-
 from .forms import *
 from .models import *
 from django.http import HttpResponse
@@ -269,6 +268,7 @@ class ShowShops(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Торговые точки')
+        c_def['user_partner'] = self.request.user.partner
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
@@ -376,7 +376,8 @@ class ProductCategoriesList(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Торговые точки')
+        c_def = self.get_user_context(title='Категории товаров')
+        c_def['user_partner'] = self.request.user.partner
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
@@ -425,27 +426,27 @@ def edit_product_category(request, pk):
     return render(request, 'Jaimain/editproductcategory.html', context=context)
 
 
-def add_product_property(request):
-    template = 'Jaimain/addproductproperty.html'
-    form = AddProductPropertyForm()
-    partner = request.user.partner
-    user_menu = menu.copy()
-    context = {'partner': partner, 'form': form, 'menu': user_menu}
-
-    if request.method == 'POST':
-        form = AddProductPropertyForm(request.POST)
-        if form.is_valid():
-            partner = request.user.partner
-            name = form.cleaned_data['name']
-            try:
-                queryset = ProductProperty.objects.create(partner=partner, name=name)
-            except:
-                form = AddProductPropertyForm()
-            return redirect('product_properties')
-        else:
-            form = AddProductPropertyForm()
-
-    return render(request, template, context=context)
+# def add_product_property(request):
+#     template = 'Jaimain/addproductproperty.html'
+#     form = AddProductPropertyForm()
+#     partner = request.user.partner
+#     user_menu = menu.copy()
+#     context = {'partner': partner, 'form': form, 'menu': user_menu}
+#
+#     if request.method == 'POST':
+#         form = AddProductPropertyForm(request.POST)
+#         if form.is_valid():
+#             partner = request.user.partner
+#             name = form.cleaned_data['name']
+#             try:
+#                 queryset = ProductProperty.objects.create(partner=partner, name=name)
+#             except:
+#                 form = AddProductPropertyForm()
+#             return redirect('product_properties')
+#         else:
+#             form = AddProductPropertyForm()
+#
+#     return render(request, template, context=context)
 
 
 class ProductPropertiesList(DataMixin, ListView):
@@ -954,3 +955,17 @@ class PropertyAPIUpdate(generics.UpdateAPIView):
 class PartnerAPIView(generics.ListAPIView):
     queryset = Partner.objects.all()
     serializer_class = PartnerSerializer
+
+
+class ProductCategoryAPIView(generics.ListCreateAPIView):
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+
+
+class ShopApiView(generics.ListCreateAPIView):
+    queryset = Shop.objects.all()
+    serializer_class = ShopSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = [SessionAuthentication, BasicAuthentication]

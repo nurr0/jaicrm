@@ -68,7 +68,7 @@ class AddShopForm(forms.ModelForm):
 class AddProductCategoryForm(forms.ModelForm):
     class Meta:
         model = ProductCategory
-        exclude = ('partner',)
+        exclude = ('partner', 'user')
 
 
 class AddProductPropertyForm(forms.ModelForm):

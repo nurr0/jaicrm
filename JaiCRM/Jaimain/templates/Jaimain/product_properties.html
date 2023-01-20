@@ -4,7 +4,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 {% extends 'Jaimain/base.html' %}
 {% block content %}
-<h3>Текущий партнер пользователя - {{user_partner}}, id - {{user_partner.pk}}</h3>
 <!-- <form class="search form-text" action="{% url 'search' %}" method="GET">
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -29,18 +28,11 @@
 	</button> -->
 	<div class="btn__addUsers btn__api">
 		<button class="btn ">
-			Добавить свойство API
+			Добавить свойство
 		</button>
 
 	</div>
 
-
-	<div class="btn__addUsers">
-		<button class="btn ">
-			<a class="btn__text" href="{% url 'addproductproperty' %}">Добавить свойство</a>
-		</button>
-
-	</div>
 
 	<!-- <input type="text" class="filter-input"> -->
 
