@@ -1233,12 +1233,28 @@ if (/product_categories/.test(location.href )){
             let div = document.createElement('option');
             let option = document.createElement('option');
             console.log("id: " + item.id + "   " + "Имя категории " + item.name)
-            const nameItem = "id: " + item.id + "   " + "Имя категории " + item.name
+            // const nameItem = "id: " + item.id + "   " + "Имя категории " + item.name
+            const nameItem =  item.name
             // podskazka.appendChild(option)
             podskazka.appendChild(div)
             div.innerHTML = nameItem
             const idOpt = item.id
             div.setAttribute('value',idOpt)
+            if (item.level == 1){
+                div.innerHTML = "--- " + div.innerHTML
+            }
+            if (item.level == 2){
+                div.innerHTML = "------ " + div.innerHTML
+            }
+            if (item.level == 3){
+                div.innerHTML = "--------- " + div.innerHTML
+            }
+            if (item.level == 4){
+                div.innerHTML = "------------ " + div.innerHTML
+            }
+            if (item.level == 5){
+                div.innerHTML = "--------------- " + div.innerHTML
+            }
             
 
         }
