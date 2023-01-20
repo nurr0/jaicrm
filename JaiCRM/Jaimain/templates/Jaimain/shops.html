@@ -23,10 +23,39 @@
 		</form>
 	</div>
 
-	<div class="btn__addUsers">
+	<!-- <div class="btn__addUsers">
 		<button class="btn">
 			<a class="btn__text" href="{% url 'addshop' %}">Добавить торговую точку</a>
 		</button>
+	</div> -->
+
+	<div class="btn__addUsers btn__api">
+		<button class="btn ">
+			Добавить точку
+		</button>
+
+	</div>
+</div>
+
+<div class="modal zero1 ">
+	<div class="modal-content">
+		<div class="imgCrossParrent"><img class="imgCross" src="/static/Jaimain/images/Cross.svg" alt=""></div>
+		<div class="imgPropertyParrent"><img class="imgProperty" src="/static/Jaimain/images/SalyTochka.png" alt=""></div>
+		<form id="formElem">
+			{% csrf_token %}
+			<input class="formElem-name" type="text" name="name" placeholder="Название точки">
+			<input class="formElem-location formElemStyle" type="text" name="location" placeholder="Местоположение">
+			<input class="formElem-description formElemStyle" type="text" name="description" placeholder="Описание">
+			<!-- <input class="formElem-parent formElemStyle" type="text" name="parent" placeholder="Родительская категория" "> -->
+			<p class="formElemStyle">Точка активна?</p>
+			<select name='parent' class="podskazka formElemStyle" aria-placeholder="Активен?">
+				<option value="false">Нет</option>
+				<option value="true">Да</option>
+			</select >
+			
+			<input class="zero1" type="text" name="partner" value="{{user_partner.pk}}" placeholder="Партнер">
+			<input class="btn btn__submit-form formElem-btn" type="submit" value="Добавить">
+		</form>
 	</div>
 </div>
 
