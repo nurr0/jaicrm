@@ -440,7 +440,7 @@ if ( url === 'http://127.0.0.1:8000/sell_receipt_list/'){
 }
 
 
-if (url === 'http://127.0.0.1:8000/product_categories/') {
+if (/product_categories/.test(location.href ) ) {
         document.querySelectorAll('.title').forEach((el) => {
             el.addEventListener('click',()=>{
                 let content = el.nextElementSibling ;
@@ -1173,5 +1173,79 @@ if (/product_properties/.test(location.href )){
         modal.classList.toggle('zero1')
     }
 
+ 
+}
+
+if (/product_categories/.test(location.href )){
+    const arTd = document.querySelectorAll('a')
+    
+    const formElemBtn = document.querySelector('.btn__submit-form')
+    formElemBtn.addEventListener('click', postForm)
+    async function postForm(e){
+        
+        let areaName = document.querySelector('.formElem-name').value
+        // e.preventDefault();
+        for (let item of arTd){
+            if (areaName == item.innerHTML){
+                alert('Данная категория уже имеется! Добавьте другую')
+                e.preventDefault();
+                
+            }else if(areaName !== item.innerHTML){
+                console.log('Все ок!')
+                
+            }   
+        }
+    
+        let response = await fetch('http://127.0.0.1:8000/api/v1/product_cats/', {
+          method: 'POST',
+
+          body: new FormData(formElem)
+        });
+    
+        let result = await response.json();
+    
+
+       
+    }
+    const btnApi = document.querySelector('.btn__api')
+    const modal  = document.querySelector('.modal')
+    const imgCross = document.querySelector('.imgCross')
+
+    btnApi.addEventListener('click', btnApiAction)
+    function btnApiAction(){
+        modal.classList.toggle('zero1')
+    }
+
+    imgCross.addEventListener('click', imgCrossAction)
+    function imgCrossAction(){
+        modal.classList.toggle('zero1')
+    }
+    async function getCategory(){
+        const podskazka = document.querySelector('.podskazka')
+        let response = await fetch('http://127.0.0.1:8000/api/v1/product_cats/');
+        
+        let result = await response.json();
+
+        let div = document.createElement('option');
+        podskazka.appendChild(div)
+
+        for (let item of result){
+            let div = document.createElement('option');
+            let option = document.createElement('option');
+            console.log("id: " + item.id + "   " + "Имя категории " + item.name)
+            const nameItem = "id: " + item.id + "   " + "Имя категории " + item.name
+            // podskazka.appendChild(option)
+            podskazka.appendChild(div)
+            div.innerHTML = nameItem
+            const idOpt = item.id
+            div.setAttribute('value',idOpt)
+            
+
+        }
+
+
+     
+    }
+    getCategory()
  
 }
