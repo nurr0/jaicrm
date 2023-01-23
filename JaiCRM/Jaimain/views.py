@@ -622,19 +622,22 @@ def add_supply(request):
                 for form in products_in_supply_formset:
                     if form.cleaned_data.get('DELETE'):
                         continue
-                    products_in_supply = form.save(commit=False)
-                    products_in_supply.supply = supply
-                    products_in_supply.save()
-                    amount_added = products_in_supply.amount
-                    product_added = products_in_supply.product
-                    product_in_stock = ProductInStock.objects.get(shop=shop_supply_to, product=product_added)
-                    if product_in_stock:
-                        product_in_stock.update(amount=F('amount') + amount_added)
-                    else:
-                        save_product_to_warehouse = ProductInStock.objects.create(amount=amount_added,
-                                                                                  product=product_added,
-                                                                                  shop=shop_supply_to)
-                        save_product_to_warehouse.save()
+                    if form.is_valid:
+                        products_in_supply = form.save(commit=False)
+                        products_in_supply.supply = supply
+                        products_in_supply.save()
+                        amount_added = products_in_supply.amount
+                        product_added = products_in_supply.product
+                        product_exists = ProductInStock.objects.filter(shop=shop_supply_to, product=product_added).exists()
+
+                        if product_exists:
+                            product = ProductInStock.objects.get(shop=shop_supply_to, product=product_added)
+                            product.amount += amount_added
+                            product.save()
+                        else:
+                            ProductInStock.objects.create(amount=amount_added,
+                                                          product=product_added,
+                                                          shop=shop_supply_to)
             except:
                 supply.delete()
             return redirect('supplies')
@@ -1043,7 +1046,6 @@ class ShopApiView(generics.ListCreateAPIView):
 
 
 class ReportsAPIView(generics.ListAPIView):
-    # queryset = ReportExport.objects.all()
     serializer_class = ReportsSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -1062,3 +1064,6 @@ def sales_report_export_api(request):
         export_sales_report(user=request.user.pk, file_format=file_format)
         return Response({"message": "Запущена сборка отчета!"})
     return Response({"message": "Это апи для запуска сборки отчета, передайте в него file_format и user.id"})
+
+
+
