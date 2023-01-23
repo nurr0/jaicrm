@@ -1311,3 +1311,41 @@ if (/shops/.test(location.href )){
     
  
 }
+
+if (/sell_receipt_list/.test(location.href )){
+    const arTd = document.querySelectorAll('.tdStyle')
+    
+    const formElemBtn = document.querySelector('.btn__submit-form')
+    formElemBtn.addEventListener('click', postForm)
+    async function postForm(e){
+        
+        // e.preventDefault();
+        
+        let host = location.host
+        let response = await fetch('/api/v1/sales_report_export/', {
+          method: 'POST',
+
+          body: new FormData(formElem)
+        });
+    
+        let result = await response.json();
+    
+        // alert(result.message);
+       
+    }
+    const btnApi = document.querySelector('.btn__api')
+    const modal  = document.querySelector('.modal')
+    const imgCross = document.querySelector('.imgCross')
+
+    btnApi.addEventListener('click', btnApiAction)
+    function btnApiAction(){
+        modal.classList.toggle('zero1')
+    }
+
+    imgCross.addEventListener('click', imgCrossAction)
+    function imgCrossAction(){
+        modal.classList.toggle('zero1')
+    }
+
+ 
+}
