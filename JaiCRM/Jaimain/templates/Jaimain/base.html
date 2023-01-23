@@ -32,7 +32,29 @@
 				</div>
 			</div>
 {% if request.user.is_authenticated %}
+				<!-- Модалка отчетов -->
+				<div class="modalOt  zero1">
+					<div class="modalOt-content">
+						
+						<div class="imgCrossParrent"><img class="imgCrossOt" src="/static/Jaimain/images/Cross.svg" alt=""></div>
+						<div class="imgPropertyParrent"><img class="imgProperty" src="/static/Jaimain/images/SalyOtchet.png" alt=""></div>
+						<div class="d7 d8">
+							<form>
+								<input ul id="filter-listOt" class="filter-inputOt" type="text" placeholder="Искать здесь...">
+							</form>
+						</div>
+						<div class="reportsApi">
+
+						</div>
+					</div>
+				</div>
+
 				<div class="header__user">
+					<div class="last btn__apiOt">
+						<img src="/static/Jaimain/images/icon-otchit.svg" alt="">
+						
+						<p>Отчеты</p>
+					</div>
 					<div class="last">
 						<!-- <img src="./../../static/Jaimain/images/user.svg" alt=""> -->
 						<img class="user__img" src="/static/Jaimain/images/user.svg" alt="">

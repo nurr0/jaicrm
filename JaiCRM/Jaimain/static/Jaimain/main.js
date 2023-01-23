@@ -1362,3 +1362,82 @@ if (/sell_receipt_list/.test(location.href )){
 
  
 }
+
+const btnApiOt = document.querySelector('.btn__apiOt')
+const modalOt  = document.querySelector('.modalOt')
+const imgCrossOt = document.querySelector('.imgCrossOt')
+const divArea = document.querySelector('.reportsApi')
+
+btnApiOt.addEventListener('click', btnApiActionOt)
+    function btnApiActionOt(){
+        modalOt.classList.toggle('zero1')
+
+        let filterOt = function () {
+            let input = document.querySelector('.filter-inputOt');
+            input.addEventListener('keyup', FilterUser)
+
+            function FilterUser(){
+                //Ловеркейс для поиска
+                let filter = input.value.toLowerCase(),
+                //Ищем все li у ul
+                filterElements = document.querySelectorAll('.otcheti');
+                //Странное решение
+                // if (input.value == ''){
+                //     location.reload()}
+    
+                filterElements.forEach((item) => {
+                    if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                        // item.style.display = '';
+                        item.classList.remove('zero1')
+                        item.classList.remove('num')
+                    
+                    } else {
+                        // item.style.display = 'none';
+                        item.classList.add('zero1')
+                        item.classList.add('num')
+                    }
+                })}
+                
+            
+        };
+        filterOt();
+       
+    }
+
+imgCrossOt.addEventListener('click', imgCrossActionOt)
+function imgCrossActionOt(){
+    modalOt.classList.toggle('zero1')
+    // divArea.innerHTML = '';
+}
+
+async function postForm(e){
+        
+    // e.preventDefault();
+    
+    
+    let response = await fetch('/api/v1/reports/');
+
+    let result = await response.json();
+    
+    console.log(result)
+    // const divArea = document.querySelector('.reportsApi')
+   
+    for (let item of result){
+        let divId = item.id
+        let divFile = item.file
+        let divName = item.file_name
+        let divGod = item.datetime
+        let divData = divGod.slice(0,9)
+        let divDataDay = divGod.slice(11,16)
+
+        const divNew = document.createElement('div')
+        // divNew.innerHTML = divId + " " + divFile + " " + divName + " " + divData
+        divNew.innerHTML = `<div class='otcheti'>  <div class='z'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
+        divArea.appendChild(divNew)
+        
+    }
+    
+     
+   
+}
+postForm()
