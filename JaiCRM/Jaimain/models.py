@@ -296,3 +296,10 @@ class ProductInReceipt(models.Model):
 
     def get_total_cost_with_discount(self):
         return self.amount * self.price_with_discount
+
+
+class ReportExport(models.Model):
+    file = models.FileField(upload_to='reports/', verbose_name='Файл')
+    user = models.ForeignKey(JaiUser, on_delete=models.PROTECT, verbose_name='Пользователь')
+    datetime = models.DateTimeField(auto_now_add=True)
+    file_name = models.CharField(verbose_name='Имя файла', max_length=50)

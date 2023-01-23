@@ -1,7 +1,10 @@
+import os
+from datetime import datetime
+from .tasks import *
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
-from django.db import IntegrityError
+from django.db import IntegrityError, connection
 from django.forms import model_to_dict
 from django.http import HttpResponse, HttpResponseNotFound, Http404, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
@@ -11,10 +14,15 @@ from django.views.generic import ListView, DetailView, CreateView, FormView, Upd
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+import JaiCRM.settings as settings
 from .forms import *
 from .models import *
 from django.http import HttpResponse
 from django.template import loader
+
+from .resources import SalesResource
+from .service import sales_report
 from .utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -378,6 +386,7 @@ class ProductCategoriesList(DataMixin, ListView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Категории товаров')
         c_def['user_partner'] = self.request.user.partner
+        c_def['prod_cats'] = ProductCategory.objects.filter(partner=self.request.user.partner)
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
@@ -596,6 +605,9 @@ class ShowSKU(DataMixin, DetailView):
         return super().dispatch(request, *args, **kwargs)
 
 
+"""Переписать \/"""
+
+
 def add_supply(request):
     user_menu = menu.copy()
     if request.method == 'POST':
@@ -615,10 +627,10 @@ def add_supply(request):
                     products_in_supply.save()
                     amount_added = products_in_supply.amount
                     product_added = products_in_supply.product
-                    product_in_stock: object = ProductInStock.objects.filter(shop=shop_supply_to, product=product_added)
-                    if len(product_in_stock) == 1:
+                    product_in_stock = ProductInStock.objects.get(shop=shop_supply_to, product=product_added)
+                    if product_in_stock:
                         product_in_stock.update(amount=F('amount') + amount_added)
-                    elif len(product_in_stock) == 0:
+                    else:
                         save_product_to_warehouse = ProductInStock.objects.create(amount=amount_added,
                                                                                   product=product_added,
                                                                                   shop=shop_supply_to)
@@ -937,7 +949,66 @@ class SellReceiptReturnView(DataMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
 
+# def export_data(request):
+#     if request.method == 'POST':
+#         # Get selected option from form
+#         file_format = request.POST['file-format']
+#         sales_resource = SalesResource(user=request.user)
+#         dataset = sales_resource.export()
+#         if file_format == 'CSV':
+#             response = HttpResponse(dataset.csv, content_type='text/csv')
+#             response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
+#             return response
+#         elif file_format == 'JSON':
+#             response = HttpResponse(dataset.json, content_type='application/json')
+#             response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
+#             return response
+#         elif file_format == 'XLS (Excel)':
+#             response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+#             response['Content-Disposition'] = 'attachment; filename="exported_data.xls"'
+#             return response
+#
+#     return render(request, 'Jaimain/export.html')
+
+
+def export_sales_data(request):
+    if request.method == 'POST':
+        # Get selected option from form
+        file_format = request.POST['file-format']
+        # partner = request.user.partner.name
+        # export_sales_report.delay(user=request.user.pk, file_format=file_format)
+        export_sales_report(user=request.user.pk, file_format=file_format)
+        return redirect('sell_receipt_list')
+
+    return render(request, 'Jaimain/export.html')
+
+
+class ReportsList(DataMixin, ListView):
+    model = ReportExport
+    template_name = 'Jaimain/reports.html'
+    context_object_name = 'reports'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_costumer:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Сформированные отчеты')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        user = self.request.user
+        partner = self.request.user.partner
+        queryset = ReportExport.objects.all() if user.is_superuser else ReportExport.objects.filter(
+            user__partner=partner)
+        return queryset
+
+
 """API views \/"""
+
 
 
 class PropertyAPIView(generics.ListCreateAPIView):
@@ -969,3 +1040,25 @@ class ShopApiView(generics.ListCreateAPIView):
     serializer_class = ShopSerializer
     permission_classes = (IsAuthenticated,)
     authentication_classes = [SessionAuthentication, BasicAuthentication]
+
+
+class ReportsAPIView(generics.ListAPIView):
+    # queryset = ReportExport.objects.all()
+    serializer_class = ReportsSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return ReportExport.objects.filter(user=self.request.user)
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def sales_report_export_api(request):
+    if request.method == 'POST':
+        file_format = request.data['file-format']
+        # user_pk = request.data['user']
+        if file_format not in ('CSV', 'JSON', 'XLS (Excel)'):
+            return Response({"error": "Укажите верный формат файла"})
+        # export_sales_report.delay(user=request.user.pk, file_format=file_format)
+        export_sales_report(user=request.user.pk, file_format=file_format)
+        return Response({"message": "Запущена сборка отчета!"})
+    return Response({"message": "Это апи для запуска сборки отчета, передайте в него file_format и user.id"})

@@ -30,3 +30,10 @@ class ShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
         fields = '__all__'
+
+
+class ReportsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReportExport
+        fields = '__all__'
+
