@@ -322,7 +322,7 @@ if (/shops/.test(location.href ) || /partners/.test(location.href ) || /users/.t
 
 
 
-if (/users/.test(location.href )  || /product_properties/.test(location.href )  || /sku/.test(location.href ) || /products_in_stock/.test(location.href ) || /sell_receipt_list/.test(location.href )){
+if (/users/.test(location.href )  || /product_properties/.test(location.href )  || url === 'http://127.0.0.1:8000/sku/' || /products_in_stock/.test(location.href ) || /sell_receipt_list/.test(location.href )){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -387,7 +387,7 @@ if (/supplies/.test(location.href )){
     filter04();
 }
 
-if (/users/.test(location.href ) ||/product_properties/.test(location.href ) || /sku/.test(location.href ) || /products_in_stock/.test(location.href ) ){
+if (/users/.test(location.href ) ||/product_properties/.test(location.href ) || url === 'http://127.0.0.1:8000/sku/' || /products_in_stock/.test(location.href ) ){
     let filter02 = function () {
         let input = document.querySelector('.filter-input');
 
