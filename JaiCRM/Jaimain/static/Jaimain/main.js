@@ -14,6 +14,8 @@ const showShop = document.querySelector('.shops')
 const fileUpload = document.getElementById('id_logo')
 const category1 = document.querySelector('.category ')
 
+
+
 if (JSON.parse(localStorage.getItem('tasks')) == 1){
     console.log('privet')
     nonActive()
@@ -322,7 +324,7 @@ if (/shops/.test(location.href ) || /partners/.test(location.href ) || /users/.t
 
 
 
-if (/users/.test(location.href )  || /product_properties/.test(location.href )  || url === 'http://127.0.0.1:8000/sku/' || /products_in_stock/.test(location.href ) || /sell_receipt_list/.test(location.href )){
+if (/users/.test(location.href )  || /product_properties/.test(location.href )  || location.pathname === '/sku/' || /products_in_stock/.test(location.href ) || /sell_receipt_list/.test(location.href )  ||   /supplies/.test(location.href ) ){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -387,7 +389,7 @@ if (/supplies/.test(location.href )){
     filter04();
 }
 
-if (/users/.test(location.href ) ||/product_properties/.test(location.href ) || url === 'http://127.0.0.1:8000/sku/' || /products_in_stock/.test(location.href ) ){
+if (/users/.test(location.href ) ||/product_properties/.test(location.href ) || location.pathname === '/sku/' || /products_in_stock/.test(location.href ) ){
     let filter02 = function () {
         let input = document.querySelector('.filter-input');
 
@@ -1024,6 +1026,17 @@ if (/add_supply/.test(location.href ) ){
     proverty04.setAttribute('checked','checked')
     const proverty05 = document.querySelector('#id_productsinsupply_set-4-DELETE')
     proverty05.setAttribute('checked','checked')
+    const proverty06 = document.querySelector('#id_productsinsupply_set-5-DELETE')
+    proverty06.setAttribute('checked','checked')
+    const proverty07 = document.querySelector('#id_productsinsupply_set-6-DELETE')
+    proverty07.setAttribute('checked','checked')
+    const proverty08 = document.querySelector('#id_productsinsupply_set-7-DELETE')
+    proverty08.setAttribute('checked','checked')
+    const proverty09 = document.querySelector('#id_productsinsupply_set-8-DELETE')
+    proverty09.setAttribute('checked','checked')
+    const proverty10 = document.querySelector('#id_productsinsupply_set-9-DELETE')
+    proverty10.setAttribute('checked','checked')
+
 
     const udalit1 = document.querySelectorAll('p')[8]
     udalit1.classList.toggle('zero')
