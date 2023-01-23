@@ -976,7 +976,8 @@ def export_sales_data(request):
         # Get selected option from form
         file_format = request.POST['file-format']
         # partner = request.user.partner.name
-        export_sales_report.delay(user=request.user.pk, file_format=file_format)
+        # export_sales_report.delay(user=request.user.pk, file_format=file_format)
+        export_sales_report(user=request.user.pk, file_format=file_format)
         return redirect('sell_receipt_list')
 
     return render(request, 'Jaimain/export.html')
@@ -1057,6 +1058,7 @@ def sales_report_export_api(request):
         # user_pk = request.data['user']
         if file_format not in ('CSV', 'JSON', 'XLS (Excel)'):
             return Response({"error": "Укажите верный формат файла"})
-        export_sales_report.delay(user=request.user.pk, file_format=file_format)
+        # export_sales_report.delay(user=request.user.pk, file_format=file_format)
+        export_sales_report(user=request.user.pk, file_format=file_format)
         return Response({"message": "Запущена сборка отчета!"})
     return Response({"message": "Это апи для запуска сборки отчета, передайте в него file_format и user.id"})
