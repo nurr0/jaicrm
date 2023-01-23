@@ -1120,11 +1120,11 @@ if (/receipt_registration/.test(location.href ) ){
         })
     })
 
-    const udalit1 = document.querySelectorAll('div')[33]
-    udalit1.classList.toggle('zero')
+    // const udalit1 = document.querySelectorAll('div')[33]
+    // udalit1.classList.toggle('zero')
 
-    const udalit2 = document.querySelectorAll('div')[41]
-    udalit2.classList.toggle('zero')
+    // const udalit2 = document.querySelectorAll('div')[41]
+    // udalit2.classList.toggle('zero')
 }
 
 if (/product_properties/.test(location.href )){
