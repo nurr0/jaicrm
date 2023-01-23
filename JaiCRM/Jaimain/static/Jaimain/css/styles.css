@@ -1193,6 +1193,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 .tdStyle{
 	border: 1px solid black; 
 	width: 100px !important;
+	padding: 10px;
 }
 
 
@@ -1602,7 +1603,14 @@ canvas {
 	width: 60%;
 	border-radius: 25px;
 	padding: 8px;
+	margin: 10px;
+}
 
+.formElemStyle{
+	width: 60%;
+	border-radius: 25px;
+	padding: 8px;
+	margin: 10px;
 }
 
 .formElem-btn{

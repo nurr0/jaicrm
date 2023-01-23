@@ -17,12 +17,39 @@
 		</div>
 
 
-		<div class="btn__addUsers">
+		<!-- <div class="btn__addUsers">
 			<button class="btn">
 				<a class="btn__text" href="{% url 'addproductcategory' %}">Добавить товарную категорию</a>
 			</button>
+		</div> -->
+
+		<div class="btn__addUsers btn__api">
+			<button class="btn ">
+				Добавить категорию
+			</button>
+	
 		</div>
 
+</div>
+
+<div class="modal zero1 ">
+	<div class="modal-content">
+		<div class="imgCrossParrent"><img class="imgCross" src="/static/Jaimain/images/Cross.svg" alt=""></div>
+		<div class="imgPropertyParrent"><img class="imgProperty" src="/static/Jaimain/images/SalyCAtegories.png" alt=""></div>
+		<form id="formElem">
+			{% csrf_token %}
+			<input class="formElem-name" type="text" name="name" placeholder="Название свойства">
+			<input class="formElem-description formElemStyle" type="text" name="description" placeholder="Описание свойства">
+			<!-- <input class="formElem-parent formElemStyle" type="text" name="parent" placeholder="Родительская категория" "> -->
+			
+			<select name='parent' class="podskazka formElemStyle">
+
+			</select >
+			
+			<input class="zero1" type="text" name="partner" value="{{user_partner.pk}}" placeholder="Партнер">
+			<input class="btn btn__submit-form formElem-btn" type="submit" value="Добавить">
+		</form>
+	</div>
 </div>
 
 {% load mptt_tags %}

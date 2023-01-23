@@ -134,33 +134,31 @@ prodazh.addEventListener('click',()=>
 )
 
 const url = window.location.href;
-if (url === 'http://127.0.0.1:8000/partners/'){
+if (/partners/.test(location.href )){
     partners.classList.add('ActiveList')
-}else if (url === 'http://127.0.0.1:8000/shops/'){
+}else if (/shops/.test(location.href )){
     shop.classList.add('ActiveList')    
-}else if (url === 'http://127.0.0.1:8000/product_categories/'){
+}else if (/product_categories/.test(location.href )){
     category.classList.add('ActiveList')    
-}else if (url === 'http://127.0.0.1:8000/partners/1/'){
+
+}else if (/addpartner/.test(location.href )){
     partners.classList.add('ActiveList')  
-}else if (url === 'http://127.0.0.1:8000/addpartner/'){
-    partners.classList.add('ActiveList')  
-}else if (url === 'http://127.0.0.1:8000/partners/1/edit/'){
-    partners.classList.add('ActiveList') 
+
 }else if (/product_properties/.test(location.href ) ){
     propertyBlock.classList.add('ActiveList') 
-}else if (url === 'http://127.0.0.1:8000/sku/'){
+}else if (/sku/.test(location.href )){
     settingsBlock.classList.add('ActiveList') 
-}else if (url === 'http://127.0.0.1:8000/supplies/'){
+}else if (/supplies/.test(location.href )){
     suppliesBlock.classList.add('ActiveList')
-}else if (url === 'http://127.0.0.1:8000/products_in_stock/'){
+}else if (/products_in_stock/.test(location.href )){
     tovariNaSklade.classList.add('ActiveList')
-}else if (url === 'http://127.0.0.1:8000/sell_receipt_list/'){
+}else if (/sell_receipt_list/.test(location.href )){
     prodazh.classList.add('ActiveList')
-}else if (url === 'http://127.0.0.1:8000/receipt_registration/'){
+}else if (/receipt_registration/.test(location.href )){
     regisProdaz.classList.add('ActiveList')
-}else if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/registeruser/' ){
+}else if (/users/.test(location.href ) || /registeruser/.test(location.href ) ){
     users.classList.add('ActiveList')
-}else if (url === 'http://127.0.0.1:8000/login/'){
+}else if (/login/.test(location.href )){
     sidebar.classList.add('nonActive-time')
 }
 
@@ -190,7 +188,7 @@ location.href = 'http://127.0.0.1:8000/product_categories/',
     proverka()
 )
 
-if (url === 'http://127.0.0.1:8000/addpartner/'){
+if (/addpartner/.test(location.href )){
     // fileUpload.classList.add('btn-zero')
     const VFail = document.querySelector('.btn-addPart');
     fileUpload.addEventListener('click',failEdit)
@@ -225,7 +223,7 @@ const TextContactPhone = document.querySelector('#id_partner_tel')
 const TextContactEmail = document.querySelector('#id_partner_email')
 const TextContactInn = document.querySelector('#id_iin')
 
-if (url === 'http://127.0.0.1:8000/login/'){
+if (/login/.test(location.href )){
     const LoginPage = document.querySelector('.content-text')
     LoginPage.classList.add('content-textLogin')
 
@@ -242,7 +240,7 @@ if (url === 'http://127.0.0.1:8000/login/'){
     LoginPageInputPass.classList.add('input__login')
 }
 
-if (url === 'http://127.0.0.1:8000/registeruser/'){
+if (/registeruser/.test(location.href )){
     const RegistName = document.querySelectorAll('.form-input')[0];
     RegistName.classList.add('form-inputRegister');
     const RegistFamily = document.querySelectorAll('.form-input')[1];
@@ -261,7 +259,7 @@ if (url === 'http://127.0.0.1:8000/registeruser/'){
     RegistPhone.classList.add('form-inputRegister');
 }
 
-if (url === 'http://127.0.0.1:8000/addpartner/'){
+if (/addpartner/.test(location.href )){
 
 
 descriptionPartners.classList.add('p__addPart-desc')
@@ -284,7 +282,7 @@ TextContactInn.classList.add('p__addPart-widthRight')
 
 
 //Поиск у пользователей и партнеров
-if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/partners/' || url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_categories/' ){
+if (/shops/.test(location.href ) || /partners/.test(location.href ) || /users/.test(location.href ) || /product_categories/.test(location.href ) ){
     let filter = function () {
         let input = document.querySelector('.filter-input');
 
@@ -324,7 +322,7 @@ if (url === 'http://127.0.0.1:8000/shops/' || url === 'http://127.0.0.1:8000/par
 
 
 
-if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/product_properties/'  || url === 'http://127.0.0.1:8000/sku/' || url === 'http://127.0.0.1:8000/products_in_stock/' || url === 'http://127.0.0.1:8000/sell_receipt_list/'){
+if (/users/.test(location.href )  || /product_properties/.test(location.href )  || url === 'http://127.0.0.1:8000/sku/' || /products_in_stock/.test(location.href ) || /sell_receipt_list/.test(location.href )){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -364,7 +362,7 @@ if (url === 'http://127.0.0.1:8000/users/'  || url === 'http://127.0.0.1:8000/pr
 
 }
 
-if (url === 'http://127.0.0.1:8000/supplies/'){
+if (/supplies/.test(location.href )){
     let filter04 = function () {
         let input = document.querySelector('.filter-input');
 
@@ -389,7 +387,7 @@ if (url === 'http://127.0.0.1:8000/supplies/'){
     filter04();
 }
 
-if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/product_properties/' || url === 'http://127.0.0.1:8000/sku/' || url === 'http://127.0.0.1:8000/products_in_stock/' ){
+if (/users/.test(location.href ) ||/product_properties/.test(location.href ) || url === 'http://127.0.0.1:8000/sku/' || /products_in_stock/.test(location.href ) ){
     let filter02 = function () {
         let input = document.querySelector('.filter-input');
 
@@ -414,7 +412,7 @@ if (url === 'http://127.0.0.1:8000/users/' || url === 'http://127.0.0.1:8000/pro
     filter02();
 }
 
-if ( url === 'http://127.0.0.1:8000/sell_receipt_list/'){
+if ( /sell_receipt_list/.test(location.href )){
     let filter06 = function () {
         let input = document.querySelector('.filter-input');
 
@@ -440,7 +438,7 @@ if ( url === 'http://127.0.0.1:8000/sell_receipt_list/'){
 }
 
 
-if (url === 'http://127.0.0.1:8000/product_categories/') {
+if (/product_categories/.test(location.href ) ) {
         document.querySelectorAll('.title').forEach((el) => {
             el.addEventListener('click',()=>{
                 let content = el.nextElementSibling ;
@@ -934,7 +932,7 @@ userImg.addEventListener('click',()=>{
 })
 
 
-if (url === 'http://127.0.0.1:8000/partners/'){
+if (/partners/.test(location.href ) ){
     // let count = 8; //всего записей
     let count = document.querySelectorAll(".num").length;
     let cnt = 4; //сколько отображаем сначала
@@ -995,7 +993,7 @@ if (url === 'http://127.0.0.1:8000/partners/'){
         }
 }
 
-if (url === 'http://127.0.0.1:8000/add_supply/' ){
+if (/add_supply/.test(location.href ) ){
     const tovarz = document.querySelectorAll('.form-group1')
     const plus1 = document.querySelector('.plus1')
     for (let item of tovarz){
@@ -1084,7 +1082,7 @@ if (url === 'http://127.0.0.1:8000/add_supply/' ){
 
 }
 
-if (url === 'http://127.0.0.1:8000/receipt_registration/' ){
+if (/receipt_registration/.test(location.href ) ){
     const tovarz = document.querySelectorAll('.form-group')
     const plus1 = document.querySelector('.plus')
     for (let item of tovarz){
@@ -1130,10 +1128,23 @@ if (url === 'http://127.0.0.1:8000/receipt_registration/' ){
 }
 
 if (/product_properties/.test(location.href )){
+    const arTd = document.querySelectorAll('.tdStyle')
+    
     const formElemBtn = document.querySelector('.btn__submit-form')
     formElemBtn.addEventListener('click', postForm)
     async function postForm(e){
+        let areaName = document.querySelector('.formElem-name').value
         // e.preventDefault();
+        for (let item of arTd){
+            if (areaName == item.innerHTML){
+                alert('Данное свойство уже имеется! Добавьте другое')
+                e.preventDefault();
+                
+            }else if(areaName !== item.innerHTML){
+                console.log('Все ок!')
+                
+            }   
+        }
     
         let response = await fetch('http://127.0.0.1:8000/api/v1/propertylist/', {
           method: 'POST',
@@ -1144,6 +1155,7 @@ if (/product_properties/.test(location.href )){
         let result = await response.json();
     
         // alert(result.message);
+       
     }
     const btnApi = document.querySelector('.btn__api')
     const modal  = document.querySelector('.modal')
@@ -1158,4 +1170,144 @@ if (/product_properties/.test(location.href )){
     function imgCrossAction(){
         modal.classList.toggle('zero1')
     }
+
+ 
+}
+
+if (/product_categories/.test(location.href )){
+    const arTd = document.querySelectorAll('a')
+    
+    const formElemBtn = document.querySelector('.btn__submit-form')
+    formElemBtn.addEventListener('click', postForm)
+    async function postForm(e){
+        
+        let areaName = document.querySelector('.formElem-name').value
+        // e.preventDefault();
+        for (let item of arTd){
+            if (areaName == item.innerHTML){
+                alert('Данная категория уже имеется! Добавьте другую')
+                e.preventDefault();
+                
+            }else if(areaName !== item.innerHTML){
+                console.log('Все ок!')
+                
+            }   
+        }
+    
+        let response = await fetch('http://127.0.0.1:8000/api/v1/product_cats/', {
+          method: 'POST',
+
+          body: new FormData(formElem)
+        });
+    
+        let result = await response.json();
+    
+
+       
+    }
+    const btnApi = document.querySelector('.btn__api')
+    const modal  = document.querySelector('.modal')
+    const imgCross = document.querySelector('.imgCross')
+
+    btnApi.addEventListener('click', btnApiAction)
+    function btnApiAction(){
+        modal.classList.toggle('zero1')
+    }
+
+    imgCross.addEventListener('click', imgCrossAction)
+    function imgCrossAction(){
+        modal.classList.toggle('zero1')
+    }
+    async function getCategory(){
+        const podskazka = document.querySelector('.podskazka')
+        let response = await fetch('http://127.0.0.1:8000/api/v1/product_cats/');
+        
+        let result = await response.json();
+
+        let div = document.createElement('option');
+        podskazka.appendChild(div)
+
+        for (let item of result){
+            let div = document.createElement('option');
+            let option = document.createElement('option');
+            console.log("id: " + item.id + "   " + "Имя категории " + item.name)
+            // const nameItem = "id: " + item.id + "   " + "Имя категории " + item.name
+            const nameItem =  item.name
+            // podskazka.appendChild(option)
+            podskazka.appendChild(div)
+            div.innerHTML = nameItem
+            const idOpt = item.id
+            div.setAttribute('value',idOpt)
+            if (item.level == 1){
+                div.innerHTML = "--- " + div.innerHTML
+            }
+            if (item.level == 2){
+                div.innerHTML = "------ " + div.innerHTML
+            }
+            if (item.level == 3){
+                div.innerHTML = "--------- " + div.innerHTML
+            }
+            if (item.level == 4){
+                div.innerHTML = "------------ " + div.innerHTML
+            }
+            if (item.level == 5){
+                div.innerHTML = "--------------- " + div.innerHTML
+            }
+            
+
+        }
+
+
+     
+    }
+    getCategory()
+ 
+}
+
+if (/shops/.test(location.href )){
+    const arTd = document.querySelectorAll('.name__shop')
+    
+    const formElemBtn = document.querySelector('.btn__submit-form')
+    formElemBtn.addEventListener('click', postForm)
+    async function postForm(e){
+        let areaName = document.querySelector('.formElem-name').value
+        // e.preventDefault();
+        for (let item of arTd){
+            if (areaName == item.innerHTML){
+                alert('Данная точка уже имеется! Добавьте другую')
+                e.preventDefault();
+                
+            }else if(areaName !== item.innerHTML){
+                console.log('Все ок!')
+                
+            }   
+        }
+    
+        let response = await fetch('http://127.0.0.1:8000/api/v1/shoplist/', {
+          method: 'POST',
+
+          body: new FormData(formElem)
+        });
+    
+        let result = await response.json();
+    
+        // alert(result.message);
+       
+    }
+    const btnApi = document.querySelector('.btn__api')
+    const modal  = document.querySelector('.modal')
+    const imgCross = document.querySelector('.imgCross')
+
+    btnApi.addEventListener('click', btnApiAction)
+    function btnApiAction(){
+        modal.classList.toggle('zero1')
+    }
+
+    imgCross.addEventListener('click', imgCrossAction)
+    function imgCrossAction(){
+        modal.classList.toggle('zero1')
+    }
+
+    
+ 
 }
