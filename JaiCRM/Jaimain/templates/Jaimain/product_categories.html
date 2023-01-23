@@ -4,6 +4,10 @@
 {% extends 'Jaimain/base.html' %}
 {% block content %}
 <h1>{{ user_partner }} id - {{user_partner.pk}}</h1>
+<h1> {{prod_cats}}</h1>
+{% for cat in prod_cats %}
+{{ cat }}
+{% endfor %}
 <div class="header__users-top">
 		<div class="d7">
 			<form>
