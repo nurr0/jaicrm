@@ -1612,13 +1612,17 @@ canvas {
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-	width: 122px;
-	height: 152px;
+	width: 125px;
+	height: 155px;
 }
 .z{
 	margin: 5px;
 	color: #000;
 }
+/* .otcheti1{
+	width: 90%;
+	height: 30%;
+} */
 
 .imgCrossParrent{
 	display: flex;

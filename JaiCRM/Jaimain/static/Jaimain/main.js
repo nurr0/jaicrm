@@ -1427,12 +1427,12 @@ async function postForm(e){
         let divFile = item.file
         let divName = item.file_name
         let divGod = item.datetime
-        let divData = divGod.slice(0,9)
+        let divData = divGod.slice(0,10)
         let divDataDay = divGod.slice(11,16)
 
         const divNew = document.createElement('div')
         // divNew.innerHTML = divId + " " + divFile + " " + divName + " " + divData
-        divNew.innerHTML = `<div class='otcheti'>  <div class='z'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
+        divNew.innerHTML = `<div class='otcheti otcheti1'>  <div class='z'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
         divArea.appendChild(divNew)
         
     }
