@@ -14,6 +14,8 @@ const showShop = document.querySelector('.shops')
 const fileUpload = document.getElementById('id_logo')
 const category1 = document.querySelector('.category ')
 
+
+
 if (JSON.parse(localStorage.getItem('tasks')) == 1){
     console.log('privet')
     nonActive()
@@ -322,7 +324,7 @@ if (/shops/.test(location.href ) || /partners/.test(location.href ) || /users/.t
 
 
 
-if (/users/.test(location.href )  || /product_properties/.test(location.href )  || url === 'http://127.0.0.1:8000/sku/' || /products_in_stock/.test(location.href ) || /sell_receipt_list/.test(location.href )){
+if (/users/.test(location.href )  || /product_properties/.test(location.href )  || location.pathname === '/sku/' || /products_in_stock/.test(location.href ) || /sell_receipt_list/.test(location.href )  ||   /supplies/.test(location.href ) ){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -387,7 +389,7 @@ if (/supplies/.test(location.href )){
     filter04();
 }
 
-if (/users/.test(location.href ) ||/product_properties/.test(location.href ) || url === 'http://127.0.0.1:8000/sku/' || /products_in_stock/.test(location.href ) ){
+if (/users/.test(location.href ) ||/product_properties/.test(location.href ) || location.pathname === '/sku/' || /products_in_stock/.test(location.href ) ){
     let filter02 = function () {
         let input = document.querySelector('.filter-input');
 
@@ -1024,6 +1026,17 @@ if (/add_supply/.test(location.href ) ){
     proverty04.setAttribute('checked','checked')
     const proverty05 = document.querySelector('#id_productsinsupply_set-4-DELETE')
     proverty05.setAttribute('checked','checked')
+    const proverty06 = document.querySelector('#id_productsinsupply_set-5-DELETE')
+    proverty06.setAttribute('checked','checked')
+    const proverty07 = document.querySelector('#id_productsinsupply_set-6-DELETE')
+    proverty07.setAttribute('checked','checked')
+    const proverty08 = document.querySelector('#id_productsinsupply_set-7-DELETE')
+    proverty08.setAttribute('checked','checked')
+    const proverty09 = document.querySelector('#id_productsinsupply_set-8-DELETE')
+    proverty09.setAttribute('checked','checked')
+    const proverty10 = document.querySelector('#id_productsinsupply_set-9-DELETE')
+    proverty10.setAttribute('checked','checked')
+
 
     const udalit1 = document.querySelectorAll('p')[8]
     udalit1.classList.toggle('zero')
@@ -1120,11 +1133,11 @@ if (/receipt_registration/.test(location.href ) ){
         })
     })
 
-    const udalit1 = document.querySelectorAll('div')[33]
-    udalit1.classList.toggle('zero')
+    // const udalit1 = document.querySelectorAll('div')[33]
+    // udalit1.classList.toggle('zero')
 
-    const udalit2 = document.querySelectorAll('div')[41]
-    udalit2.classList.toggle('zero')
+    // const udalit2 = document.querySelectorAll('div')[41]
+    // udalit2.classList.toggle('zero')
 }
 
 if (/product_properties/.test(location.href )){
@@ -1311,3 +1324,120 @@ if (/shops/.test(location.href )){
     
  
 }
+
+if (/sell_receipt_list/.test(location.href )){
+    const arTd = document.querySelectorAll('.tdStyle')
+    
+    const formElemBtn = document.querySelector('.btn__submit-form')
+    formElemBtn.addEventListener('click', postForm)
+    async function postForm(e){
+        
+        // e.preventDefault();
+        
+        let host = location.host
+        let response = await fetch('/api/v1/sales_report_export/', {
+          method: 'POST',
+
+          body: new FormData(formElem)
+        });
+    
+        let result = await response.json();
+    
+        // alert(result.message);
+       
+    }
+    const btnApi = document.querySelector('.btn__api')
+    const modal  = document.querySelector('.modal')
+    const imgCross = document.querySelector('.imgCross')
+
+    btnApi.addEventListener('click', btnApiAction)
+    function btnApiAction(){
+        modal.classList.toggle('zero1')
+    }
+
+    imgCross.addEventListener('click', imgCrossAction)
+    function imgCrossAction(){
+        modal.classList.toggle('zero1')
+    }
+
+ 
+}
+
+const btnApiOt = document.querySelector('.btn__apiOt')
+const modalOt  = document.querySelector('.modalOt')
+const imgCrossOt = document.querySelector('.imgCrossOt')
+const divArea = document.querySelector('.reportsApi')
+
+btnApiOt.addEventListener('click', btnApiActionOt)
+    function btnApiActionOt(){
+        modalOt.classList.toggle('zero1')
+
+        let filterOt = function () {
+            let input = document.querySelector('.filter-inputOt');
+            input.addEventListener('keyup', FilterUser)
+
+            function FilterUser(){
+                //Ловеркейс для поиска
+                let filter = input.value.toLowerCase(),
+                //Ищем все li у ul
+                filterElements = document.querySelectorAll('.otcheti');
+                //Странное решение
+                // if (input.value == ''){
+                //     location.reload()}
+    
+                filterElements.forEach((item) => {
+                    if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                        // item.style.display = '';
+                        item.classList.remove('zero1')
+                        item.classList.remove('num')
+                    
+                    } else {
+                        // item.style.display = 'none';
+                        item.classList.add('zero1')
+                        item.classList.add('num')
+                    }
+                })}
+                
+            
+        };
+        filterOt();
+       
+    }
+
+imgCrossOt.addEventListener('click', imgCrossActionOt)
+function imgCrossActionOt(){
+    modalOt.classList.toggle('zero1')
+    // divArea.innerHTML = '';
+}
+
+async function postForm(e){
+        
+    // e.preventDefault();
+    
+    
+    let response = await fetch('/api/v1/reports/');
+
+    let result = await response.json();
+    
+    console.log(result)
+    // const divArea = document.querySelector('.reportsApi')
+   
+    for (let item of result){
+        let divId = item.id
+        let divFile = item.file
+        let divName = item.file_name
+        let divGod = item.datetime
+        let divData = divGod.slice(0,10)
+        let divDataDay = divGod.slice(11,16)
+
+        const divNew = document.createElement('div')
+        // divNew.innerHTML = divId + " " + divFile + " " + divName + " " + divData
+        divNew.innerHTML = `<div class='otcheti otcheti1'>  <div class='z'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
+        divArea.appendChild(divNew)
+        
+    }
+    
+     
+   
+}
+postForm()
