@@ -1432,7 +1432,7 @@ async function postForm(e){
 
         const divNew = document.createElement('div')
         // divNew.innerHTML = divId + " " + divFile + " " + divName + " " + divData
-        divNew.innerHTML = `<div class='otcheti otcheti1'>  <div class='z'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
+        divNew.innerHTML = `<div class='otcheti otcheti1'>  <div class='z x'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
         divArea.appendChild(divNew)
         
     }

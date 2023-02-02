@@ -1619,6 +1619,10 @@ canvas {
 .z{
 	margin: 5px;
 	color: #000;
+	/* width: 280px; */
+}
+.x{
+	width: 300px !important;
 }
 /* .otcheti1{
 	width: 90%;
