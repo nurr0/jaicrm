@@ -7,7 +7,12 @@
     {{ formset.management_form }}
     {% for form in formset %}
         <div class="form-group">
+            
         {{ form.as_p }}
+            <div class="procent">
+                <input type="text" placeholder="Процент" class="procent__text">
+                <button class="procent__btn">Посчитать с процентом</button>
+            </div>
         </div>
     {% endfor %}
     <input type="submit" value="Сохранить">
