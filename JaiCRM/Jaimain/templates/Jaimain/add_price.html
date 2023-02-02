@@ -6,16 +6,38 @@
     {% csrf_token %}
     {{ formset.management_form }}
     {% for form in formset %}
-        <div class="form-group">
+        <div class="form-group-addPrice">
+             <!-- Скрытое -->
+        {{form.product_in_stock}} 
             
-        {{ form.as_p }}
+        <!-- {{ form.as_p }} -->
+            <div class="tovar">
+                <div class="addPrice__tovarText">{{ form.product_in_stock.label }} </div>
+                <div class="addPrice__tovar">{{form.product_in_stock_display}}</div>
+            </div>
+            <div class="poslendyaPrice">
+                <div class="addPrice__poslendyaPriceText">{{ form.product_latest_supply_price.label }} </div>
+                <div class="addPrice__poslendyaPrice">{{ form.product_latest_supply_price }}</div>
+            </div>
             <div class="procent">
-                <input type="text" placeholder="Процент" class="procent__text">
-                <button class="procent__btn">Посчитать с процентом</button>
+                <label class="procent__textArea" for="">Процент</label>
+                <input type="text" placeholder="" class="procent__text">
+                <button class="procent__btn btn">%</button>
+            </div>
+            <div class="price">
+                <div class="addPrice__priceText">{{ form.price.label }} </div>
+                <div class="addPrice__price">{{ form.price }}</div>
+            </div>
+
+            <div>
+                
             </div>
         </div>
     {% endfor %}
-    <input type="submit" value="Сохранить">
+    <input class="btn" type="submit" value="Сохранить">
 </form>
-    <button class="btn" onclick="history.go(-1)">Отменить</button>
+<div class="bnt__addPrice">
+    <button class="btn " onclick="history.go(-1)">Отменить</button>
+</div>
+
 {% endblock %}

@@ -152,7 +152,7 @@ if (/partners/.test(location.href )){
     settingsBlock.classList.add('ActiveList') 
 }else if (/supplies/.test(location.href )){
     suppliesBlock.classList.add('ActiveList')
-}else if (/products_in_stock/.test(location.href )){
+}else if (/products_in_stock/.test(location.href ) || /add_price/.test(location.href )){
     tovariNaSklade.classList.add('ActiveList')
 }else if (/sell_receipt_list/.test(location.href )){
     prodazh.classList.add('ActiveList')
@@ -1455,7 +1455,7 @@ if (/add_price/.test(location.href )  ){
         
             // const div = poschitat.closest('div')
             const div = item.closest('div')
-            const glavDiv = div.closest('.form-group')
+            const glavDiv = div.closest('.form-group-addPrice')
 
             const procentVnytr = div.querySelector('.procent__text').value
             const cenaVnytr = glavDiv.querySelector("input[type='number']")
