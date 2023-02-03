@@ -1,6 +1,7 @@
 from calendar import calendar, monthrange
 from datetime import datetime
 import os
+from random import randint
 from typing import NoReturn
 
 from .models import *
@@ -62,21 +63,25 @@ def data_for_sales_by_cat_donought(partner):
 
 def data_for_sales_by_shop_graph(partner):
     today = datetime.now()
-    days_in_month = [i + 1 for i in range(monthrange(today.year, today.month)[1])]
-    partner = partner
-    shops = []
-    sales = []
+    days_in_month = [i + 1 for i in range(today.day)]
     data = SellReceipt.objects.filter(partner=partner)
-    for elem in data:
-        sales.append([elem.shop.name, elem.time_created.day, int(elem.get_total_price_with_discount())])
 
     result = {}
-    for sublist in sales:
-        shop, day, sales = sublist[0], sublist[1], sublist[2]
+    for elem in data:
+        shop = elem.shop.name
+        day = elem.time_created.day
+        sales = int(elem.get_total_price_with_discount())
         if shop in result:
-            result[shop][day] = result[shop].get(day, 0) + sales
+            result[shop][day-1] += sales
         else:
-            result[shop] = {day: sales}
+            result[shop] = [0 for i in days_in_month]
+            result[shop][day-1] = sales
 
-    return result
+    datasets = []
+    for elem in result:
+        datasets.append({'label': elem,
+                         'data': result[elem],
+                         'borderColor': f'rgb({randint(1,255)},{randint(1,255)},{randint(1,255)})',
+                         'backgroundColor': f'rgb({randint(1,255)},{randint(1,255)},{randint(1,255)})'})
+    return datasets
 
