@@ -103,7 +103,7 @@ new Chart(ctx4, {
 
   type: 'line',
   data: {
-    labels: [1,3,5],
+    labels: [1,3,5,7,9,11,13],
     datasets: [
     {
       label: 'Dataset 1',
