@@ -1023,6 +1023,7 @@ class ReportsList(DataMixin, ListView):
 def dashboard(request):
     user_menu = menu.copy()
     partner = request.user.partner
+
     data_1 = data_for_sales_by_cat_donought(partner) # данные по продажам по категориям (функция в service)
     data_2 = data_for_sales_by_shop_graph(partner)
 
@@ -1031,6 +1032,7 @@ def dashboard(request):
 
     return render(request, 'Jaimain/dashboard.html', {
         'menu': user_menu, 'title': 'Dashboard', 'data': data_1, 'data2': data_2
+
     })
 
 """API views \/"""

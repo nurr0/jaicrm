@@ -135,6 +135,12 @@ prodazh.addEventListener('click',()=>
     localStorage.setItem('tasks', JSON.stringify(0))
 )
 
+const dashboard = document.querySelector('[href="/dashboard/"]');
+dashboard.classList.add('dashboard')
+dashboard.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
 const url = window.location.href;
 if (/partners/.test(location.href )){
     partners.classList.add('ActiveList')
@@ -150,6 +156,8 @@ if (/partners/.test(location.href )){
     propertyBlock.classList.add('ActiveList') 
 }else if (/sku/.test(location.href )){
     settingsBlock.classList.add('ActiveList') 
+}else if (/dashboard/.test(location.href )){
+    dashboard.classList.add('ActiveList') 
 }else if (/supplies/.test(location.href )){
     suppliesBlock.classList.add('ActiveList')
 }else if (/products_in_stock/.test(location.href ) || /add_price/.test(location.href )){
@@ -791,147 +799,7 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
     }
 }
 
-const userImg = document.querySelector('.user__img');
-userImg.addEventListener('click',()=>{
-                        // Поле
-            var canvas = document.getElementById('game');
-            // canvas.classList.toggle('canvasgame')
-            // змейка
-            // Описываеем что будет 2х мерная игра
-            var context = canvas.getContext('2d');
-            // Размер одной клеточки на поле — 16 пикселей
-            var grid = 16;
-            // Служебная переменная, которая отвечает за скорость змейки
-            var count = 0;
-            // А вот и сама змейка
-            var snake = {
-            // Начальные координаты
-            x: 160,
-            y: 160,
-            // Скорость змейки — в каждом новом кадре змейка смещается по оси Х или У. На старте будет двигаться горизонтально, поэтому скорость по игреку равна нулю.
-            dx: grid,
-            dy: 0,
-            // Тащим за собой хвост, который пока пустой
-            cells: [],
-            // Стартовая длина змейки — 4 клеточки
-            maxCells: 4
-            };
-            // А это — еда. Представим, что это красные яблоки.
-            var apple = {
-            // Начальные координаты яблока
-            x: 320,
-            y: 320
-            };
 
-            // Делаем генератор случайных чисел в заданном диапазоне
-            function getRandomInt(min, max) {
-                return Math.floor(Math.random() * (max - min)) + min;
-            }
-
-            // Игровой цикл — основной процесс, внутри которого будет всё происходить
-            function loop() {
-                // Дальше будет хитрая функция, которая замедляет скорость игры с 60 кадров в секунду до 15. Для этого она пропускает три кадра из четырёх, то есть срабатывает каждый четвёртый кадр игры. Было 60 кадров в секунду, станет 15.
-                requestAnimationFrame(loop);
-                // Игровой код выполнится только один раз из четырёх, в этом и суть замедления кадров, а пока переменная count меньше четырёх, код выполняться не будет.
-                if (++count < 6) {
-                return;
-                }
-                // Обнуляем переменную скорости
-                count = 0;
-                // Очищаем игровое поле
-                context.clearRect(0, 0, canvas.width, canvas.height);
-                // Двигаем змейку с нужной скоростью
-                snake.x = snake.x + snake.dx ;
-                snake.y += snake.dy;
-                // Если змейка достигла края поля по горизонтали — продолжаем её движение с противоположной стороны
-                if (snake.x < 0) {
-                snake.x = canvas.width - grid;
-                }
-                else if (snake.x >= canvas.width) {
-                snake.x = 0;
-                }
-                // Делаем то же самое для движения по вертикали
-                if (snake.y < 0) {
-                snake.y = canvas.height - grid;
-                }
-                else if (snake.y >= canvas.height) {
-                snake.y = 0;
-                }
-                // Продолжаем двигаться в выбранном направлении. Голова всегда впереди, поэтому добавляем её координаты в начало массива, который отвечает за всю змейку.
-                snake.cells.unshift({ x: snake.x, y: snake.y });
-                // Сразу после этого удаляем последний элемент из массива змейки, потому что она движется и постоянно особождает клетки после себя
-                if (snake.cells.length > snake.maxCells) {
-                snake.cells.pop();
-                }
-                // Рисуем еду — красное яблоко
-                context.fillStyle = 'red';
-                context.fillRect(apple.x, apple.y, grid - 1, grid - 1);
-                // Одно движение змейки — один новый нарисованный квадратик 
-                context.fillStyle = 'green';
-                // Обрабатываем каждый элемент змейки
-                snake.cells.forEach(function (cell, index) {
-                // Чтобы создать эффект клеточек, делаем зелёные квадратики меньше на один пиксель, чтобы вокруг них образовалась чёрная граница
-                context.fillRect(cell.x, cell.y, grid - 1, grid - 1);
-                // Если змейка добралась до яблока...
-                if (cell.x === apple.x && cell.y === apple.y) {
-                    // увеличиваем длину змейки
-                    snake.maxCells++;
-                    // Рисуем новое яблочко
-                    // Помним, что размер холста у нас 400x400, при этом он разбит на ячейки — 25 в каждую сторону
-                    apple.x = getRandomInt(0, 25) * grid;
-                    apple.y = getRandomInt(0, 25) * grid;
-                }
-                // Проверяем, не столкнулась ли змея сама с собой
-                // Для этого перебираем весь массив и смотрим, есть ли у нас в массиве змейки две клетки с одинаковыми координатами 
-                for (var i = index + 1; i < snake.cells.length; i++) {
-                    // Если такие клетки есть — начинаем игру заново
-                    if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-                    // Задаём стартовые параметры основным переменным
-                    snake.x = 160;
-                    snake.y = 160;
-                    snake.cells = [];
-                    snake.maxCells = 4;
-                    snake.dx = grid;
-                    snake.dy = 0;
-                    // Ставим яблочко в случайное место
-                    apple.x = getRandomInt(0, 25) * grid;
-                    apple.y = getRandomInt(0, 25) * grid;
-                    }
-                }
-                });
-            }
-
-            // Смотрим, какие нажимаются клавиши, и реагируем на них нужным образом
-            document.addEventListener('keydown', function (e) {
-                // Дополнительно проверяем такой момент: если змейка движется, например, влево, то ещё одно нажатие влево или вправо ничего не поменяет — змейка продолжит двигаться в ту же сторону, что и раньше. Это сделано для того, чтобы не разворачивать весь массив со змейкой на лету и не усложнять код игры.
-                // Стрелка влево
-                // Если нажата стрелка влево, и при этом змейка никуда не движется по горизонтали…
-                if (e.which === 37 && snake.dx === 0) {
-                // то даём ей движение по горизонтали, влево, а вертикальное — останавливаем
-                // Та же самая логика будет и в остальных кнопках
-                snake.dx = -grid;
-                snake.dy = 0;
-                }
-                // Стрелка вверх
-                else if (e.which === 38 && snake.dy === 0) {
-                snake.dy = -grid;
-                snake.dx = 0;
-                }
-                // Стрелка вправо
-                else if (e.which === 39 && snake.dx === 0) {
-                snake.dx = grid;
-                snake.dy = 0;
-                }
-                // Стрелка вниз
-                else if (e.which === 40 && snake.dy === 0) {
-                snake.dy = grid;
-                snake.dx = 0;
-                }
-            });
-
-            requestAnimationFrame(loop);
-
-})
 
 
 if (/partners/.test(location.href ) ){
@@ -1020,22 +888,22 @@ if (/add_supply/.test(location.href ) ){
     proverty01.setAttribute('checked','checked')
     const proverty02 = document.querySelector('#id_productsinsupply_set-1-DELETE')
     proverty02.setAttribute('checked','checked')
-    const proverty03 = document.querySelector('#id_productsinsupply_set-2-DELETE')
-    proverty03.setAttribute('checked','checked')
-    const proverty04 = document.querySelector('#id_productsinsupply_set-3-DELETE')
-    proverty04.setAttribute('checked','checked')
-    const proverty05 = document.querySelector('#id_productsinsupply_set-4-DELETE')
-    proverty05.setAttribute('checked','checked')
-    const proverty06 = document.querySelector('#id_productsinsupply_set-5-DELETE')
-    proverty06.setAttribute('checked','checked')
-    const proverty07 = document.querySelector('#id_productsinsupply_set-6-DELETE')
-    proverty07.setAttribute('checked','checked')
-    const proverty08 = document.querySelector('#id_productsinsupply_set-7-DELETE')
-    proverty08.setAttribute('checked','checked')
-    const proverty09 = document.querySelector('#id_productsinsupply_set-8-DELETE')
-    proverty09.setAttribute('checked','checked')
-    const proverty10 = document.querySelector('#id_productsinsupply_set-9-DELETE')
-    proverty10.setAttribute('checked','checked')
+    // const proverty03 = document.querySelector('#id_productsinsupply_set-2-DELETE')
+    // proverty03.setAttribute('checked','checked')
+    // const proverty04 = document.querySelector('#id_productsinsupply_set-3-DELETE')
+    // proverty04.setAttribute('checked','checked')
+    // const proverty05 = document.querySelector('#id_productsinsupply_set-4-DELETE')
+    // proverty05.setAttribute('checked','checked')
+    // const proverty06 = document.querySelector('#id_productsinsupply_set-5-DELETE')
+    // proverty06.setAttribute('checked','checked')
+    // const proverty07 = document.querySelector('#id_productsinsupply_set-6-DELETE')
+    // proverty07.setAttribute('checked','checked')
+    // const proverty08 = document.querySelector('#id_productsinsupply_set-7-DELETE')
+    // proverty08.setAttribute('checked','checked')
+    // const proverty09 = document.querySelector('#id_productsinsupply_set-8-DELETE')
+    // proverty09.setAttribute('checked','checked')
+    // const proverty10 = document.querySelector('#id_productsinsupply_set-9-DELETE')
+    // proverty10.setAttribute('checked','checked')
 
 
     const udalit1 = document.querySelectorAll('p')[9]
@@ -1044,29 +912,29 @@ if (/add_supply/.test(location.href ) ){
     const udalit2 = document.querySelectorAll('p')[13]
     udalit2.classList.toggle('zero')
 
-    const udalit3 = document.querySelectorAll('p')[17]
-    udalit3.classList.toggle('zero')
+    // const udalit3 = document.querySelectorAll('p')[17]
+    // udalit3.classList.toggle('zero')
 
-    const udalit4 = document.querySelectorAll('p')[21]
-    udalit4.classList.toggle('zero')
+    // const udalit4 = document.querySelectorAll('p')[21]
+    // udalit4.classList.toggle('zero')
 
-    const udalit5 = document.querySelectorAll('p')[25]
-    udalit5.classList.toggle('zero')
+    // const udalit5 = document.querySelectorAll('p')[25]
+    // udalit5.classList.toggle('zero')
 
-    const udalit6 = document.querySelectorAll('p')[29]
-    udalit6.classList.toggle('zero')
+    // const udalit6 = document.querySelectorAll('p')[29]
+    // udalit6.classList.toggle('zero')
 
-    const udalit7 = document.querySelectorAll('p')[33]
-    udalit7.classList.toggle('zero')
+    // const udalit7 = document.querySelectorAll('p')[33]
+    // udalit7.classList.toggle('zero')
 
-    const udalit8 = document.querySelectorAll('p')[37]
-    udalit8.classList.toggle('zero')
+    // const udalit8 = document.querySelectorAll('p')[37]
+    // udalit8.classList.toggle('zero')
 
-    const udalit9 = document.querySelectorAll('p')[41]
-    udalit9.classList.toggle('zero')
+    // const udalit9 = document.querySelectorAll('p')[41]
+    // udalit9.classList.toggle('zero')
 
-    const udalit10 = document.querySelectorAll('p')[45]
-    udalit10.classList.toggle('zero')
+    // const udalit10 = document.querySelectorAll('p')[45]
+    // udalit10.classList.toggle('zero')
 
     document.querySelectorAll('.title0').forEach((el) => {
         el.addEventListener('click',()=>{
@@ -1477,217 +1345,221 @@ if (/add_price/.test(location.href )  ){
     }
     }
 
-//ИЛЮХА ТУТ НИЖЕ ИДУТ
-//Графики для дашборда:
-
-//Линейный график продаж
-Highcharts.chart('dashboard_container_1', {
-
-    title: {
-        text: 'Продажи по дням текущего месяца',
-        align: 'left'
-    },
-
-    subtitle: {
-        text: 'Партнер: ',
-        align: 'left'
-    },
-
-    yAxis: {
-        title: {
-            text: 'Сумма продаж'
-        }
-    },
-
-    xAxis: {
-        accessibility: {
-            rangeDescription: 'список дат текущего месяца'
-        }
-    },
-
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle'
-    },
-
-    plotOptions: {
-        series: {
-            label: {
-                connectorAllowed: false
-            },
-            pointStart: 1
-        }
-    },
-
-    series: [{
-        name: 'Продажи всего',
-        data: [43934, 48656, 65165, 81827, 112143, 142383,
-            171533, 165174, 155157, 161454, 154610]
-    }, {
-        name: 'Возвраты',
-        data: [24916, 37941, 29742, 29851, 32490, 30282,
-            38121, 36885, 33726, 34243, 31050]
-    },
-    ],
-
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
-            },
-            chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
-            }
-        }]
-    }
-
-});
 
 
-//Круговая диаграмма продаж по категориям:
+// if (/dashboard/.test(location.href )  ){
+//     //ИЛЮХА ТУТ НИЖЕ ИДУТ
+//     //Графики для дашборда:
 
-Highcharts.chart('dashboard_container_2', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Продажи по категориям за текущий месяц',
-        align: 'left'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' +
-                      'Сумма продаж: <b>{point.y}</b><br/>'
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            }
-        }
-    },
-    series: [{
-        name: 'Доля: ',
-        colorByPoint: true,
-        data: [{
-            name: 'Обувь',
-            y: 165000,
-        }, {
-            name: 'Сумки',
-            y: 35000
-        },]
-    }]
-});
+//     //Линейный график продаж
+//     Highcharts.chart('dashboard_container_1', {
 
+//         title: {
+//             text: 'Продажи по дням текущего месяца',
+//             align: 'left'
+//         },
 
-Highcharts.chart('dashboard_container_3', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Доли по каналам продаж за текущий месяц',
-        align: 'left'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' +
-                      'Сумма продаж: <b>{point.y}</b><br/>'
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            }
-        }
-    },
-    series: [{
-        name: 'Доля: ',
-        colorByPoint: true,
-        data: [{
-            name: 'Оффлайн',
-            y: 30000,
-        }, {
-            name: 'kaspi.kz',
-            y: 150000
-        },
-        {
-            name: 'instagramm',
-            y: 20000
-        },]
-    }]
-});
+//         subtitle: {
+//             text: 'Партнер: ',
+//             align: 'left'
+//         },
+
+//         yAxis: {
+//             title: {
+//                 text: 'Сумма продаж'
+//             }
+//         },
+
+//         xAxis: {
+//             accessibility: {
+//                 rangeDescription: 'список дат текущего месяца'
+//             }
+//         },
+
+//         legend: {
+//             layout: 'vertical',
+//             align: 'right',
+//             verticalAlign: 'middle'
+//         },
+
+//         plotOptions: {
+//             series: {
+//                 label: {
+//                     connectorAllowed: false
+//                 },
+//                 pointStart: 1
+//             }
+//         },
+
+//         series: [{
+//             name: 'Продажи всего',
+//             data: [43934, 48656, 65165, 81827, 112143, 142383,
+//                 171533, 165174, 155157, 161454, 154610]
+//         }, {
+//             name: 'Возвраты',
+//             data: [24916, 37941, 29742, 29851, 32490, 30282,
+//                 38121, 36885, 33726, 34243, 31050]
+//         },
+//         ],
+
+//         responsive: {
+//             rules: [{
+//                 condition: {
+//                     maxWidth: 500
+//                 },
+//                 chartOptions: {
+//                     legend: {
+//                         layout: 'horizontal',
+//                         align: 'center',
+//                         verticalAlign: 'bottom'
+//                     }
+//                 }
+//             }]
+//         }
+
+//     });
 
 
-Highcharts.chart('dashboard_container_4', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Доли способов оплаты за текущий месяц',
-        align: 'left'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' +
-                      'Сумма продаж: <b>{point.y}</b><br/>'
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            }
-        }
-    },
-    series: [{
-        name: 'Доля: ',
-        colorByPoint: true,
-        data: [{
-            name: 'Наличные',
-            y: 68000,
+//     //Круговая диаграмма продаж по категориям:
 
-        },
-            {
-            name: 'Безналичные',
-            y: 32000
-        },
-        {
-            name: 'kaspi red/credit',
-            y: 100000
-        },]
-    }]
+//     Highcharts.chart('dashboard_container_2', {
+//         chart: {
+//             plotBackgroundColor: null,
+//             plotBorderWidth: null,
+//             plotShadow: false,
+//             type: 'pie'
+//         },
+//         title: {
+//             text: 'Продажи по категориям за текущий месяц',
+//             align: 'left'
+//         },
+//         tooltip: {
+//             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' +
+//                         'Сумма продаж: <b>{point.y}</b><br/>'
+//         },
+//         accessibility: {
+//             point: {
+//                 valueSuffix: '%'
+//             }
+//         },
+//         plotOptions: {
+//             pie: {
+//                 allowPointSelect: true,
+//                 cursor: 'pointer',
+//                 dataLabels: {
+//                     enabled: true,
+//                     format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+//                 }
+//             }
+//         },
+//         series: [{
+//             name: 'Доля: ',
+//             colorByPoint: true,
+//             data: [{
+//                 name: 'Обувь',
+//                 y: 165000,
+//             }, {
+//                 name: 'Сумки',
+//                 y: 35000
+//             },]
+//         }]
+//     });
+
+
+//     Highcharts.chart('dashboard_container_3', {
+//         chart: {
+//             plotBackgroundColor: null,
+//             plotBorderWidth: null,
+//             plotShadow: false,
+//             type: 'pie'
+//         },
+//         title: {
+//             text: 'Доли по каналам продаж за текущий месяц',
+//             align: 'left'
+//         },
+//         tooltip: {
+//             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' +
+//                         'Сумма продаж: <b>{point.y}</b><br/>'
+//         },
+//         accessibility: {
+//             point: {
+//                 valueSuffix: '%'
+//             }
+//         },
+//         plotOptions: {
+//             pie: {
+//                 allowPointSelect: true,
+//                 cursor: 'pointer',
+//                 dataLabels: {
+//                     enabled: true,
+//                     format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+//                 }
+//             }
+//         },
+//         series: [{
+//             name: 'Доля: ',
+//             colorByPoint: true,
+//             data: [{
+//                 name: 'Оффлайн',
+//                 y: 30000,
+//             }, {
+//                 name: 'kaspi.kz',
+//                 y: 150000
+//             },
+//             {
+//                 name: 'instagramm',
+//                 y: 20000
+//             },]
+//         }]
+//     });
+
+
+//     Highcharts.chart('dashboard_container_4', {
+//         chart: {
+//             plotBackgroundColor: null,
+//             plotBorderWidth: null,
+//             plotShadow: false,
+//             type: 'pie'
+//         },
+//         title: {
+//             text: 'Доли способов оплаты за текущий месяц',
+//             align: 'left'
+//         },
+//         tooltip: {
+//             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' +
+//                         'Сумма продаж: <b>{point.y}</b><br/>'
+//         },
+//         accessibility: {
+//             point: {
+//                 valueSuffix: '%'
+//             }
+//         },
+//         plotOptions: {
+//             pie: {
+//                 allowPointSelect: true,
+//                 cursor: 'pointer',
+//                 dataLabels: {
+//                     enabled: true,
+//                     format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+//                 }
+//             }
+//         },
+//         series: [{
+//             name: 'Доля: ',
+//             colorByPoint: true,
+//             data: [{
+//                 name: 'Наличные',
+//                 y: 68000,
+//             }, {
+//                 name: 'Безналичные',
+//                 y: 32000
+//             },
+//             {
+//                 name: 'kaspi red/credit',
+//                 y: 100000
+//             },]
+//         }]
+//     });
+// }
+
 });

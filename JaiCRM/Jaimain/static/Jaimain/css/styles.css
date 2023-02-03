@@ -1324,6 +1324,23 @@ ul.lang-list li a:hover {color: #fdc073;}
 .prodazh:hover{
 	scale: 1.1;
 }
+
+.dashboard{
+	background-image: url(./../images/dashboard.svg);
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	font-size: 18px;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	padding-left: 45px;
+	align-items: center;
+}
+
+.dashboard:hover{
+	scale: 1.1;
+}
 .border{
 	border-bottom: none !important;
 }
@@ -1473,9 +1490,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 	margin-top: 30px;
 }
 
-canvas {
-	border: 0px solid black;
-  }
+
 
 .btnA{
 	text-align: center;
