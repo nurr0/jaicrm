@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden
 from .models import *
 
 menu = [
-        # {'title': "Dashboard", 'url_name': 'dashboard'},
+        {'title': "Dashboard", 'url_name': 'dashboard'},
         {'title': "Партнеры", 'url_name': 'partners'},
         {'title': "Пользователи", 'url_name': 'users'},
         {'title': "Торговые точки", 'url_name': 'shops'},
@@ -16,7 +16,7 @@ menu = [
         {'title': "Товары на складах", 'url_name': 'products_in_stock'},
         {'title': 'Регистрация продаж', 'url_name': 'receipt_registration'},
         {'title': 'Продажи', 'url_name': 'sell_receipt_list'},
-        {'title': 'Сформированные отчеты', 'url_name': 'reports'}
+        # {'title': 'Сформированные отчеты', 'url_name': 'reports'}
 
         ]
 

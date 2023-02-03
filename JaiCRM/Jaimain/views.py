@@ -1,5 +1,8 @@
 import os
 from datetime import datetime
+
+from rest_framework.pagination import PageNumberPagination
+
 from .tasks import *
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
@@ -64,8 +67,9 @@ class ShowPartner(DataMixin, DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Партнеры')
-        c_def['shops_info'] = Shop.objects.all()
-        c_def['product_cats_info'] = ProductCategory.objects.all()
+        c_def['shops_info'] = Shop.objects.filter(partner=self.object)
+        c_def['sales_channel'] = SalesChannel.objects.filter(partner=self.object)
+        c_def['payment_form'] = PaymentForm.objects.filter(partner=self.object)
         return dict(list(context.items()) + list(c_def.items()))
 
     @method_decorator(login_required)
@@ -231,7 +235,7 @@ class LoginUser(DataMixin, LoginView):
 
 
 def HomePage(request):
-    return redirect('partners')
+    return redirect('dashboard')
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -628,7 +632,8 @@ def add_supply(request):
                         products_in_supply.save()
                         amount_added = products_in_supply.amount
                         product_added = products_in_supply.product
-                        product_exists = ProductInStock.objects.filter(shop=shop_supply_to, product=product_added).exists()
+                        product_exists = ProductInStock.objects.filter(shop=shop_supply_to,
+                                                                       product=product_added).exists()
 
                         if product_exists:
                             product = ProductInStock.objects.get(shop=shop_supply_to, product=product_added)
@@ -843,6 +848,7 @@ def register_a_sale(request):
             receipt.number = receipt_number
             shop_sold_from = receipt.shop
             receipt.save()
+            # try:
             for form in products_in_receipt_formset:
                 if form.is_valid:
                     if form.cleaned_data.get('DELETE'):
@@ -851,13 +857,15 @@ def register_a_sale(request):
                     products_in_receipt.receipt = receipt
                     products_in_receipt.save()
                     amount_sold = products_in_receipt.amount
-                    product_sold = products_in_receipt.product
+                    # product_sold = products_in_receipt.product
                     # sold_amount = form.cleaned_data['decrease_amount']
                     product_in_stock = form.cleaned_data['product']
                     if product_in_stock.amount >= amount_sold:
                         product_in_stock.amount -= amount_sold
                         product_in_stock.save()
                         form.save()
+            # except IntegrityError:
+            #     receipt.delete()
 
             return redirect('sell_receipt_list')
         if not receipt_form.is_valid():
@@ -868,6 +876,8 @@ def register_a_sale(request):
 
     receipt_form.fields['receipt_number_display'].initial = f'{partner.receipt_prefix} {receipt_number}'
     receipt_form.fields['shop'].queryset = Shop.objects.filter(partner=request.user.partner)
+    receipt_form.fields['sales_channel'].queryset = SalesChannel.objects.filter(partner=request.user.partner)
+    receipt_form.fields['payment_form'].queryset = PaymentForm.objects.filter(partner=request.user.partner)
     for form in products_in_receipt_formset:
         form.fields['product'].queryset = ProductInStock.objects.filter(shop__in=shops, amount__gt=0)
 
@@ -1010,8 +1020,14 @@ class ReportsList(DataMixin, ListView):
         return queryset
 
 
-"""API views \/"""
+def dashboard(request):
+    user_menu = menu.copy()
+    partner = request.user.partner
+    return render(request, 'Jaimain/dashboard.html', {
+        'menu': user_menu, 'title': 'Dashboard'
+    })
 
+"""API views \/"""
 
 
 class PropertyAPIView(generics.ListCreateAPIView):
@@ -1045,12 +1061,33 @@ class ShopApiView(generics.ListCreateAPIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
 
 
+class SaleChannelAPIView(generics.ListCreateAPIView):
+    queryset = SalesChannel.objects.all()
+    serializer_class = SalesChannelSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+
+
+class PaymentFormAPIView(generics.ListCreateAPIView):
+    queryset = PaymentForm.objects.all()
+    serializer_class = PaymentFormSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+
+# class ReportAPIListPagination(PageNumberPagination):
+#     page_size = 2
+#     page_query_param = 'page_size'
+#     max_page_size = 100
+
+
 class ReportsAPIView(generics.ListAPIView):
     serializer_class = ReportsSerializer
     permission_classes = (IsAuthenticated,)
+    # pagination_class = ReportAPIListPagination
 
     def get_queryset(self):
         return ReportExport.objects.filter(user=self.request.user)
+
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -1066,4 +1103,6 @@ def sales_report_export_api(request):
     return Response({"message": "Это апи для запуска сборки отчета, передайте в него file_format и user.id"})
 
 
-
+class ProductInStockAPIView(generics.RetrieveAPIView):
+    queryset = ProductInStock.objects.all()
+    serializer_class = ProductInStockSerializer

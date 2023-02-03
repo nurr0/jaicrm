@@ -29,6 +29,9 @@ urlpatterns = [
     path('api/v1/product_cats/', ProductCategoryAPIView.as_view()),
     path('api/v1/sales_report_export/', sales_report_export_api),
     path('api/v1/reports/', ReportsAPIView.as_view()),
+    path('api/v1/product_in_stock/<int:pk>/', ProductInStockAPIView.as_view()),
+    path('api/v1/sales_channel/', SaleChannelAPIView.as_view()),
+    path('api/v1/payment_form/', PaymentFormAPIView.as_view())
 
 ]
 

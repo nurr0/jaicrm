@@ -88,7 +88,10 @@
 			<td class="tdStyle">{{unit.product.name}}</td>
 			<td class="tdStyle">{{unit.product.identifier}}</td>
 			<td class="tdStyle">{{unit.product.category.get_full_path}}</td>
-			<td class="tdStyle">{{unit.product.get_properties}}</td>
+			<td class="tdStyle">{% for property in unit.product.get_properties %}
+			<div>{{ property }}</div>
+				{% endfor %}
+			</td>
 			<td class="tdStyle">{{unit.product.producer}}</td>
 			<td class="tdStyle">{{unit.amount}}</td>
 

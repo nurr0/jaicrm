@@ -37,3 +37,26 @@ class ReportsSerializer(serializers.ModelSerializer):
         model = ReportExport
         fields = '__all__'
 
+
+class ProductInStockSerializer(serializers.ModelSerializer):
+    get_sell_price = serializers.DecimalField(decimal_places=2, max_digits=11)
+
+    class Meta:
+        model = ProductInStock
+        fields = '__all__'
+
+
+class PaymentFormSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = PaymentForm
+        fields = '__all__'
+
+
+class SalesChannelSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = SalesChannel
+        fields = '__all__'

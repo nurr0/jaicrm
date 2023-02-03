@@ -30,12 +30,6 @@
 
 
 
-	<div class="btn__addUsers">
-		<button class="btn ">
-			<a class="btn__text" href="{% url 'export_sales_data' %}">Сформировать отчет по продажам</a>
-		</button>
-
-	</div>
 
 	<div class="btn__addUsers btn__api">
 		<button class="btn ">
@@ -89,6 +83,8 @@
 		<tr class="headTable">
 			<th>Торговая точка(Склад)</th>
 			<th>Дата и время</th>
+			<th>Канал продаж</th>
+			<th>Способ оплаты</th>
 			<th>Документ</th>
 			<th>Кол-во позиций</th>
 			<th>Кол-во товаров</th>
@@ -109,6 +105,8 @@
 			{% for unit in sell_receipt_list %}
 			<td class="tdStyle">{% autoescape on %}{{unit.shop}}</td>
 			<td class="tdStyle">{{unit.time_created}}</td>
+			<td class="tdStyle">{{unit.sales_channel}}</td>
+			<td class="tdStyle">{{unit.payment_form}}</td>
 			<td class="tdStyle">{{unit.partner.receipt_prefix}} {{unit.number}}</td>
 			<td class="tdStyle">{{unit.get_total_amount_of_SKU_in_receipt}}</td>
 			<td class="tdStyle">{{unit.get_total_amount_of_products_in_receipt}}</td>

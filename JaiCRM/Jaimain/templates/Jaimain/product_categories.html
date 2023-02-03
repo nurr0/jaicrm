@@ -3,11 +3,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 {% extends 'Jaimain/base.html' %}
 {% block content %}
-<h1>{{ user_partner }} id - {{user_partner.pk}}</h1>
-<h1> {{prod_cats}}</h1>
-{% for cat in prod_cats %}
-{{ cat }}
-{% endfor %}
+
 <div class="header__users-top">
 		<div class="d7">
 			<form>
@@ -38,8 +34,8 @@
 		<div class="imgPropertyParrent"><img class="imgProperty" src="/static/Jaimain/images/SalyCAtegories.png" alt=""></div>
 		<form id="formElem">
 			{% csrf_token %}
-			<input class="formElem-name" type="text" name="name" placeholder="Название свойства">
-			<input class="formElem-description formElemStyle" type="text" name="description" placeholder="Описание свойства">
+			<input class="formElem-name" type="text" name="name" placeholder="Название категории">
+			<input class="formElem-description formElemStyle" type="text" name="description" placeholder="Описание категории">
 			<!-- <input class="formElem-parent formElemStyle" type="text" name="parent" placeholder="Родительская категория" "> -->
 			
 			<select name='parent' class="podskazka formElemStyle">

@@ -64,8 +64,17 @@
 
 <h4>Торговые точки партнера:</h4>
 {% for shop in shops_info %}
-{% if shop.partner == partner %}
 <li>{{ shop }}</li>
-{% endif %}
+
+{% endfor %}
+
+<h4>Каналы продаж партнера:</h4>
+{% for channel in sales_channel %}
+<li>{{ channel }}</li>
+{% endfor %}
+
+<h4>Способы оплаты партнера:</h4>
+{% for form in payment_form %}
+<li>{{ form }}</li>
 {% endfor %}
 {% endblock %}

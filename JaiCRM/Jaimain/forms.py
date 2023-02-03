@@ -143,7 +143,7 @@ class ProductsInSupplyForm(forms.ModelForm):
 ProductsInSupplyFormSet = inlineformset_factory(Supply, ProductsInSupply,
                                                 form=ProductsInSupplyForm,
                                                 fields='__all__',
-                                                extra=10,
+                                                extra=2,
                                                 can_delete=True,
                                                 can_delete_extra=True)
 
@@ -191,10 +191,12 @@ class AddSellPriceForm(forms.ModelForm):
 
 class SaleRegistrationForm(forms.ModelForm):
     receipt_number_display = forms.CharField(label='Документ продажи:', widget=forms.TextInput(attrs={'readonly': True}))
+    sales_channel = forms.ModelChoiceField(queryset=SalesChannel.objects.all(), label='Канал продаж')
+    payment_form = forms.ModelChoiceField(queryset=PaymentForm.objects.all(), label='Форма оплаты')
 
     class Meta:
         model = SellReceipt
-        fields = ['receipt_number_display', 'shop']
+        fields = ['receipt_number_display', 'shop', 'sales_channel', 'payment_form']
 
 
 class ProductsInReceiptForm(forms.ModelForm):
@@ -212,14 +214,14 @@ class ProductsInReceiptForm(forms.ModelForm):
 
     def clean_discount(self):
         discount = self.cleaned_data['discount']
-        if discount and discount >= 100:
-            raise forms.ValidationError("Скидка не может быть больше или равна 100%")
+        if discount and discount < 0:
+            raise forms.ValidationError("Скидка не может быть меньше 0")
         return discount
 
 
 ProductsInReceiptFormSet = inlineformset_factory(SellReceipt, ProductInReceipt,
                                                  form=ProductsInReceiptForm,
                                                  fields='__all__',
-                                                 extra=2,
+                                                 extra=100,
                                                  can_delete=True,
                                                  can_delete_extra=True)

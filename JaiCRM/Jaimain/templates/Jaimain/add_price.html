@@ -7,7 +7,10 @@
     {{ formset.management_form }}
     {% for form in formset %}
         <div class="form-group">
-        {{ form.as_p }}
+<!--        {{ form.as_p }}-->
+            {{ form.product_in_stock.label }} {{form.product_in_stock}} {{form.product_in_stock_display}}
+            {{ form.product_latest_supply_price.label }} {{ form.product_latest_supply_price }}
+            {{ form.price.label }} {{ form.price }}
         </div>
     {% endfor %}
     <input type="submit" value="Сохранить">

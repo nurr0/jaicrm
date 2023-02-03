@@ -119,8 +119,8 @@ class SKU(models.Model):
     def get_properties(self):
         properties = ProductPropertyRelation.objects.filter(product=self)
         properties_list = [f"{p.property.name} - {p.value}" for p in properties]
-        properties_string = '\n'.join(properties_list)
-        return properties_string
+        # properties_string = '\n'.join(properties_list)
+        return properties_list
 
     class Meta:
         unique_together = (('partner', 'identifier', 'name'),)
@@ -229,6 +229,33 @@ class SellPrice(models.Model):
     class Meta:
         unique_together = (('product_in_stock', 'partner'),)
 
+class SalesChannel(models.Model):
+    name = models.CharField(max_length=254, verbose_name='Наименование канала продаж')
+    partner = models.ForeignKey(Partner, on_delete=models.CASCADE, verbose_name='Партнер')
+    user = models.ForeignKey(JaiUser, verbose_name='Пользователь', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        unique_together = (('partner', 'name'),)
+        verbose_name = 'Канал продаж'
+        verbose_name_plural = 'Каналы продаж'
+
+
+class PaymentForm(models.Model):
+    name = models.CharField(max_length=254, verbose_name='Наименование канала продаж')
+    partner = models.ForeignKey(Partner, on_delete=models.CASCADE, verbose_name='Партнер')
+    user = models.ForeignKey(JaiUser, verbose_name='Пользователь', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        unique_together = (('partner', 'name'),)
+        verbose_name = 'Способ оплаты'
+        verbose_name_plural = 'Способы оплаты'
+
 
 class SellReceipt(models.Model):
     partner = models.ForeignKey(Partner, verbose_name='Партнер', on_delete=models.PROTECT)
@@ -237,6 +264,8 @@ class SellReceipt(models.Model):
     number = models.IntegerField(verbose_name='Номер чека')
     is_returned = models.BooleanField(verbose_name='Возврат', default=False)
     shop = models.ForeignKey(Shop, verbose_name='Торговая точка', on_delete=models.PROTECT)
+    sales_channel = models.ForeignKey(SalesChannel, verbose_name='Канал продаж', on_delete=models.DO_NOTHING)
+    payment_form = models.ForeignKey(PaymentForm, verbose_name='Способ оплаты', on_delete=models.DO_NOTHING)
 
     class Meta:
         unique_together = (('partner', 'number'),)
@@ -303,3 +332,5 @@ class ReportExport(models.Model):
     user = models.ForeignKey(JaiUser, on_delete=models.PROTECT, verbose_name='Пользователь')
     datetime = models.DateTimeField(auto_now_add=True)
     file_name = models.CharField(verbose_name='Имя файла', max_length=50)
+
+

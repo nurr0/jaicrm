@@ -12,7 +12,7 @@ def sales_report(file_format: str, user_pk: int):  # , start: datetime.date, end
     sales_resource = SalesResource(user=user)
     dataset = sales_resource.export()
     media_path = settings.MEDIA_ROOT + f'/reports/{user.partner.name}/'
-    file_name_prefix = 'asdasd'
+    file_name_prefix = f'Продажи {user} {datetime.now()}'
 
     if not os.path.exists(media_path):
         os.makedirs(media_path)
