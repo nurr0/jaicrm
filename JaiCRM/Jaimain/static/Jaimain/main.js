@@ -152,7 +152,7 @@ if (/partners/.test(location.href )){
     settingsBlock.classList.add('ActiveList') 
 }else if (/supplies/.test(location.href )){
     suppliesBlock.classList.add('ActiveList')
-}else if (/products_in_stock/.test(location.href )){
+}else if (/products_in_stock/.test(location.href ) || /add_price/.test(location.href )){
     tovariNaSklade.classList.add('ActiveList')
 }else if (/sell_receipt_list/.test(location.href )){
     prodazh.classList.add('ActiveList')
@@ -1038,34 +1038,34 @@ if (/add_supply/.test(location.href ) ){
     proverty10.setAttribute('checked','checked')
 
 
-    const udalit1 = document.querySelectorAll('p')[8]
+    const udalit1 = document.querySelectorAll('p')[9]
     udalit1.classList.toggle('zero')
 
-    const udalit2 = document.querySelectorAll('p')[12]
+    const udalit2 = document.querySelectorAll('p')[13]
     udalit2.classList.toggle('zero')
 
-    const udalit3 = document.querySelectorAll('p')[16]
+    const udalit3 = document.querySelectorAll('p')[17]
     udalit3.classList.toggle('zero')
 
-    const udalit4 = document.querySelectorAll('p')[20]
+    const udalit4 = document.querySelectorAll('p')[21]
     udalit4.classList.toggle('zero')
 
-    const udalit5 = document.querySelectorAll('p')[24]
+    const udalit5 = document.querySelectorAll('p')[25]
     udalit5.classList.toggle('zero')
 
-    const udalit6 = document.querySelectorAll('p')[28]
+    const udalit6 = document.querySelectorAll('p')[29]
     udalit6.classList.toggle('zero')
 
-    const udalit7 = document.querySelectorAll('p')[32]
+    const udalit7 = document.querySelectorAll('p')[33]
     udalit7.classList.toggle('zero')
 
-    const udalit8 = document.querySelectorAll('p')[36]
+    const udalit8 = document.querySelectorAll('p')[37]
     udalit8.classList.toggle('zero')
 
-    const udalit9 = document.querySelectorAll('p')[40]
+    const udalit9 = document.querySelectorAll('p')[41]
     udalit9.classList.toggle('zero')
 
-    const udalit10 = document.querySelectorAll('p')[44]
+    const udalit10 = document.querySelectorAll('p')[45]
     udalit10.classList.toggle('zero')
 
     document.querySelectorAll('.title0').forEach((el) => {
@@ -1432,7 +1432,7 @@ async function postForm(e){
 
         const divNew = document.createElement('div')
         // divNew.innerHTML = divId + " " + divFile + " " + divName + " " + divData
-        divNew.innerHTML = `<div class='otcheti otcheti1'>  <div class='z'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
+        divNew.innerHTML = `<div class='otcheti otcheti1'>  <div class='z x'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
         divArea.appendChild(divNew)
         
     }
@@ -1441,3 +1441,38 @@ async function postForm(e){
    
 }
 postForm()
+
+if (/add_price/.test(location.href )  ){
+    
+    const poschitat = document.querySelectorAll('.procent__btn') 
+    
+    for (let item of poschitat){
+    // poschitat.addEventListener('click',podchet)
+        item.addEventListener('click',podchet)
+
+        function podchet(e){
+            e.preventDefault();
+        
+            // const div = poschitat.closest('div')
+            const div = item.closest('div')
+            const glavDiv = div.closest('.form-group-addPrice')
+
+            const procentVnytr = div.querySelector('.procent__text').value
+            const cenaVnytr = glavDiv.querySelector("input[type='number']")
+            const poslenyaStoimVnytr = glavDiv.querySelectorAll("input[type='text']")[1].value
+            console.log(div)
+            console.log(procentVnytr)
+            console.log(glavDiv);
+            console.log(typeof(cenaVnytr));
+            console.log(poslenyaStoimVnytr);
+            const result = Number(poslenyaStoimVnytr) + ( Number(poslenyaStoimVnytr) * (Number(procentVnytr) / 100))
+            console.log(result);
+            cenaVnytr.value = result
+            
+            
+            
+            
+        
+        }
+    }
+    }
