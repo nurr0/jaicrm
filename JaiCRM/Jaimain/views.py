@@ -1023,8 +1023,20 @@ class ReportsList(DataMixin, ListView):
 def dashboard(request):
     user_menu = menu.copy()
     partner = request.user.partner
+    sales = ProductInReceipt.objects.filter(receipt__partner=partner)\
+        .values('product__product__category')\
+        .annotate(sum_of_sales=Sum(F('price_with_discount') * F('amount')))\
+        .order_by('product__product__category')
+    cats = []
+    sums = []
+    for elem in sales:
+        cats.append(ProductCategory.objects.get(pk=elem['product__product__category']).get_full_path())
+        sums.append(int(elem['sum_of_sales']))
+    data = [cats, sums]
+ 
+ 
     return render(request, 'Jaimain/dashboard.html', {
-        'menu': user_menu, 'title': 'Dashboard'
+        'menu': user_menu, 'title': 'Dashboard', 'data': data
     })
 
 """API views \/"""

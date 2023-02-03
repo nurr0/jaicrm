@@ -3,6 +3,49 @@ const ctx2 = document.getElementById('myChart2');
 const ctx3 = document.getElementById('myChart3');
 const ctx4 = document.getElementById('myChart4');
 
+const massiv1 = document.querySelector('.massiv1').innerHTML
+const massiv2 = document.querySelector('.massiv2').innerHTML
+console.log(massiv1);
+
+
+regexp = new RegExp("/", "gi");
+regexp1 = new RegExp("'", "gi");
+
+const corrmassiv1 = massiv1.replace(regexp,' => ')
+const supercorrmassiv1 = corrmassiv1.replace(regexp1,'').slice(1).slice(0, -1);
+console.log(supercorrmassiv1);
+
+
+// array1 = JSON.parse(supercorrmassiv1)
+array1 = supercorrmassiv1.split(',')
+
+array011 = array1[0]
+array012 = array1[1]
+
+
+
+
+array2 = JSON.parse(massiv2)
+array021 = array2[0]
+array022 = array2[1]
+
+console.log(array021);
+
+let x = array2.map(element => {
+    
+    return element })
+    console.log(((x)))
+    
+let y = array1.map(element => {
+    
+    return element })
+
+
+
+
+
+
+
 new Chart(ctx, {
   type: 'bar',
   data: {
@@ -27,14 +70,10 @@ let item1 = 200;
 new Chart(ctx2, {
     type: 'pie',
     data: {
-        labels: [
-          'Red',
-          'Blue',
-          'Yellow'
-        ],
+        labels: y,
         datasets: [{
           label: 'My First Dataset',
-          data: [item1, 50, 100],
+          data: x,
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
