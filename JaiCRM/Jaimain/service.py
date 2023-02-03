@@ -83,5 +83,6 @@ def data_for_sales_by_shop_graph(partner):
                          'data': result[elem],
                          'borderColor': f'rgb({randint(1,255)},{randint(1,255)},{randint(1,255)})',
                          'backgroundColor': f'rgb({randint(1,255)},{randint(1,255)},{randint(1,255)})'})
-    return datasets
+
+    return days_in_month, datasets
 

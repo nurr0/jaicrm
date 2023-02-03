@@ -1344,3 +1344,4 @@ if (/add_price/.test(location.href )  ){
     }
 
 }
+
