@@ -152,7 +152,7 @@ if (/partners/.test(location.href )){
     settingsBlock.classList.add('ActiveList') 
 }else if (/supplies/.test(location.href )){
     suppliesBlock.classList.add('ActiveList')
-}else if (/products_in_stock/.test(location.href )){
+}else if (/products_in_stock/.test(location.href ) || /add_price/.test(location.href )){
     tovariNaSklade.classList.add('ActiveList')
 }else if (/sell_receipt_list/.test(location.href )){
     prodazh.classList.add('ActiveList')
@@ -1038,34 +1038,34 @@ if (/add_supply/.test(location.href ) ){
     proverty10.setAttribute('checked','checked')
 
 
-    const udalit1 = document.querySelectorAll('p')[8]
+    const udalit1 = document.querySelectorAll('p')[9]
     udalit1.classList.toggle('zero')
 
-    const udalit2 = document.querySelectorAll('p')[12]
+    const udalit2 = document.querySelectorAll('p')[13]
     udalit2.classList.toggle('zero')
 
-    const udalit3 = document.querySelectorAll('p')[16]
+    const udalit3 = document.querySelectorAll('p')[17]
     udalit3.classList.toggle('zero')
 
-    const udalit4 = document.querySelectorAll('p')[20]
+    const udalit4 = document.querySelectorAll('p')[21]
     udalit4.classList.toggle('zero')
 
-    const udalit5 = document.querySelectorAll('p')[24]
+    const udalit5 = document.querySelectorAll('p')[25]
     udalit5.classList.toggle('zero')
 
-    const udalit6 = document.querySelectorAll('p')[28]
+    const udalit6 = document.querySelectorAll('p')[29]
     udalit6.classList.toggle('zero')
 
-    const udalit7 = document.querySelectorAll('p')[32]
+    const udalit7 = document.querySelectorAll('p')[33]
     udalit7.classList.toggle('zero')
 
-    const udalit8 = document.querySelectorAll('p')[36]
+    const udalit8 = document.querySelectorAll('p')[37]
     udalit8.classList.toggle('zero')
 
-    const udalit9 = document.querySelectorAll('p')[40]
+    const udalit9 = document.querySelectorAll('p')[41]
     udalit9.classList.toggle('zero')
 
-    const udalit10 = document.querySelectorAll('p')[44]
+    const udalit10 = document.querySelectorAll('p')[45]
     udalit10.classList.toggle('zero')
 
     document.querySelectorAll('.title0').forEach((el) => {
@@ -1432,7 +1432,7 @@ async function postForm(e){
 
         const divNew = document.createElement('div')
         // divNew.innerHTML = divId + " " + divFile + " " + divName + " " + divData
-        divNew.innerHTML = `<div class='otcheti otcheti1'>  <div class='z'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
+        divNew.innerHTML = `<div class='otcheti otcheti1'>  <div class='z x'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
         divArea.appendChild(divNew)
         
     }
@@ -1442,218 +1442,37 @@ async function postForm(e){
 }
 postForm()
 
+if (/add_price/.test(location.href )  ){
+    
+    const poschitat = document.querySelectorAll('.procent__btn') 
+    
+    for (let item of poschitat){
+    // poschitat.addEventListener('click',podchet)
+        item.addEventListener('click',podchet)
 
-//ИЛЮХА ТУТ НИЖЕ ИДУТ
-//Графики для дашборда:
+        function podchet(e){
+            e.preventDefault();
+        
+            // const div = poschitat.closest('div')
+            const div = item.closest('div')
+            const glavDiv = div.closest('.form-group-addPrice')
 
-//Линейный график продаж
-Highcharts.chart('dashboard_container_1', {
-
-    title: {
-        text: 'Продажи по дням текущего месяца',
-        align: 'left'
-    },
-
-    subtitle: {
-        text: 'Партнер: ',
-        align: 'left'
-    },
-
-    yAxis: {
-        title: {
-            text: 'Сумма продаж'
+            const procentVnytr = div.querySelector('.procent__text').value
+            const cenaVnytr = glavDiv.querySelector("input[type='number']")
+            const poslenyaStoimVnytr = glavDiv.querySelectorAll("input[type='text']")[1].value
+            console.log(div)
+            console.log(procentVnytr)
+            console.log(glavDiv);
+            console.log(typeof(cenaVnytr));
+            console.log(poslenyaStoimVnytr);
+            const result = Number(poslenyaStoimVnytr) + ( Number(poslenyaStoimVnytr) * (Number(procentVnytr) / 100))
+            console.log(result);
+            cenaVnytr.value = result
+            
+            
+            
+            
+        
         }
-    },
-
-    xAxis: {
-        accessibility: {
-            rangeDescription: 'список дат текущего месяца'
-        }
-    },
-
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle'
-    },
-
-    plotOptions: {
-        series: {
-            label: {
-                connectorAllowed: false
-            },
-            pointStart: 1
-        }
-    },
-
-    series: [{
-        name: 'Продажи всего',
-        data: [43934, 48656, 65165, 81827, 112143, 142383,
-            171533, 165174, 155157, 161454, 154610]
-    }, {
-        name: 'Возвраты',
-        data: [24916, 37941, 29742, 29851, 32490, 30282,
-            38121, 36885, 33726, 34243, 31050]
-    },
-    ],
-
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
-            },
-            chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
-            }
-        }]
     }
-
-});
-
-
-//Круговая диаграмма продаж по категориям:
-
-Highcharts.chart('dashboard_container_2', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Продажи по категориям за текущий месяц',
-        align: 'left'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' +
-                      'Сумма продаж: <b>{point.y}</b><br/>'
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            }
-        }
-    },
-    series: [{
-        name: 'Доля: ',
-        colorByPoint: true,
-        data: [{
-            name: 'Обувь',
-            y: 165000,
-        }, {
-            name: 'Сумки',
-            y: 35000
-        },]
-    }]
-});
-
-
-Highcharts.chart('dashboard_container_3', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Доли по каналам продаж за текущий месяц',
-        align: 'left'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' +
-                      'Сумма продаж: <b>{point.y}</b><br/>'
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            }
-        }
-    },
-    series: [{
-        name: 'Доля: ',
-        colorByPoint: true,
-        data: [{
-            name: 'Оффлайн',
-            y: 30000,
-        }, {
-            name: 'kaspi.kz',
-            y: 150000
-        },
-        {
-            name: 'instagramm',
-            y: 20000
-        },]
-    }]
-});
-
-
-Highcharts.chart('dashboard_container_4', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Доли способов оплаты за текущий месяц',
-        align: 'left'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' +
-                      'Сумма продаж: <b>{point.y}</b><br/>'
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            }
-        }
-    },
-    series: [{
-        name: 'Доля: ',
-        colorByPoint: true,
-        data: [{
-            name: 'Наличные',
-            y: 68000,
-        }, {
-            name: 'Безналичные',
-            y: 32000
-        },
-        {
-            name: 'kaspi red/credit',
-            y: 100000
-        },]
-    }]
-});
-
-
+    }
