@@ -3,9 +3,12 @@ const ctx2 = document.getElementById('myChart2');
 const ctx3 = document.getElementById('myChart3');
 const ctx4 = document.getElementById('myChart4');
 
+
 const massiv1 = document.querySelector('.massiv1').innerHTML
 const massiv2 = document.querySelector('.massiv2').innerHTML
-console.log(massiv1);
+const lineDay = JSON.parse(document.querySelector('.lineDay').innerHTML)
+const lineData = document.querySelector('.lineData').innerHTML
+
 
 
 regexp = new RegExp("/", "gi");
@@ -14,6 +17,12 @@ regexp1 = new RegExp("'", "gi");
 const corrmassiv1 = massiv1.replace(regexp,' => ')
 const supercorrmassiv1 = corrmassiv1.replace(regexp1,'').slice(1).slice(0, -1);
 console.log(supercorrmassiv1);
+
+regexpdata3 = new RegExp("'", "gi");
+const array3 = lineData.replace(regexpdata3,'"')
+const array003 = JSON.parse(array3)
+
+
 
 
 // array1 = JSON.parse(supercorrmassiv1)
@@ -40,8 +49,11 @@ let y = array1.map(element => {
     
     return element })
 
+let zDay = lineDay.map(element => {
+    return element })
 
-
+let zData = array003.map(element => {
+    return element })
 
 
 
@@ -103,21 +115,8 @@ new Chart(ctx4, {
 
   type: 'line',
   data: {
-    labels: [1,3,5,7,9,11,13],
-    datasets: [
-    {
-      label: 'Dataset 1',
-      data: [65, 59, 80, 81, 56, 55, 40],
-      borderColor: 'rgb(75, 192, 192)',
-      backgroundColor:'rgb(75, 192, 192)',
-    },
-    {
-      label: 'Dataset 2',
-      data: [10, 12, 14, 16, 18, 20, 22],
-      borderColor: 'rgb(75, 192, 192)',
-      backgroundColor: 'rgb(75, 192, 192)',
-    }
-  ]
+    labels: zDay,
+    datasets: zData
   },
   options: {
     responsive: true,
