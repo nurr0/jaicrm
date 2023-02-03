@@ -1679,6 +1679,7 @@ Highcharts.chart('dashboard_container_4', {
         data: [{
             name: 'Наличные',
             y: 68000,
+
         },
             {
             name: 'Безналичные',
