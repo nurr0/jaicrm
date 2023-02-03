@@ -2,6 +2,8 @@ const ctx = document.getElementById('myChart');
 const ctx2 = document.getElementById('myChart2');
 const ctx3 = document.getElementById('myChart3');
 const ctx4 = document.getElementById('myChart4');
+const ctx5 = document.getElementById('myChart4');
+const chart3btn = document.querySelector('.chart3btn')
 
 
 const massiv1 = document.querySelector('.massiv1').innerHTML
@@ -110,24 +112,35 @@ new Chart(ctx2, {
 //         }]},
 // });
 
+const line01 = new Chart(ctx4, {
 
-new Chart(ctx4, {
-
-  type: 'line',
-  data: {
-    labels: zDay,
-    datasets: zData
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Line Chart'
+    type: 'line',
+    data: {
+      labels: zDay,
+      datasets: zData
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Chart.js Line Chart'
+        }
       }
-    }
-  },
-})
+    },
+  })
+
+
+
+chart3btn.addEventListener('click',smenaPeriod)
+function smenaPeriod(){
+    console.log(zDay);
+    line01.data.labels = [4,5,6,7,8,9,10,11,12,13]
+    line01.update()
+    console.log(zDay);
+
+    
+}
