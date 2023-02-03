@@ -25,7 +25,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 from .resources import SalesResource
-from .service import sales_report
+from .service import sales_report, data_for_sales_by_cat_donought, data_for_sales_by_shop_graph
 from .utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -1023,20 +1023,16 @@ class ReportsList(DataMixin, ListView):
 def dashboard(request):
     user_menu = menu.copy()
     partner = request.user.partner
-    sales = ProductInReceipt.objects.filter(receipt__partner=partner)\
-        .values('product__product__category')\
-        .annotate(sum_of_sales=Sum(F('price_with_discount') * F('amount')))\
-        .order_by('product__product__category')
-    cats = []
-    sums = []
-    for elem in sales:
-        cats.append(ProductCategory.objects.get(pk=elem['product__product__category']).get_full_path())
-        sums.append(int(elem['sum_of_sales']))
-    data = [cats, sums]
- 
- 
+
+    data_1 = data_for_sales_by_cat_donought(partner) # данные по продажам по категориям (функция в service)
+    data_2 = data_for_sales_by_shop_graph(partner)
+
+    # линейный график продаж по магазинам
+
+
     return render(request, 'Jaimain/dashboard.html', {
-        'menu': user_menu, 'title': 'Dashboard', 'data': data
+        'menu': user_menu, 'title': 'Dashboard', 'data': data_1, 'data2': data_2
+
     })
 
 """API views \/"""

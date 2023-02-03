@@ -1346,6 +1346,7 @@ if (/add_price/.test(location.href )  ){
     }
 
 
+
 // if (/dashboard/.test(location.href )  ){
 //     //ИЛЮХА ТУТ НИЖЕ ИДУТ
 //     //Графики для дашборда:
@@ -1560,3 +1561,5 @@ if (/add_price/.test(location.href )  ){
 //         }]
 //     });
 // }
+
+});
