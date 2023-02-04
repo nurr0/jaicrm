@@ -4,6 +4,7 @@
 {% extends 'Jaimain/base.html' %}
 {% block content %}
 
+
 <!-- <div class="massiv1">{{data.0}}</div>
 <div class="massiv2">{{data.1}}</div> -->
 <div class="lineDay">{{data_sales_by_shops_linear.0}}</div>
@@ -21,6 +22,7 @@
 <div class="massiv1God">{{data_sales_by_cat_pie.2.0}}</div>
 <div class="massiv2God">{{data_sales_by_cat_pie.2.1}}</div>
 
+
 <div>
   <canvas id="myChart"></canvas>
   <button class="chartbtn btn">Продажи за день</button>
@@ -33,9 +35,14 @@
   <canvas id="myChart5"></canvas>
   <canvas id="myChart20"></canvas>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/static/Jaimain/chart.js"></script>
 
+<div>Продажи по категориям:
+  {{data_sales_by_cat_pie}}</div><br>
+<div>Продажи по магазинам для линейного графика:{{data_sales_by_shops_linear}}</div><br>
+
+<div>Продажи по формам оплаты для пирога: {{data_sales_by_payment_forms_pie}}</div><br>
+
+<div>Продажи по каналам продаж для пирога: {{data_sales_by_sales_channel_pie}}</div><br>
 
 {% endblock %}
 
