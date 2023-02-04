@@ -25,7 +25,8 @@ from django.http import HttpResponse
 from django.template import loader
 
 from .resources import SalesResource
-from .service import sales_report, data_for_sales_by_cat_donought, data_for_sales_by_shop_graph
+from .service import sales_report, data_for_sales_by_cat_donought, data_for_sales_by_shop_graph, \
+    data_for_sales_by_payment_form_donought, data_for_sales_by_sales_channel_donought
 from .utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -834,56 +835,49 @@ class EditRetailPrice(DataMixin, UpdateView):
 
 
 def register_a_sale(request):
-    user_menu = menu.copy()
     partner = request.user.partner
     receipt_number = SellReceipt.get_receipt_number_for_partner(partner)
-    shops = Shop.objects.filter(partner=request.user.partner)
+    user_menu = menu.copy()
+
     if request.method == 'POST':
         receipt_form = SaleRegistrationForm(request.POST)
-        products_in_receipt_formset = ProductsInReceiptFormSet(request.POST)
+        products_in_receipt_formset = ProductsInReceiptFormSet(request.POST, prefix='prods')
         if receipt_form.is_valid() and products_in_receipt_formset.is_valid():
             receipt = receipt_form.save(commit=False)
             receipt.partner = partner
             receipt.user_created = request.user
             receipt.number = receipt_number
-            shop_sold_from = receipt.shop
             receipt.save()
-            # try:
+
             for form in products_in_receipt_formset:
-                if form.is_valid:
-                    if form.cleaned_data.get('DELETE'):
-                        continue
+                if form.is_valid() and not form.cleaned_data.get('DELETE'):
                     products_in_receipt = form.save(commit=False)
                     products_in_receipt.receipt = receipt
                     products_in_receipt.save()
                     amount_sold = products_in_receipt.amount
-                    # product_sold = products_in_receipt.product
-                    # sold_amount = form.cleaned_data['decrease_amount']
                     product_in_stock = form.cleaned_data['product']
                     if product_in_stock.amount >= amount_sold:
                         product_in_stock.amount -= amount_sold
                         product_in_stock.save()
                         form.save()
-            # except IntegrityError:
-            #     receipt.delete()
 
             return redirect('sell_receipt_list')
         if not receipt_form.is_valid():
             print(receipt_form.errors)
     else:
         receipt_form = SaleRegistrationForm()
-        products_in_receipt_formset = ProductsInReceiptFormSet()
+        products_in_receipt_formset = ProductsInReceiptFormSet(prefix='prods')
 
     receipt_form.fields['receipt_number_display'].initial = f'{partner.receipt_prefix} {receipt_number}'
     receipt_form.fields['shop'].queryset = Shop.objects.filter(partner=request.user.partner)
     receipt_form.fields['sales_channel'].queryset = SalesChannel.objects.filter(partner=request.user.partner)
     receipt_form.fields['payment_form'].queryset = PaymentForm.objects.filter(partner=request.user.partner)
     for form in products_in_receipt_formset:
-        form.fields['product'].queryset = ProductInStock.objects.filter(shop__in=shops, amount__gt=0)
+        form.fields['product'].queryset = ProductInStock.objects.filter(shop__partner=partner, amount__gt=0)
 
     return render(request, 'Jaimain/receipt_registration.html', {
         'receipt_form': receipt_form,
-        'products_in_receipt_formset': products_in_receipt_formset, 'menu': user_menu, 'title': 'Регистрация продажи'
+        'products_in_receipt_formset': products_in_receipt_formset,'menu': user_menu, 'title': 'Регистрация продажи'
     })
 
 
@@ -1024,14 +1018,20 @@ def dashboard(request):
     user_menu = menu.copy()
     partner = request.user.partner
 
-    data_1 = data_for_sales_by_cat_donought(partner) # данные по продажам по категориям (функция в service)
-    data_2 = data_for_sales_by_shop_graph(partner)
+    data_sales_by_cat_pie = data_for_sales_by_cat_donought(partner) # данные по продажам по категориям (функция в service)
+    data_sales_by_shops_linear = data_for_sales_by_shop_graph(partner) # линейный график продаж по магазинам
+    data_sales_by_payment_forms_pie = data_for_sales_by_payment_form_donought(partner) # круговая диаграмма по формам оплаты
+    data_sales_by_sales_channel_pie = data_for_sales_by_sales_channel_donought(partner)
 
-    # линейный график продаж по магазинам
 
 
     return render(request, 'Jaimain/dashboard.html', {
-        'menu': user_menu, 'title': 'Dashboard', 'data': data_1, 'data2': data_2
+        'menu': user_menu,
+        'title': 'Dashboard',
+        'data_sales_by_cat_pie': data_sales_by_cat_pie,
+        'data_sales_by_shops_linear': data_sales_by_shops_linear,
+        'data_sales_by_payment_forms_pie': data_sales_by_payment_forms_pie,
+        'data_sales_by_sales_channel_pie': data_sales_by_sales_channel_pie
 
     })
 
