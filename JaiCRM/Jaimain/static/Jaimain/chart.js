@@ -3,7 +3,7 @@ const ctx2 = document.getElementById('myChart2');
 const ctx3 = document.getElementById('myChart3');
 const ctx4 = document.getElementById('myChart4');
 const ctx5 = document.getElementById('myChart4');
-const ctx20 = document.getElementById('myChart20');
+// const ctx20 = document.getElementById('myChart20');
 const chartbtn = document.querySelector('.chartbtn')
 const chartbtnMouth = document.querySelector('.chartbtnMouth')
 const chartbtnGod = document.querySelector('.chartbtnGod')
@@ -202,19 +202,3 @@ function smenaPeriod03(){
     console.log(xDay);
 }
 
-const pie2 = new Chart(ctx20, {
-  type: 'pie',
-  data: {
-      labels: ['Это', 'Он', 'Она'],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [15, 120, 60],
-        backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
-        ],
-        hoverOffset: 4
-      }]
-  }
-});
