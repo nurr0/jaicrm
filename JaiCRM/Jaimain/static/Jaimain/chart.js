@@ -205,10 +205,10 @@ function smenaPeriod03(){
 const pie2 = new Chart(ctx20, {
   type: 'pie',
   data: {
-      labels: y,
+      labels: ['Это', 'Он', 'Она'],
       datasets: [{
         label: 'My First Dataset',
-        data: x,
+        data: [15, 120, 60],
         backgroundColor: [
           'rgb(255, 99, 132)',
           'rgb(54, 162, 235)',
