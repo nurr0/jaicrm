@@ -1958,4 +1958,14 @@ ul.lang-list li a:hover {color: #fdc073;}
   background: #f1f7ff;
 }
 
+.pie{
+	width: 800px !important;
+	height: 800px !important;
+	margin: 0 auto;
+}
 
+.line{
+	width: 800px !important;
+	height: 400px !important;
+	margin: 0 auto;
+}
