@@ -1969,3 +1969,24 @@ ul.lang-list li a:hover {color: #fdc073;}
 	height: 400px !important;
 	margin: 0 auto;
 }
+.buttonsGraph{
+	
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.dashboard__form{
+	margin-top: -60px;
+}
+
+.textPie{
+	margin-top: 50px;
+	text-align: center;
+}
+
+.regist{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}

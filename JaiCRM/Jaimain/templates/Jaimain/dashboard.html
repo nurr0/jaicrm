@@ -7,32 +7,56 @@
 
 <!-- <div class="massiv1">{{data.0}}</div>
 <div class="massiv2">{{data.1}}</div> -->
-<div class="lineDay">{{data_sales_by_shops_linear.0}}</div>
-<div class="lineData">{{data_sales_by_shops_linear.1}}</div>
+<div class="zero1">
+  <div class="lineDay">{{data_sales_by_shops_linear.0}}</div>
+  <div class="lineData">{{data_sales_by_shops_linear.1}}</div>
 
-ПРОДАЖИ ЗА ТЕКУЩИЙ День
-<div class="massiv1Day">{{data_sales_by_cat_pie.0.0}}</div>
-<div class="massiv2Day">{{data_sales_by_cat_pie.0.1}}</div>
+  ПРОДАЖИ ЗА ТЕКУЩИЙ День
+  <div class="massiv1Day">{{data_sales_by_cat_pie.0.0}}</div>
+  <div class="massiv2Day">{{data_sales_by_cat_pie.0.1}}</div>
 
-ПРОДАЖИ ЗА ТЕКУЩИЙ МЕСЯЦ
-<div class="massiv1">{{data_sales_by_cat_pie.1.0}}</div>
-<div class="massiv2">{{data_sales_by_cat_pie.1.1}}</div>
+  ПРОДАЖИ ЗА ТЕКУЩИЙ МЕСЯЦ
+  <div class="massiv1">{{data_sales_by_cat_pie.1.0}}</div>
+  <div class="massiv2">{{data_sales_by_cat_pie.1.1}}</div>
 
-ПРОДАЖИ ЗА ТЕКУЩИЙ ГОД
-<div class="massiv1God">{{data_sales_by_cat_pie.2.0}}</div>
-<div class="massiv2God">{{data_sales_by_cat_pie.2.1}}</div>
+  ПРОДАЖИ ЗА ТЕКУЩИЙ ГОД
+  <div class="massiv1God">{{data_sales_by_cat_pie.2.0}}</div>
+  <div class="massiv2God">{{data_sales_by_cat_pie.2.1}}</div>
 
 
-<div>
+
+  ПИРОГ ПО ФОРМАМ ОПЛАТЫ ЗА ГОД
+  <div class="pirogOplataGod1">{{data_sales_by_payment_forms_pie.2.0}}</div>
+  <div class="pirogOplataGod2">{{data_sales_by_payment_forms_pie.2.1}}</div>
+
+
+  пирог по каналам продаж
+  <div class="pirogKanal1">{{data_sales_by_sales_channel_pie.2.0}}</div>
+  <div class="pirogKanal2">{{data_sales_by_sales_channel_pie.2.1}}</div>
+
+</div>
+
+<div class="dashboard__form">
   <canvas id="myChart"></canvas>
-  <button class="chartbtn btn">Продажи за день</button>
-  <button class="chartbtnMouth btn">Продажи за месяц</button>
-  <button class="chartbtnGod btn">Продажи за Год</button>
+  <button class="chart3btn btn zero">Сменить период</button>
+  <canvas class="line" id="myChart4"></canvas>
+
+  <p class="textPie">График продаж по категориям</p>
+  <div class="buttonsGraph">
+    <button class="chartbtn btn">Продажи за день</button>
+    <button class="chartbtnMouth btn">Продажи за месяц</button>
+    <button class="chartbtnGod btn">Продажи за Год</button>
+  </div>
   <canvas class="pie" id="myChart2"></canvas>
   <canvas id="myChart3"></canvas>
-  <button class="chart3btn btn ">Сменить период</button>
-  <canvas class="line" id="myChart4"></canvas>
-  <canvas id="myChart5"></canvas>
+
+ 
+
+  <p class="textPie">График по формам оплаты за год</p>
+  <canvas class="pie" id="myChart5"></canvas>
+
+  <p class="textPie">График по каналам продаж за год</p>
+  <canvas class="pie" id="myChart6"></canvas>
   <!-- <canvas id="myChart20"></canvas> -->
 </div>
 

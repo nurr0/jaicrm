@@ -158,7 +158,7 @@ if (/partners/.test(location.href )){
     settingsBlock.classList.add('ActiveList') 
 }else if (/dashboard/.test(location.href )){
     dashboard.classList.add('ActiveList') 
-}else if (/supplies/.test(location.href )){
+}else if (/supplies/.test(location.href )  ||  /add_supply/.test(location.href )  ){
     suppliesBlock.classList.add('ActiveList')
 }else if (/products_in_stock/.test(location.href ) || /add_price/.test(location.href )){
     tovariNaSklade.classList.add('ActiveList')
@@ -1336,10 +1336,39 @@ if (/add_price/.test(location.href )  ){
             const result = Number(poslenyaStoimVnytr) + ( Number(poslenyaStoimVnytr) * (Number(procentVnytr) / 100))
             console.log(result);
             cenaVnytr.value = result
-            
-            
 
+        }
+    }
+
+}
+
+if (/receipt_registration/.test(location.href )  ){
+    
+    const poschitat = document.querySelectorAll('.procent__btn') 
+    
+    for (let item of poschitat){
+
+        item.addEventListener('click',podchet)
+
+        function podchet(e){
+            e.preventDefault();
         
+            // const div = poschitat.closest('div')
+            const div = item.closest('div')
+            const glavDiv = div.closest('.form-group-addPrice')
+
+            const procentVnytr = div.querySelector('.procent__text').value
+            const cenaVnytr = glavDiv.querySelector("input[type='number']")
+            const poslenyaStoimVnytr = glavDiv.querySelectorAll("input[type='text']")[1].value
+            console.log(div)
+            console.log(procentVnytr)
+            console.log(glavDiv);
+            console.log(typeof(cenaVnytr));
+            console.log(poslenyaStoimVnytr);
+            const result = Number(poslenyaStoimVnytr) + ( Number(poslenyaStoimVnytr) * (Number(procentVnytr) / 100))
+            console.log(result);
+            cenaVnytr.value = result
+
         }
     }
 

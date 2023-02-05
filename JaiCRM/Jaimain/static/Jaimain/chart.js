@@ -3,6 +3,8 @@ const ctx2 = document.getElementById('myChart2');
 const ctx3 = document.getElementById('myChart3');
 const ctx4 = document.getElementById('myChart4');
 const ctx5 = document.getElementById('myChart4');
+const ctxOplata = document.getElementById('myChart5');
+const ctxKanal = document.getElementById('myChart6');
 // const ctx20 = document.getElementById('myChart20');
 const chartbtn = document.querySelector('.chartbtn')
 const chartbtnMouth = document.querySelector('.chartbtnMouth')
@@ -17,6 +19,12 @@ const massiv2Day = document.querySelector('.massiv2Day').innerHTML
 const massiv1God = document.querySelector('.massiv1God').innerHTML
 const massiv2God = document.querySelector('.massiv2God').innerHTML
 
+const pirogOplataGod1 = document.querySelector('.pirogOplataGod1').innerHTML
+const pirogOplataGod2 = document.querySelector('.pirogOplataGod2').innerHTML
+
+const pirogKanalGod1 = document.querySelector('.pirogKanal1').innerHTML
+const pirogKanalGod2 = document.querySelector('.pirogKanal2').innerHTML
+
 const lineDay = JSON.parse(document.querySelector('.lineDay').innerHTML)
 const lineData = document.querySelector('.lineData').innerHTML
 
@@ -26,14 +34,18 @@ const lineData = document.querySelector('.lineData').innerHTML
 regexp = new RegExp("/", "gi");
 regexp1 = new RegExp("'", "gi");
 
-const corrmassiv1 = massiv1.replace(regexp,'')
+const corrmassiv1 = massiv1.replace(regexp,' ➜ ')
 const corrmassiv1Day = massiv1Day.replace(regexp,'')
 const corrmassiv1God = massiv1God.replace(regexp,'')
+const corrpirogOplataGod1 = pirogOplataGod1.replace(regexp,'')
+const corrpirogKanalGod1 = pirogKanalGod1.replace(regexp,'')
 
 const supercorrmassiv1 = corrmassiv1.replace(regexp1,'').slice(1).slice(0, -1);
 const supercorrmassiv1Day = corrmassiv1Day.replace(regexp1,'').slice(1).slice(0, -1);
 const supercorrmassiv1God = corrmassiv1.replace(regexp1,'').slice(1).slice(0, -1);
-console.log(supercorrmassiv1Day);
+const supercorrpirogOplataGod1 = corrpirogOplataGod1.replace(regexp1,'').slice(1).slice(0, -1);
+const supercorrpirogKanalGod1 = corrpirogKanalGod1.replace(regexp1,'').slice(1).slice(0, -1);
+
 
 
 regexpdata3 = new RegExp("'", "gi");
@@ -47,6 +59,8 @@ const array003 = JSON.parse(array3)
 array1 = supercorrmassiv1.split(',')
 array1Day = supercorrmassiv1Day.split(',')
 array1God = supercorrmassiv1God.split(',')
+array1OplataGod = supercorrpirogOplataGod1.split(',')
+array1Kanal = supercorrpirogKanalGod1.split(',')
 
 array011 = array1[0]
 array012 = array1[1]
@@ -57,6 +71,8 @@ array012 = array1[1]
 array2 = JSON.parse(massiv2)
 array2Day = JSON.parse(massiv2Day)
 array2God = JSON.parse(massiv2God)
+array2OplataGod = JSON.parse(pirogOplataGod2)
+array2Kanal = JSON.parse(pirogKanalGod2)
 
 
 //Массив с числами pie
@@ -68,6 +84,24 @@ let xDay = array2Day.map(element => {
 
 let xGod = array2God.map(element => {
       return element })
+
+
+
+
+
+
+let xOplata = array1OplataGod.map(element => {
+        return element })
+
+
+
+let xKanal = array1Kanal.map(element => {
+          return element })
+
+
+
+
+
 
 
   //Массив первый с pie
@@ -82,12 +116,24 @@ let yGod = array1God.map(element => {
 
 
 
+let yOplataGod = array2OplataGod.map(element => {
+      return element })
+
+
+let yKanal = array2Kanal.map(element => {
+        return element })
+  
+
+
+
 
 let zDay = lineDay.map(element => {
     return element })
 
 let zData = array003.map(element => {
     return element })
+
+
 
 
 
@@ -118,7 +164,7 @@ const pie = new Chart(ctx2, {
     data: {
         labels: y,
         datasets: [{
-          label: 'My First Dataset',
+          label: '',
           data: x,
           backgroundColor: [
             'rgb(255, 99, 132)',
@@ -159,7 +205,7 @@ const line01 = new Chart(ctx4, {
         },
         title: {
           display: true,
-          text: 'Chart.js Line Chart'
+          text: 'Линейный график продаж по дням текущего месяца (Сумма продаж / Дни)'
         }
       }
     },
@@ -202,3 +248,39 @@ function smenaPeriod03(){
     console.log(xDay);
 }
 
+
+
+const pieOplata = new Chart(ctxOplata, {
+  type: 'pie',
+  data: {
+      labels: xOplata,
+      datasets: [{
+        label: '',
+        data: yOplataGod,
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)'
+        ],
+        hoverOffset: 4
+      }]
+  }
+});
+
+
+const pieKanal = new Chart(ctxKanal, {
+  type: 'pie',
+  data: {
+      labels: xKanal,
+      datasets: [{
+        label: '',
+        data: yKanal,
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)'
+        ],
+        hoverOffset: 4
+      }]
+  }
+});
