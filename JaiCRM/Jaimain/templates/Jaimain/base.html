@@ -40,6 +40,7 @@
 						<div class="imgPropertyParrent"><img class="imgProperty" src="/static/Jaimain/images/SalyOtchet.png" alt=""></div>
 						<div class="d7 d8">
 							<form>
+								{% csrf_token %}
 								<input ul id="filter-listOt" class="filter-inputOt" type="text" placeholder="Искать здесь...">
 							</form>
 						</div>
@@ -51,6 +52,7 @@
 
 				<div class="header__user">
 					<div class="last btn__apiOt">
+						
 						<img src="/static/Jaimain/images/icon-otchit.svg" alt="">
 						
 						<p>Отчеты</p>

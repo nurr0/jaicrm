@@ -1281,7 +1281,9 @@ function imgCrossActionOt(){
 async function postForm(e){
         
     // e.preventDefault();
-    
+    // let user = {
+    //     page_size: 1,
+    //   };
     
     let response = await fetch('/api/v1/reports/');
     // let response = await fetch('/api/v1/reports/', {
