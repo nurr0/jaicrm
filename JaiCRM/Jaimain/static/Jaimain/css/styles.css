@@ -1235,7 +1235,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 .partners__cards{
 	display: flex;
 	/* flex-direction: column; */
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: flex-start;
 	padding: 0px;
 
@@ -1989,4 +1989,36 @@ ul.lang-list li a:hover {color: #fdc073;}
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	
+}
+
+.wh{
+	width: 180px;
+}
+
+.wh1{
+	width: 200px;
+}
+
+.inputsss{
+	width: 160px !important;
+}
+
+
+.registGlav{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	
+}
+
+.btn-regist{
+	width: 11px !important;
+	margin-left: 0px !important;
+}
+
+.title__01{
+	width: 70px;
+	height: 70px;
+	margin-bottom: 20px;
 }

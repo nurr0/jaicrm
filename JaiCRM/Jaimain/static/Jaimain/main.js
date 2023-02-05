@@ -983,9 +983,9 @@ if (/receipt_registration/.test(location.href ) ){
         }
     }
 
-    const proverty01 = document.querySelector('#id_productinreceipt_set-0-DELETE')
+    const proverty01 = document.querySelector('#id_prods-0-DELETE')
     proverty01.setAttribute('checked','checked')
-    const proverty02 = document.querySelector('#id_productinreceipt_set-1-DELETE')
+    const proverty02 = document.querySelector('#id_prods-1-DELETE')
     proverty02.setAttribute('checked','checked')
 
     document.querySelectorAll('.title0').forEach((el) => {
@@ -1284,6 +1284,13 @@ async function postForm(e){
     
     
     let response = await fetch('/api/v1/reports/');
+    // let response = await fetch('/api/v1/reports/', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json;charset=utf-8'
+    //     },
+    //     body: JSON.stringify(user)
+    //   });
 
     let result = await response.json();
     
@@ -1343,6 +1350,16 @@ if (/add_price/.test(location.href )  ){
 }
 
 if (/receipt_registration/.test(location.href )  ){
+    const inputsss = document.querySelectorAll("input[type='number']")
+    for (let item of inputsss){
+        item.classList.add('inputsss')
+    }
+    const inputsssCelect = document.querySelectorAll("select")
+    for (let item of inputsssCelect){
+        item.classList.add('inputsss')
+    }
+
+    
     
     const poschitat = document.querySelectorAll('.procent__btn') 
     
