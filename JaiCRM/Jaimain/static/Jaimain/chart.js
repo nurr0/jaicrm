@@ -11,6 +11,14 @@ const chartbtnMouth = document.querySelector('.chartbtnMouth')
 const chartbtnGod = document.querySelector('.chartbtnGod')
 const chart3btn = document.querySelector('.chart3btn')
 
+const chartbtnDayOplata = document.querySelector('.chartbtnOplata')
+const chartbtnMouthOplata = document.querySelector('.chartbtnMouthOplata')
+const chartbtnGodOplata = document.querySelector('.chartbtnGodOplata')
+
+const chartbtnMouthKanal = document.querySelector('.chartbtnMouthKanal')
+const chartbtnGodKanal = document.querySelector('.chartbtnGodKanal')
+const chartbtnKanalDay = document.querySelector('.chartbtnKanalDay')
+
 
 const massiv1 = document.querySelector('.massiv1').innerHTML
 const massiv2 = document.querySelector('.massiv2').innerHTML
@@ -19,11 +27,21 @@ const massiv2Day = document.querySelector('.massiv2Day').innerHTML
 const massiv1God = document.querySelector('.massiv1God').innerHTML
 const massiv2God = document.querySelector('.massiv2God').innerHTML
 
+
+const pirogOplataDay1 = document.querySelector('.pirogOplataDay1').innerHTML
+const pirogOplataDay2 = document.querySelector('.pirogOplataDay2').innerHTML
+const pirogOplataMouth1 = document.querySelector('.pirogOplataMouth1').innerHTML
+const pirogOplataMouth2 = document.querySelector('.pirogOplataMouth2').innerHTML
 const pirogOplataGod1 = document.querySelector('.pirogOplataGod1').innerHTML
 const pirogOplataGod2 = document.querySelector('.pirogOplataGod2').innerHTML
 
+
 const pirogKanalGod1 = document.querySelector('.pirogKanal1').innerHTML
 const pirogKanalGod2 = document.querySelector('.pirogKanal2').innerHTML
+const pirogKanalMouth1 = document.querySelector('.pirogKanalMouth1').innerHTML
+const pirogKanalMouth2 = document.querySelector('.pirogKanalMouth2').innerHTML
+const pirogKanalDay1 = document.querySelector('.pirogKanalDay1').innerHTML
+const pirogKanalDay2 = document.querySelector('.pirogKanalDay2').innerHTML
 
 const lineDay = JSON.parse(document.querySelector('.lineDay').innerHTML)
 const lineData = document.querySelector('.lineData').innerHTML
@@ -39,12 +57,20 @@ const corrmassiv1Day = massiv1Day.replace(regexp,'')
 const corrmassiv1God = massiv1God.replace(regexp,'')
 const corrpirogOplataGod1 = pirogOplataGod1.replace(regexp,'')
 const corrpirogKanalGod1 = pirogKanalGod1.replace(regexp,'')
+const corrpirogOplataMouth1 = pirogOplataMouth1.replace(regexp,'')
+const corrpirogOplataDay1 = pirogOplataDay1.replace(regexp,'')
+const corrpirogKanalMouth1 = pirogKanalMouth1.replace(regexp,'')
+const corrpirogKanalDay1 = pirogKanalDay1.replace(regexp,'')
 
 const supercorrmassiv1 = corrmassiv1.replace(regexp1,'').slice(1).slice(0, -1);
 const supercorrmassiv1Day = corrmassiv1Day.replace(regexp1,'').slice(1).slice(0, -1);
 const supercorrmassiv1God = corrmassiv1.replace(regexp1,'').slice(1).slice(0, -1);
 const supercorrpirogOplataGod1 = corrpirogOplataGod1.replace(regexp1,'').slice(1).slice(0, -1);
 const supercorrpirogKanalGod1 = corrpirogKanalGod1.replace(regexp1,'').slice(1).slice(0, -1);
+const supercorrpirogOplataMouth1 = corrpirogOplataMouth1.replace(regexp1,'').slice(1).slice(0, -1);
+const supercorrpirogOplataDay1 = corrpirogOplataDay1.replace(regexp1,'').slice(1).slice(0, -1);
+const supercorrpirogKanalMouth1 = corrpirogKanalMouth1.replace(regexp1,'').slice(1).slice(0, -1);
+const supercorrpirogKanalDay1 = corrpirogKanalDay1.replace(regexp1,'').slice(1).slice(0, -1);
 
 
 
@@ -60,10 +86,12 @@ array1 = supercorrmassiv1.split(',')
 array1Day = supercorrmassiv1Day.split(',')
 array1God = supercorrmassiv1God.split(',')
 array1OplataGod = supercorrpirogOplataGod1.split(',')
+array1OplataMouth = supercorrpirogOplataMouth1.split(',')
+array1OplataDay = supercorrpirogOplataDay1.split(',')
 array1Kanal = supercorrpirogKanalGod1.split(',')
+array1KanalMouth = supercorrpirogKanalMouth1.split(',')
+array1KanalDay = supercorrpirogKanalDay1.split(',')
 
-array011 = array1[0]
-array012 = array1[1]
 
 
 
@@ -72,7 +100,11 @@ array2 = JSON.parse(massiv2)
 array2Day = JSON.parse(massiv2Day)
 array2God = JSON.parse(massiv2God)
 array2OplataGod = JSON.parse(pirogOplataGod2)
+array2OplataMouth = JSON.parse(pirogOplataMouth2)
+array2OplataDay = JSON.parse(pirogOplataDay2)
 array2Kanal = JSON.parse(pirogKanalGod2)
+array2KanalMouth = JSON.parse(pirogKanalMouth2)
+array2KanalDay = JSON.parse(pirogKanalDay2)
 
 
 //Массив с числами pie
@@ -92,11 +124,19 @@ let xGod = array2God.map(element => {
 
 let xOplata = array1OplataGod.map(element => {
         return element })
+let xOplataMouth = array1OplataMouth.map(element => {
+          return element })
+let xOplataDay = array1OplataDay.map(element => {
+            return element })
 
 
 
 let xKanal = array1Kanal.map(element => {
           return element })
+let xKanalMouth = array1KanalMouth.map(element => {
+            return element })
+let xKanalDay = array1KanalDay.map(element => {
+              return element })
 
 
 
@@ -118,13 +158,21 @@ let yGod = array1God.map(element => {
 
 let yOplataGod = array2OplataGod.map(element => {
       return element })
+let yOplataMouth = array2OplataMouth.map(element => {
+        return element })
+let yOplataDay = array2OplataDay.map(element => {
+          return element })
 
 
 let yKanal = array2Kanal.map(element => {
         return element })
+let yKanalMouth = array2KanalMouth.map(element => {
+          return element })
+let yKanalDay = array2KanalDay.map(element => {
+            return element })
   
 
-
+        
 
 
 let zDay = lineDay.map(element => {
@@ -284,3 +332,57 @@ const pieKanal = new Chart(ctxKanal, {
       }]
   }
 });
+
+chartbtnMouthOplata.addEventListener('click',smenaPeriod04)
+function smenaPeriod04(){
+    pieOplata.data.labels = xOplataMouth;
+    pieOplata.data.datasets[0].data = yOplataMouth;
+    pieOplata.update()
+    console.log(xOplataMouth);
+}
+
+chartbtnGodOplata.addEventListener('click',smenaPeriod05)
+function smenaPeriod05(){
+    pieOplata.data.labels = xOplata;
+    pieOplata.data.datasets[0].data = yOplataGod;
+    pieOplata.update()
+    console.log(xOplata);
+
+}
+
+
+chartbtnDayOplata.addEventListener('click',smenaPeriod06)
+function smenaPeriod06(){
+    pieOplata.data.labels = xOplataDay;
+    pieOplata.data.datasets[0].data = yOplataDay;
+    pieOplata.update()
+    console.log(xOplataDay);
+  
+}
+
+chartbtnMouthKanal.addEventListener('click',smenaPeriod07)
+function smenaPeriod07(){
+    pieKanal.data.labels = xKanalMouth;
+    pieKanal.data.datasets[0].data = yKanalMouth;
+    pieKanal.update()
+    console.log(xKanalMouth);
+    console.log(yKanalMouth);
+}
+
+chartbtnGodKanal.addEventListener('click',smenaPeriod08)
+function smenaPeriod08(){
+    pieKanal.data.labels = xKanal
+    pieKanal.data.datasets[0].data = yKanal;
+    pieKanal.update()
+    console.log(xKanal);
+    console.log(yKanal);
+}
+
+chartbtnKanalDay.addEventListener('click',smenaPeriod09)
+function smenaPeriod09(){
+    pieKanal.data.labels = xKanalDay
+    pieKanal.data.datasets[0].data = yKanalDay;
+    pieKanal.update()
+    console.log(xKanalDay);
+    console.log(yKanalDay);
+}

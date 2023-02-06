@@ -1164,7 +1164,7 @@ if (/shops/.test(location.href )){
             }   
         }
     
-        let response = await fetch('http://127.0.0.1:8000/api/v1/shoplist/', {
+        let response = await fetch('/api/v1/shoplist/', {
           method: 'POST',
 
           body: new FormData(formElem)
@@ -1200,7 +1200,7 @@ if (/sell_receipt_list/.test(location.href )){
     formElemBtn.addEventListener('click', postForm)
     async function postForm(e){
         
-        // e.preventDefault();
+        e.preventDefault();
         
         let host = location.host
         let response = await fetch('/api/v1/sales_report_export/', {
