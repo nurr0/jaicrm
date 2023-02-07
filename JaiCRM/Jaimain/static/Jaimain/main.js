@@ -158,7 +158,7 @@ if (/partners/.test(location.href )){
     settingsBlock.classList.add('ActiveList') 
 }else if (/dashboard/.test(location.href )){
     dashboard.classList.add('ActiveList') 
-}else if (/supplies/.test(location.href )){
+}else if (/supplies/.test(location.href )  ||  /add_supply/.test(location.href )  ){
     suppliesBlock.classList.add('ActiveList')
 }else if (/products_in_stock/.test(location.href ) || /add_price/.test(location.href )){
     tovariNaSklade.classList.add('ActiveList')
@@ -983,9 +983,9 @@ if (/receipt_registration/.test(location.href ) ){
         }
     }
 
-    const proverty01 = document.querySelector('#id_productinreceipt_set-0-DELETE')
+    const proverty01 = document.querySelector('#id_prods-0-DELETE')
     proverty01.setAttribute('checked','checked')
-    const proverty02 = document.querySelector('#id_productinreceipt_set-1-DELETE')
+    const proverty02 = document.querySelector('#id_prods-1-DELETE')
     proverty02.setAttribute('checked','checked')
 
     document.querySelectorAll('.title0').forEach((el) => {
@@ -1164,7 +1164,7 @@ if (/shops/.test(location.href )){
             }   
         }
     
-        let response = await fetch('http://127.0.0.1:8000/api/v1/shoplist/', {
+        let response = await fetch('/api/v1/shoplist/', {
           method: 'POST',
 
           body: new FormData(formElem)
@@ -1200,7 +1200,7 @@ if (/sell_receipt_list/.test(location.href )){
     formElemBtn.addEventListener('click', postForm)
     async function postForm(e){
         
-        // e.preventDefault();
+        e.preventDefault();
         
         let host = location.host
         let response = await fetch('/api/v1/sales_report_export/', {
@@ -1281,9 +1281,18 @@ function imgCrossActionOt(){
 async function postForm(e){
         
     // e.preventDefault();
-    
+    // let user = {
+    //     page_size: 1,
+    //   };
     
     let response = await fetch('/api/v1/reports/');
+    // let response = await fetch('/api/v1/reports/', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json;charset=utf-8'
+    //     },
+    //     body: JSON.stringify(user)
+    //   });
 
     let result = await response.json();
     
@@ -1336,10 +1345,49 @@ if (/add_price/.test(location.href )  ){
             const result = Number(poslenyaStoimVnytr) + ( Number(poslenyaStoimVnytr) * (Number(procentVnytr) / 100))
             console.log(result);
             cenaVnytr.value = result
-            
-            
 
+        }
+    }
+
+}
+
+if (/receipt_registration/.test(location.href )  ){
+    const inputsss = document.querySelectorAll("input[type='number']")
+    for (let item of inputsss){
+        item.classList.add('inputsss')
+    }
+    const inputsssCelect = document.querySelectorAll("select")
+    for (let item of inputsssCelect){
+        item.classList.add('inputsss')
+    }
+
+    
+    
+    const poschitat = document.querySelectorAll('.procent__btn') 
+    
+    for (let item of poschitat){
+
+        item.addEventListener('click',podchet)
+
+        function podchet(e){
+            e.preventDefault();
         
+            // const div = poschitat.closest('div')
+            const div = item.closest('div')
+            const glavDiv = div.closest('.form-group-addPrice')
+
+            const procentVnytr = div.querySelector('.procent__text').value
+            const cenaVnytr = glavDiv.querySelector("input[type='number']")
+            const poslenyaStoimVnytr = glavDiv.querySelectorAll("input[type='text']")[1].value
+            console.log(div)
+            console.log(procentVnytr)
+            console.log(glavDiv);
+            console.log(typeof(cenaVnytr));
+            console.log(poslenyaStoimVnytr);
+            const result = Number(poslenyaStoimVnytr) + ( Number(poslenyaStoimVnytr) * (Number(procentVnytr) / 100))
+            console.log(result);
+            cenaVnytr.value = result
+
         }
     }
 
