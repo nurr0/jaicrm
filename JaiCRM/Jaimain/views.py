@@ -606,6 +606,7 @@ def add_supply(request):
 
     add_supply_form.fields['warehouse'].queryset = Shop.objects.filter(partner=request.user.partner)
     for form in products_in_supply_formset:
+        form.fields['DELETE'].initial = True
         form.fields['product'].queryset = SKU.objects.filter(partner=request.user.partner)
 
     return render(request, 'Jaimain/add_supply.html', {
@@ -845,6 +846,7 @@ def register_a_sale(request):
 
     for form in products_in_receipt_formset:
         form.fields['product'].queryset = ProductInStock.objects.filter(shop__partner=partner, amount__gt=0)
+        form.fields['DELETE'].initial = True
 
     return render(request, 'Jaimain/receipt_registration.html', {
         'receipt_form': receipt_form,
@@ -1172,7 +1174,7 @@ class ReportAPIListPagination(PageNumberPagination):
 class ReportsAPIView(generics.ListAPIView):
     serializer_class = ReportsSerializer
     permission_classes = (IsAuthenticated,)
-    pagination_class = ReportAPIListPagination
+    # pagination_class = ReportAPIListPagination
 
     def get_queryset(self):
         return ReportExport.objects.filter(user=self.request.user)

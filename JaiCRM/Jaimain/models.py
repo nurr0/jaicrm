@@ -210,6 +210,8 @@ class ProductsInSupply(models.Model):
     def __str__(self):
         return self.product.__str__()
 
+    class Meta:
+        unique_together = (('product', 'supply'),)
 
 class ProductsRemove(models.Model):
     shop = models.ForeignKey(Shop, verbose_name='Склад', on_delete=models.PROTECT)
