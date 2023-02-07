@@ -74,7 +74,7 @@
 <div class="sposobi_prodazh">
     <h4>Каналы продаж партнера:</h4>
     {% for channel in sales_channel %}
-    <li>{{ channel }}</li>
+<li><a href="{% url 'sales_channel_edit' channel.pk %}">{{ channel }}</a></li>
     {% endfor %}
     <div class="btn__addUsers btn__api3">
         <button class="btn ">
@@ -85,7 +85,7 @@
 
 <div><h4>Способы оплаты партнера:</h4>
 {% for form in payment_form %}
-<li>{{ form }}</li>
+<li><a href="{% url 'payment_form_edit' form.pk %}">{{ form }}</a></li>
 {% endfor %}
 </div>
 
@@ -144,7 +144,7 @@
 </div>
     {% endif %}
 </div>
-<li>% начисляемых бонусов: {{ bsl.0.points_achieve }}%</li>
+<li> начисляемых бонусов: {{ bsl.0.points_achieve }}%</li>
 <li>% стоимости товара для оплаты бонусами: {{ bsl.0.points_spend }}%</li>
 
 <script src="/static/Jaimain/partner.js"></script>

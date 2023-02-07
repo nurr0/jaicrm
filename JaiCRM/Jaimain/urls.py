@@ -2,6 +2,7 @@ from django.urls import path, re_path
 from django.views.decorators.cache import cache_page
 from .views import *
 
+
 urlpatterns = [
     path('', HomePage, name='home'),
     path('partners/', Partners.as_view(), name='partners'),
@@ -49,6 +50,8 @@ urlpatterns = [
     path('customers/<int:pk>', CustomerShow.as_view(), name='customer_show'),
     path('partners/bsl_create/', BaseLoyaltySystemCreation.as_view(), name='bsl_create'),
     path('partners/bsl_edit/<int:pk>/', BaseLoyaltySystemEdit.as_view(), name='bsl_edit'),
+    path('partners/payment_form_edit/<int:pk>/', PaymentFormEdit.as_view(), name='payment_form_edit'),
+    path('partners/sales_channel_edit/<int:pk>/', SalesChannelEdit.as_view(), name='sales_channel_edit')
     # path('export_sales_data/', export_sales_data, name='export_sales_data'),
     # path('reports/', ReportsList.as_view(), name='reports')
 
