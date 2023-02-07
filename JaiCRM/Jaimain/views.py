@@ -595,6 +595,8 @@ def add_supply(request):
                             ProductInStock.objects.create(amount=amount_added,
                                                           product=product_added,
                                                           shop=shop_supply_to)
+                if all([form.cleaned_data.get('DELETE') for form in products_in_supply_formset]):
+                    supply.delete()
             except:
                 supply.delete()
             return redirect('supplies')
@@ -1116,7 +1118,35 @@ class BaseLoyaltySystemEdit(DataMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+class PaymentFormEdit(DataMixin, UpdateView):
+    model = PaymentForm
+    fields = ['name']
+    template_name = 'Jaimain/payment_form_edit.html'
+    success_url = reverse_lazy('partners')
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение Способа оплаты')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+class SalesChannelEdit(DataMixin, UpdateView):
+    model = SalesChannel
+    fields = ['name']
+    template_name = 'Jaimain/sales_channel_edit.html'
+    success_url = reverse_lazy('partners')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение Канала продаж')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 """API views \/"""
 
 
