@@ -141,6 +141,12 @@ dashboard.addEventListener('click',()=>
     localStorage.setItem('tasks', JSON.stringify(0))
 )
 
+const customers = document.querySelector('[href="/customers/"]');
+customers.classList.add('customers')
+customers.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
 const url = window.location.href;
 if (/partners/.test(location.href )){
     partners.classList.add('ActiveList')
@@ -154,6 +160,8 @@ if (/partners/.test(location.href )){
 
 }else if (/product_properties/.test(location.href ) ){
     propertyBlock.classList.add('ActiveList') 
+}else if (/customers/.test(location.href ) ){
+    customers.classList.add('ActiveList') 
 }else if (/sku/.test(location.href )){
     settingsBlock.classList.add('ActiveList') 
 }else if (/dashboard/.test(location.href )){
@@ -292,7 +300,7 @@ TextContactInn.classList.add('p__addPart-widthRight')
 
 
 //Поиск у пользователей и партнеров
-if (/shops/.test(location.href ) || /partners/.test(location.href ) || /users/.test(location.href ) || /product_categories/.test(location.href ) ){
+if (/shops/.test(location.href ) ||  /users/.test(location.href ) || /product_categories/.test(location.href ) ){
     let filter = function () {
         let input = document.querySelector('.filter-input');
 
@@ -985,8 +993,8 @@ if (/receipt_registration/.test(location.href ) ){
 
     const proverty01 = document.querySelector('#id_prods-0-DELETE')
     proverty01.setAttribute('checked','checked')
-    const proverty02 = document.querySelector('#id_prods-1-DELETE')
-    proverty02.setAttribute('checked','checked')
+    // const proverty02 = document.querySelector('#id_prods-1-DELETE')
+    // proverty02.setAttribute('checked','checked')
 
     document.querySelectorAll('.title0').forEach((el) => {
         el.addEventListener('click',()=>{
@@ -1296,10 +1304,10 @@ async function postForm(e){
 
     let result = await response.json();
     
-    console.log(result)
+    console.log(result.results)
     // const divArea = document.querySelector('.reportsApi')
    
-    for (let item of result){
+    for (let item of result.results){
         let divId = item.id
         let divFile = item.file
         let divName = item.file_name
