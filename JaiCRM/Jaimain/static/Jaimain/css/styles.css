@@ -1556,7 +1556,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 	height: 400px;
 } */
 
-.num {
+/* .num {
 	display: none;
   }
   .paginator {
@@ -1571,7 +1571,11 @@ ul.lang-list li a:hover {color: #fdc073;}
   }
   .paginator_active {
 	color: red;
-  }
+  } */
+
+.pagin{
+	z-index: 100;
+}
 
 .spanNumber{
 	margin: 20px;
