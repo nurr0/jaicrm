@@ -147,7 +147,7 @@ class ProductsInSupplyForm(forms.ModelForm):
 ProductsInSupplyFormSet = inlineformset_factory(Supply, ProductsInSupply,
                                                 form=ProductsInSupplyForm,
                                                 fields='__all__',
-                                                extra=2,
+                                                extra=100,
                                                 can_delete=True,
                                                 can_delete_extra=True)
 
@@ -235,7 +235,7 @@ class ProductsInReceiptForm(forms.ModelForm):
 ProductsInReceiptFormSet = inlineformset_factory(SellReceipt, ProductInReceipt,
                                                  form=ProductsInReceiptForm,
                                                  fields='__all__',
-                                                 extra=1,
+                                                 extra=20,
                                                  can_delete=True,
                                                  can_delete_extra=True)
 
