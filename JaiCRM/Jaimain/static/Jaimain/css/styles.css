@@ -685,6 +685,19 @@ ul.lang-list li a:hover {color: #fdc073;}
 	color: white;
 }
 
+.btn__api3{
+	/* margin-top: -330px; */
+	justify-content: start !important;
+	margin: 10px;
+}
+
+.btn__api4{
+	justify-content: start !important;
+	margin: 10px;
+}
+.sposobi_prodazh{
+	
+}
 .form-text{
     position: relative;
     top: 50%;
@@ -995,6 +1008,12 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .zero1{
+	display: none !important;
+}
+.zero3{
+	display: none !important;
+}
+.zero4{
 	display: none !important;
 }
 
@@ -1341,6 +1360,21 @@ ul.lang-list li a:hover {color: #fdc073;}
 .dashboard:hover{
 	scale: 1.1;
 }
+.customers{
+	background-image: url(./../images/clients.svg);
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	font-size: 18px;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	padding-left: 45px;
+	align-items: center;
+}
+.customers:hover{
+	scale: 1.1;
+}
 .border{
 	border-bottom: none !important;
 }
@@ -1522,7 +1556,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 	height: 400px;
 } */
 
-.num {
+/* .num {
 	display: none;
   }
   .paginator {
@@ -1537,7 +1571,11 @@ ul.lang-list li a:hover {color: #fdc073;}
   }
   .paginator_active {
 	color: red;
-  }
+  } */
+
+.pagin{
+	z-index: 100;
+}
 
 .spanNumber{
 	margin: 20px;
@@ -1555,11 +1593,32 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .modal{
-	/* border: 1px black solid;
-	width: 500px;
-	height: 500px;
-	position: absolute;
-	margin: 50px; */
+
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal3{
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal4{
 	position: fixed; /* Stay in place */
 	z-index: 1; /* Sit on top */
 	padding-top: 100px; /* Location of the box */
@@ -1656,6 +1715,13 @@ ul.lang-list li a:hover {color: #fdc073;}
 .imgCross:hover{
 	scale: 1.1;
 }
+.imgCross4{
+	cursor: pointer;
+}
+
+.imgCross4:hover{
+	scale: 1.1;
+}
 
 .imgCrossOt{
 	cursor: pointer;
@@ -1677,6 +1743,13 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 #formElem{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+
+}
+
+#formElem2{
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;

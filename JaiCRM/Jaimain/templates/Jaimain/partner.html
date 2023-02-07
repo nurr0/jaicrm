@@ -1,5 +1,7 @@
+
 {% extends 'Jaimain/base.html' %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 {% block content %}
 {% if partner.logo %}
 <div>
@@ -15,6 +17,7 @@
         </button>
     </div>
 </div>
+
 
 
 <!-- {% if partner.logo %}
@@ -68,15 +71,58 @@
 
 {% endfor %}
 
-<h4>Каналы продаж партнера:</h4>
-{% for channel in sales_channel %}
-<li>{{ channel }}</li>
-{% endfor %}
+<div class="sposobi_prodazh">
+    <h4>Каналы продаж партнера:</h4>
+    {% for channel in sales_channel %}
+    <li>{{ channel }}</li>
+    {% endfor %}
+    <div class="btn__addUsers btn__api3">
+        <button class="btn ">
+            Добавить канал продаж
+        </button>
+    </div>
+</div>
 
-<h4>Способы оплаты партнера:</h4>
+<div><h4>Способы оплаты партнера:</h4>
 {% for form in payment_form %}
 <li>{{ form }}</li>
 {% endfor %}
+</div>
+
+
+
+<div class="btn__addUsers btn__api4">
+    <button class="btn ">
+        Добавить оплату партнера
+    </button>
+</div>
+
+<div class="modal3 zero3 ">
+	<div class="modal-content">
+		<div class="imgCrossParrent"><img class="imgCross" src="/static/Jaimain/images/Cross.svg" alt=""></div>
+		<div class="imgPropertyParrent"><img class="imgProperty" src="/static/Jaimain/images/canal.png" alt=""></div>
+		<form id="formElem">
+			{% csrf_token %}
+			<input class="formElem-name" type="text" name="name" placeholder="Название канала">
+			<input class="zero1" type="text" name="partner" value="{{partner.pk}}" placeholder="Партнер">
+			<input class="btn btn__submit-form formElem-btn" type="submit" value="Добавить">
+		</form>
+	</div>
+</div>
+
+<div class="modal4 zero4 ">
+	<div class="modal-content">
+		<div class="imgCrossParrent"><img class="imgCross4" src="/static/Jaimain/images/Cross.svg" alt=""></div>
+		<div class="imgPropertyParrent"><img class="imgProperty" src="/static/Jaimain/images/sposobOplata.png" alt=""></div>
+		<form id="formElem2">
+			{% csrf_token %}
+			<input class="formElem-name" type="text" name="name" placeholder="Способ оплаты">
+			<input class="zero1" type="text" name="partner" value="{{partner.pk}}" placeholder="Партнер">
+			<input class="btn btn__submit-form4 formElem-btn" type="submit" value="Добавить">
+		</form>
+	</div>
+</div>
+
 
 
 
@@ -101,6 +147,7 @@
 <li>% начисляемых бонусов: {{ bsl.0.points_achieve }}%</li>
 <li>% стоимости товара для оплаты бонусами: {{ bsl.0.points_spend }}%</li>
 
-
+<script src="/static/Jaimain/partner.js"></script>
 {% endblock %}
+
 

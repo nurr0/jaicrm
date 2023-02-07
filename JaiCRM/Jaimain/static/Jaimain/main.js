@@ -141,6 +141,12 @@ dashboard.addEventListener('click',()=>
     localStorage.setItem('tasks', JSON.stringify(0))
 )
 
+const customers = document.querySelector('[href="/customers/"]');
+customers.classList.add('customers')
+customers.addEventListener('click',()=>
+    localStorage.setItem('tasks', JSON.stringify(0))
+)
+
 const url = window.location.href;
 if (/partners/.test(location.href )){
     partners.classList.add('ActiveList')
@@ -154,6 +160,8 @@ if (/partners/.test(location.href )){
 
 }else if (/product_properties/.test(location.href ) ){
     propertyBlock.classList.add('ActiveList') 
+}else if (/customers/.test(location.href ) ){
+    customers.classList.add('ActiveList') 
 }else if (/sku/.test(location.href )){
     settingsBlock.classList.add('ActiveList') 
 }else if (/dashboard/.test(location.href )){
@@ -292,7 +300,7 @@ TextContactInn.classList.add('p__addPart-widthRight')
 
 
 //Поиск у пользователей и партнеров
-if (/shops/.test(location.href ) || /partners/.test(location.href ) || /users/.test(location.href ) || /product_categories/.test(location.href ) ){
+if (/shops/.test(location.href ) ||  /users/.test(location.href )||  /partners/.test(location.href ) || /product_categories/.test(location.href ) ){
     let filter = function () {
         let input = document.querySelector('.filter-input');
 
@@ -802,66 +810,66 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
 
 
 
-if (/partners/.test(location.href ) ){
-    // let count = 8; //всего записей
-    let count = document.querySelectorAll(".num").length;
-    let cnt = 4; //сколько отображаем сначала
-    let cnt_page = Math.ceil(count / cnt); //кол-во страниц
+// if (/partners/.test(location.href ) ){
+//     // let count = 8; //всего записей
+//     let count = document.querySelectorAll(".num").length;
+//     let cnt = 4; //сколько отображаем сначала
+//     let cnt_page = Math.ceil(count / cnt); //кол-во страниц
 
-    //выводим список страниц
-    let paginator = document.querySelector(".paginator");
-    let page = "";
-    for (var i = 0; i < cnt_page; i++) {
-    page += "<span data-page=" + i * cnt + "  id=\"page" + (i + 1) + "\">" + (i + 1) + "</span>";
-    }
-    paginator.innerHTML = page;
+//     //выводим список страниц
+//     let paginator = document.querySelector(".paginator");
+//     let page = "";
+//     for (var i = 0; i < cnt_page; i++) {
+//     page += "<span data-page=" + i * cnt + "  id=\"page" + (i + 1) + "\">" + (i + 1) + "</span>";
+//     }
+//     paginator.innerHTML = page;
 
-    //выводим первые записи {cnt}
-    let div_num = document.querySelectorAll(".num");
-    for (var i = 0; i < div_num.length; i++) {
-        if (i < cnt) {
-            div_num[i].style.display = "block";
-        }
-    }
+//     //выводим первые записи {cnt}
+//     let div_num = document.querySelectorAll(".num");
+//     for (var i = 0; i < div_num.length; i++) {
+//         if (i < cnt) {
+//             div_num[i].style.display = "block";
+//         }
+//     }
 
-    let main_page = document.getElementById("page1");
-    main_page.classList.add("paginator_active");
+//     let main_page = document.getElementById("page1");
+//     main_page.classList.add("paginator_active");
 
-    //листаем
-    function pagination(event) {
-        let e = event || window.event;
-        let target = e.target;
-        let id = target.id;
+//     //листаем
+//     function pagination(event) {
+//         let e = event || window.event;
+//         let target = e.target;
+//         let id = target.id;
         
-        if (target.tagName.toLowerCase() != "span") return;
+//         if (target.tagName.toLowerCase() != "span") return;
         
         
-        let data_page = +target.dataset.page;
-        main_page.classList.remove("paginator_active");
-        main_page = document.getElementById(id);
-        main_page.classList.add("paginator_active");
+//         let data_page = +target.dataset.page;
+//         main_page.classList.remove("paginator_active");
+//         main_page = document.getElementById(id);
+//         main_page.classList.add("paginator_active");
 
-        let j = 0;
-        for (let i = 0; i < div_num.length; i++) {
-            // var data_num = div_num[i].dataset.num;
-            var data_num = div_num[i].querySelector('.btn__text').href[31]
-            // document.querySelectorAll(".num")[0].querySelector('.btn__text').href[31]
-            if (data_num <= data_page || data_num >= data_page)
-            div_num[i].style.display = "none";
+//         let j = 0;
+//         for (let i = 0; i < div_num.length; i++) {
+//             // var data_num = div_num[i].dataset.num;
+//             var data_num = div_num[i].querySelector('.btn__text').href[31]
+//             // document.querySelectorAll(".num")[0].querySelector('.btn__text').href[31]
+//             if (data_num <= data_page || data_num >= data_page)
+//             div_num[i].style.display = "none";
 
-        }
-        for (let i = data_page; i < div_num.length; i++) {
-            if (j >= cnt) break;
-            div_num[i].style.display = "block";
-            j++;
-            }
-    }
+//         }
+//         for (let i = data_page; i < div_num.length; i++) {
+//             if (j >= cnt) break;
+//             div_num[i].style.display = "block";
+//             j++;
+//             }
+//     }
 
-        const spanNumber = document.querySelectorAll('span')
-        for (let item of spanNumber){
-            item.classList.add('spanNumber')
-        }
-}
+//         const spanNumber = document.querySelectorAll('span')
+//         for (let item of spanNumber){
+//             item.classList.add('spanNumber')
+//         }
+// }
 
 if (/add_supply/.test(location.href ) ){
     const tovarz = document.querySelectorAll('.form-group1')
@@ -985,8 +993,8 @@ if (/receipt_registration/.test(location.href ) ){
 
     const proverty01 = document.querySelector('#id_prods-0-DELETE')
     proverty01.setAttribute('checked','checked')
-    const proverty02 = document.querySelector('#id_prods-1-DELETE')
-    proverty02.setAttribute('checked','checked')
+    // const proverty02 = document.querySelector('#id_prods-1-DELETE')
+    // proverty02.setAttribute('checked','checked')
 
     document.querySelectorAll('.title0').forEach((el) => {
         el.addEventListener('click',()=>{
@@ -1296,10 +1304,10 @@ async function postForm(e){
 
     let result = await response.json();
     
-    console.log(result)
+    console.log(result.results)
     // const divArea = document.querySelector('.reportsApi')
    
-    for (let item of result){
+    for (let item of result.results){
         let divId = item.id
         let divFile = item.file
         let divName = item.file_name
