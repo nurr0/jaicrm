@@ -40,11 +40,14 @@ class ReportsSerializer(serializers.ModelSerializer):
 
 class ProductInStockSerializer(serializers.ModelSerializer):
     get_sell_price = serializers.DecimalField(decimal_places=2, max_digits=11)
+    product_name = serializers.SerializerMethodField()
 
     class Meta:
         model = ProductInStock
         fields = '__all__'
 
+    def get_product_name(self, obj):
+        return str(obj.product)
 
 class PaymentFormSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
@@ -60,3 +63,14 @@ class SalesChannelSerializer(serializers.ModelSerializer):
     class Meta:
         model = SalesChannel
         fields = '__all__'
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    points_amount = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+    def get_points_amount(self, obj):
+        return obj.get_points_amount()

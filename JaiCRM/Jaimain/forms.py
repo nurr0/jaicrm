@@ -1,3 +1,5 @@
+import datetime
+
 import mptt.forms
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -5,8 +7,11 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory, formset_factory
 from mptt.forms import *
+from widget_tweaks.templatetags import widget_tweaks
+
 from . import views
 from .models import *
+import re
 
 
 class AddPartnerForm(forms.ModelForm):
@@ -16,6 +21,7 @@ class AddPartnerForm(forms.ModelForm):
     class Meta:
         model = Partner
         fields = ['name', 'logo', 'description', 'iin', 'partner_person', 'partner_tel', 'partner_email',
+                  'receipt_prefix',
                   'time_start_working', 'time_expires', 'is_working']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-input'}),
@@ -46,12 +52,10 @@ class RegisterUserForm(UserCreationForm):
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))
     partner = forms.ModelChoiceField(label='Партнер', queryset=Partner.objects.all())
     tel_number = forms.CharField(label='Номер телефона', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    is_costumer = forms.ChoiceField(label='Является покупателем', choices=CHOICES)
 
     class Meta:
         model = JaiUser
-        fields = ('first_name', 'last_name', 'username', 'password1', 'password2', 'email', 'partner', 'tel_number',
-                  'is_costumer')
+        fields = ('first_name', 'last_name', 'username', 'password1', 'password2', 'email', 'partner', 'tel_number')
 
 
 class LoginUserForm(AuthenticationForm):
@@ -190,13 +194,22 @@ class AddSellPriceForm(forms.ModelForm):
 
 
 class SaleRegistrationForm(forms.ModelForm):
-    receipt_number_display = forms.CharField(label='Документ продажи:', widget=forms.TextInput(attrs={'readonly': True}))
+    CHOICES = (
+        ('recieve', 'Начисление'),
+        ('spend', 'Списание'),
+    )
+
+    receipt_number_display = forms.CharField(label='Документ продажи:',
+                                             widget=forms.TextInput(attrs={'readonly': True}))
     sales_channel = forms.ModelChoiceField(queryset=SalesChannel.objects.all(), label='Канал продаж')
     payment_form = forms.ModelChoiceField(queryset=PaymentForm.objects.all(), label='Форма оплаты')
+    customer = forms.ModelChoiceField(queryset=Customer.objects.all(), label='Клиент', required=False)
+    points_achieve_or_spend = forms.ChoiceField(choices=CHOICES, label='Бонусы')
+    points_spend = forms.IntegerField(label='Списываемые бонусы')
 
     class Meta:
         model = SellReceipt
-        fields = ['receipt_number_display', 'shop', 'sales_channel', 'payment_form']
+        fields = ['receipt_number_display', 'shop', 'customer', 'points_achieve_or_spend', 'sales_channel', 'payment_form']
 
 
 class ProductsInReceiptForm(forms.ModelForm):
@@ -222,6 +235,46 @@ class ProductsInReceiptForm(forms.ModelForm):
 ProductsInReceiptFormSet = inlineformset_factory(SellReceipt, ProductInReceipt,
                                                  form=ProductsInReceiptForm,
                                                  fields='__all__',
-                                                 extra=100,
+                                                 extra=1,
                                                  can_delete=True,
                                                  can_delete_extra=True)
+
+
+class CustomerCreationForm(forms.ModelForm):
+    CHOICES = (
+        ('Мужской', 'Мужской'),
+        ('Женский', 'Женский'),
+    )
+    gender = forms.ChoiceField(choices=CHOICES)
+
+    class Meta:
+        model = Customer
+        exclude = ('partner',)
+
+        widgets = {
+            'birthdate': forms.SelectDateWidget(years=list(range(1900, datetime.datetime.today().year + 1))),
+        }
+
+    def clean_tel_number(self):
+        tel_number = self.cleaned_data['tel_number']
+        if not re.match(r'^(\+7|8|7)\d{10}$', tel_number):
+            raise forms.ValidationError('Номер телефона не соответвует формату')
+        return tel_number
+
+
+class BaseLoyaltySystemForm(forms.ModelForm):
+    class Meta:
+        model = BaseLoyaltySystem
+        exclude = ('partner',)
+
+    def clean_points_achieve(self):
+        points_achieve = self.cleaned_data['points_achieve']
+        if points_achieve > 100:
+            raise forms.ValidationError('Количество начисляемых бонусов не может быть больше или равно 100%')
+        return points_achieve
+
+    def clean_points_spend(self):
+        points_spend = self.cleaned_data['points_spend']
+        if points_spend > 100:
+            raise forms.ValidationError('% стоимости товара для оплаты бонусами не может быть больше или равно 100%')
+        return points_spend

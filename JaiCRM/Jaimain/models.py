@@ -34,7 +34,6 @@ class Partner(models.Model):
 class JaiUser(AbstractUser):
     partner = models.ForeignKey('Partner', on_delete=models.PROTECT, verbose_name="Партнер", default=None, null=True)
     tel_number = models.CharField(max_length=255, verbose_name='Контактный телефон')
-    is_costumer = models.BooleanField(default=False, verbose_name='Является покупателем', null=False, blank=False)
 
     def __str__(self):
         return self.username
@@ -229,6 +228,7 @@ class SellPrice(models.Model):
     class Meta:
         unique_together = (('product_in_stock', 'partner'),)
 
+
 class SalesChannel(models.Model):
     name = models.CharField(max_length=254, verbose_name='Наименование канала продаж')
     partner = models.ForeignKey(Partner, on_delete=models.CASCADE, verbose_name='Партнер')
@@ -257,6 +257,40 @@ class PaymentForm(models.Model):
         verbose_name_plural = 'Способы оплаты'
 
 
+class Customer(models.Model):
+    partner = models.ForeignKey(Partner, on_delete=models.PROTECT, verbose_name='Партнер')
+    firstname = models.CharField(max_length=255, verbose_name='Имя')
+    lastname = models.CharField(max_length=255, verbose_name='Фамилия')
+    tel_number = models.CharField(max_length=255, verbose_name='Номер телефона')
+    gender = models.CharField(max_length=255, verbose_name='Пол')
+    birthdate = models.DateField(verbose_name='Дата рождения')
+    city = models.CharField(max_length=255, verbose_name='Город проживания')
+
+    class Meta:
+        unique_together = (('partner', 'firstname', 'lastname', 'birthdate'),)
+        verbose_name = 'Клиент'
+        verbose_name_plural = 'Клиенты'
+
+    def __str__(self):
+        return f'{self.lastname} {self.firstname} [{self.tel_number}]'
+
+    def get_points_amount(self):
+        points_achieved = Points.objects.filter(customer=self, receive_or_spend='recieve'). \
+            values('points_amount'). \
+            aggregate(Sum('points_amount'))['points_amount__sum']
+
+        points_spend = Points.objects.filter(customer=self, receive_or_spend='spend'). \
+            values('points_amount'). \
+            aggregate(Sum('points_amount'))['points_amount__sum']
+        if not points_achieved:
+            points_achieved = 0
+        if not points_spend:
+            points_spend = 0
+        points_amount = points_achieved - points_spend
+
+        return points_amount
+
+
 class SellReceipt(models.Model):
     partner = models.ForeignKey(Partner, verbose_name='Партнер', on_delete=models.PROTECT)
     user_created = models.ForeignKey(JaiUser, verbose_name='Пользователь', on_delete=models.PROTECT)
@@ -266,6 +300,8 @@ class SellReceipt(models.Model):
     shop = models.ForeignKey(Shop, verbose_name='Торговая точка', on_delete=models.PROTECT)
     sales_channel = models.ForeignKey(SalesChannel, verbose_name='Канал продаж', on_delete=models.DO_NOTHING)
     payment_form = models.ForeignKey(PaymentForm, verbose_name='Способ оплаты', on_delete=models.DO_NOTHING)
+    customer = models.ForeignKey(Customer, verbose_name='Клиент', on_delete=models.DO_NOTHING, null=True, default=None,
+                                 blank=True)
 
     class Meta:
         unique_together = (('partner', 'number'),)
@@ -334,3 +370,23 @@ class ReportExport(models.Model):
     file_name = models.CharField(verbose_name='Имя файла', max_length=50)
 
 
+class Points(models.Model):
+    customer = models.ForeignKey(Customer, verbose_name='Покупатель', on_delete=models.PROTECT)
+    partner = models.ForeignKey(Partner, verbose_name='Партнер', on_delete=models.PROTECT)
+    points_amount = models.IntegerField(verbose_name='Количество бонусов')
+    receipt = models.ForeignKey(SellReceipt, verbose_name='Чек', on_delete=models.PROTECT)
+    receive_or_spend = models.CharField(verbose_name='Списание или начисление', max_length=10)
+
+    class Meta:
+        verbose_name = 'Бонусы'
+        verbose_name_plural = 'Бонусы'
+
+
+class BaseLoyaltySystem(models.Model):
+    partner = models.ForeignKey(Partner, verbose_name='Партнер', on_delete=models.PROTECT, unique=True)
+    points_achieve = models.IntegerField(verbose_name='% начисляемых бонусов')
+    points_spend = models.IntegerField(verbose_name='% стоимости товара для оплаты бонусами')
+
+    class Meta:
+        verbose_name = 'Базовая система лояльности'
+        verbose_name_plural = 'Базовые системы лояльности'

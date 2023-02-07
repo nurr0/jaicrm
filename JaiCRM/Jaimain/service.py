@@ -48,7 +48,6 @@ def sales_report(file_format: str, user_pk: int):  # , start: datetime.date, end
 
 
 def data_for_sales_by_cat_donought(partner):
-
     # текущий месяц
     today = datetime.today()
     current_month = today.month
@@ -105,7 +104,10 @@ def data_for_sales_by_cat_donought(partner):
 def data_for_sales_by_shop_graph(partner):
     today = datetime.now()
     days_in_month = [i + 1 for i in range(today.day)]
-    data = SellReceipt.objects.filter(partner=partner, is_returned=False)
+    data = SellReceipt.objects.filter(partner=partner,
+                                      is_returned=False,
+                                      time_created__month=today.month,
+                                      time_created__year=today.year)
 
     result = {}
     for elem in data:
@@ -113,24 +115,22 @@ def data_for_sales_by_shop_graph(partner):
         day = elem.time_created.day
         sales = int(elem.get_total_price_with_discount())
         if shop in result:
-            result[shop][day-1] += sales
+            result[shop][day - 1] += sales
         else:
             result[shop] = [0 for i in days_in_month]
-            result[shop][day-1] = sales
+            result[shop][day - 1] = sales
 
     datasets = []
     for elem in result:
         datasets.append({'label': elem,
                          'data': result[elem],
-                         'borderColor': f'rgb({randint(1,255)},{randint(1,255)},{randint(1,255)})',
-                         'backgroundColor': f'rgb({randint(1,255)},{randint(1,255)},{randint(1,255)})'})
+                         'borderColor': f'rgb({randint(1, 255)},{randint(1, 255)},{randint(1, 255)})',
+                         'backgroundColor': f'rgb({randint(1, 255)},{randint(1, 255)},{randint(1, 255)})'})
 
     return days_in_month, datasets
 
 
-
 def data_for_sales_by_payment_form_donought(partner):
-
     # текущий месяц
     today = datetime.today()
     current_month = today.month
@@ -184,7 +184,6 @@ def data_for_sales_by_payment_form_donought(partner):
 
 
 def data_for_sales_by_sales_channel_donought(partner):
-
     # текущий месяц
     today = datetime.today()
     current_month = today.month

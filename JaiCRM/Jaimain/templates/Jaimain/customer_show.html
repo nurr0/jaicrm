@@ -1,0 +1,82 @@
+{% extends 'Jaimain/base.html' %}
+
+{% block content %}
+<div class="header_ilya">
+    <div class="PortfolioTop">Просмотр информации о Клиенте</div>
+    <div class="PortfolioBtn" style="text-align: right" class="btn_ilya">
+        <button class="btn">
+            <a class="white" href='{% url 'customer_edit' customer.pk %}'>Редактировать</a>
+        </button>
+    </div>
+
+    <div class="PortfolioName">
+        <div class="PortfolioName-top">Имя Клиента:</div>
+        <div>{{customer.lastname}} {{customer.lastname}}</div>
+    </div>
+
+    <div class="PortfolioMail">
+        <div class="PortfolioMail-top">Номер телефона:</div>
+        <div>{{customer.tel_number}}</div>
+    </div>
+
+    <div class="PortfolioPartner">
+        <div class="PortfolioPartner-top">Пол:</div>
+        <div>{{customer.gender}}</div>
+    </div>
+
+    <div class="PortfolioPartner">
+        <div class="PortfolioPartner-top">Город проживания</div>
+        <div>{{customer.city}}</div>
+    </div>
+
+    <div class="PortfolioPartner">
+        <div class="PortfolioPartner-top">Дата рождения</div>
+        <div>{{customer.birthdate}}</div>
+    </div>
+
+    <div class="PortfolioPartner">
+        <div class="PortfolioPartner-top">Количество бонусов</div>
+        <div>{{points_amount}}</div>
+    </div>
+</div>
+
+    <div class="header_ilya">
+<h2>История движения бонусов</h2>
+</div>
+	<div class="headers__users  header_users-list header_users-list1">
+		<div class="headerTable">Дата</div>
+		<div class="headerTable">Чек</div>
+		<div class="headerTable">Количество бонусов</div>
+		<div class="headerTable">Начисление/списание</div>
+		<div class="headerTable">Торговая точка</div>
+	</div>
+	<table  class="trStyle " id="myTable">
+		<tr class="trClass">
+			{% for elem in points_history %}
+			<td class="tdStyle">{{ elem.receipt.time_created }}</td>
+			<td class="tdStyle">{{elem.partner.receipt_prefix}}{{ elem.receipt.number }}</td>
+			<td class="tdStyle">{{ elem.points_amount }}</td>
+            {% if elem.receive_or_spend == 'recieve' %}
+            <td class="tdStyle">Начисление</td>
+            {% elif elem.receive_or_spend == 'spend'  %}
+            <td class="tdStyle">Списание</td>
+            {% endif %}
+			<td class="tdStyle">{{ elem.receipt.shop}}</td>
+			</td>
+		</tr>
+		{% endfor %}
+<!--		<tr class="trClass">-->
+<!--			<td class="tdStyle">Всего {{ supply.get_total_amount_of_SKU }} наименований</td>-->
+<!--			<td class="tdStyle"></td>-->
+<!--			<td class="tdStyle">{{ supply.get_total_amount_of_products }}</td>-->
+<!--			<td class="tdStyle">{{ supply.get_total_cost_of_supply }}</td>-->
+<!--			</td>-->
+	</table>
+
+    {% endblock %}
+
+
+
+
+
+

@@ -1,0 +1,89 @@
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+{% extends 'Jaimain/base.html' %}
+{% block content %}
+<!-- <form class="search form-text" action="{% url 'search' %}" method="GET">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<form class="form-text" action="">
+  		<input class="input-text" name="q" type="search">
+  		<i class="fa fa-search"></i>
+		  <input class="input-search" type="submit" value="Искать">
+</form> -->
+
+<!-- </form> -->
+<div class="header__users-top">
+
+	<div class="d7">
+		<form>
+		<input ul id="filter-list" class="filter-input" type="text" placeholder="Искать здесь...">
+		</form>
+	</div>
+
+	<!-- <button class="btn btn__addUsers1 btn-fuck zero1">
+
+		<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+	</button> -->
+
+
+
+	<div class="btn__addUsers">
+		<button class="btn ">
+			<a class="btn__text" href="{% url 'customer_creation' %}">Добавить Клиента</a>
+		</button>
+
+	</div>
+
+	<!-- <input type="text" class="filter-input"> -->
+
+
+</div>
+
+
+
+
+	<div class="headers__users  header_users-list header_users-list1">
+		<div class="headerTable">Фамилия</div>
+		<div class="headerTable">Имя</div>
+		<div class="headerTable">Пол</div>
+		<div class="headerTable">Дата рождения</div>
+		<div class="headerTable">Город</div>
+		<div class="headerTable">Номер телефона</div>
+		<div class="headerTable">Количество бонусов</div>
+		<div class="headerTable butPods" data-title="Сортировать от А - Я">
+			<button class="btn1 btn__addUsers1 btn-fuck ">
+			<!-- <a class="btn__text">Сортировать от A - Я </a> -->
+			<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+		</button>
+		</div>
+	</div>
+	<table  class="trStyle " id="myTable">
+
+
+		<tr class="trClass">
+			{% for c in customers_list %}
+			<td class="tdStyle">{{c.lastname}}</td>
+			<td class="tdStyle">{{c.firstname}}</td>
+			<td class="tdStyle">{{c.gender}}</td>
+			<td class="tdStyle">{{c.birthdate}}</td>
+			<td class="tdStyle">{{c.city}}</td>
+			<td class="tdStyle">{{c.tel_number}}</td>
+			<td class="tdStyle">{{c.get_points_amount}}</td>
+			<td class="tdStyle"> <button class="btn">
+				  <a class="btn__text" href="{{c.pk}}">Просмотр</a>
+				  </button>
+			</td>
+		</tr>
+
+
+		{% endfor %}
+	</table>
+
+
+		<div class="clear"></div>
+
+
+{% endblock %}

@@ -77,4 +77,30 @@
 {% for form in payment_form %}
 <li>{{ form }}</li>
 {% endfor %}
+
+
+
+
+<div class="header_ilya">
+    <h4>Базовая система лояльности партнера:</h4>
+    {% if bsl.0 %}
+<div style="text-align: right" class="btn_ilya">
+        <button class="btn">
+            <a class="white" href='{% url 'bsl_edit' bsl.0.pk %}'>Изменить Базовую Систему Лояльности</a>
+        </button>
+</div>
+
+    {% else %}
+<div style="text-align: right" class="btn_ilya">
+        <button class="btn">
+            <a class="white" href='{% url 'bsl_create' %}'>Создать Базовую Систему Лояльности</a>
+        </button>
+</div>
+    {% endif %}
+</div>
+<li>% начисляемых бонусов: {{ bsl.0.points_achieve }}%</li>
+<li>% стоимости товара для оплаты бонусами: {{ bsl.0.points_spend }}%</li>
+
+
 {% endblock %}
+

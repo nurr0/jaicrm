@@ -42,7 +42,13 @@ urlpatterns = [
     path('sell_receipt_list/', SellReceiptList.as_view(), name='sell_receipt_list'),
     path('sell_receipt_list/<int:receipt_pk>/', ShowSellReceipt.as_view(), name='show_receipt'),
     path('sell_receipt_list/<int:pk>/return/', SellReceiptReturnView.as_view(), name='receipt_return'),
-    path('dashboard/', dashboard, name='dashboard')
+    path('dashboard/', dashboard, name='dashboard'),
+    path('customers/', CustomersList.as_view(), name='customers'),
+    path('customers/create/', CustomerCreation.as_view(), name='customer_creation'),
+    path('customers/edit/<int:pk>/', CustomerEdit.as_view(), name='customer_edit'),
+    path('customers/<int:pk>', CustomerShow.as_view(), name='customer_show'),
+    path('partners/bsl_create/', BaseLoyaltySystemCreation.as_view(), name='bsl_create'),
+    path('partners/bsl_edit/<int:pk>/', BaseLoyaltySystemEdit.as_view(), name='bsl_edit'),
     # path('export_sales_data/', export_sales_data, name='export_sales_data'),
     # path('reports/', ReportsList.as_view(), name='reports')
 

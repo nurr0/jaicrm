@@ -30,20 +30,13 @@
   <button class="chartbtnGod btn">Продажи за Год</button>
   <canvas class="pie" id="myChart2"></canvas>
   <canvas id="myChart3"></canvas>
-  <button class="chart3btn btn">Сменить период</button>
+  <button class="chart3btn btn ">Сменить период</button>
   <canvas class="line" id="myChart4"></canvas>
   <canvas id="myChart5"></canvas>
-  <canvas id="myChart20"></canvas>
+  <!-- <canvas id="myChart20"></canvas> -->
 </div>
 
-<div>Продажи по категориям:
-  {{data_sales_by_cat_pie}}</div><br>
-<div>Продажи по магазинам для линейного графика:{{data_sales_by_shops_linear}}</div><br>
 
-<div>Продажи по формам оплаты для пирога: {{data_sales_by_payment_forms_pie}}</div><br>
-
-<div>Продажи по каналам продаж для пирога: {{data_sales_by_sales_channel_pie}}</div><br>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/Jaimain/chart.js"></script>
 {% endblock %}
-
-

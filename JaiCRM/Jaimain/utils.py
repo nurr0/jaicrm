@@ -16,6 +16,7 @@ menu = [
         {'title': "Товары на складах", 'url_name': 'products_in_stock'},
         {'title': 'Регистрация продаж', 'url_name': 'receipt_registration'},
         {'title': 'Продажи', 'url_name': 'sell_receipt_list'},
+        {'title': 'Клиенты', 'url_name': 'customers'}
         # {'title': 'Сформированные отчеты', 'url_name': 'reports'}
 
         ]

@@ -38,14 +38,13 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 
 
 class Partners(DataMixin, ListView):
+    paginate_by = 10
     model = Partner
     template_name = 'Jaimain/partners.html'
     context_object_name = 'partners'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -71,18 +70,12 @@ class ShowPartner(DataMixin, DetailView):
         c_def['shops_info'] = Shop.objects.filter(partner=self.object)
         c_def['sales_channel'] = SalesChannel.objects.filter(partner=self.object)
         c_def['payment_form'] = PaymentForm.objects.filter(partner=self.object)
+        c_def['bsl'] = BaseLoyaltySystem.objects.filter(partner=self.object)
         return dict(list(context.items()) + list(c_def.items()))
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
-
-    # def get(self, request):
-    #     partner_data = Partner.objects.all()
-    #     shops_data = Shop.objects.all()
-    #     return render(request, 'Jaimain/partner.html', {'partner_data': partner_data, 'shops_data': shops_data})
 
 
 class AddPartner(DataMixin, CreateView):
@@ -116,15 +109,11 @@ class EditPartner(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
 @login_required
 def search_partners(request):
-    if request.user.is_costumer:
-        raise PermissionDenied
     query = request.GET.get('q')
     results = []  # здесь будут храниться результаты поиска
 
@@ -143,6 +132,7 @@ def search_partners(request):
 
 
 class UsersList(DataMixin, ListView):
+    paginate_by = 20
     model = JaiUser
     template_name = 'Jaimain/users.html'
     context_object_name = 'users'
@@ -162,8 +152,6 @@ class UsersList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -180,8 +168,6 @@ class ShowUser(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -198,8 +184,6 @@ class EditUser(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -250,8 +234,6 @@ def logout_user(request):
 
 @login_required()
 def search_users(request):
-    if request.user.is_costumer:
-        raise PermissionDenied
     query = request.GET.get('q')
     results = []
 
@@ -268,14 +250,13 @@ def search_users(request):
 
 
 class ShowShops(DataMixin, ListView):
+    paginate_by = 10
     model = Shop
     template_name = 'Jaimain/shops.html'
     context_object_name = 'shops'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -327,8 +308,6 @@ class ShowShop(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -345,8 +324,6 @@ class EditShop(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -383,8 +360,6 @@ class ProductCategoriesList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -399,24 +374,6 @@ class ProductCategoriesList(DataMixin, ListView):
         queryset = ProductCategory.objects.all() if user.is_superuser else ProductCategory.objects.filter(
             partner=user.partner)
         return queryset
-
-
-# class EditProductCategory(DataMixin, UpdateView):
-#     model = ProductCategory
-#     fields = ['name', 'parent']
-#     template_name = 'Jaimain/editproductcategory.html'
-#     success_url = '/product_categories/'
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         c_def = self.get_user_context(title='Изменение товарной категории')
-#         return dict(list(context.items()) + list(c_def.items()))
-#
-#     @method_decorator(login_required)
-#     def dispatch(self, request, *args, **kwargs):
-#         if request.user.is_costumer:
-#             raise PermissionDenied
-#         return super().dispatch(request, *args, **kwargs)
 
 
 def edit_product_category(request, pk):
@@ -464,14 +421,13 @@ def edit_product_category(request, pk):
 
 
 class ProductPropertiesList(DataMixin, ListView):
+    paginate_by = 20
     model = ProductProperty
     template_name = 'Jaimain/product_properties.html'
     context_object_name = 'product_props'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -500,8 +456,6 @@ class EditProductProperty(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -569,14 +523,13 @@ def edit_sku(request, sku_pk):
 
 
 class SKUList(DataMixin, ListView):
+    paginate_by = 20
     model = SKU
     template_name = 'Jaimain/sku.html'
     context_object_name = 'sku_list'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -605,8 +558,6 @@ class ShowSKU(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -664,14 +615,13 @@ def add_supply(request):
 
 
 class SupplyList(DataMixin, ListView):
+    paginate_by = 20
     model = Supply
     template_name = 'Jaimain/supplies.html'
     context_object_name = 'supply_list'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -700,8 +650,6 @@ class ShowSupply(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -718,8 +666,6 @@ class EditSupply(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -763,14 +709,13 @@ def remove_products_from_shop(request, shop_pk):
 #     return render(request, 'decrease_form.html', {'form': form})
 
 class ProductInStockList(DataMixin, ListView):
+    paginate_by = 20
     model = ProductInStock
     template_name = 'Jaimain/products_in_stock.html'
     context_object_name = 'products_in_stock'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -829,26 +774,27 @@ class EditRetailPrice(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
+
+    """ДОДЕЛАТЬ НАЧИСЛЕНИЕ БОНУСОВ"""
 
 
 def register_a_sale(request):
     partner = request.user.partner
     receipt_number = SellReceipt.get_receipt_number_for_partner(partner)
     user_menu = menu.copy()
+    bsl_queryset = BaseLoyaltySystem.objects.filter(partner=partner)
 
     if request.method == 'POST':
         receipt_form = SaleRegistrationForm(request.POST)
         products_in_receipt_formset = ProductsInReceiptFormSet(request.POST, prefix='prods')
-        if receipt_form.is_valid() and products_in_receipt_formset.is_valid():
+        if receipt_form.is_valid():
             receipt = receipt_form.save(commit=False)
             receipt.partner = partner
             receipt.user_created = request.user
             receipt.number = receipt_number
-            receipt.save()
 
+            receipt.save()
             for form in products_in_receipt_formset:
                 if form.is_valid() and not form.cleaned_data.get('DELETE'):
                     products_in_receipt = form.save(commit=False)
@@ -860,8 +806,30 @@ def register_a_sale(request):
                         product_in_stock.amount -= amount_sold
                         product_in_stock.save()
                         form.save()
+            customer = receipt_form.cleaned_data['customer']
+            if customer:
+                if bsl_queryset:
+                    bsl = bsl_queryset[0]
+                    if receipt_form.cleaned_data['points_achieve_or_spend'] == 'recieve':
+                        points_achieve = int(int(receipt.get_total_price_with_discount()) * (bsl.points_achieve / 100))
+                        points_queryset = Points.objects.create(customer=customer,
+                                                                partner=partner,
+                                                                points_amount=points_achieve,
+                                                                receipt=receipt,
+                                                                receive_or_spend='recieve')
+                        points_queryset.save()
+                    elif receipt_form.cleaned_data['points_achieve_or_spend'] == 'spend' and \
+                            receipt_form.cleaned_data['points_spend'] > 0:
+                        points_queryset = Points.objects.create(customer=customer,
+                                                                partner=partner,
+                                                                points_amount=receipt_form.cleaned_data['points_spend'],
+                                                                receipt=receipt,
+                                                                receive_or_spend='spend')
+                        points_queryset.save()
+
 
             return redirect('sell_receipt_list')
+
         if not receipt_form.is_valid():
             print(receipt_form.errors)
     else:
@@ -869,27 +837,29 @@ def register_a_sale(request):
         products_in_receipt_formset = ProductsInReceiptFormSet(prefix='prods')
 
     receipt_form.fields['receipt_number_display'].initial = f'{partner.receipt_prefix} {receipt_number}'
+    receipt_form.fields['points_spend'].initial = 0
     receipt_form.fields['shop'].queryset = Shop.objects.filter(partner=request.user.partner)
     receipt_form.fields['sales_channel'].queryset = SalesChannel.objects.filter(partner=request.user.partner)
     receipt_form.fields['payment_form'].queryset = PaymentForm.objects.filter(partner=request.user.partner)
+    receipt_form.fields['customer'].queryset = Customer.objects.filter(partner=request.user.partner)
+
     for form in products_in_receipt_formset:
         form.fields['product'].queryset = ProductInStock.objects.filter(shop__partner=partner, amount__gt=0)
 
     return render(request, 'Jaimain/receipt_registration.html', {
         'receipt_form': receipt_form,
-        'products_in_receipt_formset': products_in_receipt_formset,'menu': user_menu, 'title': 'Регистрация продажи'
+        'products_in_receipt_formset': products_in_receipt_formset, 'menu': user_menu, 'title': 'Регистрация продажи'
     })
 
 
 class SellReceiptList(DataMixin, ListView):
+    paginate_by = 20
     model = SellReceipt
     template_name = 'Jaimain/sell_receipt_list.html'
     context_object_name = 'sell_receipt_list'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -915,12 +885,11 @@ class ShowSellReceipt(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Просмотр документа продажи')
         c_def['products_in_receipt'] = ProductInReceipt.objects.filter(receipt=self.object)
+        c_def['points_achieved'] = Points.objects.filter(receipt=self.object)
         return dict(list(context.items()) + list(c_def.items()))
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -951,8 +920,6 @@ class SellReceiptReturnView(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -991,14 +958,13 @@ def export_sales_data(request):
 
 
 class ReportsList(DataMixin, ListView):
+    paginate_by = 20
     model = ReportExport
     template_name = 'Jaimain/reports.html'
     context_object_name = 'reports'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_costumer:
-            raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -1018,12 +984,12 @@ def dashboard(request):
     user_menu = menu.copy()
     partner = request.user.partner
 
-    data_sales_by_cat_pie = data_for_sales_by_cat_donought(partner) # данные по продажам по категориям (функция в service)
-    data_sales_by_shops_linear = data_for_sales_by_shop_graph(partner) # линейный график продаж по магазинам
-    data_sales_by_payment_forms_pie = data_for_sales_by_payment_form_donought(partner) # круговая диаграмма по формам оплаты
+    data_sales_by_cat_pie = data_for_sales_by_cat_donought(
+        partner)  # данные по продажам по категориям (функция в service)
+    data_sales_by_shops_linear = data_for_sales_by_shop_graph(partner)  # линейный график продаж по магазинам
+    data_sales_by_payment_forms_pie = data_for_sales_by_payment_form_donought(
+        partner)  # круговая диаграмма по формам оплаты
     data_sales_by_sales_channel_pie = data_for_sales_by_sales_channel_donought(partner)
-
-
 
     return render(request, 'Jaimain/dashboard.html', {
         'menu': user_menu,
@@ -1034,6 +1000,120 @@ def dashboard(request):
         'data_sales_by_sales_channel_pie': data_sales_by_sales_channel_pie
 
     })
+
+
+class CustomersList(DataMixin, ListView):
+    paginate_by = 20
+    model = Customer
+    template_name = 'Jaimain/customers.html'
+    context_object_name = 'customers_list'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Клиенты')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        user = self.request.user
+        partner = self.request.user.partner
+        queryset = Customer.objects.all() if user.is_superuser else Customer.objects.filter(
+            partner=partner)
+        return queryset
+
+
+class CustomerCreation(DataMixin, CreateView):
+    form_class = CustomerCreationForm
+    template_name = 'Jaimain/customer_creation.html'
+    success_url = reverse_lazy('customers')
+    raise_exception = True
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Добавление Клиента')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        form.instance.partner = self.request.user.partner
+        return super().form_valid(form)
+
+
+class CustomerEdit(DataMixin, UpdateView):
+    model = Customer
+    fields = ['firstname', 'lastname', 'tel_number', 'gender', 'birthdate', 'city']
+    template_name = 'Jaimain/customer_edit.html'
+    success_url = reverse_lazy('customers')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение данных Клиента')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+class CustomerShow(DataMixin, DetailView):
+    model = Customer
+    template_name = 'Jaimain/customer_show.html'
+    pk_url_kwarg = 'pk'
+    context_object_name = 'customer'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Информация о клиенте')
+        c_def['points_amount'] = self.object.get_points_amount()
+        c_def['points_history'] = Points.objects.filter(customer=self.object)
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+class BaseLoyaltySystemCreation(DataMixin, CreateView):
+    form_class = BaseLoyaltySystemForm
+    template_name = 'Jaimain/bsl_create.html'
+    success_url = reverse_lazy('partners')
+    raise_exception = True
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Добавление Базовой Системы Лояльности')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        form.instance.partner = self.request.user.partner
+        return super().form_valid(form)
+
+
+class BaseLoyaltySystemEdit(DataMixin, UpdateView):
+    model = BaseLoyaltySystem
+    fields = ['points_achieve', 'points_spend']
+    template_name = 'Jaimain/bsl_edit.html'
+    success_url = reverse_lazy('partners')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение Базовой Системы Лояльности')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
 
 """API views \/"""
 
@@ -1082,16 +1162,17 @@ class PaymentFormAPIView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
     authentication_classes = [SessionAuthentication, BasicAuthentication]
 
-# class ReportAPIListPagination(PageNumberPagination):
-#     page_size = 2
-#     page_query_param = 'page_size'
-#     max_page_size = 100
+
+class ReportAPIListPagination(PageNumberPagination):
+    page_size = 2
+    page_query_param = 'page_size'
+    max_page_size = 100
 
 
 class ReportsAPIView(generics.ListAPIView):
     serializer_class = ReportsSerializer
     permission_classes = (IsAuthenticated,)
-    # pagination_class = ReportAPIListPagination
+    pagination_class = ReportAPIListPagination
 
     def get_queryset(self):
         return ReportExport.objects.filter(user=self.request.user)
@@ -1114,3 +1195,11 @@ def sales_report_export_api(request):
 class ProductInStockAPIView(generics.RetrieveAPIView):
     queryset = ProductInStock.objects.all()
     serializer_class = ProductInStockSerializer
+
+class ProductInStockListAPIView(generics.ListAPIView):
+    queryset = ProductInStock.objects.all()
+    serializer_class = ProductInStockSerializer
+
+class CustomerAPIView(generics.RetrieveAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer

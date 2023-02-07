@@ -1,0 +1,29 @@
+{% extends 'Jaimain/base.html' %}
+
+{% block content %}
+<h1 class="h1-header">{{title}}</h1>
+<!-- <div>
+    <button class="btn btn-addPart">Выбрать файл</button>
+</div> -->
+
+<form action="{% url 'bsl_create' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+{% for f in form %}
+<p class="p__addPart">
+    <label class="form-label p__addPart-width" for="{{ f.id_for_label }}">
+        {{f.label}}: </label>{{ f }}
+
+</p>
+
+<div class="form-error">{{ f.errors }}</div>
+{% endfor %}
+
+
+    <button class="btn" type="submit">Добавить</button>
+</form>
+
+
+{% endblock %}
