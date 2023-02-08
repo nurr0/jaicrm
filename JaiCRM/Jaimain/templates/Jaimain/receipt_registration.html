@@ -55,15 +55,24 @@
     </div>
 
 
-    <div>Товар | Установленная цена | Количество | Скидка | Цена с учетом скидки | Удалить </div>
+   
     
 
   
     <!-- <div class="glavTovariMid"><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div>
         <div><div> -->
+            <div class="whpGlav">
+                <p class="whp">Товар</p>
+                <p class="whp">Установленная цена</p>
+                <p class="whp">Количество</p>
+                <p class="whp">Скидка</p>
+                <p class="whp">Цена с учетом скидки</p>
+                <p class="whp"></p>
+            </div>
+            {% for form in products_in_receipt_formset %}
             <div class="RazdelTovari">
                 {{ products_in_receipt_formset.management_form }}
-                {% for form in products_in_receipt_formset %}
+                
                 {{ form.product }} {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}} {{ form.DELETE }}</div>
     
                 {{form.errors}}
@@ -76,8 +85,11 @@
     </div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div> -->
         
 
-    <h3>Всего товаров - , на сумму - </h3>
-    <div class="totalzArea">0</div>
+    <div>Всего товаров: </div> 
+     <div class="zArea"> 
+       <p>На сумму: </p> <p class="totalzArea"> 0</p> 
+    </div>
+   
     <input class="btn" type="submit" value="Сохранить">
 </form>
 

@@ -2101,7 +2101,28 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .whregishDoc{
-	width: 336px;
+	width: 356px;
 	border-radius: 20px;
-	
+}
+.zArea{
+	display: flex;
+	flex-wrap: wrap;
+}
+.totalzArea{
+	margin-left: 10px;
+	margin-bottom: 30px;
+}
+.flex-tovari{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.whpGlav{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.whp{
+	width: 170px;
+	text-align: center;
 }
