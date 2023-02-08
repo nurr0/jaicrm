@@ -289,7 +289,7 @@ ul.content-table li a {
 ul.content-table li a:hover {color: #F0711C;}
 
 .content-text {
-	margin: 30px 0 0 30px;
+	/* margin: 30px 0 0 30px; */
 	color: #000;
 	font-size: 20px;
 	font-family: Yandex Sans Display Light;
@@ -310,8 +310,12 @@ ul.content-table li a:hover {color: #F0711C;}
 	border-radius: 40px;
 	width: 30%;
 	margin-top: 10px;
-	
+}
 
+.flex-regist{
+	display: flex;
+	flex-wrap: wrap;
+	
 }
 
 
@@ -2094,4 +2098,31 @@ ul.lang-list li a:hover {color: #fdc073;}
 	width: 70px;
 	height: 70px;
 	margin-bottom: 20px;
+}
+
+.whregishDoc{
+	width: 356px;
+	border-radius: 20px;
+}
+.zArea{
+	display: flex;
+	flex-wrap: wrap;
+}
+.totalzArea{
+	margin-left: 10px;
+	margin-bottom: 30px;
+}
+.flex-tovari{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.whpGlav{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.whp{
+	width: 170px;
+	text-align: center;
 }
