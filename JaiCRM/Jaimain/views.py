@@ -873,7 +873,8 @@ class SellReceiptList(DataMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         partner = self.request.user.partner
-        queryset = SellReceipt.objects.all().order_by('-time_created') if user.is_superuser else SellReceipt.objects.filter(
+        queryset = SellReceipt.objects.all().order_by(
+            '-time_created') if user.is_superuser else SellReceipt.objects.filter(
             partner=partner).order_by('-time_created')
         return queryset
 
@@ -1245,3 +1246,11 @@ class ProductInStockListAPIView(generics.ListAPIView):
 class CustomerAPIView(generics.RetrieveAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+
+
+class CustomerListAPIView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CustomerSerializer
+
+    def get_queryset(self):
+        return Customer.objects.filter(partner=self.request.user.partner)
