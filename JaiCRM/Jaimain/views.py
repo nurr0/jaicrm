@@ -851,7 +851,10 @@ def register_a_sale(request):
 
     return render(request, 'Jaimain/receipt_registration.html', {
         'receipt_form': receipt_form,
-        'products_in_receipt_formset': products_in_receipt_formset, 'menu': user_menu, 'title': 'Регистрация продажи'
+        'products_in_receipt_formset': products_in_receipt_formset,
+        'menu': user_menu,
+        'title': 'Регистрация продажи',
+        'partner_bsl': bsl_queryset[0]
     })
 
 
