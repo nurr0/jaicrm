@@ -2,10 +2,11 @@
 const client = document.querySelector('select[name=customer]')
 const RazdelTovari = document.querySelector('.glavTovariMid')
 // const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[type=number]')
-const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[name*=price_with_discount]')
+// const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[name*=price_with_discount]')
+const inputcenaSychetomSkidki = document.querySelectorAll('input[name*=price_with_discount]')
 
 // const cenaSychetomSkidki = [...RazdelTovari.querySelectorAll('input[type=number]')]
-const cenaSychetomSkidki = [...RazdelTovari.querySelectorAll('input[name*=price_with_discount]')]
+const cenaSychetomSkidki = [...document.querySelectorAll('input[name*=price_with_discount]')]
 
 
 
@@ -80,6 +81,7 @@ client.addEventListener('change',GetCustomers)
 
 
 const tovariArray = document.querySelectorAll('select[name*=product]')
+
 for (let item of tovariArray){
         item.addEventListener('click', vuborTovari)
         async function vuborTovari(){
@@ -106,5 +108,23 @@ for (let item of tovariArray){
             
     }
     
-    GetTovari()
+   
+}
+
+
+
+const skidkas = document.querySelectorAll('input[name*=-discount]')
+for (let skidka of skidkas){
+    skidka.addEventListener('change',skidkaPlus)
+    function skidkaPlus(){
+        console.log('Привет бро');
+        console.log(skidka);
+        let ystanCenaSkidka = skidka.previousElementSibling.previousElementSibling
+        console.log(ystanCenaSkidka);
+
+        let cenaSkidka = skidka.nextElementSibling
+        cenaSkidka.value = Number(ystanCenaSkidka.value) -  ((Number(ystanCenaSkidka.value) / 100) * Number(skidka.value))
+        smenaCeniSkidki()
+        
+    }
 }
