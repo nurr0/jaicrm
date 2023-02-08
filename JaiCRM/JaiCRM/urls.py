@@ -34,6 +34,7 @@ urlpatterns = [
     path('api/v1/payment_form/', PaymentFormAPIView.as_view()),
     path('api/v1/customer/<int:pk>/', CustomerAPIView.as_view()),
     path('api/v1/product_in_stock/', ProductInStockListAPIView.as_view()),
+    path('api/v1/customers/', CustomerListAPIView.as_view())
 
 ]
 

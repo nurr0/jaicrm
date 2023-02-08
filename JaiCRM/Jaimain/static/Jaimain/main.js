@@ -29,7 +29,7 @@ function proverka(){
         console.log('privet')
         
     } else if (JSON.parse(localStorage.getItem('tasks')) == 0){
-        console.log('privet2')
+       
         
     }
 }
@@ -971,50 +971,50 @@ if (/add_supply/.test(location.href ) ){
 
 }
 
-if (/receipt_registration/.test(location.href ) ){
-    const tovarz = document.querySelectorAll('.form-group')
-    const plus1 = document.querySelector('.plus')
-    for (let item of tovarz){
-        item.classList.toggle('zero1')
-    }
+// if (/receipt_registration/.test(location.href ) ){
+//     const tovarz = document.querySelectorAll('.form-group')
+//     const plus1 = document.querySelector('.plus')
+//     for (let item of tovarz){
+//         item.classList.toggle('zero1')
+//     }
 
-    plus1.addEventListener('click', plus1Action)
-    function plus1Action(){
-        for (let item of tovarz){
-            if (item.classList.contains('zero1')){
-                item.classList.toggle('zero1')
-                const checkbox = item.querySelector('input[type=checkbox]')
-                checkbox.removeAttribute('checked')
-                return
-            }
+//     plus1.addEventListener('click', plus1Action)
+//     function plus1Action(){
+//         for (let item of tovarz){
+//             if (item.classList.contains('zero1')){
+//                 item.classList.toggle('zero1')
+//                 const checkbox = item.querySelector('input[type=checkbox]')
+//                 checkbox.removeAttribute('checked')
+//                 return
+//             }
 
-        }
-    }
+//         }
+//     }
 
-    const proverty01 = document.querySelector('#id_prods-0-DELETE')
-    proverty01.setAttribute('checked','checked')
-    // const proverty02 = document.querySelector('#id_prods-1-DELETE')
-    // proverty02.setAttribute('checked','checked')
+//     const proverty01 = document.querySelector('#id_prods-0-DELETE')
+//     proverty01.setAttribute('checked','checked')
+//     // const proverty02 = document.querySelector('#id_prods-1-DELETE')
+//     // proverty02.setAttribute('checked','checked')
 
-    document.querySelectorAll('.title0').forEach((el) => {
-        el.addEventListener('click',()=>{
-            let content = el.nextElementSibling ;
+//     document.querySelectorAll('.title0').forEach((el) => {
+//         el.addEventListener('click',()=>{
+//             let content = el.nextElementSibling ;
            
-            let contentP = content.querySelector('input[type=checkbox]')
-            contentP.setAttribute('checked','checked')
+//             let contentP = content.querySelector('input[type=checkbox]')
+//             contentP.setAttribute('checked','checked')
             
-            content.classList.toggle('zero1')
-            el.classList.toggle('zero1')
+//             content.classList.toggle('zero1')
+//             el.classList.toggle('zero1')
 
-        })
-    })
+//         })
+//     })
 
-    // const udalit1 = document.querySelectorAll('div')[33]
-    // udalit1.classList.toggle('zero')
+//     // const udalit1 = document.querySelectorAll('div')[33]
+//     // udalit1.classList.toggle('zero')
 
-    // const udalit2 = document.querySelectorAll('div')[41]
-    // udalit2.classList.toggle('zero')
-}
+//     // const udalit2 = document.querySelectorAll('div')[41]
+//     // udalit2.classList.toggle('zero')
+// }
 
 if (/product_properties/.test(location.href )){
     const arTd = document.querySelectorAll('.tdStyle')
