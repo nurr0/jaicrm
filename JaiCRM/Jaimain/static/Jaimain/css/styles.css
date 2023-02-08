@@ -310,8 +310,12 @@ ul.content-table li a:hover {color: #F0711C;}
 	border-radius: 40px;
 	width: 30%;
 	margin-top: 10px;
-	
+}
 
+.flex-regist{
+	display: flex;
+	flex-wrap: wrap;
+	
 }
 
 
@@ -2094,4 +2098,10 @@ ul.lang-list li a:hover {color: #fdc073;}
 	width: 70px;
 	height: 70px;
 	margin-bottom: 20px;
+}
+
+.whregishDoc{
+	width: 336px;
+	border-radius: 20px;
+	
 }

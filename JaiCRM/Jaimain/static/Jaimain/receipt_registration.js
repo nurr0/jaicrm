@@ -128,3 +128,9 @@ for (let skidka of skidkas){
         
     }
 }
+
+
+const UstanovlenCena = document.querySelectorAll('input[name*=price_in_stock]')
+for (let item of UstanovlenCena){
+    item.setAttribute('readonly','1')
+}
