@@ -99,6 +99,11 @@ for (let item of tovariArray){
             const cena = item.nextElementSibling 
             console.log(cena);
             cena.value = Number(ystanCena.get_sell_price);
+
+            let checkboxxx = item.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
+            console.log(checkboxxx);
+            checkboxxx.classList.remove('checked')
+            
             
             
             
