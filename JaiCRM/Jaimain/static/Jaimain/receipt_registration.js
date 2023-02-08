@@ -2,10 +2,10 @@
 const client = document.querySelector('select[name=customer]')
 const RazdelTovari = document.querySelector('.glavTovariMid')
 // const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[type=number]')
-const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[name*=discount]')
+const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[name*=price_with_discount]')
 
 // const cenaSychetomSkidki = [...RazdelTovari.querySelectorAll('input[type=number]')]
-const cenaSychetomSkidki = [...RazdelTovari.querySelectorAll('input[name*=discount]')]
+const cenaSychetomSkidki = [...RazdelTovari.querySelectorAll('input[name*=price_with_discount]')]
 
 
 
@@ -30,12 +30,12 @@ async function GetCustomers(){
     let response = await fetch('/api/v1/customers/'); 
     let result = await response.json();
     console.log(result);
-    let bonys = result.find(item => {
+    let bonys = result.find(res => {
         const clientId = Number(document.querySelector('select[name=customer]').value)
-        return item.id == clientId})
+        return res.id == clientId})
     console.log(bonys);
     console.log(bonys.points_amount);
-    spisivaemBonysi = document.querySelector('input[name=points_used')
+    spisivaemBonysi = document.querySelector('input[name=points_used]')
     spisivaemBonysi.value = bonys.points_amount;
 
     spisivaemBonysi.addEventListener('change', proverkaBonysov)
@@ -73,14 +73,11 @@ async function GetCustomers(){
     }
 }
 
+// GetCustomers()
+
+client.addEventListener('change',GetCustomers)
 
 
-client.addEventListener('change',GetTovari)
-
-async function GetTovari(){
-    let response = await fetch('/api/v1/product_in_stock/'); 
-    let result = await response.json();
-}
 
 const tovariArray = document.querySelectorAll('select[name*=product]')
 for (let item of tovariArray){
