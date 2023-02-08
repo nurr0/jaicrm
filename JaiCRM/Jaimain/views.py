@@ -822,14 +822,13 @@ def register_a_sale(request):
                                                                 receive_or_spend='recieve')
                         points_queryset.save()
                     elif receipt_form.cleaned_data['points_achieve_or_spend'] == 'spend' and \
-                            receipt_form.cleaned_data['points_spend'] > 0:
+                            receipt_form.cleaned_data['points_used'] > 0:
                         points_queryset = Points.objects.create(customer=customer,
                                                                 partner=partner,
-                                                                points_amount=receipt_form.cleaned_data['points_spend'],
+                                                                points_amount=receipt_form.cleaned_data['points_used'],
                                                                 receipt=receipt,
                                                                 receive_or_spend='spend')
                         points_queryset.save()
-
 
             return redirect('sell_receipt_list')
 
@@ -840,11 +839,11 @@ def register_a_sale(request):
         products_in_receipt_formset = ProductsInReceiptFormSet(prefix='prods')
 
     receipt_form.fields['receipt_number_display'].initial = f'{partner.receipt_prefix} {receipt_number}'
-    receipt_form.fields['points_spend'].initial = 0
-    receipt_form.fields['shop'].queryset = Shop.objects.filter(partner=request.user.partner)
-    receipt_form.fields['sales_channel'].queryset = SalesChannel.objects.filter(partner=request.user.partner)
-    receipt_form.fields['payment_form'].queryset = PaymentForm.objects.filter(partner=request.user.partner)
-    receipt_form.fields['customer'].queryset = Customer.objects.filter(partner=request.user.partner)
+    receipt_form.fields['points_used'].initial = 0
+    receipt_form.fields['shop'].queryset = Shop.objects.filter(partner=partner)
+    receipt_form.fields['sales_channel'].queryset = SalesChannel.objects.filter(partner=partner)
+    receipt_form.fields['payment_form'].queryset = PaymentForm.objects.filter(partner=partner)
+    receipt_form.fields['customer'].queryset = Customer.objects.filter(partner=partner)
 
     for form in products_in_receipt_formset:
         form.fields['product'].queryset = ProductInStock.objects.filter(shop__partner=partner, amount__gt=0)
@@ -874,8 +873,8 @@ class SellReceiptList(DataMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         partner = self.request.user.partner
-        queryset = SellReceipt.objects.all() if user.is_superuser else SellReceipt.objects.filter(
-            partner=partner)
+        queryset = SellReceipt.objects.all().order_by('-time_created') if user.is_superuser else SellReceipt.objects.filter(
+            partner=partner).order_by('-time_created')
         return queryset
 
 
@@ -908,6 +907,11 @@ class SellReceiptReturnView(DataMixin, UpdateView):
         receipt = form.save(commit=False)
         receipt.is_returned = True
         receipt.save()
+        try:
+            points_return = Points.objects.get(receipt=receipt)
+            points_return.delete()
+        except:
+            pass
 
         products_in_receipt = ProductInReceipt.objects.filter(receipt=receipt)
         for products_item in products_in_receipt:
@@ -1118,6 +1122,7 @@ class BaseLoyaltySystemEdit(DataMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+
 class PaymentFormEdit(DataMixin, UpdateView):
     model = PaymentForm
     fields = ['name']
@@ -1133,6 +1138,7 @@ class PaymentFormEdit(DataMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+
 class SalesChannelEdit(DataMixin, UpdateView):
     model = SalesChannel
     fields = ['name']
@@ -1147,6 +1153,8 @@ class SalesChannelEdit(DataMixin, UpdateView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+
 """API views \/"""
 
 
@@ -1196,7 +1204,7 @@ class PaymentFormAPIView(generics.ListCreateAPIView):
 
 
 class ReportAPIListPagination(PageNumberPagination):
-    page_size = 2
+    page_size = 10
     page_query_param = 'page_size'
     max_page_size = 100
 
@@ -1204,10 +1212,10 @@ class ReportAPIListPagination(PageNumberPagination):
 class ReportsAPIView(generics.ListAPIView):
     serializer_class = ReportsSerializer
     permission_classes = (IsAuthenticated,)
-    # pagination_class = ReportAPIListPagination
+    pagination_class = ReportAPIListPagination
 
     def get_queryset(self):
-        return ReportExport.objects.filter(user=self.request.user)
+        return ReportExport.objects.filter(user=self.request.user).order_by('-datetime')
 
 
 @api_view(['GET', 'POST'])
@@ -1228,9 +1236,11 @@ class ProductInStockAPIView(generics.RetrieveAPIView):
     queryset = ProductInStock.objects.all()
     serializer_class = ProductInStockSerializer
 
+
 class ProductInStockListAPIView(generics.ListAPIView):
     queryset = ProductInStock.objects.all()
     serializer_class = ProductInStockSerializer
+
 
 class CustomerAPIView(generics.RetrieveAPIView):
     queryset = Customer.objects.all()

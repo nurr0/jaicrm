@@ -205,11 +205,11 @@ class SaleRegistrationForm(forms.ModelForm):
     payment_form = forms.ModelChoiceField(queryset=PaymentForm.objects.all(), label='Форма оплаты')
     customer = forms.ModelChoiceField(queryset=Customer.objects.all(), label='Клиент', required=False)
     points_achieve_or_spend = forms.ChoiceField(choices=CHOICES, label='Бонусы')
-    points_spend = forms.IntegerField(label='Списываемые бонусы')
+
 
     class Meta:
         model = SellReceipt
-        fields = ['receipt_number_display', 'shop', 'customer', 'points_achieve_or_spend', 'sales_channel', 'payment_form']
+        fields = ['receipt_number_display', 'shop', 'customer', 'points_achieve_or_spend', 'sales_channel', 'payment_form', 'points_used']
 
 
 class ProductsInReceiptForm(forms.ModelForm):

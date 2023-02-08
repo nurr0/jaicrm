@@ -304,6 +304,7 @@ class SellReceipt(models.Model):
     payment_form = models.ForeignKey(PaymentForm, verbose_name='Способ оплаты', on_delete=models.DO_NOTHING)
     customer = models.ForeignKey(Customer, verbose_name='Клиент', on_delete=models.DO_NOTHING, null=True, default=None,
                                  blank=True)
+    points_used = models.IntegerField(verbose_name='Списываемые бонусы')
 
     class Meta:
         unique_together = (('partner', 'number'),)
