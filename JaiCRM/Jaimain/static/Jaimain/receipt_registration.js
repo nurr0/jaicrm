@@ -75,5 +75,34 @@ async function GetCustomers(){
 
 
 
+client.addEventListener('change',GetTovari)
 
-client.addEventListener('change',GetCustomers)
+async function GetTovari(){
+    let response = await fetch('/api/v1/product_in_stock/'); 
+    let result = await response.json();
+}
+
+const tovariArray = document.querySelectorAll('select[name*=product]')
+for (let item of tovariArray){
+        item.addEventListener('click', vuborTovari)
+        async function vuborTovari(){
+            console.log(item.value);
+            let response = await fetch('/api/v1/product_in_stock/'); 
+            let result = await response.json();
+            console.log(result);
+
+            let ystanCena = result.find(obj=>{
+               return obj.id == item.value
+            })
+            console.log(ystanCena);
+            console.log(item)
+            const cena = item.nextElementSibling 
+            console.log(cena);
+            cena.value = Number(ystanCena.get_sell_price);
+            
+            
+            
+    }
+    
+    GetTovari()
+}
