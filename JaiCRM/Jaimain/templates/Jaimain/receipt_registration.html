@@ -36,7 +36,7 @@
             <div class="RazdelTovari">
                 {{ products_in_receipt_formset.management_form }}
                 {% for form in products_in_receipt_formset %}
-                {{ form.product }} {{ form.price_in_stock }} {{ form.amount }} {{ form.discount }} {{form.price_with_discount}} {{ form.DELETE }}</div>
+                {{ form.product }} {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}} {{ form.DELETE }}</div>
     
                 {{form.errors}}
                 {% endfor %}

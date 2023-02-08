@@ -1,8 +1,13 @@
 // const clientId = Number(document.querySelector('select[name=customer]').value)
 const client = document.querySelector('select[name=customer]')
 const RazdelTovari = document.querySelector('.glavTovariMid')
-const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[type=number]')
+// const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[type=number]')
+const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[name*=discount]')
+
 const cenaSychetomSkidki = [...RazdelTovari.querySelectorAll('input[type=number]')]
+
+
+
 let totalzArea = document.querySelector('.totalzArea')
 
 for (let item of inputcenaSychetomSkidki){
