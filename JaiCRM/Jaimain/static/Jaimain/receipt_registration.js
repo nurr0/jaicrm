@@ -4,7 +4,8 @@ const RazdelTovari = document.querySelector('.glavTovariMid')
 // const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[type=number]')
 const inputcenaSychetomSkidki = RazdelTovari.querySelectorAll('input[name*=discount]')
 
-const cenaSychetomSkidki = [...RazdelTovari.querySelectorAll('input[type=number]')]
+// const cenaSychetomSkidki = [...RazdelTovari.querySelectorAll('input[type=number]')]
+const cenaSychetomSkidki = [...RazdelTovari.querySelectorAll('input[name*=discount]')]
 
 
 
