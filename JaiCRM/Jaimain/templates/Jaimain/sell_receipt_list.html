@@ -89,8 +89,8 @@
 			<th>Кол-во позиций</th>
 			<th>Кол-во товаров</th>
 			<th>Сумма</th>
-			<th>Скидка</th>
 			<th>Сумма с учетом скидки </th>
+			<th>Использовано бонусов</th>
 			<th>Возврат </th>
 			<th>
 				<div class="headerTable butPods" data-title="Сортировать Склад от А - Я">
@@ -111,9 +111,13 @@
 			<td class="tdStyle">{{unit.get_total_amount_of_SKU_in_receipt}}</td>
 			<td class="tdStyle">{{unit.get_total_amount_of_products_in_receipt}}</td>
 			<td class="tdStyle">{{unit.get_total_price}}</td>
-			<td class="tdStyle">{{unit.get_total_discount}}</td>
 			<td class="tdStyle">{{unit.get_total_price_with_discount}}</td>
-			<td class="tdStyle">{{unit.is_returned}}</td>
+			<td class="tdStyle">{{unit.points_used}}</td>
+			{% if unit.is_returned == True %}
+			<td class="tdStyle">Да</td>
+			{% elif unit.is_returned == False %}
+			<td class="tdStyle">Нет</td>
+			{% endif %}
 			<td class="tdStyle"> <button class="btn">
 				  <a class="btn__text" href="{{unit.pk}}">Просмотр</a>
 				  </button>
