@@ -45,9 +45,10 @@ async function GetCustomers(){
     spisivaemBonysi.addEventListener('change', proverkaBonysov)
     function proverkaBonysov(){
         if (spisivaemBonysi.value > bonys.points_amount){
-            let res = confirm('У клиента нет столько бонусов! Вернуть прошлое значение?')
+            let res = confirm('У клиента нет столько бонусов! Обнулить бонусы?')
             if (res){
-                spisivaemBonysi.value = bonys.points_amount;
+                // spisivaemBonysi.value = bonys.points_amount;
+                spisivaemBonysi.value = 0;
             } else {
                 // alert('Просьба отредактировать "Списываемые бонусы!')
             }
@@ -65,9 +66,10 @@ async function GetCustomers(){
         console.log(formyla);
         
         if (spisivaemBonysi.value > formyla){
-            let res = confirm('Списываемые бонусы больше чем БСЛ! Вернуть прошлое значение?')
+            let res = confirm('Списываемые бонусы больше чем БСЛ! Обнулить бонусы?')
             if (res){
-                spisivaemBonysi.value = bonys.points_amount;
+                // spisivaemBonysi.value = bonys.points_amount;
+                spisivaemBonysi.value = 0;
             } else {
                 // alert('Просьба отредактировать "Списываемые бонусы!')
             }
