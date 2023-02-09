@@ -796,7 +796,6 @@ def register_a_sale(request):
             receipt.partner = partner
             receipt.user_created = request.user
             receipt.number = receipt_number
-
             receipt.save()
             for form in products_in_receipt_formset:
                 if form.is_valid() and not form.cleaned_data.get('DELETE'):
