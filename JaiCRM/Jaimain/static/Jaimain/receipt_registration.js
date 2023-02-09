@@ -35,7 +35,7 @@ for (let item of inputcenaSychetomSkidki){
 const kolVoArray = document.querySelectorAll('input[name*=amount]')
 for (let kolVoItem of kolVoArray){
     kolVoItem.addEventListener('change',smenaKolVo)
-    kolVoItem.value = 1;
+    // kolVoItem.value = 1;
     function smenaKolVo(){
         
         const totalZ = cenaSychetomSkidki.reduce(function (sum, currentAccount) {
