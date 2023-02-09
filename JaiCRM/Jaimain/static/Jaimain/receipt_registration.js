@@ -37,14 +37,18 @@ async function GetCustomers(){
     console.log(bonys);
     console.log(bonys.points_amount);
     spisivaemBonysi = document.querySelector('input[name=points_used]')
-    spisivaemBonysi.value = bonys.points_amount;
+    // spisivaemBonysi.value = bonys.points_amount;
+    spisivaemBonysi.value = 0;
+    const bonysiClient = document.querySelector('.bonysiClient')
+    bonysiClient.innerHTML = bonys.points_amount;
 
     spisivaemBonysi.addEventListener('change', proverkaBonysov)
     function proverkaBonysov(){
         if (spisivaemBonysi.value > bonys.points_amount){
-            let res = confirm('У клиента нет столько бонусов! Вернуть прошлое значение?')
+            let res = confirm('У клиента нет столько бонусов! Обнулить бонусы?')
             if (res){
-                spisivaemBonysi.value = bonys.points_amount;
+                // spisivaemBonysi.value = bonys.points_amount;
+                spisivaemBonysi.value = 0;
             } else {
                 // alert('Просьба отредактировать "Списываемые бонусы!')
             }
@@ -62,9 +66,10 @@ async function GetCustomers(){
         console.log(formyla);
         
         if (spisivaemBonysi.value > formyla){
-            let res = confirm('Списываемые бонусы больше чем БСЛ! Вернуть прошлое значение?')
+            let res = confirm('Списываемые бонусы больше чем БСЛ! Обнулить бонусы?')
             if (res){
-                spisivaemBonysi.value = bonys.points_amount;
+                // spisivaemBonysi.value = bonys.points_amount;
+                spisivaemBonysi.value = 0;
             } else {
                 // alert('Просьба отредактировать "Списываемые бонусы!')
             }
@@ -103,8 +108,11 @@ for (let item of tovariArray){
             console.log(checkboxxx);
             checkboxxx.classList.remove('checked')
             
+            let cenasEchetomSkidki = item.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling
+            console.log(cenasEchetomSkidki);
             
-            
+            cenasEchetomSkidki.value = Number(ystanCena.get_sell_price);
+            smenaCeniSkidki()
             
     }
     
@@ -134,3 +142,22 @@ const UstanovlenCena = document.querySelectorAll('input[name*=price_in_stock]')
 for (let item of UstanovlenCena){
     item.setAttribute('readonly','1')
 }
+
+
+
+
+const vidBonysov = document.querySelector('select[name=points_achieve_or_spend]')
+
+vidBonysov.addEventListener('change',smenaVidBonysov)
+function smenaVidBonysov(){
+    if (vidBonysov.value == 'recieve' ){
+        spisivaemBonysi = document.querySelector('input[name=points_used]');
+        spisivaemBonysi.value = 0;
+        spisivaemBonysi.setAttribute('disabled', 1)
+    }
+    if (vidBonysov.value == 'spend' ){
+        spisivaemBonysi = document.querySelector('input[name=points_used]');
+        spisivaemBonysi.removeAttribute('disabled')
+    }
+}
+smenaVidBonysov()
