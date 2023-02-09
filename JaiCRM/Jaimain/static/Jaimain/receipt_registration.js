@@ -19,10 +19,24 @@ for (let item of inputcenaSychetomSkidki){
             return Number(sum) + Number(currentAccount.value);
             },0)
         console.log(totalZ);
-        totalzArea.innerHTML = totalZ;
+        let kolVo = item.previousElementSibling.previousElementSibling;
+        console.log(kolVo);
+        console.log(kolVo.value);
+        
+        totalzArea.innerHTML = totalZ * Number(kolVo.value);
     }
 }
-
+const kolVoArray = document.querySelectorAll('input[name*=amount]')
+for (let kolVoItem of kolVoArray){
+    kolVoItem.addEventListener('change',smenaKolVo)
+    function smenaKolVo(){
+        cenasYchetom = kolVoItem.nextElementSibling.nextElementSibling;
+        const totalZ = cenaSychetomSkidki.reduce(function (sum, currentAccount) {
+            return Number(sum) + Number(currentAccount.value);
+            },0)
+        totalzArea.innerHTML = totalZ *  Number(kolVoItem.value)
+    }
+}
 
 // const spisivaemBonysi = document.querySelector('input[name=points_used')
 var spisivaemBonysi
