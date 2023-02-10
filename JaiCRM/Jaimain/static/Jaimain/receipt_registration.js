@@ -15,14 +15,36 @@ let totalzArea = document.querySelector('.totalzArea')
 for (let item of inputcenaSychetomSkidki){
     item.addEventListener('change',smenaCeniSkidki)
     function smenaCeniSkidki(){
+        let kolVo = item.previousElementSibling.previousElementSibling;
+        let resultatSlozhenia = Number(kolVo.value) * Number(item.value);
         const totalZ = cenaSychetomSkidki.reduce(function (sum, currentAccount) {
-            return Number(sum) + Number(currentAccount.value);
+            let kek = currentAccount.previousElementSibling.previousElementSibling
+            return Number(sum) + (Number(currentAccount.value) * Number(kek.value));
             },0)
         console.log(totalZ);
-        totalzArea.innerHTML = totalZ;
+        
+        console.log(kolVo);
+        console.log(kolVo.value);
+        if (kolVo.value == 0){
+            totalzArea.innerHTML = 0
+        }else {
+            totalzArea.innerHTML = totalZ ;
+        }
     }
 }
-
+const kolVoArray = document.querySelectorAll('input[name*=amount]')
+for (let kolVoItem of kolVoArray){
+    kolVoItem.addEventListener('change',smenaKolVo)
+    // kolVoItem.value = 1;
+    function smenaKolVo(){
+        
+        const totalZ = cenaSychetomSkidki.reduce(function (sum, currentAccount) {
+            let kek = currentAccount.previousElementSibling.previousElementSibling
+            return Number(sum) + (Number(currentAccount.value) * Number(kek.value));
+            },0)
+        totalzArea.innerHTML = totalZ 
+    }
+}
 
 // const spisivaemBonysi = document.querySelector('input[name=points_used')
 var spisivaemBonysi
@@ -45,15 +67,8 @@ async function GetCustomers(){
     spisivaemBonysi.addEventListener('change', proverkaBonysov)
     function proverkaBonysov(){
         if (spisivaemBonysi.value > bonys.points_amount){
-            let res = confirm('У клиента нет столько бонусов! Обнулить бонусы?')
-            if (res){
-                // spisivaemBonysi.value = bonys.points_amount;
-                spisivaemBonysi.value = 0;
-            } else {
-                // alert('Просьба отредактировать "Списываемые бонусы!')
-            }
-            // alert('У клиента нет столько бонусов!')
-            // spisivaemBonysi.value = bonys.points_amount;
+            alert('У клиента нет столько бонусов!');
+            
         }
         let totalzArea = document.querySelector('.totalzArea')
         console.log(totalzArea.innerHTML);
@@ -66,15 +81,8 @@ async function GetCustomers(){
         console.log(formyla);
         
         if (spisivaemBonysi.value > formyla){
-            let res = confirm('Списываемые бонусы больше чем БСЛ! Обнулить бонусы?')
-            if (res){
-                // spisivaemBonysi.value = bonys.points_amount;
-                spisivaemBonysi.value = 0;
-            } else {
-                // alert('Просьба отредактировать "Списываемые бонусы!')
-            }
-            // alert('БСЛ')
-            // spisivaemBonysi.value = bonys.points_amount;
+            alert('Списываемые бонусы больше чем БСЛ!');
+            
         }
     }
 }
@@ -90,6 +98,8 @@ const tovariArray = document.querySelectorAll('select[name*=product]')
 for (let item of tovariArray){
         item.addEventListener('click', vuborTovari)
         async function vuborTovari(){
+            let kolVovTovar = item.nextElementSibling.nextElementSibling;
+           
             console.log(item.value);
             let response = await fetch('/api/v1/product_in_stock/'); 
             let result = await response.json();
@@ -112,8 +122,17 @@ for (let item of tovariArray){
             console.log(cenasEchetomSkidki);
             
             cenasEchetomSkidki.value = Number(ystanCena.get_sell_price);
-            smenaCeniSkidki()
             
+
+            
+            // kolVovTovar.value = 1;
+            console.log(kolVovTovar.value);
+            
+            const totalZ = cenaSychetomSkidki.reduce(function (sum, currentAccount) {
+                let kek = currentAccount.previousElementSibling.previousElementSibling
+                return Number(sum) + (Number(currentAccount.value) * Number(kek.value));
+                },0)
+            totalzArea.innerHTML = totalZ 
     }
     
    
