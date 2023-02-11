@@ -114,9 +114,7 @@ for (let item of tovariArray){
             console.log(cena);
             cena.value = Number(ystanCena.get_sell_price);
 
-            let checkboxxx = item.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
-            console.log(checkboxxx);
-            checkboxxx.classList.remove('checked')
+            
             
             let cenasEchetomSkidki = item.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling
             console.log(cenasEchetomSkidki);
