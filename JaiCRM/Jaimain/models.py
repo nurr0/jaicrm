@@ -34,6 +34,8 @@ class Partner(models.Model):
 class JaiUser(AbstractUser):
     partner = models.ForeignKey('Partner', on_delete=models.PROTECT, verbose_name="Партнер", default=None, null=True)
     tel_number = models.CharField(max_length=255, verbose_name='Контактный телефон')
+    shop_allowed = models.ForeignKey('Shop', on_delete=models.PROTECT, verbose_name='Сотрудник торговой точки', default=None, blank=True, null=True)
+    is_partner_admin = models.BooleanField(verbose_name='Является администратором партнера', default=False)
 
     def __str__(self):
         return self.username
@@ -160,16 +162,23 @@ class ProductInStock(models.Model):
         return latest_supply_cost
 
     def get_sell_price(self):
-        sell_price = SellPrice.objects.get(product_in_stock=self).price
-        return sell_price
+        sell_price = SellPrice.objects.filter(product_in_stock=self)
+        if sell_price:
+            return sell_price[0].price
+        else:
+            return 0
 
     def get_retail_price_id(self):
         retail_price_id = SellPrice.objects.get(product_in_stock=self).pk
         return retail_price_id
 
+    def get_amount(self):
+        return self.amount
+
     class Meta:
         unique_together = (('product', 'shop'),)
-
+        verbose_name = 'Товар на складе'
+        verbose_name_plural = 'Товары на складе'
 
 class Supply(models.Model):
     supplier = models.CharField(max_length=255, verbose_name='Поставщик')
@@ -181,6 +190,8 @@ class Supply(models.Model):
 
     class Meta:
         unique_together = (('supplier', 'document'),)
+        verbose_name = 'Поступление товаров'
+        verbose_name_plural = 'Поступления товаров'
 
     def __str__(self):
         return self.document
@@ -212,6 +223,8 @@ class ProductsInSupply(models.Model):
 
     class Meta:
         unique_together = (('product', 'supply'),)
+        verbose_name = 'Товар в поставке'
+        verbose_name_plural = 'Товары в поставке'
 
 class ProductsRemove(models.Model):
     shop = models.ForeignKey(Shop, verbose_name='Склад', on_delete=models.PROTECT)
@@ -221,15 +234,25 @@ class ProductsRemove(models.Model):
     date_created = models.DateField(auto_now_add=True)
     user_created = models.ForeignKey(JaiUser, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return f'[{self.shop}] {self.product} ({self.reason}) {self.date_created}]'
+
+    class Meta:
+        verbose_name = 'Списание товаров'
+        verbose_name_plural = 'Списания товаров'
 
 class SellPrice(models.Model):
     product_in_stock = models.ForeignKey(ProductInStock, verbose_name='Товар', on_delete=models.PROTECT)
     price = models.DecimalField(verbose_name='Цена', decimal_places=2, max_digits=11)
     partner = models.ForeignKey(Partner, verbose_name='Партнер', on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.product_in_stock.__str__()
+
     class Meta:
         unique_together = (('product_in_stock', 'partner'),)
-
+        verbose_name = 'Продажная цена'
+        verbose_name_plural = 'Продажные цены'
 
 class SalesChannel(models.Model):
     name = models.CharField(max_length=254, verbose_name='Наименование канала продаж')
@@ -308,6 +331,8 @@ class SellReceipt(models.Model):
 
     class Meta:
         unique_together = (('partner', 'number'),)
+        verbose_name = 'Документ продажи'
+        verbose_name_plural = 'Документы продажи'
 
     @staticmethod
     def get_receipt_number_for_partner(partner):
@@ -355,6 +380,11 @@ class ProductInReceipt(models.Model):
 
     class Meta:
         unique_together = (('receipt', 'product'),)
+        verbose_name = 'Товар в чеке'
+        verbose_name_plural = 'Товары в чеке'
+
+    def __str__(self):
+        return self.product.__str__()
 
     def get_total_cost(self):
         return self.amount * self.price_in_stock
@@ -384,6 +414,8 @@ class Points(models.Model):
         verbose_name = 'Бонусы'
         verbose_name_plural = 'Бонусы'
 
+    def __str__(self):
+        return f'{self.receive_or_spend} {self.pk}'
 
 class BaseLoyaltySystem(models.Model):
     partner = models.ForeignKey(Partner, verbose_name='Партнер', on_delete=models.PROTECT, unique=True)
@@ -393,3 +425,6 @@ class BaseLoyaltySystem(models.Model):
     class Meta:
         verbose_name = 'Базовая система лояльности'
         verbose_name_plural = 'Базовые системы лояльности'
+
+    def __str__(self):
+        return f'БСЛ {self.partner.__str__()}'

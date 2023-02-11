@@ -71,6 +71,7 @@ class ShowPartner(DataMixin, DetailView):
         c_def['sales_channel'] = SalesChannel.objects.filter(partner=self.object)
         c_def['payment_form'] = PaymentForm.objects.filter(partner=self.object)
         c_def['bsl'] = BaseLoyaltySystem.objects.filter(partner=self.object)
+        c_def['user'] = self.request.user
         return dict(list(context.items()) + list(c_def.items()))
 
     @method_decorator(login_required)
@@ -143,9 +144,6 @@ class UsersList(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return JaiUser.objects.all()
-
-    def get_queryset(self):
         user = self.request.user
         queryset = JaiUser.objects.all() if user.is_superuser else JaiUser.objects.filter(partner=user.partner)
         return queryset
@@ -163,17 +161,25 @@ class ShowUser(DataMixin, DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Партнеры')
+        c_def = self.get_user_context(title='Просмотр пользователя')
+        c_def['self_user'] = self.request.user
         return dict(list(context.items()) + list(c_def.items()))
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        partner = self.get_object().partner
+        if user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        elif user.partner == partner and (user.is_partner_admin or user == self.get_object()):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 class EditUser(DataMixin, UpdateView):
     model = JaiUser
-    fields = ['last_name', 'first_name', 'email', 'is_active']
+    fields = ['last_name', 'first_name', 'email', 'shop_allowed', 'is_active']
     template_name = 'Jaimain/edituser.html'
     success_url = '/users/'
 
@@ -184,7 +190,14 @@ class EditUser(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        partner = self.get_object().partner
+        if user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        elif user.partner == partner and user.is_partner_admin:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 class RegisterUser(DataMixin, CreateView):
@@ -263,6 +276,7 @@ class ShowShops(DataMixin, ListView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Торговые точки')
         c_def['user_partner'] = self.request.user.partner
+        c_def['self_user'] = self.request.user
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
@@ -270,13 +284,14 @@ class ShowShops(DataMixin, ListView):
         queryset = Shop.objects.all() if user.is_superuser else Shop.objects.filter(partner=user.partner)
         return queryset
 
-
+@login_required()
 def add_shop(request):
     template = 'Jaimain/addshop.html'
     user_menu = menu.copy()
     form = AddShopForm()
     context = {'menu': user_menu, 'form': form}
-
+    if not request.user.is_partner_admin:
+        raise PermissionDenied
     if request.method == 'POST':
         form = AddShopForm(request.POST)
         if form.is_valid():
@@ -291,7 +306,7 @@ def add_shop(request):
         else:
             form = AddShopForm()
 
-    return render(request, template, context=context)
+    return render(request, template, context=context, self_user=request.user)
 
 
 class ShowShop(DataMixin, DetailView):
@@ -304,11 +319,19 @@ class ShowShop(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Торговая точка')
         c_def['products_in_shop'] = ProductInStock.objects.filter(shop=self.object)
+        c_def['self_user'] = self.request.user
         return dict(list(context.items()) + list(c_def.items()))
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        partner = self.get_object().partner
+        if user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        elif user.partner == partner:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 class EditShop(DataMixin, UpdateView):
@@ -324,9 +347,16 @@ class EditShop(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        partner = self.get_object().partner
+        if user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        elif user.partner == partner:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
-
+@login_required()
 def add_product_category(request):
     template = 'Jaimain/addrootproductcategory.html'
     form = AddProductCategoryForm()
@@ -375,9 +405,11 @@ class ProductCategoriesList(DataMixin, ListView):
             partner=user.partner)
         return queryset
 
-
+@login_required()
 def edit_product_category(request, pk):
     product_category = get_object_or_404(ProductCategory, pk=pk)
+    if request.user.partner != product_category.partner:
+        raise PermissionDenied
     user_menu = menu.copy()
     partner = request.user.partner
     context = {'partner': partner, 'menu': user_menu, }
@@ -456,9 +488,16 @@ class EditProductProperty(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        partner = self.get_object().partner
+        if user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        elif user.partner == partner:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
-
+@login_required()
 def add_sku(request):
     user_menu = menu.copy()
     # context = {'partner': partner, 'form': form, 'menu': user_menu}
@@ -487,15 +526,19 @@ def add_sku(request):
         productpropertyrelation_formset = ProductPropertyRelationFormSet()
 
     sku_form.fields['category'].queryset = ProductCategory.objects.filter(partner=request.user.partner)
+    for form in productpropertyrelation_formset:
+        form.fields['property'].queryset = ProductProperty.objects.filter(partner=request.user.partner)
     return render(request, 'Jaimain/add_sku.html', {
         'sku_form': sku_form,
         'productpropertyrelation_formset': productpropertyrelation_formset, 'menu': user_menu
     })
 
-
+@login_required()
 def edit_sku(request, sku_pk):
     user_menu = menu.copy()
     sku = get_object_or_404(SKU, pk=sku_pk)
+    if sku.partner != request.user.partner:
+        raise PermissionDenied
 
     if request.method == 'POST':
         sku_form = AddSKUForm(request.POST, request.FILES, instance=sku)
@@ -558,12 +601,17 @@ class ShowSKU(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        partner = self.get_object().partner
+        if user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        elif user.partner == partner:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
-"""Переписать \/"""
-
-
+@login_required()
 def add_supply(request):
     user_menu = menu.copy()
     if request.method == 'POST':
@@ -576,7 +624,7 @@ def add_supply(request):
             shop_supply_to = supply.warehouse
             try:
                 for form in products_in_supply_formset:
-                    if form.cleaned_data.get('DELETE'):
+                    if not form.cleaned_data.get('product'):
                         continue
                     if form.is_valid:
                         products_in_supply = form.save(commit=False)
@@ -595,7 +643,7 @@ def add_supply(request):
                             ProductInStock.objects.create(amount=amount_added,
                                                           product=product_added,
                                                           shop=shop_supply_to)
-                if all([form.cleaned_data.get('DELETE') for form in products_in_supply_formset]):
+                if all([form.cleaned_data.get('product') is None for form in products_in_supply_formset]):
                     supply.delete()
             except:
                 supply.delete()
@@ -606,9 +654,12 @@ def add_supply(request):
         add_supply_form = AddSupplyForm()
         products_in_supply_formset = ProductsInSupplyFormSet()
 
-    add_supply_form.fields['warehouse'].queryset = Shop.objects.filter(partner=request.user.partner)
+    if request.user.is_partner_admin or request.user.shop_allowed is None:
+        add_supply_form.fields['warehouse'].queryset = Shop.objects.filter(partner=request.user.partner)
+    else:
+        add_supply_form.fields['warehouse'].queryset = Shop.objects.filter(pk=request.user.shop_allowed.pk)
+        add_supply_form.fields['warehouse'].initial = request.user.shop_allowed.pk
     for form in products_in_supply_formset:
-        form.fields['DELETE'].initial = True
         form.fields['product'].queryset = SKU.objects.filter(partner=request.user.partner)
 
     return render(request, 'Jaimain/add_supply.html', {
@@ -634,8 +685,13 @@ class SupplyList(DataMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Supply.objects.all() if user.is_superuser else Supply.objects.filter(
-            partner=user.partner)
+        if user.is_superuser:
+            queryset = Supply.objects.all()
+        elif user.is_partner_admin or user.shop_allowed is None:
+            queryset = Supply.objects.filter(partner=user.partner)
+        else:
+            queryset = Supply.objects.filter(warehouse=user.shop_allowed.pk)
+
         return queryset
 
 
@@ -653,7 +709,11 @@ class ShowSupply(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 class EditSupply(DataMixin, UpdateView):
@@ -669,13 +729,23 @@ class EditSupply(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
-
+@login_required()
 def remove_products_from_shop(request, shop_pk):
     user_menu = menu.copy()
     template = 'Jaimain/product_remove.html'
     shop = Shop.objects.get(pk=shop_pk)
+    if not request.user.is_partner_admin:
+        raise PermissionDenied
+    if request.user.partner != shop.partner:
+        raise PermissionDenied
+    if request.user.shop_allowed and request.user.shop_allowed != shop:
+        raise PermissionDenied
     if request.method == 'POST':
         form = ProductsRemoveForm(request.POST)
         if form.is_valid():
@@ -729,12 +799,18 @@ class ProductInStockList(DataMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         partners_shops = Shop.objects.filter(partner=user.partner)
-        queryset = ProductInStock.objects.all() if user.is_superuser else ProductInStock.objects.filter(
-            shop__in=partners_shops)
+        if self.request.user.is_superuser:
+            queryset = ProductInStock.objects.all()
+        elif self.request.user.is_partner_admin or self.request.user.shop_allowed is None:
+            queryset = ProductInStock.objects.filter(shop__in=partners_shops)
+        else:
+            queryset = ProductInStock.objects.filter(shop=self.request.user.shop_allowed)
         return queryset
 
-
+@login_required()
 def add_sell_price(request):
+    if not request.user.is_partner_admin and not request.user.is_superuser:
+       raise PermissionDenied
     user_menu = menu.copy()
     shops = Shop.objects.filter(partner=request.user.partner)
     queryset = ProductInStock.objects.filter(sellprice__isnull=True, shop__in=shops)
@@ -777,11 +853,14 @@ class EditRetailPrice(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
+        user = self.request.user
+        if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
     """ДОДЕЛАТЬ НАЧИСЛЕНИЕ БОНУСОВ"""
 
-
+@login_required()
 def register_a_sale(request):
     partner = request.user.partner
     receipt_number = SellReceipt.get_receipt_number_for_partner(partner)
@@ -790,44 +869,52 @@ def register_a_sale(request):
 
     if request.method == 'POST':
         receipt_form = SaleRegistrationForm(request.POST)
-        products_in_receipt_formset = ProductsInReceiptFormSet(request.POST, prefix='prods')
-        if receipt_form.is_valid():
+        products_in_receipt_formset = ProductsInReceiptFormSet(request.POST)
+        if receipt_form.is_valid() and products_in_receipt_formset.is_valid():
             receipt = receipt_form.save(commit=False)
             receipt.partner = partner
             receipt.user_created = request.user
             receipt.number = receipt_number
             receipt.save()
+            receipt_deleted = False
             for form in products_in_receipt_formset:
-                if form.is_valid() and not form.cleaned_data.get('DELETE'):
-                    products_in_receipt = form.save(commit=False)
-                    products_in_receipt.receipt = receipt
-                    products_in_receipt.save()
-                    amount_sold = products_in_receipt.amount
+                if form.is_valid():
+                    if not form.cleaned_data.get('product'):
+                        continue
+                    product_in_receipt = form.save(commit=False)
+                    product_in_receipt.receipt = receipt
+                    amount_sold = product_in_receipt.amount
                     product_in_stock = form.cleaned_data['product']
-                    if product_in_stock.amount >= amount_sold:
-                        product_in_stock.amount -= amount_sold
-                        product_in_stock.save()
-                        form.save()
-            customer = receipt_form.cleaned_data['customer']
-            if customer:
-                if bsl_queryset:
-                    bsl = bsl_queryset[0]
-                    if receipt_form.cleaned_data['points_achieve_or_spend'] == 'recieve':
-                        points_achieve = int(int(receipt.get_total_price_with_discount()) * (bsl.points_achieve / 100))
-                        points_queryset = Points.objects.create(customer=customer,
-                                                                partner=partner,
-                                                                points_amount=points_achieve,
-                                                                receipt=receipt,
-                                                                receive_or_spend='recieve')
-                        points_queryset.save()
-                    elif receipt_form.cleaned_data['points_achieve_or_spend'] == 'spend' and \
-                            receipt_form.cleaned_data['points_used'] > 0:
-                        points_queryset = Points.objects.create(customer=customer,
-                                                                partner=partner,
-                                                                points_amount=receipt_form.cleaned_data['points_used'],
-                                                                receipt=receipt,
-                                                                receive_or_spend='spend')
-                        points_queryset.save()
+                    product_in_stock.amount -= amount_sold
+                    product_in_stock.save()
+                    product_in_receipt.save()
+
+            if all([form.cleaned_data.get('product') is None for form in products_in_receipt_formset]):
+                receipt.delete()
+                receipt_deleted = True
+                raise ValidationError('Нельзя создать чек без товаров')
+
+            if not receipt_deleted:
+                customer = receipt_form.cleaned_data['customer']
+                if customer:
+                    if bsl_queryset:
+                        bsl = bsl_queryset[0]
+                        if receipt_form.cleaned_data['points_achieve_or_spend'] == 'recieve':
+                            points_achieve = int(int(receipt.get_total_price_with_discount()) * (bsl.points_achieve / 100))
+                            points_queryset = Points.objects.create(customer=customer,
+                                                                    partner=partner,
+                                                                    points_amount=points_achieve,
+                                                                    receipt=receipt,
+                                                                    receive_or_spend='recieve')
+                            points_queryset.save()
+                        elif receipt_form.cleaned_data['points_achieve_or_spend'] == 'spend' and \
+                                receipt_form.cleaned_data['points_used'] > 0:
+                            points_queryset = Points.objects.create(customer=customer,
+                                                                    partner=partner,
+                                                                    points_amount=receipt_form.cleaned_data['points_used'],
+                                                                    receipt=receipt,
+                                                                    receive_or_spend='spend')
+                            points_queryset.save()
 
             return redirect('sell_receipt_list')
 
@@ -835,18 +922,25 @@ def register_a_sale(request):
             print(receipt_form.errors)
     else:
         receipt_form = SaleRegistrationForm()
-        products_in_receipt_formset = ProductsInReceiptFormSet(prefix='prods')
+        products_in_receipt_formset = ProductsInReceiptFormSet()
 
     receipt_form.fields['receipt_number_display'].initial = f'{partner.receipt_prefix} {receipt_number}'
     receipt_form.fields['points_used'].initial = 0
-    receipt_form.fields['shop'].queryset = Shop.objects.filter(partner=partner)
+    if request.user.is_partner_admin or request.user.shop_allowed is None:
+        receipt_form.fields['shop'].queryset = Shop.objects.filter(partner=partner)
+    else:
+        receipt_form.fields['shop'].queryset = Shop.objects.filter(pk=request.user.shop_allowed.pk)
+        receipt_form.fields['shop'].initial = request.user.shop_allowed
     receipt_form.fields['sales_channel'].queryset = SalesChannel.objects.filter(partner=partner)
     receipt_form.fields['payment_form'].queryset = PaymentForm.objects.filter(partner=partner)
     receipt_form.fields['customer'].queryset = Customer.objects.filter(partner=partner)
 
     for form in products_in_receipt_formset:
-        form.fields['product'].queryset = ProductInStock.objects.filter(shop__partner=partner, amount__gt=0)
-        form.fields['DELETE'].initial = True
+        if request.user.is_partner_admin or request.user.shop_allowed is None:
+            form.fields['product'].queryset = ProductInStock.objects.filter(shop__partner=partner, amount__gt=0)
+        else:
+            form.fields['product'].queryset = ProductInStock.objects.filter(shop=request.user.shop_allowed, amount__gt=0)
+        form.fields['DELETE'].initial = False
 
     return render(request, 'Jaimain/receipt_registration.html', {
         'receipt_form': receipt_form,
@@ -875,9 +969,13 @@ class SellReceiptList(DataMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         partner = self.request.user.partner
-        queryset = SellReceipt.objects.all().order_by(
-            '-time_created') if user.is_superuser else SellReceipt.objects.filter(
-            partner=partner).order_by('-time_created')
+        if user.is_superuser:
+            queryset = SellReceipt.objects.all().order_by(
+            '-time_created')
+        elif user.is_partner_admin:
+            queryset = SellReceipt.objects.filter(partner=partner).order_by('-time_created')
+        else:
+            queryset = SellReceipt.objects.filter(shop=user.shop_allowed).order_by('-time_created')
         return queryset
 
 
@@ -896,7 +994,13 @@ class ShowSellReceipt(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        if user.is_superuser or \
+                (user.is_partner_admin and user.partner == self.get_object().partner) or \
+                (user.shop_allowed == self.get_object().shop):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 class SellReceiptReturnView(DataMixin, UpdateView):
@@ -931,7 +1035,13 @@ class SellReceiptReturnView(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        if user.is_superuser or \
+                (user.is_partner_admin and user.partner == self.get_object().partner) or \
+                (user.shop_allowed == self.get_object().shop):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 # def export_data(request):
@@ -955,7 +1065,7 @@ class SellReceiptReturnView(DataMixin, UpdateView):
 #
 #     return render(request, 'Jaimain/export.html')
 
-
+@login_required()
 def export_sales_data(request):
     if request.method == 'POST':
         # Get selected option from form
@@ -990,7 +1100,7 @@ class ReportsList(DataMixin, ListView):
             user__partner=partner)
         return queryset
 
-
+@login_required()
 def dashboard(request):
     user_menu = menu.copy()
     partner = request.user.partner
@@ -1069,7 +1179,11 @@ class CustomerEdit(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        if user.is_superuser or (user.partner == self.get_object().partner):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 class CustomerShow(DataMixin, DetailView):
@@ -1087,7 +1201,11 @@ class CustomerShow(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        if user.is_superuser or (user.partner == self.get_object().partner):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 class BaseLoyaltySystemCreation(DataMixin, CreateView):
@@ -1098,7 +1216,10 @@ class BaseLoyaltySystemCreation(DataMixin, CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        if request.user.is_superuser or request.user.is_partner_admin:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1123,7 +1244,11 @@ class BaseLoyaltySystemEdit(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 class PaymentFormEdit(DataMixin, UpdateView):
@@ -1139,7 +1264,11 @@ class PaymentFormEdit(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 class SalesChannelEdit(DataMixin, UpdateView):
@@ -1155,67 +1284,92 @@ class SalesChannelEdit(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        user = self.request.user
+        if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 """API views \/"""
 
 
 class PropertyAPIView(generics.ListCreateAPIView):
-    queryset = ProductProperty.objects.all()
     serializer_class = PropertySerializer
     permission_classes = (IsAuthenticated,)
     authentication_classes = [SessionAuthentication, BasicAuthentication]
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return ProductProperty.objects.all()
+        else:
+            return ProductCategory.objects.filter(partner=self.request.user.partner)
 
 class PropertyAPIUpdate(generics.UpdateAPIView):
-    queryset = ProductProperty.objects.all()
     serializer_class = PropertySerializer
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return ProductProperty.objects.all()
+        else:
+            return ProductCategory.objects.filter(partner=self.request.user.partner)
 
 class PartnerAPIView(generics.ListAPIView):
     queryset = Partner.objects.all()
     serializer_class = PartnerSerializer
 
 
+
 class ProductCategoryAPIView(generics.ListCreateAPIView):
-    queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
     permission_classes = (IsAuthenticated,)
     authentication_classes = [SessionAuthentication, BasicAuthentication]
 
+    def get_queryset(self):
+        return ProductCategory.objects.filter(partner=self.request.user.partner)
+
+
 
 class ShopApiView(generics.ListCreateAPIView):
-    queryset = Shop.objects.all()
     serializer_class = ShopSerializer
     permission_classes = (IsAuthenticated,)
     authentication_classes = [SessionAuthentication, BasicAuthentication]
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Shop.objects.all()
+        else:
+            return Shop.objects.filter(partner=self.request.user.partner)
 
 class SaleChannelAPIView(generics.ListCreateAPIView):
-    queryset = SalesChannel.objects.all()
     serializer_class = SalesChannelSerializer
     permission_classes = (IsAuthenticated,)
     authentication_classes = [SessionAuthentication, BasicAuthentication]
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return SalesChannel.objects.all()
+        else:
+            return SalesChannel.objects.filter(partner=self.request.user.partner)
+
 
 class PaymentFormAPIView(generics.ListCreateAPIView):
-    queryset = PaymentForm.objects.all()
     serializer_class = PaymentFormSerializer
     permission_classes = (IsAuthenticated,)
     authentication_classes = [SessionAuthentication, BasicAuthentication]
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return PaymentForm.objects.all()
+        else:
+            return PaymentForm.objects.filter(partner=self.request.user.partner)
 
-class ReportAPIListPagination(PageNumberPagination):
-    page_size = 10
-    page_query_param = 'page_size'
-    max_page_size = 100
 
 
 class ReportsAPIView(generics.ListAPIView):
     serializer_class = ReportsSerializer
     permission_classes = (IsAuthenticated,)
-    pagination_class = ReportAPIListPagination
+
 
     def get_queryset(self):
         return ReportExport.objects.filter(user=self.request.user).order_by('-datetime')
@@ -1236,23 +1390,40 @@ def sales_report_export_api(request):
 
 
 class ProductInStockAPIView(generics.RetrieveAPIView):
-    queryset = ProductInStock.objects.all()
+    # queryset = ProductInStock.objects.all()
     serializer_class = ProductInStockSerializer
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return ProductInStock.objects.all()
+        else:
+            return ProductInStock.objects.filter(shop__partner=self.request.user.partner)
 
 class ProductInStockListAPIView(generics.ListAPIView):
-    queryset = ProductInStock.objects.all()
+    # queryset = ProductInStock.objects.all()
     serializer_class = ProductInStockSerializer
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return ProductInStock.objects.all()
+        else:
+            return ProductInStock.objects.filter(shop__partner=self.request.user.partner)
 
 class CustomerAPIView(generics.RetrieveAPIView):
-    queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Customer.objects.all()
+        else:
+            return Customer.objects.filter(partner=self.request.user.partner)
 
 class CustomerListAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = CustomerSerializer
 
     def get_queryset(self):
-        return Customer.objects.filter(partner=self.request.user.partner)
+        if self.request.user.is_superuser:
+            return Customer.objects.all()
+        else:
+            return Customer.objects.filter(partner=self.request.user.partner)

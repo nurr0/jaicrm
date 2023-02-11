@@ -52,10 +52,12 @@ class RegisterUserForm(UserCreationForm):
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))
     partner = forms.ModelChoiceField(label='Партнер', queryset=Partner.objects.all())
     tel_number = forms.CharField(label='Номер телефона', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    shop_allowed = forms.ModelChoiceField(label='Привязка к торговой точке', queryset=Shop.objects.all(), required=False)
+    is_partner_admin = forms.BooleanField(label='Является администратором партнера', required=True)
 
     class Meta:
         model = JaiUser
-        fields = ('first_name', 'last_name', 'username', 'password1', 'password2', 'email', 'partner', 'tel_number')
+        fields = ('first_name', 'last_name', 'username', 'password1', 'password2', 'email', 'partner', 'tel_number', 'shop_allowed')
 
 
 class LoginUserForm(AuthenticationForm):
@@ -147,9 +149,7 @@ class ProductsInSupplyForm(forms.ModelForm):
 ProductsInSupplyFormSet = inlineformset_factory(Supply, ProductsInSupply,
                                                 form=ProductsInSupplyForm,
                                                 fields='__all__',
-                                                extra=100,
-                                                can_delete=True,
-                                                can_delete_extra=True)
+                                                extra=100)
 
 
 class ProductsRemoveForm(forms.ModelForm):
@@ -212,17 +212,26 @@ class SaleRegistrationForm(forms.ModelForm):
         fields = ['receipt_number_display', 'shop', 'customer', 'points_achieve_or_spend', 'sales_channel', 'payment_form', 'points_used']
 
 
+    def clean_points_used(self):
+        points_used = self.cleaned_data['points_used']
+        if points_used and points_used < 0:
+            raise forms.ValidationError("Количество списываемых бонусов не может быть меньше 0")
+        return points_used
+
 class ProductsInReceiptForm(forms.ModelForm):
     class Meta:
         model = ProductInReceipt
         fields = '__all__'
 
+
     def clean_amount(self):
         amount = self.cleaned_data['amount']
+        product = self.cleaned_data['product']
+        print(amount, product.amount)
         if amount <= 0:
             raise forms.ValidationError("Количество товара не может быть меньше или равно 0")
-        elif amount > self.cleaned_data['product'].amount:
-            raise forms.ValidationError("Количество товара в чеке не может превышать количество товара на складе")
+        elif amount > product.amount:
+            raise forms.ValidationError(f"Количество товара в чеке не может превышать количество товара на складе, остаток на складе - {product.amount}")
         return amount
 
     def clean_discount(self):
@@ -235,9 +244,7 @@ class ProductsInReceiptForm(forms.ModelForm):
 ProductsInReceiptFormSet = inlineformset_factory(SellReceipt, ProductInReceipt,
                                                  form=ProductsInReceiptForm,
                                                  fields='__all__',
-                                                 extra=20,
-                                                 can_delete=True,
-                                                 can_delete_extra=True)
+                                                 extra=20)
 
 
 class CustomerCreationForm(forms.ModelForm):

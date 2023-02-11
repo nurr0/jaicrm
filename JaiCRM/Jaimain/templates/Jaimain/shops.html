@@ -28,13 +28,14 @@
 			<a class="btn__text" href="{% url 'addshop' %}">Добавить торговую точку</a>
 		</button>
 	</div> -->
-
+{% if self_user.is_partner_admin %}
 	<div class="btn__addUsers btn__api">
 		<button class="btn ">
 			Добавить точку
 		</button>
 
 	</div>
+	{% endif %}
 </div>
 
 <div class="modal zero1 ">

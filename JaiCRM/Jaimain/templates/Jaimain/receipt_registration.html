@@ -43,7 +43,7 @@
             </div>
             <div>
                 <div>{{ receipt_form.points_used.label }}</div>
-                <div> {{ receipt_form.points_used}}</div>
+                <div> {{ receipt_form.points_used}} {{ receipt_form.points_used.errors}}</div>
             </div>
             <div>
                 <div>Бонусы клиента</div>
@@ -69,7 +69,7 @@
                 <p class="whp">Товар</p>
                 <p class="whp">Установленная цена</p>
                 <p class="whp">Количество</p>
-                <p class="whp">Скидка</p>
+                <p class="whp">Скидка %</p>
                 <p class="whp">Цена с учетом скидки</p>
                 <p class="whp"></p>
             </div>
@@ -77,9 +77,8 @@
             <div class="RazdelTovari">
                 {{ products_in_receipt_formset.management_form }}
                 
-                {{ form.product }} {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}} {{ form.DELETE }}</div>
-    
-                {{form.errors}}
+                {{ form.product }} {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}}</div>
+{{form.errors}}
                 {% endfor %}
     
             </div>
@@ -89,7 +88,7 @@
     </div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div> -->
         
 
-    <div>Всего товаров: </div> 
+<!--    <div>Всего товаров: </div> -->
      <div class="zArea"> 
        <p>На сумму: </p> <p class="totalzArea"> 0</p> 
     </div>
