@@ -71,7 +71,7 @@
 			<th>Кол-во позиций</th>
 			<th>Общее кол-во товаров</th>
 			<th>Общая стоимость</th>
-			<th>
+			<th class="knopkaSort">
 				<div class="headerTable butPods" data-title="Сортировать Документ от А - Я">
 					<button class="btn1 btn__addUsers1 btn-fuck ">
 					
@@ -90,9 +90,11 @@
 			<td class="tdStyle">{{supply.get_total_amount_of_SKU}}</td>
 			<td class="tdStyle">{{supply.get_total_amount_of_products}}</td>
 			<td class="tdStyle">{{supply.get_total_cost_of_supply}}</td>
-			<td class="tdStyle"> <button class="btn">
-				  <a class="btn__text" href="{{supply.pk}}">Просмотр</a>
-				  </button>
+			<td class="tdStyle"> 
+				  
+				  <a class="btn__text" href="{{supply.pk}}">
+					<button class="btnTable">Просмотр</button>
+				</a>
 			</td>
 		</tr>
 

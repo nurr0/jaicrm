@@ -44,24 +44,33 @@
 
 
 
-	<div class="headers__users  header_users-list header_users-list1">
+	<!-- <div class="headers__users  header_users-list header_users-list1">
 		<div class="headerTable">Наименование</div>
 		<div class="headerTable">Артикул<br>(Идентификатор)</div>
 		<div class="headerTable">Производитель</div>
 		<div class="headerTable">Категория</div>
 		<div class="headerTable butPods" data-title="Сортировать SKU от А - Я">
 			<button class="btn1 btn__addUsers1 btn-fuck ">
-			<!-- <a class="btn__text">Сортировать от A - Я </a> -->
+
 			<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
 		</button>
 		</div>
-	</div>
+	</div> -->
 	<table  class="trStyle " id="myTable">
-		<tr>
-		  <!-- <th>Пользователь</th>
-		  <th>Имя пользователя</th>
-		  <th>Партнер</th>
-		  <th>Данные</th> -->
+		<tr class="headTable">
+			<th>Наименование</th>
+			<th>Артикул</th>
+			<th>Производитель</th>
+			<th>Категория</th>
+			
+			<th class="knopkaSort">
+				<div class="headerTable butPods" data-title="Сортировать SKU от А - Я">
+					<button class="btn1 btn__addUsers1 btn-fuck ">
+					
+					<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+					</button>
+				</div>
+			</th>
 		</tr>
 
 		<tr class="trClass">
@@ -70,9 +79,11 @@
 			<td class="tdStyle">{{sku.identifier}}</td>
 			<td class="tdStyle">{{sku.producer}}</td>
 			<td class="tdStyle">{{sku.category.get_full_path}}</td>
-			<td class="tdStyle"> <button class="btn">
-				  <a class="btn__text" href="{{sku.pk}}">Просмотр</a>
-				  </button>
+			<td class="tdStyle"> 
+				  
+				<a class="btn__text" href="{{sku.pk}}">
+					<button class="btnTable">Просмотр</button>
+				</a>
 			</td>
 		</tr>
 		{% endfor %}

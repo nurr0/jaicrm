@@ -23,7 +23,13 @@
 <!--    <img class="title1 plus1" src="/static/Jaimain/images/plus.png" alt="">-->
 
     <div>
-        <div> Товар   Количество  Закупочная Цена</div>
+    
+    <div class="whpGlav">
+        <p class="whp">Товар</p>
+        <p class="whp ml">Количество</p>
+        <p class="whp ml ">Закупочная цена</p>
+
+    </div>
         <ol>
     {% for form in products_in_supply_formset %}
                 {{ products_in_supply_formset.management_form }}
