@@ -1,5 +1,5 @@
 {% extends 'Jaimain/base.html' %}
-
+{% load widget_tweaks %}
 {% block content %}
 <h1>
     {{title}}
@@ -9,6 +9,8 @@
     <br>"Списываемые бонусы" должны быть <= Сумма бонусов клиента(получаешь в АПИ)
     <br> "Списываемые бонусы" должны быть <= ((Сумма всех полей "Цена с учетом скидки")/100)*БСЛ
 </div>
+
+
 <form method="post" action="{% url 'receipt_registration' %}" enctype="multipart/form-data">
     {% csrf_token %}
 
@@ -21,29 +23,30 @@
             </div>
             <div>
                 <div>{{ receipt_form.shop.label }}</div>
-                <div>{{ receipt_form.shop}}</div>
+                <div>{% render_field receipt_form.shop class+="select2" %}</div>
             </div>
             <div>
                 <div>{{ receipt_form.customer.label }}</div>
-                <div>{{ receipt_form.customer }}</div>
+                <div>{% render_field receipt_form.customer class+="select2" %}</div>
             </div>
+
             <div>
                 <div>{{ receipt_form.sales_channel.label }}</div>
-                <div>{{ receipt_form.sales_channel }}</div>
+                <div>{% render_field receipt_form.sales_channel class+="select2" %}</div>
             </div>
         </div>
         <div>
             <div>
                 <div>{{ receipt_form.payment_form.label }}</div>
-                <div> {{ receipt_form.payment_form }}</div>
+                <div> {% render_field receipt_form.payment_form class+="select2" %}</div>
             </div>
             <div>
                 <div>{{ receipt_form.points_achieve_or_spend.label}} </div>
-                <div>{{ receipt_form.points_achieve_or_spend }}</div>
+                <div>{% render_field receipt_form.points_achieve_or_spend class+="select2" %}</div>
             </div>
             <div>
                 <div>{{ receipt_form.points_used.label }}</div>
-                <div> {{ receipt_form.points_used}}</div>
+                <div> {{ receipt_form.points_used}} {{ receipt_form.points_used.errors}}</div>
             </div>
             <div>
                 <div>Бонусы клиента</div>
@@ -69,7 +72,7 @@
                 <p class="whp">Товар</p>
                 <p class="whp">Установленная цена</p>
                 <p class="whp">Количество</p>
-                <p class="whp">Скидка</p>
+                <p class="whp">Скидка %</p>
                 <p class="whp">Цена с учетом скидки</p>
                 <p class="whp"></p>
             </div>
@@ -77,9 +80,8 @@
             <div class="RazdelTovari">
                 {{ products_in_receipt_formset.management_form }}
                 
-                {{ form.product }} {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}} {{ form.DELETE }}</div>
-    
-                {{form.errors}}
+                {% render_field form.product class+="select2" %} {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}}</div>
+{{form.errors}}
                 {% endfor %}
     
             </div>
@@ -89,7 +91,7 @@
     </div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div> -->
         
 
-    <div>Всего товаров: </div> 
+<!--    <div>Всего товаров: </div> -->
      <div class="zArea"> 
        <p>На сумму: </p> <p class="totalzArea"> 0</p> 
     </div>
@@ -97,6 +99,21 @@
     <input class="btn" type="submit" value="Сохранить">
 </form>
 
-
+<script>
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.select2').select2();
+});
+</script>
+<!--<script>-->
+<!--$(document).ready(function() {-->
+<!--    $('.js-example-basic-single').each(function (idx, elem) {-->
+<!--        $(elem).select2({-->
+<!--            'language': 'ru',-->
+<!--        });-->
+<!--    });-->
+<!--})-->
+<!--</script>-->
 <script src="/static/Jaimain/receipt_registration.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>-->
 {% endblock %}

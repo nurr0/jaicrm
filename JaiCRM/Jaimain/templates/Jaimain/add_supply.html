@@ -1,5 +1,5 @@
 {% extends 'Jaimain/base.html' %}
-
+{% load widget_tweaks %}
 {% block content %}
 <h1>{{title}}</h1>
 
@@ -10,9 +10,10 @@
     </div>
 
     <div class="p__addPart">
-        {{ add_supply_form.as_p }}
-
-
+        <div> {{ add_supply_form.supplier.label }} {{ add_supply_form.supplier }}</div>
+        <div> {{ add_supply_form.document.label }} {{ add_supply_form.document }}</div>
+        <div> {{ add_supply_form.date.label }} {{ add_supply_form.date }} </div>
+        <div> {{add_supply_form.warehouse.label }} {% render_field add_supply_form.warehouse class+="select2" %} </div>
     </div>
 
 
@@ -20,25 +21,27 @@
         <h2>Товары</h2>
     </div>
 <!--    <img class="title1 plus1" src="/static/Jaimain/images/plus.png" alt="">-->
-    {{ products_in_supply_formset.management_form }}
+
     <div>
-        <div> Товар   Количество   Цена Удалить</div>
+        <div> Товар   Количество  Закупочная Цена</div>
         <ol>
     {% for form in products_in_supply_formset %}
-<!--        <div class="form-group1">-->
-<!--            <img class="title0 plusMinus" src="/static/Jaimain/images/minusss.png" alt="">-->
-            <li>{{ form.product }} {{ form.amount }} {{ form.product_supply_price }} {{ form.DELETE }}
-                {% if form.DELETE == False %}}
-                {{ form.errors }}
-            {% endif %}</li>
+                {{ products_in_supply_formset.management_form }}
 
+            <li>{% render_field form.product class+="select2" %} {{ form.amount }} {{ form.product_supply_price }}</li>
+{{ form.errors }}
 
-<!--    </div>-->
    
     {% endfor %}
     </ol>
     <input class="btn" type="submit" value="Сохранить">
 </form>
 
+<script>
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.select2').select2();
+});
+</script>
 
 {% endblock %}

@@ -51,7 +51,11 @@ urlpatterns = [
     path('partners/bsl_create/', BaseLoyaltySystemCreation.as_view(), name='bsl_create'),
     path('partners/bsl_edit/<int:pk>/', BaseLoyaltySystemEdit.as_view(), name='bsl_edit'),
     path('partners/payment_form_edit/<int:pk>/', PaymentFormEdit.as_view(), name='payment_form_edit'),
-    path('partners/sales_channel_edit/<int:pk>/', SalesChannelEdit.as_view(), name='sales_channel_edit')
+    path('partners/sales_channel_edit/<int:pk>/', SalesChannelEdit.as_view(), name='sales_channel_edit'),
+    path('bugreport/', add_bug_report, name='bug_report'),
+    path('404/', temp_error404, name='404'),
+    path('403/', temp_error403, name='403'),
+    path('500/', temp_error500, name='500')
     # path('export_sales_data/', export_sales_data, name='export_sales_data'),
     # path('reports/', ReportsList.as_view(), name='reports')
 

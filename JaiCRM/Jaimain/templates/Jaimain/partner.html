@@ -11,11 +11,13 @@
 {% endif %}
 <div class="header_ilya">
     <h1>{{partner.name}}</h1>
+    {% if user.is_partner_admin %}
     <div style="text-align: right" class="btn_ilya">
         <button class="btn">
             <a class="white" href='{% url 'editpartner' partner.pk %}'>Редактировать</a>
         </button>
     </div>
+    {% endif %}
 </div>
 
 
@@ -71,6 +73,7 @@
 
 {% endfor %}
 
+{% if user.is_partner_admin %}
 <div class="sposobi_prodazh">
     <h4>Каналы продаж партнера:</h4>
     {% for channel in sales_channel %}
@@ -147,6 +150,33 @@
 <li> начисляемых бонусов: {{ bsl.0.points_achieve }}%</li>
 <li>% стоимости товара для оплаты бонусами: {{ bsl.0.points_spend }}%</li>
 
+
+{% else %}
+
+<div class="sposobi_prodazh">
+    <h4>Каналы продаж партнера:</h4>
+    {% for channel in sales_channel %}
+<li>{{ channel }}</li>
+    {% endfor %}
+
+</div>
+
+<div><h4>Способы оплаты партнера:</h4>
+{% for form in payment_form %}
+<li>{{ form }}</li>
+{% endfor %}
+</div>
+
+
+
+<div class="header_ilya">
+    <h4>Базовая система лояльности партнера:</h4>
+
+
+</div>
+<li> начисляемых бонусов: {{ bsl.0.points_achieve }}%</li>
+<li>% стоимости товара для оплаты бонусами: {{ bsl.0.points_spend }}%</li>
+{% endif %}
 <script src="/static/Jaimain/partner.js"></script>
 {% endblock %}
 

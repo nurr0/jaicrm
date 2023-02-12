@@ -94,15 +94,17 @@ ul.list-articles li {
 
 .logo {
 	/* background: url('../images/logo.png') no-repeat 10px 5px; */
-	width: 70px;
-	height: 60px;
+	width: 150px;
+	height: 100px;
 	
 	position: absolute;
 }
 
 .logoImg{
-	height: 63px;
+	height: 45px;
+	width : 220px;
 	z-index: 100000;
+	transform: translate(5px,12px);
 }
 
 ul.mainmenu {
@@ -310,6 +312,10 @@ ul.content-table li a:hover {color: #F0711C;}
 	border-radius: 40px;
 	width: 30%;
 	margin-top: 10px;
+	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
 }
 
 .flex-regist{
@@ -436,11 +442,13 @@ ul.lang-list li a:hover {color: #fdc073;}
     /* width: 300px; */
 	width: 100%;
     font-size: 16px;
+	border-radius: 5px;
 }
 
 .form-inputRegisterP{
 	border-bottom: rgb(128, 128, 128) dotted 1px;
 	padding: 20px 0;
+
 }
 
 .form-inputRegister{
@@ -1055,12 +1063,14 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .p__addPart-widthRight{
-	width: 50%;
+	width: 20%;
+	border-radius: 5px;
 }
 
 .p__addPart-desc{
 	height: 40px;
 	width: 300px;
+	border-radius: 5px;
 }
 
 .p__addPart-dataDay{

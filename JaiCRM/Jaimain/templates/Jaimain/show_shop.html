@@ -3,11 +3,13 @@
 {% block content %}
 <div class="header_ilya">
     <h1>Торговая точка - {{shop.name}}</h1>
+	{% if self_user.is_partner_admin %}
     <div style="text-align: right" class="btn_ilya">
         <button class="btn">
             <a class="white" href='{% url 'editshop' shop.pk %}'>Редактировать</a>
         </button>
     </div>
+	{% endif %}
 </div>
 <h4>Адрес: {{shop.location}}</h4>
 <h4>Описание: {{shop.description}}</h4>

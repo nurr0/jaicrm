@@ -25,12 +25,12 @@
                 <button class="procent__btn btn">%</button>
             </div>
             <div class="price">
-                <div class="addPrice__priceText">{{ form.price.label }} </div>
-                <div class="addPrice__price">{{ form.price }}</div>
+                <div class="addPrice__priceText">{{ form.price.label }} {{ form.price.errors }}</div>
+                <div class="addPrice__price">{{ form.price }} </div>
             </div>
 
             <div>
-                
+
             </div>
         </div>
     {% endfor %}
