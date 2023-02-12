@@ -806,7 +806,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
         }
     }
 }
-
+// const widthPolya = document.querySelectorAll('span[class*=select2-container]')
+// for (let item of widthPolya){
+//     item.classList.add('widthPilya')
+// }
 
 
 
@@ -871,105 +874,105 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
 //         }
 // }
 
-if (/add_supply/.test(location.href ) ){
-    const tovarz = document.querySelectorAll('.form-group1')
-    const plus1 = document.querySelector('.plus1')
-    for (let item of tovarz){
-        item.classList.toggle('zero1')
-    }
+// if (/add_supply/.test(location.href ) ){
+//     const tovarz = document.querySelectorAll('.form-group1')
+//     const plus1 = document.querySelector('.plus1')
+//     for (let item of tovarz){
+//         item.classList.toggle('zero1')
+//     }
 
-    plus1.addEventListener('click', plus1Action)
-    function plus1Action(){
-        for (let item of tovarz){
-            if (item.classList.contains('zero1')){
-                item.classList.toggle('zero1')
-                const checkbox = item.querySelector('input[type=checkbox]')
-                checkbox.removeAttribute('checked')
-                return
-            }
+//     plus1.addEventListener('click', plus1Action)
+//     function plus1Action(){
+//         for (let item of tovarz){
+//             if (item.classList.contains('zero1')){
+//                 item.classList.toggle('zero1')
+//                 const checkbox = item.querySelector('input[type=checkbox]')
+//                 checkbox.removeAttribute('checked')
+//                 return
+//             }
 
-        }
-    }
-    const checkDelete = document.querySelectorAll('input[type=checkbox]')
+//         }
+//     }
+//     const checkDelete = document.querySelectorAll('input[type=checkbox]')
 
-    const proverty01 = document.querySelector('#id_productsinsupply_set-0-DELETE')
-    proverty01.setAttribute('checked','checked')
-    const proverty02 = document.querySelector('#id_productsinsupply_set-1-DELETE')
-    proverty02.setAttribute('checked','checked')
-    // const proverty03 = document.querySelector('#id_productsinsupply_set-2-DELETE')
-    // proverty03.setAttribute('checked','checked')
-    // const proverty04 = document.querySelector('#id_productsinsupply_set-3-DELETE')
-    // proverty04.setAttribute('checked','checked')
-    // const proverty05 = document.querySelector('#id_productsinsupply_set-4-DELETE')
-    // proverty05.setAttribute('checked','checked')
-    // const proverty06 = document.querySelector('#id_productsinsupply_set-5-DELETE')
-    // proverty06.setAttribute('checked','checked')
-    // const proverty07 = document.querySelector('#id_productsinsupply_set-6-DELETE')
-    // proverty07.setAttribute('checked','checked')
-    // const proverty08 = document.querySelector('#id_productsinsupply_set-7-DELETE')
-    // proverty08.setAttribute('checked','checked')
-    // const proverty09 = document.querySelector('#id_productsinsupply_set-8-DELETE')
-    // proverty09.setAttribute('checked','checked')
-    // const proverty10 = document.querySelector('#id_productsinsupply_set-9-DELETE')
-    // proverty10.setAttribute('checked','checked')
+//     const proverty01 = document.querySelector('#id_productsinsupply_set-0-DELETE')
+//     proverty01.setAttribute('checked','checked')
+//     const proverty02 = document.querySelector('#id_productsinsupply_set-1-DELETE')
+//     proverty02.setAttribute('checked','checked')
+//     // const proverty03 = document.querySelector('#id_productsinsupply_set-2-DELETE')
+//     // proverty03.setAttribute('checked','checked')
+//     // const proverty04 = document.querySelector('#id_productsinsupply_set-3-DELETE')
+//     // proverty04.setAttribute('checked','checked')
+//     // const proverty05 = document.querySelector('#id_productsinsupply_set-4-DELETE')
+//     // proverty05.setAttribute('checked','checked')
+//     // const proverty06 = document.querySelector('#id_productsinsupply_set-5-DELETE')
+//     // proverty06.setAttribute('checked','checked')
+//     // const proverty07 = document.querySelector('#id_productsinsupply_set-6-DELETE')
+//     // proverty07.setAttribute('checked','checked')
+//     // const proverty08 = document.querySelector('#id_productsinsupply_set-7-DELETE')
+//     // proverty08.setAttribute('checked','checked')
+//     // const proverty09 = document.querySelector('#id_productsinsupply_set-8-DELETE')
+//     // proverty09.setAttribute('checked','checked')
+//     // const proverty10 = document.querySelector('#id_productsinsupply_set-9-DELETE')
+//     // proverty10.setAttribute('checked','checked')
 
 
-    const udalit1 = document.querySelectorAll('p')[9]
-    udalit1.classList.toggle('zero')
+//     const udalit1 = document.querySelectorAll('p')[9]
+//     udalit1.classList.toggle('zero')
 
-    const udalit2 = document.querySelectorAll('p')[13]
-    udalit2.classList.toggle('zero')
+//     const udalit2 = document.querySelectorAll('p')[13]
+//     udalit2.classList.toggle('zero')
 
-    // const udalit3 = document.querySelectorAll('p')[17]
-    // udalit3.classList.toggle('zero')
+//     // const udalit3 = document.querySelectorAll('p')[17]
+//     // udalit3.classList.toggle('zero')
 
-    // const udalit4 = document.querySelectorAll('p')[21]
-    // udalit4.classList.toggle('zero')
+//     // const udalit4 = document.querySelectorAll('p')[21]
+//     // udalit4.classList.toggle('zero')
 
-    // const udalit5 = document.querySelectorAll('p')[25]
-    // udalit5.classList.toggle('zero')
+//     // const udalit5 = document.querySelectorAll('p')[25]
+//     // udalit5.classList.toggle('zero')
 
-    // const udalit6 = document.querySelectorAll('p')[29]
-    // udalit6.classList.toggle('zero')
+//     // const udalit6 = document.querySelectorAll('p')[29]
+//     // udalit6.classList.toggle('zero')
 
-    // const udalit7 = document.querySelectorAll('p')[33]
-    // udalit7.classList.toggle('zero')
+//     // const udalit7 = document.querySelectorAll('p')[33]
+//     // udalit7.classList.toggle('zero')
 
-    // const udalit8 = document.querySelectorAll('p')[37]
-    // udalit8.classList.toggle('zero')
+//     // const udalit8 = document.querySelectorAll('p')[37]
+//     // udalit8.classList.toggle('zero')
 
-    // const udalit9 = document.querySelectorAll('p')[41]
-    // udalit9.classList.toggle('zero')
+//     // const udalit9 = document.querySelectorAll('p')[41]
+//     // udalit9.classList.toggle('zero')
 
-    // const udalit10 = document.querySelectorAll('p')[45]
-    // udalit10.classList.toggle('zero')
+//     // const udalit10 = document.querySelectorAll('p')[45]
+//     // udalit10.classList.toggle('zero')
 
-    document.querySelectorAll('.title0').forEach((el) => {
-        el.addEventListener('click',()=>{
-            let content = el.nextElementSibling ;
+//     document.querySelectorAll('.title0').forEach((el) => {
+//         el.addEventListener('click',()=>{
+//             let content = el.nextElementSibling ;
            
-            let contentP = content.querySelector('input[type=checkbox]')
-            contentP.setAttribute('checked','checked')
+//             let contentP = content.querySelector('input[type=checkbox]')
+//             contentP.setAttribute('checked','checked')
             
-            content.classList.toggle('zero1')
-            el.classList.toggle('zero1')
+//             content.classList.toggle('zero1')
+//             el.classList.toggle('zero1')
 
-        })
-    })
-    const postav = document.querySelector('label[for="id_supplier"]')
-    postav.classList.add('p__addPart-width')
+//         })
+//     })
+//     const postav = document.querySelector('label[for="id_supplier"]')
+//     postav.classList.add('p__addPart-width')
 
-    const doc = document.querySelector('label[for="id_document"]')
-    doc.classList.add('p__addPart-width')
+//     const doc = document.querySelector('label[for="id_document"]')
+//     doc.classList.add('p__addPart-width')
 
-    const date = document.querySelector('label[for="id_date_day"]')
-    date.classList.add('p__addPart-width')
+//     const date = document.querySelector('label[for="id_date_day"]')
+//     date.classList.add('p__addPart-width')
 
-    const sklad = document.querySelector('label[for="id_warehouse"]')
-    sklad.classList.add('p__addPart-width')
+//     const sklad = document.querySelector('label[for="id_warehouse"]')
+//     sklad.classList.add('p__addPart-width')
     
 
-}
+// }
 
 // if (/receipt_registration/.test(location.href ) ){
 //     const tovarz = document.querySelectorAll('.form-group')

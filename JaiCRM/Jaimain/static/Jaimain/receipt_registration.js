@@ -92,8 +92,14 @@ async function GetCustomers(){
 client.addEventListener('change',GetCustomers)
 
 
+const widthPolya = document.querySelectorAll('span[class*=select2-container]')
+for (let item of widthPolya){
+    item.classList.add('widthPilya')
+}
+
 
 const tovariArray = document.querySelectorAll('select[name*=product]')
+// const tovariArray = document.querySelectorAll('span[class*=select2-container]')
 
 for (let item of tovariArray){
         item.addEventListener('click', vuborTovari)
