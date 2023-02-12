@@ -340,7 +340,7 @@ if (/shops/.test(location.href ) ||  /users/.test(location.href )||  /partners/.
 
 
 
-if (/users/.test(location.href )  || /product_properties/.test(location.href )  || location.pathname === '/sku/' || /products_in_stock/.test(location.href ) || /sell_receipt_list/.test(location.href )  ||   /supplies/.test(location.href ) ){
+if (/users/.test(location.href )  || /product_properties/.test(location.href )  || location.pathname === '/sku/' || /products_in_stock/.test(location.href ) || /sell_receipt_list/.test(location.href )  ||   /supplies/.test(location.href ) || /customers/.test(location.href ) ){
     const fuck = document.querySelector('.btn-fuck') 
     
     fuck.addEventListener('click',sortTable)  
@@ -1304,10 +1304,10 @@ async function postForm(e){
 
     let result = await response.json();
     
-    console.log(result.results)
+    console.log(result)
     // const divArea = document.querySelector('.reportsApi')
    
-    for (let item of result.results){
+    for (let item of result){
         let divId = item.id
         let divFile = item.file
         let divName = item.file_name
