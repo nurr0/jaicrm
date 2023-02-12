@@ -203,7 +203,7 @@ class SaleRegistrationForm(forms.ModelForm):
                                              widget=forms.TextInput(attrs={'readonly': True}))
     sales_channel = forms.ModelChoiceField(queryset=SalesChannel.objects.all(), label='Канал продаж')
     payment_form = forms.ModelChoiceField(queryset=PaymentForm.objects.all(), label='Форма оплаты')
-    customer = forms.ModelChoiceField(queryset=Customer.objects.all(), label='Клиент', required=False)
+    customer = forms.ModelChoiceField(queryset=Customer.objects.all(), label='Клиент', required=False, widget=forms.Select)
     points_achieve_or_spend = forms.ChoiceField(choices=CHOICES, label='Бонусы')
 
 
@@ -285,3 +285,14 @@ class BaseLoyaltySystemForm(forms.ModelForm):
         if points_spend > 100:
             raise forms.ValidationError('% стоимости товара для оплаты бонусами не может быть больше или равно 100%')
         return points_spend
+
+class BugReportForm(forms.ModelForm):
+    CHOICES = (
+        ('bug' ,'Сообщение об ошибке' ),
+        ( 'feature', 'Предложение по улучшению'),
+    )
+    category = forms.ChoiceField(choices=CHOICES, label='Выберите категорию')
+    class Meta:
+        model = BugReport
+        exclude = ('user_created',)
+

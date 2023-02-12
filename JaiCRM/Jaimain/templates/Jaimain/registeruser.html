@@ -19,5 +19,11 @@
     <button class="btn" type="submit">Добавить</button>
 </form>
 
-
+<script>
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('#id_partner').select2();
+    $('#id_shop_allowed').select2();
+});
+</script>
 {% endblock %}

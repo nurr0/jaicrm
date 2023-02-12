@@ -1290,6 +1290,23 @@ class SalesChannelEdit(DataMixin, UpdateView):
         else:
             raise PermissionDenied
 
+@login_required()
+def add_bug_report(request):
+    template = 'Jaimain/bugreport.html'
+    form = BugReportForm()
+    user_menu = menu.copy()
+    context = {'form': form, 'menu': user_menu, 'title':'Форма обратной связи с разработчиком'}
+
+    if request.method == 'POST':
+        form = BugReportForm(request.POST, request.FILES)
+        if form.is_valid():
+            bug_report = form.save(commit=False)
+            bug_report.user_created = request.user
+            bug_report.save()
+            return redirect('/')
+    else:
+        form = BugReportForm()
+    return render(request, template, context=context)
 
 """API views \/"""
 
@@ -1427,3 +1444,22 @@ class CustomerListAPIView(generics.ListAPIView):
             return Customer.objects.all()
         else:
             return Customer.objects.filter(partner=self.request.user.partner)
+
+
+def temp_error404(request):
+    template = 'core/error404.html'
+    # user_menu = menu.copy()
+    context = {'title': 'Страница не найдена'}
+    return render(request, template, context=context)
+
+def temp_error500(request):
+    template = 'core/error500.html'
+    # user_menu = menu.copy()
+    context = {'title': 'ОШИБКА'}
+    return render(request, template, context=context)
+
+def temp_error403(request):
+    template = 'core/error403.html'
+    # user_menu = menu.copy()
+    context = {'title': 'Доступ запрещен'}
+    return render(request, template, context=context)

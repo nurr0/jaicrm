@@ -26,7 +26,8 @@ SECRET_KEY = "django-insecure-pd2@0aj0-_%$4_37(#u(kve=&65patf))#!duz)g%97nrl#bz*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'localhost']
 
 
 # Application definition
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     "django_mptt_admin",
     "rest_framework",
     "import_export",
+    "widget_tweaks"
 ]
 
 MIDDLEWARE = [
@@ -54,6 +56,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+SESSION_COOKIE_AGE = 3600
 
 ROOT_URLCONF = "JaiCRM.urls"
 
@@ -121,8 +125,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 # Default primary key field type

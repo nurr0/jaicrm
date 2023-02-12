@@ -428,3 +428,11 @@ class BaseLoyaltySystem(models.Model):
 
     def __str__(self):
         return f'БСЛ {self.partner.__str__()}'
+
+class BugReport(models.Model):
+    user_created = models.ForeignKey(JaiUser, on_delete=models.PROTECT, verbose_name='Пользователь')
+    category = models.CharField(max_length=255, verbose_name='Категория обращения')
+    description = models.TextField(blank=False, verbose_name='Описание')
+    file_1 = models.FileField(upload_to='bug_reports/', verbose_name='Файл №1', blank=True)
+    file_2 = models.FileField(upload_to='bug_reports/', verbose_name='Файл №2', blank=True)
+    file_3 = models.FileField(upload_to='bug_reports/', verbose_name='Файл №3', blank=True)
