@@ -1,0 +1,7 @@
+import jwt
+import time
+
+METABASE_SITE_URL = "http://127.0.0.1:3000"
+METABASE_SECRET_KEY = "7f0c4b406e45609dfd4cf6b50825b117e80e21b72f8621e4a294e32d6f704717"
+
+

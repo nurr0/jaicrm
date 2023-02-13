@@ -252,7 +252,7 @@ class CustomerCreationForm(forms.ModelForm):
         ('Мужской', 'Мужской'),
         ('Женский', 'Женский'),
     )
-    gender = forms.ChoiceField(choices=CHOICES)
+    gender = forms.ChoiceField(choices=CHOICES, label='Пол')
 
     class Meta:
         model = Customer
