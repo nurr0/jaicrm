@@ -1,8 +1,11 @@
 import os
 from datetime import datetime
+import time
 
+import jwt
 from rest_framework.pagination import PageNumberPagination
 
+from .dashboard import METABASE_SECRET_KEY, METABASE_SITE_URL
 from .tasks import *
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
@@ -1101,7 +1104,7 @@ class ReportsList(DataMixin, ListView):
         return queryset
 
 @login_required()
-def dashboard(request):
+def dashboard_old(request):
     user_menu = menu.copy()
     partner = request.user.partner
 
@@ -1112,13 +1115,35 @@ def dashboard(request):
         partner)  # круговая диаграмма по формам оплаты
     data_sales_by_sales_channel_pie = data_for_sales_by_sales_channel_donought(partner)
 
-    return render(request, 'Jaimain/dashboard.html', {
+    return render(request, 'Jaimain/dashboard_old.html', {
         'menu': user_menu,
         'title': 'Dashboard',
         'data_sales_by_cat_pie': data_sales_by_cat_pie,
         'data_sales_by_shops_linear': data_sales_by_shops_linear,
         'data_sales_by_payment_forms_pie': data_sales_by_payment_forms_pie,
         'data_sales_by_sales_channel_pie': data_sales_by_sales_channel_pie
+
+    })
+
+@login_required()
+def dashboard(request):
+    user_menu = menu.copy()
+    partner = request.user.partner
+    payload = {
+        "resource": {"dashboard": 2},
+        "params": {
+
+        },
+        "exp": round(time.time()) + (60 * 10)  # 10 minute expiration
+    }
+    token = jwt.encode(payload, METABASE_SECRET_KEY, algorithm="HS256")
+
+    iframeUrl = METABASE_SITE_URL + "/embed/dashboard/" + token + "#theme=transparent&bordered=false&titled=false"
+
+    return render(request, 'Jaimain/dashboard.html', {
+        'menu': user_menu,
+        'title': 'Dashboard',
+        'dashboard': iframeUrl
 
     })
 
