@@ -55,31 +55,40 @@
 </div>
 
 
-	<div class="headers__users  header_users-list header_users-list1">
+	<!-- <div class="headers__users  header_users-list header_users-list1">
 		<div class="headerTable">Название свойства</div>
 		<div class="headerTable">Партнер</div>
 		<div class="headerTable butPods" data-title="Сортировать Свойства от А - Я">
 			<button class="btn1 btn__addUsers1 btn-fuck ">
-			<!-- <a class="btn__text">Сортировать от A - Я </a> -->
+
 			<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
 		</button>
 		</div>
-	</div>
+	</div> -->
 	<table  class="trStyle " id="myTable">
-		<tr>
-		  <!-- <th>Пользователь</th>
-		  <th>Имя пользователя</th>
-		  <th>Партнер</th>
-		  <th>Данные</th> -->
+		<tr class="headTable">
+			<th>Название свойства</th>
+			<th>Партнер</th>
+
+			<th class="knopkaSort">
+				<div class="headerTable butPods" data-title="Сортировать Свойства от А - Я">
+					<button class="btn1 btn__addUsers1 btn-fuck ">
+					
+					<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+					</button>
+				</div>
+			</th>
 		</tr>
 
 		<tr class="trClass">
 			{% for prop in product_props %}
 			<td class="tdStyle">{{prop.name}}</td>
 			<td class="tdStyle">{{prop.partner}}</td>
-			<td class="tdStyle"> <button class="btn">
-				  <a class="btn__text" href="{{prop.pk}}">Просмотр</a>
-				  </button>
+			<td class="tdStyle"> 
+				  
+				  <a class="btn__text" href="{{prop.pk}}">
+					<button class="btnTable">Просмотр</button>
+				</a>
 			</td>
 		</tr>
 		{% endfor %}

@@ -45,7 +45,7 @@
 
 
 
-	<div class="headers__users  header_users-list header_users-list1">
+	<!-- <div class="headers__users  header_users-list header_users-list1">
 		<div class="headerTable">Фамилия</div>
 		<div class="headerTable">Имя</div>
 		<div class="headerTable">Пол</div>
@@ -55,13 +55,30 @@
 		<div class="headerTable">Количество бонусов</div>
 		<div class="headerTable butPods" data-title="Сортировать от А - Я">
 			<button class="btn1 btn__addUsers1 btn-fuck ">
-			<!-- <a class="btn__text">Сортировать от A - Я </a> -->
+
 			<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
 		</button>
 		</div>
-	</div>
+	</div> -->
 	<table  class="trStyle " id="myTable">
-
+		<tr class="headTable">
+			<th>Фамилия</th>
+			<th>Имя</th>
+			<th>Пол</th>
+			<th>Дата рождения</th>
+			<th>Город</th>
+			<th>Номер телефона</th>
+			<th>Кол-во бонусов</th>
+			
+			<th class="knopkaSort">
+				<div class="headerTable butPods" data-title="Сортировать по Фамилии от А - Я">
+					<button class="btn1 btn__addUsers1 btn-fuck ">
+					
+					<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+					</button>
+				</div>
+			</th>
+		</tr>
 
 		<tr class="trClass">
 			{% for c in customers_list %}

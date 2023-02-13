@@ -27,28 +27,42 @@
 </div>
 
 
-	<div class="headers__users  header_users-list header_users-list1">
+	<!-- <div class="headers__users  header_users-list header_users-list1">
 		<div class="headerTable">Пользователь</div>
 		<div class="headerTable">Аккаунт</div>
 		<div class="headerTable">Партнер</div>
 		<div class="headerTable butPods" data-title="Сортировать Пользователя от А - Я">
 			<button class="btn1 btn__addUsers1 btn-fuck ">
-			<!-- <a class="btn__text">Сортировать от A - Я </a> -->
+
 			<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
 		</button>
 		</div>
-	</div>
+	</div> -->
 	<table  class="trStyle " id="myTable">
-
+		<tr class="headTable">
+			<th>Пользователь</th>
+			<th>Аккаунт</th>
+			<th>Партнер</th>
+			<th class="knopkaSort">
+				<div class="headerTable butPods" data-title="Сортировать Пользователя от А - Я">
+					<button class="btn1 btn__addUsers1 btn-fuck ">
+					
+					<img src="./../../static/Jaimain/images/sort-arrows-svgrepo-com.svg" alt="">
+					</button>
+				</div>
+			</th>
+		</tr>
 
 		<tr class="trClass">
 			{% for u in users %}
 			<td class="tdStyle">{% autoescape on %}{{u.username}}</td>
 			<td class="tdStyle">{{u.last_name}}  {{u.first_name}}</td>
 			<td class="tdStyle">{{u.partner}}</td>
-			<td class="tdStyle"> <button class="btn">
-				  <a class="btn__text" href="{{u.pk}}">Просмотр</a>
-				  </button>
+			<td class="tdStyle"> 
+				<a class="btn__text" href="{{u.pk}}">
+					<button class="btnTable">Просмотр</button>
+				</a>
+				
 			</td>
 		</tr>
 

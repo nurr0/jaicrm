@@ -92,8 +92,14 @@ async function GetCustomers(){
 client.addEventListener('change',GetCustomers)
 
 
+const widthPolya = document.querySelectorAll('span[class*=select2-container]')
+for (let item of widthPolya){
+    item.classList.add('widthPilya')
+}
+
 
 const tovariArray = document.querySelectorAll('select[name*=product]')
+// const tovariArray = document.querySelectorAll('span[class*=select2-container]')
 
 for (let item of tovariArray){
         item.addEventListener('click', vuborTovari)
@@ -114,9 +120,7 @@ for (let item of tovariArray){
             console.log(cena);
             cena.value = Number(ystanCena.get_sell_price);
 
-            // let checkboxxx = item.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
-            // console.log(checkboxxx);
-            // checkboxxx.classList.remove('checked')
+            
             
             let cenasEchetomSkidki = item.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling
             console.log(cenasEchetomSkidki);
