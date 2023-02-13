@@ -94,13 +94,16 @@
 			</td>
 			<td class="tdStyle">{{unit.product.producer}}</td>
 			<td class="tdStyle">{{unit.amount}}</td>
+			
 
 			<td class="tdStyle">{{unit.get_sell_price}}</td>
 
-			<td class="tdStyle"> <button class="btn">
-				  <a class="btn__text" href="{{unit.get_retail_price_id}}">Изменить цену</a>
-				  </button>
-			</td>
+			<td class="tdStyle whtdStyle"> 
+				  
+				<a class="btn__text" href="{{unit.get_retail_price_id}}">
+				  <button class="btnTable"></button>
+			  </a>
+		  </td>
 		</tr>
 
 		{% endautoescape %}

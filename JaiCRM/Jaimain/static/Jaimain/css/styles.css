@@ -1139,10 +1139,12 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 .btn__addUsers1{
 	display: flex;
-	justify-content: end;
+	justify-content: center;
 	padding-bottom: 8px;
 	height: 62px;
 	margin-bottom: 12px;
+	width: 30px;
+	height: 40px;
 }
 
 .header__users-top{
@@ -1231,7 +1233,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 .tdStyle{
 	border: 1px solid black; 
-	width: 100px !important;
+	/* width: 100px ; */
 	padding: 10px;
 }
 
@@ -2161,12 +2163,14 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 .btnTable{
 	background-color: #2F76E6;
-	width: 100%;
+	background-image: url(./../images/edit-flat.svg);
 	height: 30px;
+	width: 30px;
 	padding: 0;
 	border-radius: 15px;
 	font-size: 16px;
-	color: #fff;
+	/* color: #fff; */
+	color: #2F76E6;
 	border: 0;
 	outline: none;
 	box-shadow: 0 7px 10px #d6d9e4;
@@ -2177,9 +2181,14 @@ ul.lang-list li a:hover {color: #fdc073;}
 .btnTable:hover{
 	background-color: rgb(255, 97, 24);
 	text-decoration: none !important;
+	scale: 1.1;
+}
+.whtdStyle{
+	width: 10px ;
 }
 
 .knopkaSort{
 	display: flex;
 	justify-content: center;
+	width: 40px;
 }
