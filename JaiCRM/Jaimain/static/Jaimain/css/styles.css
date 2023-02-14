@@ -1036,6 +1036,24 @@ ul.lang-list li a:hover {color: #fdc073;}
 .zero4{
 	display: none !important;
 }
+.zero5{
+	display: none !important;
+}
+.headTovar{
+	padding: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: start;
+	align-items: center;
+}
+.naidi{
+	margin-left: 20px;
+	height: 30px;
+}
+.headTovar-text{
+	font-size: 30px;
+	font-weight: bold;
+}
 
 .btn-zero{
 	cursor: pointer;
@@ -2099,6 +2117,8 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 .inputsss{
 	width: 160px !important;
+	/* position: relative !important;
+	height: 20px !important; */
 }
 
 
@@ -2144,7 +2164,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 
 .whp{
-	width: 170px;
+	width: 164px;
 	text-align: center;
 }
 

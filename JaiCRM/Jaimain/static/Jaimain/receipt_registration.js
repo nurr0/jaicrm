@@ -97,11 +97,71 @@ for (let item of widthPolya){
     item.classList.add('widthPilya')
 }
 
-
-const tovariArray = document.querySelectorAll('select[name*=product]')
+const razdel = document.querySelector('.razdel')
+const tovariArray = razdel.querySelectorAll('select[name*=product]')
 // const tovariArray = document.querySelectorAll('span[class*=select2-container]')
 
+let inputTovar = document.querySelector('.naidi');
+inputTovar.addEventListener('keyup', FilterUserTovar)
+function FilterUserTovar(){
+    //Ловеркейс для поиска
+    // let filter = inputTovar.value.toLowerCase(),
+    let filter = inputTovar.value
+    //Ищем все li у ul
+    // filterElements = document.querySelectorAll('.otcheti');
+    filterElements = document.querySelectorAll('select[id*=id_productinreceipt_set]')
+    //Странное решение
+    // if (input.value == ''){
+    //     location.reload()}
+    console.log(filterElements);
+    
+    filterElements.forEach((itemZ) => {
+        // if (itemZ.innerHTML.toLowerCase().indexOf(filter) > -1) {
+        //     // item.style.display = '';
+        //     itemZ.classList.remove('zero1')
+        //     // item.classList.remove('num')
+        
+        // } else {
+        //     // item.style.display = 'none';
+            
+        //     itemZ.classList.add('zero1')
+        //     // item.classList.add('num')
+        // }
+        console.log(itemZ);
+        for (let opti of itemZ){
+            console.log(opti);
+            console.log(opti.innerHTML);
+            console.log(filter);
+            
+            // if (opti.innerHTML == filter || filter == ''){
+            //     console.log('Каеф');
+            //     opti.classList.remove('zero5')
+            // }else (opti.classList.add('zero5'))
+            const regex = new RegExp(filter, 'gi');
+            if (opti.innerHTML.match(regex)){
+                console.log('Каеф');
+                opti.classList.remove('zero5')
+            }else (opti.classList.add('zero5'))
+            
+            
+        }
+        
+        // itemZ.forEach((opti)=>{
+            
+        //         if ( opti.options.innerHTML == filter){
+
+        //         }else (opti.options.classList.add('zero1'))
+               
+        //     }
+        // )
+    })}
+
+
 for (let item of tovariArray){
+        optAr = document.querySelector('select[id*=id_productinreceipt_set]')
+        
+
+  
         item.addEventListener('click', vuborTovari)
         async function vuborTovari(){
             let kolVovTovar = item.nextElementSibling.nextElementSibling;
@@ -156,7 +216,11 @@ for (let skidka of skidkas){
         let cenaSkidka = skidka.nextElementSibling
         cenaSkidka.value = Number(ystanCenaSkidka.value) -  ((Number(ystanCenaSkidka.value) / 100) * Number(skidka.value))
         smenaCeniSkidki()
-        
+        const totalZ = cenaSychetomSkidki.reduce(function (sum, currentAccount) {
+            let kek = currentAccount.previousElementSibling.previousElementSibling
+            return Number(sum) + (Number(currentAccount.value) * Number(kek.value));
+            },0)
+        totalzArea.innerHTML = totalZ 
     }
 }
 
