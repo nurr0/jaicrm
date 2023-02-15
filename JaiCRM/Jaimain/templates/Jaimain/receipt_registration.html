@@ -57,8 +57,14 @@
     </div>
 
 
-    <div>
-        <h2>Товары</h2>
+    <div class="headTovar">
+        <div class="headTovar-text">Товары</div>
+        <img class="btnTable mZl" src="/static/Jaimain/images/edit-flat.svg" alt="">
+        <!-- <div class="d7 d8">
+            <form>
+                <input id="filter-listOt" type="text" class="naidi filter-inputOt" placeholder="Отсортируйте по имени">
+            </form>
+        </div> -->
     </div>
 
 
@@ -76,28 +82,34 @@
                 <p class="whp">Цена с учетом скидки</p>
                 <!-- <p class="whp"></p> -->
             </div>
-            {% for form in products_in_receipt_formset %}
-            <div class="RazdelTovari">
-                {{ products_in_receipt_formset.management_form }}
+            <div class="razdel">
+                {% for form in products_in_receipt_formset %}
+                <div class="RazdelTovari">
+                    {{ products_in_receipt_formset.management_form }}
                 
-                {% render_field form.product class+="select2" %} {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}}</div>
-{{form.errors}}
-                {% endfor %}
-    
+                    {% render_field form.product class+="" %}
+                    
+                    {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}}</div>
+    {{form.errors}}
+                    {% endfor %}
+        
+                </div>
             </div>
-            
         <!-- </div></div>
         
     </div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div> -->
         
 
 <!--    <div>Всего товаров: </div> -->
+    
      <div class="zArea"> 
        <p>На сумму: </p> <p class="totalzArea"> 0</p> 
     </div>
    
     <input class="btn" type="submit" value="Сохранить">
 </form>
+
+
 
 <script>
 // In your Javascript (external .js resource or <script> tag)
