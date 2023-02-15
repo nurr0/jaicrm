@@ -106,8 +106,14 @@
     </div>
 
 
-    <div>
-        <h2>Товары</h2>
+    <div class="headTovar">
+        <div class="headTovar-text">Товары</div>
+        <img class="btnTable mZl" src="/static/Jaimain/images/edit-flat.svg" alt="">
+        <!-- <div class="d7 d8">
+            <form>
+                <input id="filter-listOt" type="text" class="naidi filter-inputOt" placeholder="Отсортируйте по имени">
+            </form>
+        </div> -->
     </div>
 
 
@@ -125,6 +131,7 @@
                 <p class="whp">Цена с учетом скидки</p>
                 <!-- <p class="whp"></p> -->
             </div>
+
     <ol>
             {% for form in products_in_receipt_formset %}
            <div class="RazdelTovari">
@@ -135,20 +142,22 @@
                 {% endfor %}
 
 </ol>
+
             </div>
-            
         <!-- </div></div>
         
     </div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div> -->
         
 
 <!--    <div>Всего товаров: </div> -->
+
 <!--     <div class="zArea"> -->
 <!--       <p>На сумму: </p> <p class="totalzArea"> 0</p> -->
 <!--    </div>-->
 
         <div class="total_amount">
        <div>Всего товаров: <p class="total_amount_of_receipt"></p></div>
+
     </div>
     <div class="total_sum">
        <p>На сумму: </p> <p class="total_sum_of_receipt"></p>
@@ -157,7 +166,9 @@
     <span class="error-message" style="color: red; display: none;">Превышен лимит использования бонусов</span>
     <input class="btn" type="submit" value="Сохранить">
 </form>
+
 <script src="/static/Jaimain/receipt_registration.js"></script>
+
 <script>
 
 $(document).ready(function() {
