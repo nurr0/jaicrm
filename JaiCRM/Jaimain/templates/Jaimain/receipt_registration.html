@@ -1,6 +1,52 @@
 {% extends 'Jaimain/base.html' %}
 {% load widget_tweaks %}
 {% block content %}
+
+<style>
+    #id_productinreceipt_set-0-product,
+    #id_productinreceipt_set-1-product,
+    #id_productinreceipt_set-2-product,
+    #id_productinreceipt_set-3-product,
+    #id_productinreceipt_set-4-product,
+    #id_productinreceipt_set-5-product,
+    #id_productinreceipt_set-6-product,
+    #id_productinreceipt_set-7-product,
+    #id_productinreceipt_set-8-product,
+    #id_productinreceipt_set-9-product,
+    #id_productinreceipt_set-10-product,
+    #id_productinreceipt_set-11-product,
+    #id_productinreceipt_set-12-product,
+    #id_productinreceipt_set-13-product,
+    #id_productinreceipt_set-14-product,
+    #id_productinreceipt_set-15-product,
+    #id_productinreceipt_set-16-product,
+    #id_productinreceipt_set-17-product,
+    #id_productinreceipt_set-18-product,
+    #id_productinreceipt_set-19-product
+
+    {
+        width: 600px !important;
+        height: 30px !important;
+        border-radius: 5px;
+    }
+</style>
+
+
+    <style>
+    #id_customer, #id_shop, #id_sales_channel, #id_payment_form, #id_receipt_number_display,
+    #id_points_achieve_or_spend, #id_points_used
+
+    {
+        width: 320px !important;
+        height: 30px !important;
+        border-radius: 5px;
+    }
+</style>
+
+<style>   li {
+    margin-bottom: 0.4em; /* Расстояние снизу */
+   }
+</style>
 <h1>
     {{title}}
 </h1>
@@ -9,6 +55,7 @@
     <br>"Списываемые бонусы" должны быть <= Сумма бонусов клиента(получаешь в АПИ)
     <br> "Списываемые бонусы" должны быть <= ((Сумма всех полей "Цена с учетом скидки")/100)*БСЛ
 </div>
+
 
 
 <form method="post" action="{% url 'receipt_registration' %}" enctype="multipart/form-data">
@@ -42,16 +89,18 @@
             </div>
             <div>
                 <div>{{ receipt_form.points_achieve_or_spend.label}} </div>
-                <div>{% render_field receipt_form.points_achieve_or_spend class+="select2" %}</div>
+                <div>{{receipt_form.points_achieve_or_spend }}</div>
             </div>
             <div>
                 <div>{{ receipt_form.points_used.label }}</div>
                 <div> {{ receipt_form.points_used}} {{ receipt_form.points_used.errors}}</div>
             </div>
             <div>
-                <div>Бонусы клиента</div>
-                <div class="bonysiClient">0</div>
+                <div>Доступные бонусы клиента:</div>
+                <div id="bonysiClient" style="transform: translate(10px, 2px)">0</div>
+
             </div>
+
         </div>
         
     </div>
@@ -82,18 +131,18 @@
                 <p class="whp">Цена с учетом скидки</p>
                 <!-- <p class="whp"></p> -->
             </div>
-            <div class="razdel">
-                {% for form in products_in_receipt_formset %}
-                <div class="RazdelTovari">
-                    {{ products_in_receipt_formset.management_form }}
+
+    <ol>
+            {% for form in products_in_receipt_formset %}
+           <div class="RazdelTovari">
+                {{ products_in_receipt_formset.management_form }}
                 
-                    {% render_field form.product class+="" %}
-                    
-                    {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}}</div>
-    {{form.errors}}
-                    {% endfor %}
-        
-                </div>
+                <li >{% render_field form.product class+="select2" %} {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}}</div>
+{{form.errors}}</li>
+                {% endfor %}
+
+</ol>
+
             </div>
         <!-- </div></div>
         
@@ -101,31 +150,168 @@
         
 
 <!--    <div>Всего товаров: </div> -->
-    
-     <div class="zArea"> 
-       <p>На сумму: </p> <p class="totalzArea"> 0</p> 
+
+<!--     <div class="zArea"> -->
+<!--       <p>На сумму: </p> <p class="totalzArea"> 0</p> -->
+<!--    </div>-->
+
+        <div class="total_amount">
+       <div>Всего товаров: <p class="total_amount_of_receipt"></p></div>
+
     </div>
-   
+    <div class="total_sum">
+       <p>На сумму: </p> <p class="total_sum_of_receipt"></p>
+    </div>
+
+    <span class="error-message" style="color: red; display: none;">Превышен лимит использования бонусов</span>
     <input class="btn" type="submit" value="Сохранить">
 </form>
 
-
+<script src="/static/Jaimain/receipt_registration.js"></script>
 
 <script>
-// In your Javascript (external .js resource or <script> tag)
+
 $(document).ready(function() {
     $('.select2').select2();
 });
 </script>
-<!--<script>-->
-<!--$(document).ready(function() {-->
-<!--    $('.js-example-basic-single').each(function (idx, elem) {-->
-<!--        $(elem).select2({-->
-<!--            'language': 'ru',-->
-<!--        });-->
-<!--    });-->
-<!--})-->
-<!--</script>-->
-<script src="/static/Jaimain/receipt_registration.js"></script>
+
+<script>
+$(document).ready(function () {
+  $('#id_customer').on('change', function () {
+    var customer_id = $(this).val();
+    var url = '/api/v1/customer/' + customer_id + '/';
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      success: function (data) {
+        if (data && data.points_amount) {
+          $('#bonysiClient').text(data.points_amount);
+        } else {
+          $('#bonysiClient').text(0);
+        }
+      },
+      error: function () {
+        console.log('Ошибка запроса');
+        $('#bonysiClient').text(0);
+      }
+    });
+  });
+});
+</script>
+
+
+<script>
+$(document).ready(function () {
+  for (var i = 0; i <= 19; i++) {
+    (function(index) {
+      $('#id_productinreceipt_set-' + index + '-product').on('change', function () {
+        var product_id = $(this).val();
+        var url = '/api/v1/product_in_stock/' + product_id + '/';
+        var price_in_stock_id = '#id_productinreceipt_set-' + (index) + '-price_in_stock';
+        var amount_id = '#id_productinreceipt_set-'+ (index) + '-amount';
+        var discount_id = '#id_productinreceipt_set-'+ (index) + '-discount';
+        var price_with_discount_id = '#id_productinreceipt_set-'+ (index) + '-price_with_discount';
+
+        $.ajax({
+          url: url,
+          dataType: 'json',
+          success: function (data) {
+            if (data && data.get_sell_price) {
+              $(price_in_stock_id).val(data.get_sell_price);
+              $(amount_id).val(1);
+              $(discount_id).val(0);
+              $(price_with_discount_id).val(data.get_sell_price);
+              $(calculateTotal)
+              $(calculateTotalAmount)
+              $(blockSaveButton)
+            } else {
+              $(price_in_stock_id).val(0);
+              $(amount_id).val(0);
+              $(discount_id).val(0);
+              $(price_with_discount_id).val(0);
+              $(calculateTotal)
+              $(calculateTotalAmount)
+              $(blockSaveButton)
+            }
+          },
+          error: function () {
+            console.log('Ошибка запроса');
+            $(product_id).val('');
+            $(price_in_stock_id).val('');
+            $(amount_id).val('');
+            $(discount_id).val(0);
+            $(price_with_discount_id).val('');
+            $(calculateTotal)
+            $(calculateTotalAmount)
+            $(blockSaveButton)
+          }
+        });
+      });
+    })(i);
+  }
+});
+
+function calculateTotal() {
+  let total = 0;
+  for (let i = 0; i < 20; i++) {
+    const priceWithDiscount = Number(document.querySelector(`#id_productinreceipt_set-${i}-price_with_discount`).value);
+    const amount = Number(document.querySelector(`#id_productinreceipt_set-${i}-amount`).value);
+    total += priceWithDiscount * amount;
+  }
+  console.log(total);
+
+  const totalSumElement = document.querySelector('.total_sum_of_receipt');
+  if (totalSumElement) {
+    totalSumElement.textContent = total;
+  }
+}
+
+function calculateTotalAmount() {
+  let total = 0;
+  for (let i = 0; i < 20; i++) {
+    const amount = Number(document.querySelector(`#id_productinreceipt_set-${i}-amount`).value);
+    total += amount;
+  }
+  console.log(total);
+  const totalSumElement = document.querySelector('.total_amount_of_receipt');
+  if (totalSumElement) {
+    totalSumElement.textContent = total;
+  }
+}
+
+// Добавляем обработчик события на изменение любого из объектов
+const objects = document.querySelectorAll('[id^="id_productinreceipt_set-"]');
+for (let i = 0; i < objects.length; i++) {
+  objects[i].addEventListener('change', calculateTotal);
+  objects[i].addEventListener('change', calculateTotalAmount);
+  objects[i].addEventListener('change', blockSaveButton);
+
+}
+
+function blockSaveButton() {
+  const totalSum = parseFloat(document.querySelector('.total_sum_of_receipt').textContent);
+  const pointsUsed = parseFloat(document.querySelector('#id_points_used').value);
+  const bsl = document.querySelector('.bsl');
+  const threshold = totalSum * (Number(bsl.textContent) / 100);
+    console.log(threshold)
+
+  const saveButton = document.querySelector('input[value="Сохранить"]');
+  const errorMessage = document.querySelector('.error-message');
+
+  if (pointsUsed > threshold) {
+    saveButton.disabled = true;
+    errorMessage.style.display = 'block'
+    errorMessage.textContent = `Превышен лимит использования бонусов, максимальная доступная сумма для данных товаров = ${threshold}`;
+  } else {
+    saveButton.disabled = false;
+    errorMessage.style.display = 'none';
+  }
+}
+
+// Добавляем обработчик события на изменение поля points_used
+document.querySelector('#id_points_used').addEventListener('change', blockSaveButton);
+
+</script>
 <!--<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>-->
 {% endblock %}
