@@ -7,8 +7,11 @@ const inputcenaSychetomSkidki = document.querySelectorAll('input[name*=price_wit
 
 // const cenaSychetomSkidki = [...RazdelTovari.querySelectorAll('input[type=number]')]
 const cenaSychetomSkidki = [...document.querySelectorAll('input[name*=price_with_discount]')]
-
-
+const imgIcon = document.querySelector('.btnTable')
+imgIcon.addEventListener('click',imIconEdit)
+function imIconEdit(){
+    poisk();
+}
 
 let totalzArea = document.querySelector('.totalzArea')
 
@@ -92,6 +95,8 @@ async function GetCustomers(){
 client.addEventListener('change',GetCustomers)
 
 
+
+
 const widthPolya = document.querySelectorAll('span[class*=select2-container]')
 for (let item of widthPolya){
     item.classList.add('widthPilya')
@@ -100,6 +105,74 @@ for (let item of widthPolya){
 const razdel = document.querySelector('.razdel')
 const tovariArray = razdel.querySelectorAll('select[name*=product]')
 // const tovariArray = document.querySelectorAll('span[class*=select2-container]')
+
+for (let item of tovariArray){
+    optAr = document.querySelector('select[id*=id_productinreceipt_set]')
+    let divZ = document.createElement('div');
+    let boxInput = `<input id="filter-listOt" type="text" class="naidi filter-inputOt" placeholder="Отсортируйте по имени">`
+    divZ.innerHTML = boxInput
+    // item.appendChild(divZ)
+    let papa = item.closest('.RazdelTovari')
+    papa.insertBefore(divZ,item)
+    divZ.classList.add('zero5')
+
+    function poisk(){
+        let stroka = prompt('Введите искомое значение', );
+        let inputTovar = document.querySelector('.naidi');
+        inputTovar.value = stroka;
+        FilterUserTovar()
+    }
+    
+    // item.options[0].onclick = poisk()
+    item.addEventListener('click', vuborTovari)
+    async function vuborTovari(){
+        // divZ.classList.toggle('zero5')
+        let kolVovTovar = item.nextElementSibling.nextElementSibling;
+       
+        console.log(item.value);
+        let response = await fetch('/api/v1/product_in_stock/'); 
+        let result = await response.json();
+        console.log(result);
+
+        let ystanCena = result.find(obj=>{
+           return obj.id == item.value
+        })
+        console.log(ystanCena);
+        console.log(item)
+
+       
+        
+        const cena = item.nextElementSibling 
+        console.log(cena);
+        cena.value = Number(ystanCena.get_sell_price);
+
+        
+        
+        let cenasEchetomSkidki = item.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling
+        console.log(cenasEchetomSkidki);
+        
+        cenasEchetomSkidki.value = Number(ystanCena.get_sell_price);
+        
+
+        
+        // kolVovTovar.value = 1;
+        console.log(kolVovTovar.value);
+        
+        const totalZ = cenaSychetomSkidki.reduce(function (sum, currentAccount) {
+            let kek = currentAccount.previousElementSibling.previousElementSibling
+            return Number(sum) + (Number(currentAccount.value) * Number(kek.value));
+            },0)
+        totalzArea.innerHTML = totalZ 
+        let inputTovar = document.querySelector('.naidi');
+        inputTovar.value = '';
+        FilterUserTovar()
+        
+}
+
+
+}
+
+
 
 let inputTovar = document.querySelector('.naidi');
 inputTovar.addEventListener('keyup', FilterUserTovar)
@@ -157,50 +230,7 @@ function FilterUserTovar(){
     })}
 
 
-for (let item of tovariArray){
-        optAr = document.querySelector('select[id*=id_productinreceipt_set]')
-        
 
-  
-        item.addEventListener('click', vuborTovari)
-        async function vuborTovari(){
-            let kolVovTovar = item.nextElementSibling.nextElementSibling;
-           
-            console.log(item.value);
-            let response = await fetch('/api/v1/product_in_stock/'); 
-            let result = await response.json();
-            console.log(result);
-
-            let ystanCena = result.find(obj=>{
-               return obj.id == item.value
-            })
-            console.log(ystanCena);
-            console.log(item)
-            const cena = item.nextElementSibling 
-            console.log(cena);
-            cena.value = Number(ystanCena.get_sell_price);
-
-            
-            
-            let cenasEchetomSkidki = item.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling
-            console.log(cenasEchetomSkidki);
-            
-            cenasEchetomSkidki.value = Number(ystanCena.get_sell_price);
-            
-
-            
-            // kolVovTovar.value = 1;
-            console.log(kolVovTovar.value);
-            
-            const totalZ = cenaSychetomSkidki.reduce(function (sum, currentAccount) {
-                let kek = currentAccount.previousElementSibling.previousElementSibling
-                return Number(sum) + (Number(currentAccount.value) * Number(kek.value));
-                },0)
-            totalzArea.innerHTML = totalZ 
-    }
-    
-   
-}
 
 
 

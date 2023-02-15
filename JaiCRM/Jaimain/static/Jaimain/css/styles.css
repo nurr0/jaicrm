@@ -2198,6 +2198,9 @@ ul.lang-list li a:hover {color: #fdc073;}
 	transition: all 0.1s ease-in-out;
 	text-decoration: none !important;
 }
+.mZl{
+	margin-left: 10px;
+}
 .btnTable:hover{
 	background-color: rgb(255, 97, 24);
 	text-decoration: none !important;
