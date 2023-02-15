@@ -2,7 +2,20 @@
 {% load widget_tweaks %}
 {% block content %}
 <h1>{{title}}</h1>
+<style>
+    #id_warehouse, #id_supplier, #id_document
+    {
+        width: 350px !important;
+        height: 30px !important;
+        border-radius: 5px;
+    }
 
+
+</style>
+<style>   li {
+    margin-bottom: 0.4em; /* Расстояние снизу */
+   }
+</style>
 <form method="post" action="{% url 'add_supply' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <div>
@@ -10,10 +23,15 @@
     </div>
 
     <div class="p__addPart">
-        <div> {{ add_supply_form.supplier.label }} {{ add_supply_form.supplier }}</div>
-        <div> {{ add_supply_form.document.label }} {{ add_supply_form.document }}</div>
-        <div> {{ add_supply_form.date.label }} {{ add_supply_form.date }} </div>
-        <div> {{add_supply_form.warehouse.label }} {% render_field add_supply_form.warehouse class+="select2" %} </div>
+        <div> {{ add_supply_form.supplier.label }}
+            <p>{{ add_supply_form.supplier }}</div>
+        <div> {{ add_supply_form.document.label }}
+            <p>{{ add_supply_form.document }}</div>
+        <div> {{add_supply_form.warehouse.label }}
+            <p>{% render_field add_supply_form.warehouse class+="select2" %} </div>
+        <div> {{ add_supply_form.date.label }}
+            <p>{{ add_supply_form.date }} </div>
+
     </div>
 
 

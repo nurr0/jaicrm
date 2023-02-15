@@ -149,7 +149,7 @@ class ProductsInSupplyForm(forms.ModelForm):
 ProductsInSupplyFormSet = inlineformset_factory(Supply, ProductsInSupply,
                                                 form=ProductsInSupplyForm,
                                                 fields='__all__',
-                                                extra=100)
+                                                extra=50)
 
 
 class ProductsRemoveForm(forms.ModelForm):
@@ -214,8 +214,12 @@ class SaleRegistrationForm(forms.ModelForm):
 
     def clean_points_used(self):
         points_used = self.cleaned_data['points_used']
+        customer = self.cleaned_data['customer']
+        customer_points = customer.get_points_amount()
         if points_used and points_used < 0:
             raise forms.ValidationError("Количество списываемых бонусов не может быть меньше 0")
+        if points_used and customer_points and points_used > customer_points:
+            raise forms.ValidationError("Количество списываемых бонусов не может превышать сумму бонусов клиента")
         return points_used
 
 class ProductsInReceiptForm(forms.ModelForm):
@@ -225,14 +229,17 @@ class ProductsInReceiptForm(forms.ModelForm):
 
 
     def clean_amount(self):
-        amount = self.cleaned_data['amount']
-        product = self.cleaned_data['product']
-        print(amount, product.amount)
-        if amount <= 0:
-            raise forms.ValidationError("Количество товара не может быть меньше или равно 0")
-        elif amount > product.amount:
-            raise forms.ValidationError(f"Количество товара в чеке не может превышать количество товара на складе, остаток на складе - {product.amount}")
-        return amount
+        if self.cleaned_data['product']:
+            amount = self.cleaned_data['amount']
+            product = self.cleaned_data['product']
+            print(amount, product.amount)
+            if amount <= 0:
+                raise forms.ValidationError("Количество товара не может быть меньше или равно 0")
+            elif amount > product.amount:
+                raise forms.ValidationError(f"Количество товара в чеке не может превышать количество товара на складе, остаток на складе - {product.amount}")
+            return amount
+        else:
+            return None
 
     def clean_discount(self):
         discount = self.cleaned_data['discount']
