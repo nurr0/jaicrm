@@ -538,6 +538,17 @@ if (/add_sku/.test(location.href )  ){
     const provertyAll05 = document.querySelectorAll('.form-group > div')[4]
     provertyAll05.classList.toggle('properyAll')
 
+    const provertyAll06 = document.querySelectorAll('.form-group > div')[5]
+    provertyAll06.classList.toggle('properyAll')
+    const provertyAll07 = document.querySelectorAll('.form-group > div')[6]
+    provertyAll07.classList.toggle('properyAll')
+    const provertyAll08 = document.querySelectorAll('.form-group > div')[7]
+    provertyAll08.classList.toggle('properyAll')
+    const provertyAll09 = document.querySelectorAll('.form-group > div')[9]
+    provertyAll09.classList.toggle('properyAll')
+    const provertyAll10 = document.querySelectorAll('.form-group > div')[10]
+    provertyAll10.classList.toggle('properyAll')
+
     const proverty01 = document.querySelector('#id_productpropertyrelation_set-0-DELETE')
     proverty01.setAttribute('checked','checked')
     const proverty02 = document.querySelector('#id_productpropertyrelation_set-1-DELETE')
@@ -549,7 +560,18 @@ if (/add_sku/.test(location.href )  ){
     const proverty05 = document.querySelector('#id_productpropertyrelation_set-4-DELETE')
     proverty05.setAttribute('checked','checked')
 
-    document.querySelectorAll('.title').forEach((el) => {
+    const proverty06 = document.querySelector('#id_productpropertyrelation_set-6-DELETE')
+    proverty06.setAttribute('checked','checked')
+    const proverty07 = document.querySelector('#id_productpropertyrelation_set-7-DELETE')
+    proverty07.setAttribute('checked','checked')
+    const proverty08 = document.querySelector('#id_productpropertyrelation_set-8-DELETE')
+    proverty08.setAttribute('checked','checked')
+    const proverty09 = document.querySelector('#id_productpropertyrelation_set-9-DELETE')
+    proverty09.setAttribute('checked','checked')
+    const proverty10 = document.querySelector('#id_productpropertyrelation_set-10-DELETE')
+    proverty10.setAttribute('checked','checked')
+
+    document.querySelectorAll('.plus').forEach((el) => {
         el.addEventListener('click',()=>{
             let content = el.nextElementSibling ;
             console.log(content)
@@ -558,7 +580,7 @@ if (/add_sku/.test(location.href )  ){
             contentP.removeAttribute('checked')
             console.log(contentP)
 
-            document.querySelector('.plus').remove()
+            document.querySelector('.plus').classList.toggle('zero5')
 
             if(content.style.maxHeight){
                 provertyAll.forEach((el)=>el.style.maxHeight = null)
@@ -568,18 +590,34 @@ if (/add_sku/.test(location.href )  ){
                 contentPAll.classList.toggle('zero1')
                 // contentP.removeAttribute('checked')
             }
-            
+
+        })
+    })
+    document.querySelectorAll('.plusminus').forEach((el) => {
+        el.addEventListener('click',()=>{
+            let papa = el.closest('.properyAll')
+            let znach = el.parentElement.querySelector('input')
+            znach.value = ''
+            let svoystvo = el.parentElement.querySelector('select')
+            svoystvo.options = '0'
+            svoystvo.value = '';
+            let check = el.parentElement.querySelector('input[type=checkbox]')
+            check.setAttribute('checked','checked')
+            document.querySelector('.plus').classList.toggle('zero5')
+            papa.classList.toggle('opa1')
+
+
         })
     })
 }
 
 if (/edit/.test(location.href )  && /sku/.test(location.href )){
-    settingsBlock.classList.add('ActiveList') 
+    settingsBlock.classList.add('ActiveList')
 
     const nameSku = document.querySelector('label[for="id_name"]')
     const AreaNameSku = document.querySelector('#id_name')
     nameSku.classList.add('p__addPart-width')
-    
+
     const imgSku = document.querySelector('label[for="id_image"]')
     imgSku.classList.add('p__addPart-width')
 
@@ -617,10 +655,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
 
                     content1.classList.toggle('zero1')
                     el.remove()
- 
+
                 })
             })
-    
+
         }
 
     }
@@ -645,7 +683,7 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
 
                 })
             })
-    
+
         }
     }
 
@@ -668,10 +706,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                     content1.classList.toggle('zero1')
                     el.remove()
 
-                    
+
                 })
             })
-    
+
         }
     }
 
@@ -687,7 +725,7 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
             glavParentxz3.classList.toggle('zero1')
             glavParentxz3.insertAdjacentHTML('beforeBegin','<img class="title plus" src="/static/Jaimain/images/plus.png" alt=""></img>')
 
-            
+
             document.querySelectorAll('.title').forEach((el) => {
                 el.addEventListener('click',()=>{
                     let content1 = el.nextElementSibling ;
@@ -696,10 +734,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                     content1.classList.toggle('zero1')
                     el.remove()
 
-                    
+
                 })
             })
-            
+
 
         }
     }
@@ -724,11 +762,11 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                     content1.classList.toggle('zero1')
                     el.remove()
 
-                    
+
                 })
             })
         }
-    
+
     }
 
     const xz5 = document.querySelector('#id_productpropertyrelation_set-5-value')
@@ -749,10 +787,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                     content1.classList.toggle('zero1')
                     el.remove()
 
-                    
+
                 })
             })
-            
+
         }
     }
 
@@ -774,10 +812,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                     content1.classList.toggle('zero1')
                     el.remove()
 
-                    
+
                 })
             })
-    
+
         }
     }
 
@@ -799,10 +837,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
                     content1.classList.toggle('zero1')
                     el.remove()
 
-                    
+
                 })
             })
-    
+
         }
     }
 }
@@ -843,10 +881,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
 //         let e = event || window.event;
 //         let target = e.target;
 //         let id = target.id;
-        
+
 //         if (target.tagName.toLowerCase() != "span") return;
-        
-        
+
+
 //         let data_page = +target.dataset.page;
 //         main_page.classList.remove("paginator_active");
 //         main_page = document.getElementById(id);
@@ -950,10 +988,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
 //     document.querySelectorAll('.title0').forEach((el) => {
 //         el.addEventListener('click',()=>{
 //             let content = el.nextElementSibling ;
-           
+
 //             let contentP = content.querySelector('input[type=checkbox]')
 //             contentP.setAttribute('checked','checked')
-            
+
 //             content.classList.toggle('zero1')
 //             el.classList.toggle('zero1')
 
@@ -970,7 +1008,7 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
 
 //     const sklad = document.querySelector('label[for="id_warehouse"]')
 //     sklad.classList.add('p__addPart-width')
-    
+
 
 // }
 
@@ -1002,10 +1040,10 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
 //     document.querySelectorAll('.title0').forEach((el) => {
 //         el.addEventListener('click',()=>{
 //             let content = el.nextElementSibling ;
-           
+
 //             let contentP = content.querySelector('input[type=checkbox]')
 //             contentP.setAttribute('checked','checked')
-            
+
 //             content.classList.toggle('zero1')
 //             el.classList.toggle('zero1')
 
@@ -1021,7 +1059,7 @@ if (/edit/.test(location.href )  && /sku/.test(location.href )){
 
 if (/product_properties/.test(location.href )){
     const arTd = document.querySelectorAll('.tdStyle')
-    
+
     const formElemBtn = document.querySelector('.btn__submit-form')
     formElemBtn.addEventListener('click', postForm)
     async function postForm(e){
@@ -1031,23 +1069,23 @@ if (/product_properties/.test(location.href )){
             if (areaName == item.innerHTML){
                 alert('Данное свойство уже имеется! Добавьте другое')
                 e.preventDefault();
-                
+
             }else if(areaName !== item.innerHTML){
                 console.log('Все ок!')
-                
-            }   
+
+            }
         }
-    
+
         let response = await fetch('http://127.0.0.1:8000/api/v1/propertylist/', {
           method: 'POST',
 
           body: new FormData(formElem)
         });
-    
+
         let result = await response.json();
-    
+
         // alert(result.message);
-       
+
     }
     const btnApi = document.querySelector('.btn__api')
     const modal  = document.querySelector('.modal')
@@ -1063,39 +1101,39 @@ if (/product_properties/.test(location.href )){
         modal.classList.toggle('zero1')
     }
 
- 
+
 }
 
 if (/product_categories/.test(location.href )){
     const arTd = document.querySelectorAll('a')
-    
+
     const formElemBtn = document.querySelector('.btn__submit-form')
     formElemBtn.addEventListener('click', postForm)
     async function postForm(e){
-        
+
         let areaName = document.querySelector('.formElem-name').value
         // e.preventDefault();
         for (let item of arTd){
             if (areaName == item.innerHTML){
                 alert('Данная категория уже имеется! Добавьте другую')
                 e.preventDefault();
-                
+
             }else if(areaName !== item.innerHTML){
                 console.log('Все ок!')
-                
-            }   
+
+            }
         }
-    
+
         let response = await fetch('http://127.0.0.1:8000/api/v1/product_cats/', {
           method: 'POST',
 
           body: new FormData(formElem)
         });
-    
-        let result = await response.json();
-    
 
-       
+        let result = await response.json();
+
+
+
     }
     const btnApi = document.querySelector('.btn__api')
     const modal  = document.querySelector('.modal')
@@ -1113,7 +1151,7 @@ if (/product_categories/.test(location.href )){
     async function getCategory(){
         const podskazka = document.querySelector('.podskazka')
         let response = await fetch('http://127.0.0.1:8000/api/v1/product_cats/');
-        
+
         let result = await response.json();
 
         let div = document.createElement('option');
@@ -1145,20 +1183,20 @@ if (/product_categories/.test(location.href )){
             if (item.level == 5){
                 div.innerHTML = "--------------- " + div.innerHTML
             }
-            
+
 
         }
 
 
-     
+
     }
     getCategory()
- 
+
 }
 
 if (/shops/.test(location.href )){
     const arTd = document.querySelectorAll('.name__shop')
-    
+
     const formElemBtn = document.querySelector('.btn__submit-form')
     formElemBtn.addEventListener('click', postForm)
     async function postForm(e){
@@ -1168,23 +1206,23 @@ if (/shops/.test(location.href )){
             if (areaName == item.innerHTML){
                 alert('Данная точка уже имеется! Добавьте другую')
                 e.preventDefault();
-                
+
             }else if(areaName !== item.innerHTML){
                 console.log('Все ок!')
-                
-            }   
+
+            }
         }
-    
+
         let response = await fetch('/api/v1/shoplist/', {
           method: 'POST',
 
           body: new FormData(formElem)
         });
-    
+
         let result = await response.json();
-    
+
         // alert(result.message);
-       
+
     }
     const btnApi = document.querySelector('.btn__api')
     const modal  = document.querySelector('.modal')
@@ -1200,30 +1238,30 @@ if (/shops/.test(location.href )){
         modal.classList.toggle('zero1')
     }
 
-    
- 
+
+
 }
 
 if (/sell_receipt_list/.test(location.href )){
     const arTd = document.querySelectorAll('.tdStyle')
-    
+
     const formElemBtn = document.querySelector('.btn__submit-form')
     formElemBtn.addEventListener('click', postForm)
     async function postForm(e){
-        
+
         e.preventDefault();
-        
+
         let host = location.host
         let response = await fetch('/api/v1/sales_report_export/', {
           method: 'POST',
 
           body: new FormData(formElem)
         });
-    
+
         let result = await response.json();
-    
+
         // alert(result.message);
-       
+
     }
     const btnApi = document.querySelector('.btn__api')
     const modal  = document.querySelector('.modal')
@@ -1239,7 +1277,7 @@ if (/sell_receipt_list/.test(location.href )){
         modal.classList.toggle('zero1')
     }
 
- 
+
 }
 
 const btnApiOt = document.querySelector('.btn__apiOt')
@@ -1263,24 +1301,24 @@ btnApiOt.addEventListener('click', btnApiActionOt)
                 //Странное решение
                 // if (input.value == ''){
                 //     location.reload()}
-    
+
                 filterElements.forEach((item) => {
                     if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
                         // item.style.display = '';
                         item.classList.remove('zero1')
                         item.classList.remove('num')
-                    
+
                     } else {
                         // item.style.display = 'none';
                         item.classList.add('zero1')
                         item.classList.add('num')
                     }
                 })}
-                
-            
+
+
         };
         filterOt();
-       
+
     }
 
 imgCrossOt.addEventListener('click', imgCrossActionOt)
@@ -1290,12 +1328,12 @@ function imgCrossActionOt(){
 }
 
 async function postForm(e){
-        
+
     // e.preventDefault();
     // let user = {
     //     page_size: 1,
     //   };
-    
+
     let response = await fetch('/api/v1/reports/');
     // let response = await fetch('/api/v1/reports/', {
     //     method: 'POST',
@@ -1306,10 +1344,10 @@ async function postForm(e){
     //   });
 
     let result = await response.json();
-    
+
     console.log(result)
     // const divArea = document.querySelector('.reportsApi')
-   
+
     for (let item of result){
         let divId = item.id
         let divFile = item.file
@@ -1322,25 +1360,25 @@ async function postForm(e){
         // divNew.innerHTML = divId + " " + divFile + " " + divName + " " + divData
         divNew.innerHTML = `<div class='otcheti otcheti1'>  <div class='z x'>${divName}</div>  <div class='z'>${divData}</div> <div class='z'>${divDataDay}</div>   <a class='btn' href="${divFile}">Скачать</a>  </div>`
         divArea.appendChild(divNew)
-        
+
     }
-    
-     
-   
+
+
+
 }
 postForm()
 
 if (/add_price/.test(location.href )  ){
-    
-    const poschitat = document.querySelectorAll('.procent__btn') 
-    
+
+    const poschitat = document.querySelectorAll('.procent__btn')
+
     for (let item of poschitat){
     // poschitat.addEventListener('click',podchet)
         item.addEventListener('click',podchet)
 
         function podchet(e){
             e.preventDefault();
-        
+
             // const div = poschitat.closest('div')
             const div = item.closest('div')
             const glavDiv = div.closest('.form-group-addPrice')
@@ -1372,17 +1410,17 @@ if (/receipt_registration/.test(location.href )  ){
         item.classList.add('inputsss')
     }
 
-    
-    
-    const poschitat = document.querySelectorAll('.procent__btn') 
-    
+
+
+    const poschitat = document.querySelectorAll('.procent__btn')
+
     for (let item of poschitat){
 
         item.addEventListener('click',podchet)
 
         function podchet(e){
             e.preventDefault();
-        
+
             // const div = poschitat.closest('div')
             const div = item.closest('div')
             const glavDiv = div.closest('.form-group-addPrice')
@@ -1403,4 +1441,3 @@ if (/receipt_registration/.test(location.href )  ){
     }
 
 }
-
