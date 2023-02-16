@@ -24,11 +24,11 @@
     </div>
 </div>
 	<div class="headers__users  header_users-list header_users-list1">
-		<div class="headerTable">Наименование товара</div>
-		<div class="headerTable">Артикул товара</div>
-		<div class="headerTable">Производитель</div>
-		<div class="headerTable">Категория</div>
-		<div class="headerTable">Количество</div>
+		<div class="headerTable" style="transform: translate(30px)">Наименование товара</div>
+		<div class="headerTable" style="transform: translate(100px)">Артикул товара</div>
+		<div class="headerTable" style="transform: translate(100px)">Производитель</div>
+		<div class="headerTable" style="transform: translate(100px)">Категория</div>
+		<div class="headerTable" style="transform: translate(80px)">Количество</div>
 	</div>
 	<table  class="trStyle " id="myTable">
 		<tr class="trClass">
@@ -36,7 +36,7 @@
 			<td class="tdStyle">{{ product.product.name }}</td>
 			<td class="tdStyle">{{ product.product.identifier }}</td>
 			<td class="tdStyle">{{ product.product.producer }}</td>
-			<td class="tdStyle">{{ product.product.category}}</td>
+			<td class="tdStyle">{{ product.product.category.get_full_path}}</td>
 			<td class="tdStyle">{{ product.amount}}</td>
 			</td>
 		</tr>

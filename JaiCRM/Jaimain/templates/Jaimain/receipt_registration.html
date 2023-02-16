@@ -108,12 +108,6 @@
 
     <div class="headTovar">
         <div class="headTovar-text">Товары</div>
-        <img class="btnTable mZl" src="/static/Jaimain/images/edit-flat.svg" alt="">
-        <!-- <div class="d7 d8">
-            <form>
-                <input id="filter-listOt" type="text" class="naidi filter-inputOt" placeholder="Отсортируйте по имени">
-            </form>
-        </div> -->
     </div>
 
 
@@ -124,11 +118,11 @@
     <!-- <div class="glavTovariMid"><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div>
         <div><div> -->
             <div class="whpGlav">
-                <p class="whp">Товар</p>
-                <p class="whp">Установленная цена</p>
-                <p class="whp">Количество</p>
-                <p class="whp">Скидка %</p>
-                <p class="whp">Цена с учетом скидки</p>
+                <p class="whp" style="transform: translate(250px, 30px)">Товар</p>
+                <p class="whp" style="transform: translate(480px, 30px)">Установленная цена</p>
+                <p class="whp" style="transform: translate(480px, 30px)">Количество</p>
+                <p class="whp" style="transform: translate(480px, 30px)">Скидка %</p>
+                <p class="whp" style="transform: translate(480px, 30px)">Цена с учетом скидки</p>
                 <!-- <p class="whp"></p> -->
             </div>
 
@@ -137,8 +131,14 @@
            <div class="RazdelTovari">
                 {{ products_in_receipt_formset.management_form }}
                 
-                <li >{% render_field form.product class+="select2" %} {{ form.price_in_stock }} {{ form.amount }}  {{ form.discount }} {{form.price_with_discount}}</div>
+                <li >{% render_field form.product class+="select2" %}
+                    {% render_field form.price_in_stock style+="height: 28px; border-radius: 5px;" %}
+                    {% render_field form.amount style+="height: 28px; border-radius: 5px;" %}
+                    {% render_field form.discount style+="height: 28px; border-radius: 5px;" %}
+                    {% render_field form.price_with_discount style+="height: 28px; border-radius: 5px;" %}
+
 {{form.errors}}</li>
+               </div>
                 {% endfor %}
 
 </ol>

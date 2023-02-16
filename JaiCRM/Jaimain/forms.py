@@ -53,11 +53,11 @@ class RegisterUserForm(UserCreationForm):
     partner = forms.ModelChoiceField(label='Партнер', queryset=Partner.objects.all())
     tel_number = forms.CharField(label='Номер телефона', widget=forms.TextInput(attrs={'class': 'form-input'}))
     shop_allowed = forms.ModelChoiceField(label='Привязка к торговой точке', queryset=Shop.objects.all(), required=False)
-    is_partner_admin = forms.BooleanField(label='Является администратором партнера', required=True)
+    # is_partner_admin = forms.BooleanField(label='Является администратором партнера', required=True)
 
     class Meta:
         model = JaiUser
-        fields = ('first_name', 'last_name', 'username', 'password1', 'password2', 'email', 'partner', 'tel_number', 'shop_allowed')
+        fields = ('first_name', 'last_name', 'username', 'password1', 'password2', 'email', 'partner', 'tel_number', 'shop_allowed', 'is_partner_admin')
 
 
 class LoginUserForm(AuthenticationForm):
@@ -99,7 +99,7 @@ class ProductPropertyRelationForm(forms.ModelForm):
 
 ProductPropertyRelationFormSet = inlineformset_factory(SKU, ProductPropertyRelation,
                                                        fields=['property', 'value'],
-                                                       extra=5,
+                                                       extra=10,
                                                        can_delete=True,
                                                        can_delete_extra=True)
 
@@ -149,7 +149,7 @@ class ProductsInSupplyForm(forms.ModelForm):
 ProductsInSupplyFormSet = inlineformset_factory(Supply, ProductsInSupply,
                                                 form=ProductsInSupplyForm,
                                                 fields='__all__',
-                                                extra=50)
+                                                extra=100)
 
 
 class ProductsRemoveForm(forms.ModelForm):

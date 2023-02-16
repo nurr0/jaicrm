@@ -1,6 +1,17 @@
 {% extends 'Jaimain/base.html' %}
 
 {% block content %}
+<style id="cool_select">
+    #id_category , #id_name, #id_identifier, #id_producer
+    {
+        width: 350px !important;
+        height: 30px !important;
+        border-radius: 5px;
+    }
+
+
+</style>
+
 <h1>{{title}}</h1>
 
 <form method="post" action="{% url 'add_sku' %}" enctype="multipart/form-data">
@@ -11,10 +22,10 @@
 
     <div class="p__addPart">
         {{ sku_form.as_p }}
-    
+
         {{ productpropertyrelation_formset.management_form }}
     </div>
-    
+
 
     <div>
         <h2>Свойства Товара</h2>
@@ -22,10 +33,12 @@
     {% for form in productpropertyrelation_formset %}
     <div class="form-group">
         <!-- <div class="title">Добавить</div> -->
-        
+
         <img class="title plus" src="/static/Jaimain/images/plus.png" alt="">
-        <div>{{ form.as_p }}</div>
-        
+        <div>{{ form.as_p }}
+            <img class="title plusminus" src="/static/Jaimain/images/minusss.png" alt="">
+        </div>
+
     </div>
     {% endfor %}
     <input class="btn" type="submit" value="Сохранить">

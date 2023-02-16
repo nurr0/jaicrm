@@ -2,16 +2,133 @@
 {% load widget_tweaks %}
 {% block content %}
 <h1>{{title}}</h1>
+
 <style>
     #id_warehouse, #id_supplier, #id_document
     {
-        width: 350px !important;
+        width: 300px !important;
         height: 30px !important;
         border-radius: 5px;
     }
 
+</style>
+
+<style id="coolstyle">
+    {
+        height: 30px !important;
+        border-radius: 5px;
+    }
 
 </style>
+
+<style>
+    #id_productsinsupply_set-0-product,
+    #id_productsinsupply_set-1-product,
+    #id_productsinsupply_set-2-product,
+    #id_productsinsupply_set-3-product,
+    #id_productsinsupply_set-4-product,
+    #id_productsinsupply_set-5-product,
+    #id_productsinsupply_set-6-product,
+    #id_productsinsupply_set-7-product,
+    #id_productsinsupply_set-8-product,
+    #id_productsinsupply_set-9-product,
+    #id_productsinsupply_set-10-product,
+    #id_productsinsupply_set-11-product,
+    #id_productsinsupply_set-12-product,
+    #id_productsinsupply_set-13-product,
+    #id_productsinsupply_set-14-product,
+    #id_productsinsupply_set-15-product,
+    #id_productsinsupply_set-16-product,
+    #id_productsinsupply_set-17-product,
+    #id_productsinsupply_set-18-product,
+    #id_productsinsupply_set-19-product,
+    #id_productsinsupply_set-20-product,
+    #id_productsinsupply_set-21-product,
+    #id_productsinsupply_set-22-product,
+    #id_productsinsupply_set-23-product,
+    #id_productsinsupply_set-24-product,
+    #id_productsinsupply_set-25-product,
+    #id_productsinsupply_set-26-product,
+    #id_productsinsupply_set-27-product,
+    #id_productsinsupply_set-28-product,
+    #id_productsinsupply_set-29-product,
+    #id_productsinsupply_set-30-product,
+    #id_productsinsupply_set-31-product,
+    #id_productsinsupply_set-32-product,
+    #id_productsinsupply_set-33-product,
+    #id_productsinsupply_set-34-product,
+    #id_productsinsupply_set-35-product,
+    #id_productsinsupply_set-36-product,
+    #id_productsinsupply_set-37-product,
+    #id_productsinsupply_set-38-product,
+    #id_productsinsupply_set-39-product,
+    #id_productsinsupply_set-40-product,
+    #id_productsinsupply_set-41-product,
+    #id_productsinsupply_set-42-product,
+    #id_productsinsupply_set-43-product,
+    #id_productsinsupply_set-44-product,
+    #id_productsinsupply_set-45-product,
+    #id_productsinsupply_set-46-product,
+    #id_productsinsupply_set-47-product,
+    #id_productsinsupply_set-48-product,
+    #id_productsinsupply_set-49-product,
+    #id_productsinsupply_set-50-product,
+    #id_productsinsupply_set-51-product,
+    #id_productsinsupply_set-52-product,
+    #id_productsinsupply_set-53-product,
+    #id_productsinsupply_set-54-product,
+    #id_productsinsupply_set-55-product,
+    #id_productsinsupply_set-56-product,
+    #id_productsinsupply_set-57-product,
+    #id_productsinsupply_set-58-product,
+    #id_productsinsupply_set-59-product,
+    #id_productsinsupply_set-60-product,
+    #id_productsinsupply_set-61-product,
+    #id_productsinsupply_set-62-product,
+    #id_productsinsupply_set-63-product,
+    #id_productsinsupply_set-64-product,
+    #id_productsinsupply_set-65-product,
+    #id_productsinsupply_set-66-product,
+    #id_productsinsupply_set-67-product,
+    #id_productsinsupply_set-68-product,
+    #id_productsinsupply_set-69-product,
+    #id_productsinsupply_set-70-product,
+    #id_productsinsupply_set-71-product,
+    #id_productsinsupply_set-72-product,
+    #id_productsinsupply_set-73-product,
+    #id_productsinsupply_set-74-product,
+    #id_productsinsupply_set-75-product,
+    #id_productsinsupply_set-76-product,
+    #id_productsinsupply_set-77-product,
+    #id_productsinsupply_set-78-product,
+    #id_productsinsupply_set-79-product,
+    #id_productsinsupply_set-80-product,
+    #id_productsinsupply_set-81-product,
+    #id_productsinsupply_set-82-product,
+    #id_productsinsupply_set-83-product,
+    #id_productsinsupply_set-84-product,
+    #id_productsinsupply_set-85-product,
+    #id_productsinsupply_set-86-product,
+    #id_productsinsupply_set-87-product,
+    #id_productsinsupply_set-88-product,
+    #id_productsinsupply_set-89-product,
+    #id_productsinsupply_set-90-product,
+    #id_productsinsupply_set-91-product,
+    #id_productsinsupply_set-92-product,
+    #id_productsinsupply_set-93-product,
+    #id_productsinsupply_set-94-product,
+    #id_productsinsupply_set-95-product,
+    #id_productsinsupply_set-96-product,
+    #id_productsinsupply_set-97-product,
+    #id_productsinsupply_set-98-product,
+    #id_productsinsupply_set-99-product
+    {
+        width: 600px !important;
+        height: 30px !important;
+        border-radius: 5px;
+    }
+</style>
+
 <style>   li {
     margin-bottom: 0.4em; /* Расстояние снизу */
    }
@@ -43,16 +160,19 @@
     <div>
     
     <div class="whpGlav">
-        <p class="whp">Товар</p>
-        <p class="whp ml">Количество</p>
-        <p class="whp ml ">Закупочная цена</p>
+        <p class="whp" style="transform: translate(250px, 30px)">Товар</p>
+        <p class="whp ml" style="transform: translate(410px, 30px)">Количество</p>
+        <p class="whp ml " style="transform: translate(360px, 30px)">Закупочная цена, за ед.</p>
 
     </div>
         <ol>
     {% for form in products_in_supply_formset %}
                 {{ products_in_supply_formset.management_form }}
 
-            <li>{% render_field form.product class+="select2" %} {{ form.amount }} {{ form.product_supply_price }}</li>
+            <li>{% render_field form.product class+="select2" %}
+                {% render_field form.amount style+="height: 28px; border-radius: 5px;" %}
+                {% render_field form.product_supply_price style+="height: 28px; border-radius: 5px;" %}
+                </li>
 {{ form.errors }}
 
    
@@ -66,6 +186,7 @@
 $(document).ready(function() {
     $('.select2').select2();
 });
+
 </script>
 
 {% endblock %}

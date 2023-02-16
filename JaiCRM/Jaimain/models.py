@@ -35,7 +35,7 @@ class JaiUser(AbstractUser):
     partner = models.ForeignKey('Partner', on_delete=models.PROTECT, verbose_name="Партнер", default=None, null=True)
     tel_number = models.CharField(max_length=255, verbose_name='Контактный телефон')
     shop_allowed = models.ForeignKey('Shop', on_delete=models.PROTECT, verbose_name='Сотрудник торговой точки', default=None, blank=True, null=True)
-    is_partner_admin = models.BooleanField(verbose_name='Является администратором партнера', default=False)
+    is_partner_admin = models.BooleanField(verbose_name='Является администратором партнера')
 
     def __str__(self):
         return self.username

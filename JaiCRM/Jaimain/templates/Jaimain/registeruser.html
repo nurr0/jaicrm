@@ -1,6 +1,15 @@
 {% extends 'Jaimain/base.html' %}
 
 {% block content %}
+    <style>
+    #id_partner, #id_shop_allowed
+
+    {
+        width: 474px !important;
+        height: 30px !important;
+        border-radius: 5px;
+    }
+</style>
 <h1>{{title}}</h1>
 
 <form action="{% url 'registeruser' %}" method="post" enctype="multipart/form-data">

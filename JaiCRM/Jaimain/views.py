@@ -48,6 +48,7 @@ class Partners(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -79,7 +80,15 @@ class ShowPartner(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        self.request.session.set_expiry(3600)
+        user = self.request.user
+        partner = self.get_object()
+        if user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        elif user.partner == partner :
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 class AddPartner(DataMixin, CreateView):
@@ -89,6 +98,7 @@ class AddPartner(DataMixin, CreateView):
     raise_exception = True
 
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         if not request.user.is_superuser:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
@@ -113,7 +123,15 @@ class EditPartner(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+        self.request.session.set_expiry(3600)
+        user = self.request.user
+        partner = self.get_object()
+        if user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        elif user.partner == partner and user.is_partner_admin:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
 
 @login_required
@@ -153,6 +171,7 @@ class UsersList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -170,6 +189,7 @@ class ShowUser(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         partner = self.get_object().partner
         if user.is_superuser:
@@ -182,7 +202,7 @@ class ShowUser(DataMixin, DetailView):
 
 class EditUser(DataMixin, UpdateView):
     model = JaiUser
-    fields = ['last_name', 'first_name', 'email', 'shop_allowed', 'is_active']
+    fields = ['last_name', 'first_name', 'email', 'shop_allowed', 'is_active', 'is_partner_admin']
     template_name = 'Jaimain/edituser.html'
     success_url = '/users/'
 
@@ -193,6 +213,7 @@ class EditUser(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         partner = self.get_object().partner
         if user.is_superuser:
@@ -217,6 +238,7 @@ class RegisterUser(DataMixin, CreateView):
         return redirect('home')
 
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         if not request.user.is_superuser:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
@@ -234,13 +256,10 @@ class LoginUser(DataMixin, LoginView):
     def get_success_url(self):
         return reverse_lazy('partners')
 
-
+@login_required()
 def HomePage(request):
+    request.session.set_expiry(3600)
     return redirect('dashboard')
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
 
 def logout_user(request):
@@ -273,6 +292,7 @@ class ShowShops(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -289,6 +309,7 @@ class ShowShops(DataMixin, ListView):
 
 @login_required()
 def add_shop(request):
+    request.session.set_expiry(3600)
     template = 'Jaimain/addshop.html'
     user_menu = menu.copy()
     form = AddShopForm()
@@ -327,6 +348,7 @@ class ShowShop(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         partner = self.get_object().partner
         if user.is_superuser:
@@ -350,6 +372,7 @@ class EditShop(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         partner = self.get_object().partner
         if user.is_superuser:
@@ -361,6 +384,7 @@ class EditShop(DataMixin, UpdateView):
 
 @login_required()
 def add_product_category(request):
+    request.session.set_expiry(3600)
     template = 'Jaimain/addrootproductcategory.html'
     form = AddProductCategoryForm()
     partner = request.user.partner
@@ -393,6 +417,7 @@ class ProductCategoriesList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -410,6 +435,7 @@ class ProductCategoriesList(DataMixin, ListView):
 
 @login_required()
 def edit_product_category(request, pk):
+    request.session.set_expiry(3600)
     product_category = get_object_or_404(ProductCategory, pk=pk)
     if request.user.partner != product_category.partner:
         raise PermissionDenied
@@ -463,6 +489,7 @@ class ProductPropertiesList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -491,6 +518,7 @@ class EditProductProperty(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         partner = self.get_object().partner
         if user.is_superuser:
@@ -502,6 +530,7 @@ class EditProductProperty(DataMixin, UpdateView):
 
 @login_required()
 def add_sku(request):
+    request.session.set_expiry(3600)
     user_menu = menu.copy()
     # context = {'partner': partner, 'form': form, 'menu': user_menu}
     if request.method == 'POST':
@@ -538,6 +567,7 @@ def add_sku(request):
 
 @login_required()
 def edit_sku(request, sku_pk):
+    request.session.set_expiry(3600)
     user_menu = menu.copy()
     sku = get_object_or_404(SKU, pk=sku_pk)
     if sku.partner != request.user.partner:
@@ -576,6 +606,7 @@ class SKUList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -604,6 +635,7 @@ class ShowSKU(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         partner = self.get_object().partner
         if user.is_superuser:
@@ -616,6 +648,7 @@ class ShowSKU(DataMixin, DetailView):
 
 @login_required()
 def add_supply(request):
+    request.session.set_expiry(3600)
     user_menu = menu.copy()
     if request.method == 'POST':
         add_supply_form = AddSupplyForm(request.POST)
@@ -679,6 +712,7 @@ class SupplyList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -712,6 +746,7 @@ class ShowSupply(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
             return super().dispatch(request, *args, **kwargs)
@@ -732,6 +767,7 @@ class EditSupply(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
             return super().dispatch(request, *args, **kwargs)
@@ -740,6 +776,7 @@ class EditSupply(DataMixin, UpdateView):
 
 @login_required()
 def remove_products_from_shop(request, shop_pk):
+    request.session.set_expiry(3600)
     user_menu = menu.copy()
     template = 'Jaimain/product_remove.html'
     shop = Shop.objects.get(pk=shop_pk)
@@ -792,6 +829,7 @@ class ProductInStockList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -812,6 +850,7 @@ class ProductInStockList(DataMixin, ListView):
 
 @login_required()
 def add_sell_price(request):
+    request.session.set_expiry(3600)
     if not request.user.is_partner_admin and not request.user.is_superuser:
        raise PermissionDenied
     user_menu = menu.copy()
@@ -856,6 +895,7 @@ class EditRetailPrice(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
             return super().dispatch(request, *args, **kwargs)
@@ -865,6 +905,7 @@ class EditRetailPrice(DataMixin, UpdateView):
 
 @login_required()
 def register_a_sale(request):
+    request.session.set_expiry(3600)
     partner = request.user.partner
     receipt_number = SellReceipt.get_receipt_number_for_partner(partner)
     user_menu = menu.copy()
@@ -962,6 +1003,7 @@ class SellReceiptList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -997,6 +1039,7 @@ class ShowSellReceipt(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         if user.is_superuser or \
                 (user.is_partner_admin and user.partner == self.get_object().partner) or \
@@ -1038,6 +1081,7 @@ class SellReceiptReturnView(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         if user.is_superuser or \
                 (user.is_partner_admin and user.partner == self.get_object().partner) or \
@@ -1070,6 +1114,7 @@ class SellReceiptReturnView(DataMixin, UpdateView):
 
 @login_required()
 def export_sales_data(request):
+    request.session.set_expiry(3600)
     if request.method == 'POST':
         # Get selected option from form
         file_format = request.POST['file-format']
@@ -1089,6 +1134,7 @@ class ReportsList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -1127,6 +1173,7 @@ def dashboard_old(request):
 
 @login_required()
 def dashboard(request):
+    request.session.set_expiry(3600)
     user_menu = menu.copy()
     partner = request.user.partner
     payload = {
@@ -1156,6 +1203,7 @@ class CustomersList(DataMixin, ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -1179,6 +1227,7 @@ class CustomerCreation(DataMixin, CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -1204,6 +1253,7 @@ class CustomerEdit(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         if user.is_superuser or (user.partner == self.get_object().partner):
             return super().dispatch(request, *args, **kwargs)
@@ -1226,6 +1276,7 @@ class CustomerShow(DataMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         if user.is_superuser or (user.partner == self.get_object().partner):
             return super().dispatch(request, *args, **kwargs)
@@ -1241,6 +1292,7 @@ class BaseLoyaltySystemCreation(DataMixin, CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         if request.user.is_superuser or request.user.is_partner_admin:
             return super().dispatch(request, *args, **kwargs)
         else:
@@ -1269,6 +1321,7 @@ class BaseLoyaltySystemEdit(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
             return super().dispatch(request, *args, **kwargs)
@@ -1289,6 +1342,7 @@ class PaymentFormEdit(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
             return super().dispatch(request, *args, **kwargs)
@@ -1309,6 +1363,7 @@ class SalesChannelEdit(DataMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.request.session.set_expiry(3600)
         user = self.request.user
         if user.is_superuser or (user.is_partner_admin and user.partner == self.get_object().partner):
             return super().dispatch(request, *args, **kwargs)
@@ -1317,6 +1372,7 @@ class SalesChannelEdit(DataMixin, UpdateView):
 
 @login_required()
 def add_bug_report(request):
+    request.session.set_expiry(3600)
     template = 'Jaimain/bugreport.html'
     form = BugReportForm()
     user_menu = menu.copy()
