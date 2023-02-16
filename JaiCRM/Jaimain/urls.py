@@ -56,6 +56,7 @@ urlpatterns = [
     path('404/', temp_error404, name='404'),
     path('403/', temp_error403, name='403'),
     path('500/', temp_error500, name='500'),
+    path('partner_time_expired/', partner_time_expired, name='partner_time_expired'),
     path('dashboard/', dashboard, name='dashboard')
     # path('export_sales_data/', export_sales_data, name='export_sales_data'),
     # path('reports/', ReportsList.as_view(), name='reports')

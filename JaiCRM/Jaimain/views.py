@@ -39,6 +39,8 @@ from rest_framework import generics
 from Jaimain.serializers import *
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
+def partner_time_expired(request):
+    return render(request, 'Jaimain/partner_time_expired.html')
 
 class Partners(DataMixin, ListView):
     paginate_by = 10
@@ -543,7 +545,7 @@ def add_sku(request):
             sku.save()
             try:
                 for form in productpropertyrelation_formset:
-                    if form.cleaned_data.get('DELETE'):
+                    if form.cleaned_data.get('DELETE') or not form.cleaned_data.get('property'):
                         continue
                     property_relation = form.save(commit=False)
                     property_relation.product = sku
