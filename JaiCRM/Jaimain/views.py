@@ -1,50 +1,43 @@
-import os
-from datetime import datetime
 import time
 
 import jwt
-from rest_framework.pagination import PageNumberPagination
-
-from .dashboard import METABASE_SECRET_KEY, METABASE_SITE_URL
-from .tasks import *
-from django.contrib.auth import logout, login
+from django.contrib import messages
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
-from django.db import IntegrityError, connection
-from django.forms import model_to_dict
-from django.http import HttpResponse, HttpResponseNotFound, Http404, JsonResponse, HttpResponseRedirect
+from django.db import IntegrityError
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template import loader
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView, CreateView, FormView, UpdateView
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
-import JaiCRM.settings as settings
-from .forms import *
-from .models import *
-from django.http import HttpResponse
-from django.template import loader
-
-from .resources import SalesResource
-from .service import sales_report, data_for_sales_by_cat_donought, data_for_sales_by_shop_graph, \
-    data_for_sales_by_payment_form_donought, data_for_sales_by_sales_channel_donought
-from .utils import *
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from rest_framework import generics
-from Jaimain.serializers import *
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from Jaimain.serializers import *
+from .dashboard import METABASE_SECRET_KEY, METABASE_SITE_URL
+from .forms import *
+from .service import data_for_sales_by_cat_donought, data_for_sales_by_shop_graph, \
+    data_for_sales_by_payment_form_donought, data_for_sales_by_sales_channel_donought
+from .tasks import *
+from .utils import *
+
+
+def partner_time_expired(request):
+    return render(request, 'Jaimain/partner_time_expired.html')
 
 
 class Partners(DataMixin, ListView):
-    paginate_by = 10
     model = Partner
     template_name = 'Jaimain/partners.html'
     context_object_name = 'partners'
+    paginate_by = 10
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -54,11 +47,14 @@ class Partners(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Партнеры')
-        return dict(list(context.items()) + list(c_def.items()))
+        return {**context, **c_def}
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Partner.objects.all() if user.is_superuser else Partner.objects.filter(pk=user.partner.pk)
+        if user.is_superuser:
+            queryset = Partner.objects.all()
+        else:
+            queryset = Partner.objects.filter(pk=user.partner.pk)
         return queryset
 
 
@@ -76,16 +72,14 @@ class ShowPartner(DataMixin, DetailView):
         c_def['payment_form'] = PaymentForm.objects.filter(partner=self.object)
         c_def['bsl'] = BaseLoyaltySystem.objects.filter(partner=self.object)
         c_def['user'] = self.request.user
-        return dict(list(context.items()) + list(c_def.items()))
+        return {**context, **c_def}
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.request.session.set_expiry(3600)
         user = self.request.user
         partner = self.get_object()
-        if user.is_superuser:
-            return super().dispatch(request, *args, **kwargs)
-        elif user.partner == partner :
+        if user.is_superuser or user.partner == partner:
             return super().dispatch(request, *args, **kwargs)
         else:
             raise PermissionDenied
@@ -103,10 +97,10 @@ class AddPartner(DataMixin, CreateView):
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Добавление партнера')
-        return dict(list(context.items()) + list(c_def.items()))
+        return {**context, **c_def}
 
 
 class EditPartner(DataMixin, UpdateView):
@@ -116,22 +110,21 @@ class EditPartner(DataMixin, UpdateView):
     template_name = 'Jaimain/editpartner.html'
     success_url = '/partners/'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Изменение партнера')
-        return dict(list(context.items()) + list(c_def.items()))
+        return {**context, **c_def}
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.request.session.set_expiry(3600)
         user = self.request.user
         partner = self.get_object()
-        if user.is_superuser:
-            return super().dispatch(request, *args, **kwargs)
-        elif user.partner == partner and user.is_partner_admin:
+        if user.is_superuser or (user.partner == partner and user.is_partner_admin):
             return super().dispatch(request, *args, **kwargs)
         else:
             raise PermissionDenied
+
 
 
 @login_required
@@ -257,7 +250,7 @@ class LoginUser(DataMixin, LoginView):
         return reverse_lazy('partners')
 
 @login_required()
-def HomePage(request):
+def home_page(request):
     request.session.set_expiry(3600)
     return redirect('dashboard')
 
@@ -307,7 +300,8 @@ class ShowShops(DataMixin, ListView):
         queryset = Shop.objects.all() if user.is_superuser else Shop.objects.filter(partner=user.partner)
         return queryset
 
-@login_required()
+
+@login_required
 def add_shop(request):
     request.session.set_expiry(3600)
     template = 'Jaimain/addshop.html'
@@ -339,7 +333,7 @@ class ShowShop(DataMixin, DetailView):
     pk_url_kwarg = 'shop_pk'
     context_object_name = 'shop'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Торговая точка')
         c_def['products_in_shop'] = ProductInStock.objects.filter(shop=self.object)
@@ -351,9 +345,7 @@ class ShowShop(DataMixin, DetailView):
         self.request.session.set_expiry(3600)
         user = self.request.user
         partner = self.get_object().partner
-        if user.is_superuser:
-            return super().dispatch(request, *args, **kwargs)
-        elif user.partner == partner:
+        if user.is_superuser or user.partner == partner:
             return super().dispatch(request, *args, **kwargs)
         else:
             raise PermissionDenied
@@ -365,7 +357,7 @@ class EditShop(DataMixin, UpdateView):
     template_name = 'Jaimain/editshop.html'
     success_url = '/shops/'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Изменение торговой точки')
         return dict(list(context.items()) + list(c_def.items()))
@@ -375,14 +367,13 @@ class EditShop(DataMixin, UpdateView):
         self.request.session.set_expiry(3600)
         user = self.request.user
         partner = self.get_object().partner
-        if user.is_superuser:
-            return super().dispatch(request, *args, **kwargs)
-        elif user.partner == partner:
+        if user.is_superuser or user.partner == partner:
             return super().dispatch(request, *args, **kwargs)
         else:
             raise PermissionDenied
 
-@login_required()
+
+@login_required
 def add_product_category(request):
     request.session.set_expiry(3600)
     template = 'Jaimain/addrootproductcategory.html'
@@ -401,13 +392,6 @@ def add_product_category(request):
                 queryset = ProductCategory.objects.create(partner=partner, name=name, parent=parent)
             except:
                 form = AddProductCategoryForm()
-            return redirect('product_categories/')
-        else:
-            form = AddProductCategoryForm()
-    categories = ProductCategory.objects.filter(partner=request.user.partner)
-    form.fields['parent'].queryset = categories
-
-    return render(request, template, context=context)
 
 
 class ProductCategoriesList(DataMixin, ListView):
@@ -432,6 +416,7 @@ class ProductCategoriesList(DataMixin, ListView):
         queryset = ProductCategory.objects.all() if user.is_superuser else ProductCategory.objects.filter(
             partner=user.partner)
         return queryset
+
 
 @login_required()
 def edit_product_category(request, pk):
@@ -458,27 +443,27 @@ def edit_product_category(request, pk):
     return render(request, 'Jaimain/editproductcategory.html', context=context)
 
 
-# def add_product_property(request):
-#     template = 'Jaimain/addproductproperty.html'
-#     form = AddProductPropertyForm()
-#     partner = request.user.partner
-#     user_menu = menu.copy()
-#     context = {'partner': partner, 'form': form, 'menu': user_menu}
-#
-#     if request.method == 'POST':
-#         form = AddProductPropertyForm(request.POST)
-#         if form.is_valid():
-#             partner = request.user.partner
-#             name = form.cleaned_data['name']
-#             try:
-#                 queryset = ProductProperty.objects.create(partner=partner, name=name)
-#             except:
-#                 form = AddProductPropertyForm()
-#             return redirect('product_properties')
-#         else:
-#             form = AddProductPropertyForm()
-#
-#     return render(request, template, context=context)
+def add_product_property(request):
+    template = 'Jaimain/addproductproperty.html'
+    form = AddProductPropertyForm()
+    partner = request.user.partner
+    user_menu = menu.copy()
+    context = {'partner': partner, 'form': form, 'menu': user_menu}
+
+    if request.method == 'POST':
+        form = AddProductPropertyForm(request.POST)
+        if form.is_valid():
+            partner = request.user.partner
+            name = form.cleaned_data['name']
+            try:
+                queryset = ProductProperty.objects.create(partner=partner, name=name)
+            except:
+                form = AddProductPropertyForm()
+            return redirect('product_properties')
+        else:
+            form = AddProductPropertyForm()
+
+    return render(request, template, context=context)
 
 
 class ProductPropertiesList(DataMixin, ListView):
@@ -536,34 +521,43 @@ def add_sku(request):
     if request.method == 'POST':
         sku_form = AddSKUForm(request.POST, request.FILES)
         productpropertyrelation_formset = ProductPropertyRelationFormSet(request.POST)
+
         if sku_form.is_valid() and productpropertyrelation_formset.is_valid():
             sku = sku_form.save(commit=False)
             sku.partner = request.user.partner
             sku.image = sku_form.cleaned_data['image']
             sku.save()
+
             try:
                 for form in productpropertyrelation_formset:
-                    if form.cleaned_data.get('DELETE'):
+                    if form.cleaned_data.get('DELETE') or not form.cleaned_data.get('property'):
                         continue
                     property_relation = form.save(commit=False)
                     property_relation.product = sku
                     property_relation.save()
             except:
                 sku.delete()
+
             return redirect('sku')
+
         if not sku_form.is_valid():
             print(sku_form.errors)
+
     else:
         sku_form = AddSKUForm()
         productpropertyrelation_formset = ProductPropertyRelationFormSet()
 
     sku_form.fields['category'].queryset = ProductCategory.objects.filter(partner=request.user.partner)
+
     for form in productpropertyrelation_formset:
         form.fields['property'].queryset = ProductProperty.objects.filter(partner=request.user.partner)
+
     return render(request, 'Jaimain/add_sku.html', {
         'sku_form': sku_form,
-        'productpropertyrelation_formset': productpropertyrelation_formset, 'menu': user_menu
+        'productpropertyrelation_formset': productpropertyrelation_formset,
+        'menu': user_menu,
     })
+
 
 @login_required()
 def edit_sku(request, sku_pk):
@@ -594,7 +588,8 @@ def edit_sku(request, sku_pk):
     sku_form.fields['category'].queryset = ProductCategory.objects.filter(partner=request.user.partner)
     return render(request, 'Jaimain/edit_sku.html', {
         'sku_form': sku_form,
-        'productpropertyrelation_formset': productpropertyrelation_formset, 'menu': user_menu
+        'productpropertyrelation_formset': productpropertyrelation_formset,
+        'menu': user_menu
     })
 
 
@@ -650,42 +645,48 @@ class ShowSKU(DataMixin, DetailView):
 def add_supply(request):
     request.session.set_expiry(3600)
     user_menu = menu.copy()
+
     if request.method == 'POST':
         add_supply_form = AddSupplyForm(request.POST)
         products_in_supply_formset = ProductsInSupplyFormSet(request.POST)
+
         if add_supply_form.is_valid() and products_in_supply_formset.is_valid():
             supply = add_supply_form.save(commit=False)
             supply.partner = request.user.partner
             supply.save()
             shop_supply_to = supply.warehouse
+
             try:
                 for form in products_in_supply_formset:
                     if not form.cleaned_data.get('product'):
                         continue
+
                     if form.is_valid:
                         products_in_supply = form.save(commit=False)
                         products_in_supply.supply = supply
                         products_in_supply.save()
                         amount_added = products_in_supply.amount
                         product_added = products_in_supply.product
-                        product_exists = ProductInStock.objects.filter(shop=shop_supply_to,
-                                                                       product=product_added).exists()
+                        product_exists = ProductInStock.objects.filter(shop=shop_supply_to, product=product_added).exists()
 
                         if product_exists:
                             product = ProductInStock.objects.get(shop=shop_supply_to, product=product_added)
                             product.amount += amount_added
                             product.save()
                         else:
-                            ProductInStock.objects.create(amount=amount_added,
-                                                          product=product_added,
-                                                          shop=shop_supply_to)
+                            ProductInStock.objects.create(amount=amount_added, product=product_added, shop=shop_supply_to)
+
                 if all([form.cleaned_data.get('product') is None for form in products_in_supply_formset]):
                     supply.delete()
+
             except:
                 supply.delete()
+
             return redirect('supplies')
+
         if not add_supply_form.is_valid():
             print(add_supply_form.errors)
+
     else:
         add_supply_form = AddSupplyForm()
         products_in_supply_formset = ProductsInSupplyFormSet()
@@ -695,12 +696,14 @@ def add_supply(request):
     else:
         add_supply_form.fields['warehouse'].queryset = Shop.objects.filter(pk=request.user.shop_allowed.pk)
         add_supply_form.fields['warehouse'].initial = request.user.shop_allowed.pk
+
     for form in products_in_supply_formset:
         form.fields['product'].queryset = SKU.objects.filter(partner=request.user.partner)
 
     return render(request, 'Jaimain/add_supply.html', {
         'add_supply_form': add_supply_form,
-        'products_in_supply_formset': products_in_supply_formset, 'menu': user_menu
+        'products_in_supply_formset': products_in_supply_formset,
+        'menu': user_menu
     })
 
 
@@ -780,12 +783,16 @@ def remove_products_from_shop(request, shop_pk):
     user_menu = menu.copy()
     template = 'Jaimain/product_remove.html'
     shop = Shop.objects.get(pk=shop_pk)
+
     if not request.user.is_partner_admin:
         raise PermissionDenied
+
     if request.user.partner != shop.partner:
         raise PermissionDenied
+
     if request.user.shop_allowed and request.user.shop_allowed != shop:
         raise PermissionDenied
+
     if request.method == 'POST':
         form = ProductsRemoveForm(request.POST)
         if form.is_valid():
@@ -804,22 +811,9 @@ def remove_products_from_shop(request, shop_pk):
     else:
         form = ProductsRemoveForm()
     form.fields['product'].queryset = ProductInStock.objects.filter(shop_id=shop_pk)
+
     return render(request, template, {'form': form, 'menu': user_menu, 'title': 'Списание товаров со склада'})
 
-
-# def decrease_product_amount(request):
-#     if request.method == 'POST':
-#         form = DecreaseAmountForm(request.POST)
-#         if form.is_valid():
-#             product_id = form.cleaned_data['product_id']
-#             decrease_amount = form.cleaned_data['decrease_amount']
-#             product_in_stock = get_object_or_404(ProductInStock, product_id=product_id)
-#             product_in_stock.amount -= decrease_amount
-#             product_in_stock.save()
-#             return render(request, 'decrease_success.html')
-#     else:
-#         form = DecreaseAmountForm()
-#     return render(request, 'decrease_form.html', {'form': form})
 
 class ProductInStockList(DataMixin, ListView):
     paginate_by = 20
@@ -857,18 +851,22 @@ def add_sell_price(request):
     shops = Shop.objects.filter(partner=request.user.partner)
     queryset = ProductInStock.objects.filter(sellprice__isnull=True, shop__in=shops)
     formset_class = formset_factory(AddSellPriceForm, extra=len(queryset), can_delete_extra=True, can_delete=True)
+
     if request.method == 'POST':
         formset = formset_class(request.POST)
+
         if formset.is_valid():
             for i, form in enumerate(formset):
                 form.instance.partner = request.user.partner
                 form.instance.product_in_stock = queryset[i]
+
                 if form.cleaned_data.get('DELETE'):
                     continue
                 try:
                     form.save()
                 except IntegrityError:
                     messages.error(request, 'Цена для данного товара уже установлена')
+
             return redirect('products_in_stock')
     else:
         formset = formset_class()
@@ -876,6 +874,7 @@ def add_sell_price(request):
             form.fields['product_in_stock'].initial = queryset[i]
             form.fields['product_in_stock_display'].initial = str(queryset[i])
             form.fields['product_latest_supply_price'].initial = str(queryset[i].get_latest_supply_price())
+
     return render(request, 'Jaimain/add_price.html',
                   {'formset': formset, 'menu': user_menu, 'title': 'Добавление цены'})
 
@@ -1091,36 +1090,12 @@ class SellReceiptReturnView(DataMixin, UpdateView):
             raise PermissionDenied
 
 
-# def export_data(request):
-#     if request.method == 'POST':
-#         # Get selected option from form
-#         file_format = request.POST['file-format']
-#         sales_resource = SalesResource(user=request.user)
-#         dataset = sales_resource.export()
-#         if file_format == 'CSV':
-#             response = HttpResponse(dataset.csv, content_type='text/csv')
-#             response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
-#             return response
-#         elif file_format == 'JSON':
-#             response = HttpResponse(dataset.json, content_type='application/json')
-#             response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
-#             return response
-#         elif file_format == 'XLS (Excel)':
-#             response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
-#             response['Content-Disposition'] = 'attachment; filename="exported_data.xls"'
-#             return response
-#
-#     return render(request, 'Jaimain/export.html')
-
 @login_required()
 def export_sales_data(request):
     request.session.set_expiry(3600)
     if request.method == 'POST':
-        # Get selected option from form
         file_format = request.POST['file-format']
-        # partner = request.user.partner.name
         export_sales_report.delay(user=request.user.pk, file_format=file_format)
-        # export_sales_report(user=request.user.pk, file_format=file_format)
         return redirect('sell_receipt_list')
 
     return render(request, 'Jaimain/export.html')

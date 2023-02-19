@@ -1,4 +1,5 @@
 db.sqlite3
 /JaiCRM/db.sqlite3
 *.sqlite3
-
+/JaiCRM/Jaimain/dashboard.py
+/JaiCRM/media/

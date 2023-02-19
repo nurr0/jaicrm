@@ -235,3 +235,4 @@ def data_for_sales_by_sales_channel_donought(partner):
     data_year = [sales_channels_year, sums_year]
 
     return data_day, data_month, data_year
+

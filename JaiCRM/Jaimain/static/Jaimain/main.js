@@ -544,9 +544,9 @@ if (/add_sku/.test(location.href )  ){
     provertyAll07.classList.toggle('properyAll')
     const provertyAll08 = document.querySelectorAll('.form-group > div')[7]
     provertyAll08.classList.toggle('properyAll')
-    const provertyAll09 = document.querySelectorAll('.form-group > div')[9]
+    const provertyAll09 = document.querySelectorAll('.form-group > div')[8]
     provertyAll09.classList.toggle('properyAll')
-    const provertyAll10 = document.querySelectorAll('.form-group > div')[10]
+    const provertyAll10 = document.querySelectorAll('.form-group > div')[9]
     provertyAll10.classList.toggle('properyAll')
 
     const proverty01 = document.querySelector('#id_productpropertyrelation_set-0-DELETE')
@@ -560,15 +560,15 @@ if (/add_sku/.test(location.href )  ){
     const proverty05 = document.querySelector('#id_productpropertyrelation_set-4-DELETE')
     proverty05.setAttribute('checked','checked')
 
-    const proverty06 = document.querySelector('#id_productpropertyrelation_set-6-DELETE')
+    const proverty06 = document.querySelector('#id_productpropertyrelation_set-5-DELETE')
     proverty06.setAttribute('checked','checked')
-    const proverty07 = document.querySelector('#id_productpropertyrelation_set-7-DELETE')
+    const proverty07 = document.querySelector('#id_productpropertyrelation_set-6-DELETE')
     proverty07.setAttribute('checked','checked')
-    const proverty08 = document.querySelector('#id_productpropertyrelation_set-8-DELETE')
+    const proverty08 = document.querySelector('#id_productpropertyrelation_set-7-DELETE')
     proverty08.setAttribute('checked','checked')
-    const proverty09 = document.querySelector('#id_productpropertyrelation_set-9-DELETE')
+    const proverty09 = document.querySelector('#id_productpropertyrelation_set-8-DELETE')
     proverty09.setAttribute('checked','checked')
-    const proverty10 = document.querySelector('#id_productpropertyrelation_set-10-DELETE')
+    const proverty10 = document.querySelector('#id_productpropertyrelation_set-9-DELETE')
     proverty10.setAttribute('checked','checked')
 
     document.querySelectorAll('.plus').forEach((el) => {
@@ -587,7 +587,7 @@ if (/add_sku/.test(location.href )  ){
             } else{
                 provertyAll.forEach((el)=>el.style.maxHeight = null)
                 content.classList.toggle('opa1')
-                contentPAll.classList.toggle('zero1')
+                contentPAll.classList.add('zero1')
                 // contentP.removeAttribute('checked')
             }
 

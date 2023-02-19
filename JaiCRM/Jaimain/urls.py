@@ -4,7 +4,7 @@ from .views import *
 
 
 urlpatterns = [
-    path('', HomePage, name='home'),
+    path('', home_page, name='home'),
     path('partners/', Partners.as_view(), name='partners'),
     path('addpartner/', AddPartner.as_view(), name='addpartner'),
     path('partners/<int:partner_pk>/', ShowPartner.as_view(), name='partner'),
@@ -24,7 +24,7 @@ urlpatterns = [
     path('add_prod_cat', add_product_category, name='addproductcategory'),
     path('product_categories/', ProductCategoriesList.as_view(), name='product_categories'),
     path('product_categories/<int:pk>/', edit_product_category, name='editproductcategory'),
-    # path('addproductproperty/', add_product_property, name='addproductproperty'),
+    path('addproductproperty/', add_product_property, name='addproductproperty'),
     path('product_properties/', ProductPropertiesList.as_view(), name='product_properties'),
     path('product_properties/<int:pk>/', EditProductProperty.as_view(), name='editproductproperty'),
     path('add_sku/', add_sku, name='add_sku'),
@@ -56,6 +56,7 @@ urlpatterns = [
     path('404/', temp_error404, name='404'),
     path('403/', temp_error403, name='403'),
     path('500/', temp_error500, name='500'),
+    path('partner_time_expired/', partner_time_expired, name='partner_time_expired'),
     path('dashboard/', dashboard, name='dashboard')
     # path('export_sales_data/', export_sales_data, name='export_sales_data'),
     # path('reports/', ReportsList.as_view(), name='reports')
